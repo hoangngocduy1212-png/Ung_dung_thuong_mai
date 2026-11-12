@@ -1,0 +1,32 @@
+.orders-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+.orders-toolbar select { min-width: 180px; height: 40px; padding: 0 10px; border: 1px solid #dce5ef; border-radius: 9px; background: #fff; }
+.order-group { margin-bottom: 18px; padding: 18px; border: 1px solid #e5ecf4; border-radius: 15px; background: #fff; }
+.order-group__head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; padding-bottom: 12px; border-bottom: 1px solid #e9eef4; }
+.order-group__head h2 { margin: 0; font-size: 14px; }
+.order-card { padding: 14px 0; border-bottom: 1px solid #edf1f6; }
+.order-card:last-child { border-bottom: 0; }
+.order-card__head, .order-card__totals, .order-card__actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }
+.order-card__head strong { font-size: 13px; }
+.order-card__products { margin: 9px 0; color: #65768c; font-size: 12px; line-height: 1.6; }
+.order-card__totals { color: #3a4f68; font-size: 12px; }
+.order-card__actions { justify-content: flex-start; margin-top: 12px; }
+.status { display: inline-flex; padding: 5px 9px; border-radius: 18px; color: #76520c; background: #fff2cc; font-size: 10px; font-weight: 700; }
+.status--da_xac_nhan { color: #245da1; background: #e6f1ff; }
+.status--dang_giao { color: #6249a5; background: #f0eaff; }
+.status--da_giao, .status--hoan_tat { color: #147251; background: #e1f7ed; }
+.status--da_huy, .status--da_tra_hang { color: #a43e37; background: #ffebe8; }
+.order-progress { display: flex; gap: 6px; margin: 16px 0; }
+.order-progress span { flex: 1; height: 5px; border-radius: 5px; background: #e3eaf2; }
+.order-progress span.is-done { background: #25a17d; }
+.order-detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.order-detail-line { display: flex; justify-content: space-between; gap: 10px; padding: 7px 0; border-bottom: 1px solid #edf1f6; font-size: 12px; }
+.order-detail-history { padding-left: 18px; color: #65768c; font-size: 12px; line-height: 1.8; }
+.review-form { display: grid; gap: 10px; }
+.review-form select, .review-form textarea { width: 100%; padding: 10px 12px; border: 1px solid #dce5ef; border-radius: 9px; font: inherit; }
+.review-form textarea { resize: vertical; }
+@media (max-width: 600px) {
+  .order-group { padding: 13px; }
+  .orders-toolbar { align-items: stretch; flex-direction: column; }
+  .orders-toolbar select { width: 100%; }
+  .order-detail-grid { grid-template-columns: 1fr; }
+}

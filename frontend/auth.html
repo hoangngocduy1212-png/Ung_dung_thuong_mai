@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#081b32" />
+    <meta name="description" content="Đăng nhập hoặc tạo tài khoản TechStore để mua sắm và quản lý gian hàng." />
+    <title>Tài khoản TechStore</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./css/base.css" />
+    <link rel="stylesheet" href="./css/auth.css" />
+    <script type="module" src="./js/auth.js"></script>
+  </head>
+  <body class="auth-page" data-role="customer">
+    <a class="skip-link" href="#auth-main">Bỏ qua đến biểu mẫu</a>
+    <main class="auth-layout" id="auth-main">
+      <a class="auth-back" href="./index.html" aria-label="Về trang chủ"><span aria-hidden="true">←</span></a>
+
+      <section class="auth-card" aria-label="Tài khoản TechStore">
+        <div class="auth-panel">
+          <a class="brand auth-brand" href="./index.html" aria-label="TechStore - Trang chủ">
+            <span class="brand__icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none">
+                <rect x="9" y="9" width="30" height="22" rx="3.5" stroke="currentColor" stroke-width="3" />
+                <path d="M5 36h38l-3.5 4H8.5L5 36Z" fill="currentColor" />
+                <path d="M20 35h8" stroke="#fff" stroke-width="2" stroke-linecap="round" />
+              </svg>
+            </span>
+            <span class="brand__wordmark">Tech<span>Store</span></span>
+          </a>
+
+          <div class="auth-view" id="auth-views">
+            <div class="auth-role-switch" id="channel-tabs" role="tablist" aria-label="Chọn loại tài khoản">
+              <button type="button" role="tab" id="tab-customer" data-channel="customer" aria-selected="true" aria-controls="auth-views">Khách hàng</button>
+              <button type="button" role="tab" id="tab-business" data-channel="business" aria-selected="false" aria-controls="auth-views" tabindex="-1">Doanh nghiệp</button>
+            </div>
+
+            <!-- ĐĂNG NHẬP -->
+            <section data-view="login" aria-labelledby="login-title">
+              <span class="auth-eyebrow" id="login-eyebrow">TÀI KHOẢN TECHSTORE</span>
+              <h1 id="login-title">Chào mừng trở lại</h1>
+              <p class="auth-intro" id="login-intro">Đăng nhập để khám phá thiết bị công nghệ và theo dõi đơn hàng của bạn.</p>
+              <br />
+              <form class="auth-form" id="login-form" novalidate>
+                <div class="auth-field">
+                  <label for="login-email">Email</label>
+                  <input id="login-email" type="email" name="email" autocomplete="email" placeholder="you@example.com" aria-describedby="login-email-error" />
+                  <p class="auth-error" id="login-email-error" data-error="email" aria-live="polite"></p>
+                </div>
+                <div class="auth-field">
+                  <label for="login-password">Mật khẩu</label>
+                  <span class="auth-password">
+                    <input id="login-password" type="password" name="password" autocomplete="current-password" placeholder="Nhập mật khẩu" aria-describedby="login-password-error" />
+                    <button type="button" class="password-toggle" data-password-toggle="login-password" aria-label="Hiện mật khẩu">Hiện</button>
+                  </span>
+                  <p class="auth-error" id="login-password-error" data-error="password" aria-live="polite"></p>
+                </div>
+                <div class="auth-form__options">
+                  <label class="auth-check"><input type="checkbox" name="remember" /> <span>Ghi nhớ đăng nhập</span></label>
+                  <button class="auth-text-button" type="button" data-go="forgot">Quên mật khẩu?</button>
+                </div>
+                <p class="auth-alert" data-form-error role="alert"></p>
+                <button class="auth-submit" type="submit">Đăng nhập <span aria-hidden="true">→</span></button>
+              </form>
+              <p class="auth-switch-copy" id="login-switch">Chưa có tài khoản? <button class="auth-text-button" type="button" data-go="register">Đăng ký</button></p>
+              <p class="auth-staff-entry">
+                <button class="auth-text-button" type="button" id="staff-entry">Dành cho CSKH / Quản trị viên</button>
+                <button class="auth-text-button" type="button" id="staff-exit" hidden>← Quay lại đăng nhập thông thường</button>
+              </p>
+            </section>
+
+            <!-- ĐĂNG KÝ -->
+            <section data-view="register" aria-labelledby="register-title" hidden>
+              <span class="auth-eyebrow">BẮT ĐẦU CÙNG TECHSTORE</span>
+              <h1 id="register-title">Tạo tài khoản mới</h1>
+
+              <!-- Khách hàng -->
+              <div data-register="customer">
+                <p class="auth-intro">Đăng ký nhanh chóng để bắt đầu mua sắm tại TechStore.</p>
+                <br />
+                <form class="auth-form auth-form--grid" id="register-form" novalidate>
+                  <div class="auth-field auth-field--wide">
+                    <label for="reg-name">Họ và tên</label>
+                    <input id="reg-name" type="text" name="fullName" autocomplete="name" placeholder="Nguyễn Văn An" aria-describedby="reg-name-error" />
+                    <p class="auth-error" id="reg-name-error" data-error="fullName" aria-live="polite"></p>
+                  </div>
+                  <div class="auth-field">
+                    <label for="reg-email">Email</label>
+                    <input id="reg-email" type="email" name="email" autocomplete="email" placeholder="you@example.com" aria-describedby="reg-email-error" />
+                    <p class="auth-error" id="reg-email-error" data-error="email" aria-live="polite"></p>
+                  </div>
+                  <div class="auth-field">
+                    <label for="reg-phone">Số điện thoại</label>
+                    <input id="reg-phone" type="tel" name="phone" autocomplete="tel" placeholder="0912345678" aria-describedby="reg-phone-error" />
+                    <p class="auth-error" id="reg-phone-error" data-error="phone" aria-live="polite"></p>
+                  </div>
+                  <div class="auth-field">
+                    <label for="reg-password">Mật khẩu</label>
+                    <span class="auth-password">
+                      <input id="reg-password" type="password" name="password" autocomplete="new-password" placeholder="Tối thiểu 6 ký tự" aria-describedby="reg-password-error reg-strength" />
+                      <button type="button" class="password-toggle" data-password-toggle="reg-password" aria-label="Hiện mật khẩu">Hiện</button>
+                    </span>
+                    <div class="strength" id="reg-strength" data-strength data-level="0"><span class="strength__bar" aria-hidden="true"><i></i><i></i><i></i><i></i></span><small>Độ mạnh mật khẩu: chưa nhập</small></div>
+                    <p class="auth-error" id="reg-password-error" data-error="password" aria-live="polite"></p>
+                  </div>
+                  <div class="auth-field">
+                    <label for="reg-confirm">Nhập lại mật khẩu</label>
+                    <span class="auth-password">
+                      <input id="reg-confirm" type="password" name="confirmPassword" autocomplete="new-password" placeholder="Nhập lại mật khẩu" aria-describedby="reg-confirm-error" />
+                      <button type="button" class="password-toggle" data-password-toggle="reg-confirm" aria-label="Hiện mật khẩu">Hiện</button>
+                    </span>
+                    <p class="auth-error" id="reg-confirm-error" data-error="confirmPassword" aria-live="polite"></p>
+                  </div>
+                  <div class="auth-field auth-field--wide">
+                    <label class="auth-check auth-terms"><input type="checkbox" name="terms" aria-describedby="reg-terms-error" /> <span>Tôi đồng ý với <a href="#terms">Điều khoản sử dụng</a> và <a href="#privacy">Chính sách bảo mật</a>.</span></label>
+                    <p class="auth-error" id="reg-terms-error" data-error="terms" aria-live="polite"></p>
+                  </div>
+                  <p class="auth-alert auth-field--wide" data-form-error role="alert"></p>
+                  <button class="auth-submit auth-field--wide" type="submit">Tạo tài khoản <span aria-hidden="true">→</span></button>
+                </form>
+              </div>
+
+              <!-- Doanh nghiệp -->
+              <div data-register="business" hidden>
+                <div class="auth-step" data-step="choose">
+                  <p class="auth-intro">Bạn tham gia sàn TechStore với vai trò nào?</p>
+                  <div class="type-cards">
+                    <button type="button" class="type-card" data-seller-type="owner">
+                      <span class="type-card__icon" aria-hidden="true">⌂</span>
+                      <strong>Chủ doanh nghiệp</strong>
+                      <span>Mở gian hàng mới trên sàn. Gian hàng cần quản trị viên duyệt.</span>
+                    </button>
+                    <button type="button" class="type-card" data-seller-type="staff">
+                      <span class="type-card__icon" aria-hidden="true">☺</span>
+                      <strong>Nhân viên gian hàng</strong>
+                      <span>Tham gia gian hàng đang hoạt động. Cần chủ gian hàng duyệt.</span>
+                    </button>
+                  </div>
+                  <p class="auth-note">Mỗi gian hàng chỉ có một chủ và có thể có nhiều nhân viên.</p>
+                </div>
+
+                <div class="auth-step" data-step="form" hidden>
+                  <button class="auth-back-login" type="button" id="seller-back" style="margin:0 0 10px"><span aria-hidden="true">←</span> Chọn lại vai trò</button>
+                  <p class="auth-intro" id="seller-form-intro"></p>
+                  <br />
+                  <form class="auth-form auth-form--grid" id="seller-form" novalidate>
+                    <div class="auth-field auth-field--wide">
+                      <label for="sel-name">Họ và tên</label>
+                      <input id="sel-name" type="text" name="fullName" autocomplete="name" placeholder="Nguyễn Văn An" aria-describedby="sel-name-error" />
+                      <p class="auth-error" id="sel-name-error" data-error="fullName" aria-live="polite"></p>
+                    </div>
+                    <div class="auth-field">
+                      <label for="sel-email">Email</label>
+                      <input id="sel-email" type="email" name="email" autocomplete="email" placeholder="you@example.com" aria-describedby="sel-email-error" />
+                      <p class="auth-error" id="sel-email-error" data-error="email" aria-live="polite"></p>
+                    </div>
+                    <div class="auth-field">
+                      <label for="sel-phone">Số điện thoại</label>
+                      <input id="sel-phone" type="tel" name="phone" autocomplete="tel" placeholder="0912345678" aria-describedby="sel-phone-error" />
+                      <p class="auth-error" id="sel-phone-error" data-error="phone" aria-live="polite"></p>
+                    </div>
+
+                    <div class="auth-field auth-field--wide" data-owner-only>
+                      <label for="sel-shop-name">Tên gian hàng</label>
+                      <input id="sel-shop-name" type="text" name="shopName" placeholder="Nhập tên gian hàng" aria-describedby="sel-shop-name-error" />
+                      <p class="auth-error" id="sel-shop-name-error" data-error="shopName" aria-live="polite"></p>
+                    </div>
+
+                    <div class="auth-field auth-field--wide" data-staff-only hidden>
+                      <label for="sel-shop-search" id="sel-shop-label">Gian hàng đang hoạt động</label>
+                      <div class="combo">
+                        <input id="sel-shop-search" type="search" role="combobox" aria-expanded="false" aria-controls="sel-shop-list" aria-autocomplete="list" aria-describedby="sel-shop-error" placeholder="Tìm và chọn gian hàng" autocomplete="off" />
+                        <input type="hidden" name="shopId" />
+                        <div class="combo__list" id="sel-shop-list" role="listbox" aria-labelledby="sel-shop-label" hidden></div>
+                      </div>
+                      <p class="auth-error" id="sel-shop-error" data-error="shopId" aria-live="polite"></p>
+                    </div>
+
+                    <div class="auth-field">
+                      <label for="sel-password">Mật khẩu</label>
+                      <span class="auth-password">
+                        <input id="sel-password" type="password" name="password" autocomplete="new-password" placeholder="Tối thiểu 6 ký tự" aria-describedby="sel-password-error sel-strength" />
+                        <button type="button" class="password-toggle" data-password-toggle="sel-password" aria-label="Hiện mật khẩu">Hiện</button>
+                      </span>
+                      <div class="strength" id="sel-strength" data-strength data-level="0"><span class="strength__bar" aria-hidden="true"><i></i><i></i><i></i><i></i></span><small>Độ mạnh mật khẩu: chưa nhập</small></div>
+                      <p class="auth-error" id="sel-password-error" data-error="password" aria-live="polite"></p>
+                    </div>
+                    <div class="auth-field">
+                      <label for="sel-confirm">Nhập lại mật khẩu</label>
+                      <span class="auth-password">
+                        <input id="sel-confirm" type="password" name="confirmPassword" autocomplete="new-password" placeholder="Nhập lại mật khẩu" aria-describedby="sel-confirm-error" />
+                        <button type="button" class="password-toggle" data-password-toggle="sel-confirm" aria-label="Hiện mật khẩu">Hiện</button>
+                      </span>
+                      <p class="auth-error" id="sel-confirm-error" data-error="confirmPassword" aria-live="polite"></p>
+                    </div>
+                    <p class="auth-note auth-field--wide" id="seller-note"></p>
+                    <div class="auth-field auth-field--wide">
+                      <label class="auth-check auth-terms"><input type="checkbox" name="terms" aria-describedby="sel-terms-error" /> <span>Tôi đồng ý với <a href="#terms">Điều khoản sử dụng</a> và <a href="#privacy">Chính sách bảo mật</a>.</span></label>
+                      <p class="auth-error" id="sel-terms-error" data-error="terms" aria-live="polite"></p>
+                    </div>
+                    <p class="auth-alert auth-field--wide" data-form-error role="alert"></p>
+                    <button class="auth-submit auth-field--wide" type="submit">Gửi đăng ký <span aria-hidden="true">→</span></button>
+                  </form>
+                </div>
+
+                <div class="auth-step auth-success" data-step="done-owner" tabindex="-1" hidden>
+                  <span class="auth-success__icon" aria-hidden="true">✓</span>
+                  <h2 style="margin:0;color:#fff;font-size:22px">Gian hàng đang chờ quản trị viên duyệt</h2>
+                  <p class="auth-intro">Tài khoản chủ gian hàng đã được tạo. Bạn có thể đăng nhập sau khi quản trị viên duyệt gian hàng của bạn.</p>
+                  <button class="auth-submit" type="button" data-go="login">Về trang đăng nhập</button>
+                </div>
+                <div class="auth-step auth-success" data-step="done-staff" tabindex="-1" hidden>
+                  <span class="auth-success__icon" aria-hidden="true">✓</span>
+                  <h2 style="margin:0;color:#fff;font-size:22px">Yêu cầu đã gửi, chờ chủ gian hàng duyệt</h2>
+                  <p class="auth-intro">Bạn có thể đăng nhập sau khi chủ gian hàng phê duyệt tài khoản nhân viên.</p>
+                  <button class="auth-submit" type="button" data-go="login">Về trang đăng nhập</button>
+                </div>
+              </div>
+
+              <p class="auth-switch-copy">Đã có tài khoản? <button class="auth-text-button" type="button" data-go="login">Đăng nhập</button></p>
+            </section>
+
+            <!-- QUÊN MẬT KHẨU -->
+            <section data-view="forgot" aria-labelledby="forgot-title" hidden>
+              <span class="auth-eyebrow">KHÔI PHỤC TÀI KHOẢN</span>
+              <h1 id="forgot-title">Quên mật khẩu?</h1>
+              <p class="auth-intro">Nhập email bạn dùng để đăng ký. Nếu email tồn tại trong hệ thống, bạn sẽ nhận được hướng dẫn đặt lại mật khẩu.</p>
+              <br />
+              <form class="auth-form" id="forgot-form" novalidate>
+                <div class="auth-field">
+                  <label for="forgot-email">Email</label>
+                  <input id="forgot-email" type="email" name="email" autocomplete="email" placeholder="you@example.com" aria-describedby="forgot-email-error" />
+                  <p class="auth-error" id="forgot-email-error" data-error="email" aria-live="polite"></p>
+                </div>
+                <p class="auth-alert" data-form-error role="alert"></p>
+                <p class="auth-alert auth-alert--ok" id="forgot-ok" role="status" aria-live="polite"></p>
+                <div class="dev-token" id="dev-token" hidden></div>
+                <button class="auth-submit" type="submit" id="forgot-submit">Gửi hướng dẫn đặt lại <span aria-hidden="true">→</span></button>
+              </form>
+              <button class="auth-back-login" type="button" data-go="login"><span aria-hidden="true">←</span> Quay lại đăng nhập</button>
+            </section>
+
+            <!-- ĐẶT LẠI MẬT KHẨU -->
+            <section data-view="reset" aria-labelledby="reset-title" hidden>
+              <span class="auth-eyebrow">KHÔI PHỤC TÀI KHOẢN</span>
+              <h1 id="reset-title">Đặt lại mật khẩu</h1>
+              <p class="auth-intro">Nhập mật khẩu mới cho tài khoản của bạn.</p>
+              <br />
+              <form class="auth-form" id="reset-form" novalidate>
+                <div class="auth-field">
+                  <label for="reset-password">Mật khẩu mới</label>
+                  <span class="auth-password">
+                    <input id="reset-password" type="password" name="password" autocomplete="new-password" placeholder="Tối thiểu 6 ký tự" aria-describedby="reset-password-error reset-strength" />
+                    <button type="button" class="password-toggle" data-password-toggle="reset-password" aria-label="Hiện mật khẩu">Hiện</button>
+                  </span>
+                  <div class="strength" id="reset-strength" data-strength data-level="0"><span class="strength__bar" aria-hidden="true"><i></i><i></i><i></i><i></i></span><small>Độ mạnh mật khẩu: chưa nhập</small></div>
+                  <p class="auth-error" id="reset-password-error" data-error="password" aria-live="polite"></p>
+                </div>
+                <div class="auth-field">
+                  <label for="reset-confirm">Nhập lại mật khẩu mới</label>
+                  <span class="auth-password">
+                    <input id="reset-confirm" type="password" name="confirmPassword" autocomplete="new-password" placeholder="Nhập lại mật khẩu" aria-describedby="reset-confirm-error" />
+                    <button type="button" class="password-toggle" data-password-toggle="reset-confirm" aria-label="Hiện mật khẩu">Hiện</button>
+                  </span>
+                  <p class="auth-error" id="reset-confirm-error" data-error="confirmPassword" aria-live="polite"></p>
+                </div>
+                <p class="auth-alert" data-form-error role="alert"></p>
+                <button class="auth-submit" type="submit">Đặt lại mật khẩu <span aria-hidden="true">→</span></button>
+              </form>
+              <button class="auth-back-login" type="button" data-go="login"><span aria-hidden="true">←</span> Quay lại đăng nhập</button>
+            </section>
+          </div>
+        </div>
+
+        <aside class="auth-art" aria-label="Công nghệ đồng hành cùng bạn">
+          <div class="auth-art__topline"><span class="auth-art__status"><i></i> TECHSTORE</span></div>
+
+          <div class="auth-art__visual" aria-hidden="true">
+            <svg viewBox="0 0 560 430" fill="none">
+              <defs>
+                <linearGradient id="screenGradient" x1="180" y1="110" x2="387" y2="304" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#56B6FF" />
+                  <stop offset="1" stop-color="#1267D5" />
+                </linearGradient>
+                <filter id="blueGlow" x="55" y="22" width="455" height="390" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse">
+                  <feGaussianBlur stdDeviation="16" />
+                </filter>
+              </defs>
+              <circle cx="284" cy="214" r="118" fill="#1267D5" fill-opacity=".26" filter="url(#blueGlow)" />
+              <path d="M38 118h78l24 24h34" stroke="#6EBFFF" stroke-opacity=".48" />
+              <circle cx="175" cy="142" r="4" fill="#B7E3FF" />
+              <path d="M416 91h67l-25 25h-40" stroke="#6EBFFF" stroke-opacity=".45" />
+              <circle cx="418" cy="91" r="4" fill="#B7E3FF" />
+              <path d="M75 332h75l23-23h45" stroke="#6EBFFF" stroke-opacity=".42" />
+              <path d="M170 126h208a13 13 0 0 1 13 13v133H157V139a13 13 0 0 1 13-13Z" stroke="#D8F0FF" stroke-width="3" />
+              <path d="M173 143h202v110H173V143Z" fill="url(#screenGradient)" fill-opacity=".92" />
+              <path d="M143 272h272l39 39H105l38-39Z" fill="#0B2545" stroke="#D8F0FF" stroke-width="3" stroke-linejoin="round" />
+              <path d="m174 283-7 8h23l7-8h-23Zm34 0-7 8h23l7-8h-23Zm34 0-7 8h23l7-8h-23Zm34 0-7 8h23l7-8h-23Zm34 0-7 8h23l7-8h-23Zm34 0-7 8h23l7-8h-23Z" fill="#5FAFFF" />
+              <path d="m160 296-5 6h203l-5-6H160Z" fill="#5FAFFF" />
+              <rect x="230" y="172" width="89" height="62" rx="9" fill="#0B54B0" stroke="#D7EFFF" stroke-width="2" />
+              <circle cx="274.5" cy="191" r="10" stroke="white" stroke-width="2" />
+              <path d="M256 221c2-10 8-15 18.5-15s16.5 5 18.5 15" stroke="white" stroke-width="2" stroke-linecap="round" />
+              <rect x="88" y="181" width="48" height="56" rx="9" fill="#0C4FA6" stroke="#BFE5FF" stroke-width="2" />
+              <circle cx="112" cy="198" r="7" stroke="white" stroke-width="1.7" />
+              <path d="M100 222c1-7 5-11 12-11s11 4 12 11" stroke="white" stroke-width="1.7" stroke-linecap="round" />
+              <rect x="401" y="155" width="48" height="56" rx="9" fill="#0C4FA6" stroke="#BFE5FF" stroke-width="2" />
+              <circle cx="425" cy="172" r="7" stroke="white" stroke-width="1.7" />
+              <path d="M413 196c1-7 5-11 12-11s11 4 12 11" stroke="white" stroke-width="1.7" stroke-linecap="round" />
+              <path d="m468 269 8 8-8 8-8-8 8-8Z" stroke="#D7EFFF" stroke-width="2" />
+              <circle cx="101" cy="278" r="4" fill="#6EBFFF" />
+              <circle cx="426" cy="334" r="5" stroke="#D7EFFF" stroke-width="2" />
+              <path d="M431 334h66" stroke="#D7EFFF" stroke-width="2" />
+            </svg>
+          </div>
+
+          <div class="auth-art__copy">
+            <span class="auth-art__eyebrow" id="auth-art-eyebrow">KẾT NỐI VỚI TECHSTORE</span>
+            <h2 id="auth-art-title">Công nghệ đồng hành cùng bạn</h2>
+            <p id="auth-art-description">Khám phá thiết bị phù hợp và tận hưởng trải nghiệm mua sắm tiện lợi.</p>
+          </div>
+          <div class="auth-art__footer"><span>TechStore</span><span>Laptop · Điện thoại · Phụ kiện</span></div>
+        </aside>
+      </section>
+
+      <p class="auth-page__copyright">© 2026 TechStore.</p>
+    </main>
+  </body>
+</html>

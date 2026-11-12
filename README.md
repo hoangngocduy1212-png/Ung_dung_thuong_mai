@@ -1,0 +1,46 @@
+# Sàn thương mại điện tử thiết bị điện tử
+
+Node.js + Express + MongoDB (Mongoose) + JWT. Dự án gồm backend API và giao diện mua sắm HTML/CSS/JavaScript thuần.
+Quy tắc nghiệp vụ: xem `docs/NGHIEP-VU.md`.
+
+## Giao diện (frontend)
+HTML, CSS và JavaScript thuần (ES modules) trong `frontend/`, gọi trực tiếp API thật, không dùng dữ liệu mock:
+- `index.html`: trang chủ, danh mục, thương hiệu, tìm kiếm, lọc, voucher toàn sàn, giỏ và yêu thích.
+- `auth.html`: đăng nhập, đăng ký khách hàng/chủ gian hàng/nhân viên, quên và đặt lại mật khẩu.
+- `products.html`, `product.html`: danh sách/lọc sản phẩm và chi tiết sản phẩm, biến thể, đánh giá.
+- `cart.html`, `checkout.html`, `orders.html`: giỏ hàng, thanh toán/địa chỉ, lịch sử và trạng thái đơn hàng.
+
+Chạy: bật backend (xem bên dưới, cổng 5000), rồi mở thư mục `frontend` bằng Live Server tại `http://127.0.0.1:5500` (hoặc `npx serve -l 5500 frontend`). Địa chỉ API đặt ở `frontend/js/config.js` (`API_BASE_URL`).
+
+CORS: backend cho phép `http://127.0.0.1:5500`, `http://localhost:5500` và các origin trong `CLIENT_ORIGIN` (phân tách bằng dấu phẩy).
+
+Ghi chú: chưa có dịch vụ email, nên khi quên mật khẩu (môi trường không phải production) backend trả `devResetToken` và giao diện hiển thị liên kết đặt lại. Backend không có khái niệm "kênh", nên cảnh báo "sai kênh" được suy ra từ vai trò tài khoản ở phía giao diện. Thanh toán online hiện là mô phỏng theo API; phí ship và tổng tiền chính thức do backend trả về sau khi đặt hàng.
+
+## Chạy thử
+```bash
+cd server
+npm install
+cp .env.example .env      # sửa MONGODB_URI thành chuỗi kết nối MongoDB Atlas, đổi JWT_SECRET
+npm run seed:demo         # admin + danh mục + dữ liệu mẫu
+npm run dev               # http://localhost:5000/api/health
+npm test                  # kiểm thử toàn bộ luồng (dùng CSDL tạm rồi xóa)
+```
+Atlas: tạo cluster → Database Access (user/mật khẩu) → Network Access (thêm IP của bạn) → Connect → Drivers → copy chuỗi, thay `<password>`, thêm tên DB `/ecommerce_electronics`.
+
+Tài khoản mẫu: `admin@shop.local / Admin@123`, `cskh@shop.local / Cskh@123`, `owner@shop.local / Owner@123`, `khach@shop.local / Khach@123`.
+
+## Các nhóm API (`/api`, gửi `Authorization: Bearer <token>`)
+| Nhóm | Tiền tố | Ghi chú |
+|---|---|---|
+| Xác thực | `/auth` | register, register-seller, login, forgot/reset-password, password |
+| Khách vãng lai | `/categories` `/brands` `/products` `/products/:id/reviews` `/shops/:id` `/vouchers/platform` `/auth/shops` | không cần đăng nhập; lọc sản phẩm bằng `q category brand shop minPrice maxPrice sort page` |
+| Khách hàng | `/customer` | profile; addresses; cart (`/cart`, `/cart/items`); wishlist; vouchers/points; orders (`/orders/checkout`, `/orders`, `/orders/:id`, `/orders/group/:groupCode/pay`); after-sales và reviews |
+| Người bán | `/seller` | shop, staff, products, inventory, orders, after-sales, vouchers, reviews, stats, upload |
+| CSKH | `/staff` | customers, orders, complaints, reviews |
+| Quản trị | `/admin` | stats, customers, shops, cskh, vouchers, categories, brands, orders, complaints |
+
+## Cấu trúc
+```
+server/src/  models/ (dữ liệu)  routes/ (API theo tác nhân)  services/ (đặt hàng, voucher, điểm, thống kê)  middleware/  seed.js
+server/test/smoke.js  (122 kiểm tra)
+```

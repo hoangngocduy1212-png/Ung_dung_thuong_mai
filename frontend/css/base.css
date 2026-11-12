@@ -1,0 +1,288 @@
+:root {
+  font-family: "Be Vietnam Pro", Arial, sans-serif;
+  color: #17283e;
+  background: #f5f8fc;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  --blue: #1267d5;
+  --blue-dark: #084ca8;
+  --ink: #17283e;
+  --muted: #78889b;
+  --line: #e6edf5;
+  --pale-blue: #e9f3ff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-width: 320px;
+  margin: 0;
+  background: #f5f8fc;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  color: inherit;
+}
+
+.container {
+  width: min(1380px, calc(100% - 64px));
+  margin-inline: auto;
+}
+
+.announcement {
+  color: #fff;
+  background: #0c56b7;
+  font-size: 12px;
+}
+
+.announcement__inner {
+  display: flex;
+  min-height: 34px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.announcement a {
+  font-weight: 600;
+}
+
+.announcement a span {
+  padding-left: 5px;
+}
+
+.site-header {
+  position: relative;
+  z-index: 3;
+  background: #fff;
+  box-shadow: 0 1px 0 rgb(27 55 88 / 7%);
+}
+
+.header-main {
+  display: flex;
+  min-height: 92px;
+  align-items: center;
+  gap: 30px;
+}
+
+.brand {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 10px;
+  color: var(--blue);
+}
+
+.brand__icon {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border-radius: 14px;
+  color: #fff;
+  background: linear-gradient(145deg, #2586ed, #0758bd);
+  box-shadow: 0 7px 16px rgb(18 103 213 / 20%);
+}
+
+.brand__icon svg {
+  width: 31px;
+  height: 31px;
+}
+
+.brand__wordmark {
+  color: #173c70;
+  font-size: 23px;
+  font-weight: 800;
+  letter-spacing: -1.1px;
+}
+
+.brand__wordmark span {
+  color: var(--blue);
+}
+
+
+/* ---------- Dùng chung ---------- */
+.skip-link {
+  position: fixed;
+  z-index: 200;
+  top: -60px;
+  left: 12px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  color: #fff;
+  background: #12355f;
+  font-size: 13px;
+}
+
+.skip-link:focus {
+  top: 12px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+:focus-visible {
+  outline: 3px solid rgb(18 103 213 / 55%);
+  outline-offset: 2px;
+}
+
+.btn {
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 16px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 150ms ease, border-color 150ms ease, opacity 150ms ease;
+}
+
+.btn--primary {
+  color: #fff;
+  background: var(--blue);
+}
+
+.btn--primary:hover {
+  background: var(--blue-dark);
+}
+
+.btn--ghost {
+  border-color: #cfe0f4;
+  color: var(--blue);
+  background: #fff;
+}
+
+.btn--ghost:hover {
+  background: #edf5ff;
+}
+
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.modal {
+  position: fixed;
+  z-index: 100;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: rgb(10 28 50 / 55%);
+}
+
+.modal__dialog {
+  position: relative;
+  width: min(440px, 100%);
+  max-height: 90vh;
+  overflow: auto;
+  padding: 26px 24px 22px;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 24px 60px rgb(10 28 50 / 30%);
+}
+
+.modal__close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.modal__close:hover {
+  background: #eef3f8;
+}
+
+.modal__title {
+  margin: 0 28px 8px 0;
+  font-size: 18px;
+}
+
+.modal__desc {
+  margin: 0 0 16px;
+  color: #5b6d83;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.modal__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+body.has-modal {
+  overflow: hidden;
+}
+
+.toast {
+  z-index: 300;
+  max-width: calc(100vw - 32px);
+  font-size: 13px;
+}
+
+.toast.is-error {
+  background: #a8352f;
+}
+
+@media (max-width: 1080px) {
+  .container {
+    width: min(100% - 40px, 1380px);
+  }
+}
+
+@media (max-width: 760px) {
+  .container {
+    width: calc(100% - 32px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Tìm kiếm, lọc và khám phá sản phẩm điện tử trên TechStore." />
+  <title>Sản phẩm — TechStore</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./css/base.css" />
+  <link rel="stylesheet" href="./css/home.css" />
+  <link rel="stylesheet" href="./css/shopping.css" />
+  <link rel="stylesheet" href="./css/products.css" />
+  <script type="module" src="./js/products.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#page-content">Bỏ qua đến nội dung chính</a>
+  <div id="shopping-chrome"></div>
+  <main class="container shopping-main" id="page-content" hidden>
+    <nav class="breadcrumbs" aria-label="Điều hướng"><a href="./index.html">Trang chủ</a><span> / </span><span>Sản phẩm</span></nav>
+    <div class="page-heading"><div><span class="section-kicker">KHÁM PHÁ TECHSTORE</span><h1>Sản phẩm</h1><p id="products-count" role="status" aria-live="polite"></p></div><button class="btn btn--ghost filter-toggle" id="filter-toggle" type="button" aria-expanded="false" aria-controls="product-filters">Bộ lọc</button></div>
+    <div class="catalog-layout">
+      <aside class="catalog-filters" id="product-filters" aria-label="Bộ lọc sản phẩm">
+        <div class="filter-head"><strong>Bộ lọc</strong><button class="text-button" id="filter-close" type="button">Đóng</button></div>
+        <form id="filters-form">
+          <label class="filter-field"><span>Tìm sản phẩm</span><input name="q" type="search" /></label>
+          <label class="filter-field"><span>Danh mục</span><select name="category"><option value="">Tất cả danh mục</option></select></label>
+          <label class="filter-field"><span>Thương hiệu</span><select name="brand"><option value="">Tất cả thương hiệu</option></select></label>
+          <label class="filter-field"><span>Gian hàng</span><select name="shop"><option value="">Tất cả gian hàng</option></select></label>
+          <div class="price-fields">
+            <label class="filter-field"><span>Giá từ</span><input name="minPrice" type="number" min="0" step="1000" inputmode="numeric" /></label>
+            <label class="filter-field"><span>Đến</span><input name="maxPrice" type="number" min="0" step="1000" inputmode="numeric" /></label>
+          </div>
+          <label class="filter-field"><span>Sắp xếp</span><select name="sort">
+            <option value="newest">Mới nhất</option><option value="popular">Bán chạy</option><option value="rating">Đánh giá cao</option><option value="price_asc">Giá tăng dần</option><option value="price_desc">Giá giảm dần</option>
+          </select></label>
+          <button class="btn btn--primary filter-apply" type="submit">Áp dụng bộ lọc</button>
+          <button class="btn btn--ghost filter-reset" id="filter-reset" type="button">Xóa bộ lọc</button>
+        </form>
+      </aside>
+      <section class="catalog-results" aria-label="Kết quả sản phẩm">
+        <div class="filter-chips" id="filter-chips"></div>
+        <div class="product-grid shopping-product-grid" id="products-grid" aria-live="polite" aria-busy="false"></div>
+        <nav class="pagination" id="products-pagination" aria-label="Phân trang sản phẩm" hidden></nav>
+      </section>
+    </div>
+  </main>
+  <div class="filter-scrim" id="filter-scrim" hidden></div>
+  <div id="shopping-footer"></div>
+</body>
+</html>

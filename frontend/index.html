@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#1267d5" />
+    <meta name="description" content="TechStore - sàn thương mại điện tử thiết bị điện tử: laptop, điện thoại, linh kiện và phụ kiện từ nhiều gian hàng." />
+    <title>TechStore — Sàn thiết bị điện tử</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./css/base.css" />
+    <link rel="stylesheet" href="./css/home.css?v=2" />
+    <script type="module" src="./js/home.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Bỏ qua đến nội dung chính</a>
+
+    <div class="announcement">
+      <div class="container announcement__inner">
+        <span>Phí vận chuyển cố định cho mỗi đơn hàng</span>
+        <a href="#support">Hỗ trợ khách hàng <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+
+    <header class="site-header">
+      <div class="container header-main">
+        <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Mở danh mục" aria-expanded="false" aria-controls="category-nav">
+          <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
+        </button>
+
+        <a class="brand" href="./index.html" aria-label="TechStore - Trang chủ">
+          <span class="brand__icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none">
+              <rect x="9" y="9" width="30" height="22" rx="3.5" stroke="currentColor" stroke-width="3" />
+              <path d="M5 36h38l-3.5 4H8.5L5 36Z" fill="currentColor" />
+              <path d="M20 35h8" stroke="#fff" stroke-width="2" stroke-linecap="round" />
+            </svg>
+          </span>
+          <span class="brand__wordmark">Tech<span>Store</span></span>
+        </a>
+
+        <form class="search" id="search-form" role="search" autocomplete="off">
+          <span class="search__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.8" />
+              <path d="m16 16 4.2 4.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+            </svg>
+          </span>
+          <input id="product-search" type="search" placeholder="Tìm laptop, điện thoại, phụ kiện..." aria-label="Tìm kiếm sản phẩm" role="combobox" aria-expanded="false" aria-controls="search-suggest" aria-autocomplete="list" />
+          <button class="search__clear" id="search-clear" type="button" aria-label="Xóa từ khóa" hidden>×</button>
+          <button class="search__submit" type="submit">Tìm kiếm</button>
+          <div class="search-suggest" id="search-suggest" role="listbox" aria-label="Gợi ý sản phẩm" hidden></div>
+        </form>
+
+        <div class="account-area" id="account-area"></div>
+
+        <button class="cart" id="cart-button" type="button" aria-label="Giỏ hàng" hidden>
+          <span class="cart__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M3 4h2l2.2 11.1a2 2 0 0 0 2 1.6h8.5a2 2 0 0 0 1.9-1.4L22 8H6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+              <circle cx="10" cy="20" r="1.4" fill="currentColor" />
+              <circle cx="18" cy="20" r="1.4" fill="currentColor" />
+            </svg>
+          </span>
+          <span class="cart__count" id="cart-count">0</span>
+          <span class="cart__label">Giỏ hàng</span>
+        </button>
+      </div>
+
+      <nav class="category-nav" id="category-nav" aria-label="Danh mục chính">
+        <div class="container category-nav__inner">
+          <div class="category-menu">
+            <button class="category-nav__all" id="all-categories-btn" type="button" aria-expanded="false" aria-controls="all-categories-panel">
+              <span aria-hidden="true">☷</span> Tất cả danh mục
+            </button>
+            <div class="category-panel" id="all-categories-panel" hidden></div>
+          </div>
+          <div class="category-links" id="category-links"></div>
+          <a class="category-nav__voucher" href="#vouchers">Voucher toàn sàn <span aria-hidden="true">✦</span></a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="container hero" aria-labelledby="hero-title">
+        <div class="hero__main">
+          <div class="hero__content">
+            <span class="eyebrow"><span class="eyebrow__dot"></span> SÀN THIẾT BỊ ĐIỆN TỬ</span>
+            <h1 id="hero-title"><span class="hero__title-line">Nâng tầm trải nghiệm,</span><br /><span>mở lối tương lai.</span></h1>
+            <p>Laptop, điện thoại, linh kiện và phụ kiện từ nhiều gian hàng, gom về một nơi tại TechStore.</p>
+            <a class="button button--light" href="#products">Khám phá ngay <span aria-hidden="true">→</span></a>
+            <div class="hero__benefits">
+              <span><i aria-hidden="true">✓</i> Nhiều gian hàng trên một sàn</span>
+              <span><i aria-hidden="true">✓</i> Phí vận chuyển cố định mỗi đơn</span>
+            </div>
+          </div>
+          <div class="hero__art" role="img" aria-label="Laptop hiện đại trên bàn làm việc">
+            <div class="hero__image"></div>
+            <span class="hero__float hero__float--one" aria-hidden="true">✦</span>
+            <span class="hero__float hero__float--two" aria-hidden="true">+</span>
+          </div>
+        </div>
+
+        <aside class="hero__side" id="deals" aria-label="Thông tin nổi bật">
+          <a class="promo-card promo-card--coupon" href="#vouchers">
+            <span class="promo-card__icon" aria-hidden="true">％</span>
+            <span class="promo-card__label">VOUCHER TOÀN SÀN</span>
+            <strong>Nhận voucher giảm tiền</strong>
+            <small>Nhận trước, dùng khi thanh toán.</small>
+            <span class="promo-card__link">Xem voucher <span aria-hidden="true">→</span></span>
+          </a>
+          <a class="promo-card promo-card--support" id="support" href="./auth.html?tab=login">
+            <span class="promo-card__icon" aria-hidden="true">⌘</span>
+            <span class="promo-card__label">TECHSTORE CARE</span>
+            <strong>Cần hỗ trợ?</strong>
+            <small>Đăng nhập để gửi yêu cầu cho đơn hàng của bạn.</small>
+            <span class="promo-card__link">Đăng nhập <span aria-hidden="true">→</span></span>
+          </a>
+        </aside>
+      </section>
+
+      <section class="container section" id="vouchers" aria-labelledby="vouchers-title">
+        <div class="section-heading">
+          <div>
+            <span class="section-kicker">ƯU ĐÃI TỪ SÀN</span>
+            <h2 id="vouchers-title">Voucher toàn sàn</h2>
+          </div>
+        </div>
+        <p class="section-note">Voucher chỉ giảm theo số tiền và cần nhận trước khi dùng. Điểm thưởng: 1 điểm cho mỗi 10.000đ, cộng khi đơn hoàn tất.</p>
+        <div class="voucher-list" id="voucher-list" aria-live="polite"></div>
+      </section>
+
+      <section class="container section" id="popular" aria-labelledby="popular-title">
+        <div class="section-heading">
+          <div>
+            <span class="section-kicker">LỰA CHỌN NỔI BẬT</span>
+            <h2 id="popular-title">Sản phẩm bán chạy</h2>
+          </div>
+          <a class="btn btn--ghost" href="./products.html?sort=popular">Xem tất cả</a>
+        </div>
+        <div class="product-grid" id="popular-grid" aria-live="polite"></div>
+      </section>
+
+      <section class="container section" id="products" aria-labelledby="products-title">
+        <div class="section-heading">
+          <div>
+            <span class="section-kicker">TẤT CẢ SẢN PHẨM</span>
+            <h2 id="products-title">Khám phá sản phẩm</h2>
+          </div>
+          <a class="btn btn--ghost" href="./products.html">Xem tất cả</a>
+        </div>
+        <form class="filter-bar" id="filter-bar" aria-label="Bộ lọc sản phẩm">
+          <label class="filter-field"><span>Danh mục</span><select id="filter-category" name="category"><option value="">Tất cả</option></select></label>
+          <label class="filter-field"><span>Thương hiệu</span><select id="filter-brand" name="brand"><option value="">Tất cả</option></select></label>
+          <label class="filter-field filter-field--price"><span>Giá từ (đ)</span><input id="filter-min" name="minPrice" type="number" inputmode="numeric" min="0" step="1000" placeholder="0" /></label>
+          <label class="filter-field filter-field--price"><span>Đến (đ)</span><input id="filter-max" name="maxPrice" type="number" inputmode="numeric" min="0" step="1000" placeholder="Không giới hạn" /></label>
+          <label class="filter-field"><span>Sắp xếp</span>
+            <select id="filter-sort" name="sort">
+              <option value="newest">Mới nhất</option>
+              <option value="popular">Bán chạy</option>
+              <option value="rating">Đánh giá cao</option>
+              <option value="price_asc">Giá tăng dần</option>
+              <option value="price_desc">Giá giảm dần</option>
+            </select>
+          </label>
+          <div class="filter-actions">
+            <button class="btn btn--primary" type="submit">Lọc</button>
+            <button class="btn btn--ghost" id="filter-reset" type="button">Xóa lọc</button>
+          </div>
+        </form>
+        <p class="search-status" id="search-status" role="status" aria-live="polite"></p>
+        <div class="product-grid" id="product-grid"></div>
+        <nav class="pagination" id="pagination" aria-label="Phân trang sản phẩm" hidden></nav>
+      </section>
+
+      <section class="container store-section section" id="store-products" aria-labelledby="store-title">
+        <div class="store-section__heading">
+          <div class="section-heading">
+            <div>
+              <span class="section-kicker">GIAN HÀNG TRÊN SÀN</span>
+              <h2 id="store-title">Sản phẩm tại cửa hàng</h2>
+            </div>
+          </div>
+          <div class="store-control">
+            <button class="store-picker" id="store-picker" type="button" aria-expanded="false" aria-controls="store-menu" aria-haspopup="listbox">
+              <span class="store-picker__icon" aria-hidden="true">⌂</span>
+              <span class="store-picker__copy"><small>Đang xem cửa hàng</small><strong id="active-store-name">Đang tải...</strong></span>
+              <span class="store-picker__chevron" aria-hidden="true">⌄</span>
+            </button>
+            <div class="store-menu" id="store-menu" role="listbox" aria-label="Chọn gian hàng" hidden></div>
+          </div>
+        </div>
+        <div class="product-grid" id="store-grid" aria-live="polite"></div>
+        <div class="load-more" id="store-more" hidden><button class="btn btn--ghost" type="button">Xem thêm</button></div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer__inner">
+        <a class="brand brand--footer" href="./index.html">
+          <span class="brand__icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none">
+              <rect x="9" y="9" width="30" height="22" rx="3.5" stroke="currentColor" stroke-width="3" />
+              <path d="M5 36h38l-3.5 4H8.5L5 36Z" fill="currentColor" />
+              <path d="M20 35h8" stroke="#fff" stroke-width="2" stroke-linecap="round" />
+            </svg>
+          </span>
+          <span class="brand__wordmark">Tech<span>Store</span></span>
+        </a>
+        <p>Sàn thiết bị điện tử nhiều gian hàng. Giỏ hàng nhiều gian hàng sẽ tách thành nhiều đơn, mỗi đơn một mức phí vận chuyển cố định.</p>
+        <small>© 2026 TechStore.</small>
+      </div>
+    </footer>
+
+    <div class="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>

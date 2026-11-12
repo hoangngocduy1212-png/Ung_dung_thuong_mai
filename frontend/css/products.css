@@ -1,0 +1,25 @@
+.catalog-layout { display: grid; grid-template-columns: 252px minmax(0, 1fr); align-items: start; gap: 24px; }
+.catalog-filters { position: sticky; top: 16px; padding: 18px; border: 1px solid #e4ebf3; border-radius: 15px; background: #fff; }
+.filter-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+#filters-form { display: grid; gap: 13px; }
+.filter-field { display: grid; gap: 6px; color: #40546d; font-size: 12px; font-weight: 600; }
+.filter-field input, .filter-field select { width: 100%; min-width: 0; height: 40px; padding: 0 10px; border: 1px solid #dce5ef; border-radius: 9px; color: #263d57; background: #fff; font: inherit; font-weight: 400; }
+.price-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.filter-apply, .filter-reset { width: 100%; }
+.catalog-results { min-width: 0; }
+.filter-chips { display: flex; flex-wrap: wrap; gap: 7px; }
+.filter-chip { display: inline-flex; align-items: center; gap: 6px; padding: 6px 9px; border-radius: 20px; color: #245181; background: #eaf3fc; font-size: 11px; }
+.filter-chip button { border: 0; color: inherit; background: none; font-size: 15px; cursor: pointer; }
+.filter-toggle, .filter-head, .filter-scrim { display: none; }
+.catalog-results .product-grid { margin-top: 12px; }
+.filter-chips:empty { display: none; }
+@media (max-width: 760px) {
+  .catalog-layout { display: block; }
+  .filter-toggle { display: inline-flex; }
+  .catalog-filters { position: fixed; z-index: 102; inset: 0 0 0 auto; display: block; width: min(360px, 88vw); height: 100dvh; overflow-y: auto; border: 0; border-radius: 0; padding: 20px; transform: translateX(105%); transition: transform 180ms ease; }
+  .catalog-filters.is-open { transform: translateX(0); }
+  .filter-head { display: flex; }
+  .filter-scrim { position: fixed; z-index: 101; inset: 0; background: rgb(10 28 50 / 48%); }
+  .filter-scrim.is-open { display: block; }
+}
+@media (prefers-reduced-motion: reduce) { .catalog-filters { transition: none; } }

@@ -1,0 +1,167 @@
+import { $, $$, h } from "./utils.js";
+import { refreshProfile, ROLE_LABEL } from "./auth-service.js";
+import { getCart, countCartItems } from "./cart-service.js";
+import { clearSession } from "./session.js";
+import { showToast, comingSoon } from "./ui.js";
+import { getCategories, getBrands } from "./product-service.js";
+
+let cartChangeListenerBound = false;
+
+async function updateCartBadge() {
+  const badge = $("#shopping-chrome .cart__count");
+  if (!badge) return;
+  try { badge.textContent = String(countCartItems(await getCart())); }
+  catch (error) { showToast(error.message, { error: true }); }
+}
+
+export function safeRedirectTarget(value) {
+  if (!value || typeof value !== "string") return "./index.html";
+  try {
+    const target = new URL(value, location.href);
+    if (target.origin !== location.origin || !target.pathname.startsWith(location.pathname.replace(/[^/]*$/, ""))) return "./index.html";
+    return `${target.pathname}${target.search}${target.hash}`;
+  } catch {
+    return "./index.html";
+  }
+}
+
+export function requireCustomerPage() {
+  const main = $("#page-content");
+  if (!main) return false;
+  const setMessage = (message) => {
+    main.replaceChildren(h("section", { class: "shop-state" },
+      h("h1", { text: "Trang mua hàng" }),
+      h("p", { text: message })));
+    main.hidden = false;
+  };
+  (async () => {
+    const token = localStorage.getItem("techstore.token") || sessionStorage.getItem("techstore.token");
+    const user = token ? await refreshProfile() : null;
+    if (!user) {
+      const target = `${location.pathname}${location.search}${location.hash}`;
+      location.replace(`./auth.html?tab=login&redirect=${encodeURIComponent(target)}`);
+      return;
+    }
+    if (user.role !== "customer") {
+      setMessage("Trang này dành cho khách hàng.");
+      return;
+    }
+    main.hidden = false;
+    document.dispatchEvent(new CustomEvent("shopping:authorized", { detail: { user } }));
+  })().catch((error) => {
+    setMessage(error.message || "Không thể xác minh tài khoản.");
+  });
+  main.hidden = true;
+  return true;
+}
+
+function accountBlock(user) {
+  const wrap = h("div", { class: "account-area shopping-account" });
+  if (!user) {
+    wrap.append(h("a", { class: "account-trigger", href: "./auth.html?tab=login", text: "Đăng nhập / Đăng ký" }));
+    return wrap;
+  }
+  const trigger = h("button", { class: "account-trigger", type: "button", "aria-haspopup": "menu", "aria-expanded": "false", "aria-controls": "shopping-account-menu" },
+    h("span", { class: "account-link__copy" }, h("small", { text: "Xin chào," }), h("strong", { text: user.fullName || user.email })));
+  const menuItems = [];
+  const menuButton = (text, action) => h("button", { role: "menuitem", type: "button", onclick: () => { menu.hidden = true; trigger.setAttribute("aria-expanded", "false"); action(); } }, text);
+  if (user.role === "customer") {
+    menuItems.push(menuButton("Tài khoản", comingSoon));
+    menuItems.push(h("a", { role: "menuitem", href: "./orders.html", text: "Đơn hàng" }));
+    menuItems.push(menuButton("Voucher của tôi", comingSoon));
+    menuItems.push(menuButton("Điểm thưởng", comingSoon));
+  } else if (user.role === "seller") {
+    menuItems.push(menuButton("Vào Seller Center", comingSoon));
+  } else {
+    menuItems.push(menuButton("Vào trang quản trị", comingSoon));
+  }
+  menuItems.push(menuButton("Đăng xuất", () => { clearSession(); location.replace("./index.html"); }));
+  const menu = h("div", { class: "account-menu", id: "shopping-account-menu", role: "menu", hidden: true },
+    h("div", { class: "account-menu__head" }, h("strong", { text: user.fullName || user.email }), h("small", { text: ROLE_LABEL[user.role] || "" })),
+    ...menuItems);
+  trigger.addEventListener("click", () => {
+    menu.hidden = !menu.hidden;
+    trigger.setAttribute("aria-expanded", String(!menu.hidden));
+  });
+  wrap.append(trigger, menu);
+  return wrap;
+}
+
+export async function mountShoppingChrome(userOverride) {
+  const host = $("#shopping-chrome");
+  if (!host) return null;
+  const user = userOverride === undefined ? await refreshProfile() : userOverride;
+  const announcement = h("div", { class: "announcement" },
+    h("div", { class: "container announcement__inner" },
+      h("span", { text: "Phí vận chuyển cố định cho mỗi đơn hàng" }),
+      h("a", { href: "./index.html#support", text: "Hỗ trợ khách hàng →" })));
+  const icon = document.createElement("span");
+  icon.className = "brand__icon";
+  icon.setAttribute("aria-hidden", "true");
+  icon.append(document.createRange().createContextualFragment('<svg viewBox="0 0 48 48" fill="none"><rect x="9" y="9" width="30" height="22" rx="3.5" stroke="currentColor" stroke-width="3"/><path d="M5 36h38l-3.5 4H8.5L5 36Z" fill="currentColor"/><path d="M20 35h8" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>'));
+  const brand = h("a", { class: "brand", href: "./index.html", "aria-label": "TechStore - Trang chủ" },
+    icon,
+    h("span", { class: "brand__wordmark" }, "Tech", h("span", {}, "Store")));
+  const search = h("form", { class: "search", role: "search" },
+    h("input", { type: "search", name: "q", placeholder: "Tìm laptop, điện thoại, phụ kiện...", "aria-label": "Tìm kiếm sản phẩm" }),
+    h("button", { class: "search__submit", type: "submit", text: "Tìm kiếm" }));
+  search.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const q = search.elements.q.value.trim();
+    location.href = `./products.html${q ? `?q=${encodeURIComponent(q)}` : ""}`;
+  });
+  const cartIcon = h("span", { class: "cart__icon", "aria-hidden": "true" });
+  cartIcon.innerHTML = '<svg viewBox="0 0 24 24" fill="none"><path d="M3 4h2l2.2 11.1a2 2 0 0 0 2 1.6h8.5a2 2 0 0 0 1.9-1.4L22 8H6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="20" r="1.4" fill="currentColor"/><circle cx="18" cy="20" r="1.4" fill="currentColor"/></svg>';
+  const cart = h("a", { class: "cart", href: "./cart.html", "aria-label": "Giỏ hàng" },
+    cartIcon, h("span", { class: "cart__count", text: "0" }), h("span", { class: "cart__label", text: "Giỏ hàng" }));
+  const mainHeader = h("div", { class: "site-header" },
+    h("div", { class: "container header-main" }, brand, search, accountBlock(user), user && user.role !== "customer" ? null : cart));
+  const navItems = [h("a", { href: "./products.html", text: "Tất cả sản phẩm" })];
+  try {
+    const [categories, brands] = await Promise.all([getCategories(), getBrands()]);
+    categories.filter((category) => !category.parent).forEach((category) => navItems.push(
+      h("a", { href: `./products.html?category=${encodeURIComponent(category._id)}`, text: category.name })));
+    brands.forEach((brand) => navItems.push(
+      h("a", { href: `./products.html?brand=${encodeURIComponent(brand._id)}`, text: brand.name })));
+  } catch (error) {
+    showToast(error.message, { error: true });
+  }
+  const nav = h("nav", { class: "category-nav", "aria-label": "Danh mục và thương hiệu" },
+    h("div", { class: "container category-nav__inner" }, h("div", { class: "category-links" }, ...navItems)));
+  const footer = h("footer", { class: "site-footer" },
+    h("div", { class: "container footer__inner" },
+      h("a", { class: "brand brand--footer", href: "./index.html", text: "TechStore" }),
+      h("p", { text: "Giỏ hàng nhiều gian hàng được tách thành các đơn riêng; phí vận chuyển tính theo từng đơn." }),
+      h("small", { text: "© 2026 TechStore." })));
+  host.replaceChildren(announcement, mainHeader, nav);
+  $("#shopping-footer")?.replaceWith(footer);
+  try {
+    if (user?.role === "customer") cart.querySelector(".cart__count").textContent = String(countCartItems(await getCart()));
+  } catch (error) {
+    showToast(error.message, { error: true });
+  }
+  if (user?.role === "customer" && !cartChangeListenerBound) {
+    document.addEventListener("cart:changed", updateCartBadge);
+    cartChangeListenerBound = true;
+  }
+  return user;
+}
+
+export const statusLabels = {
+  cho_xac_nhan: "Chờ xác nhận",
+  da_xac_nhan: "Đã xác nhận",
+  dang_giao: "Đang giao",
+  da_giao: "Đã giao",
+  hoan_tat: "Hoàn tất",
+  da_huy: "Đã hủy",
+  da_tra_hang: "Đã trả hàng",
+};
+
+export const orderStatusClass = (status) => `status status--${status || "unknown"}`;
+
+export function notifyCartChanged() {
+  document.dispatchEvent(new CustomEvent("cart:changed"));
+}
+
+export function element(selector) { return $(selector); }
+export function elements(selector) { return $$(selector); }
