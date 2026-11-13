@@ -137,6 +137,7 @@ try {
   await call('POST', '/customer/cart/items', { productId: pB._id, variantId: vB0._id, quantity: 1 }, C1);
   ok((await call('POST', `/customer/wishlist/${pB._id}`, null, C1)).s === 201, 'thêm yêu thích');
   ok((await call('GET', '/customer/wishlist', null, C1)).d.length === 1, 'xem yêu thích');
+  await call('POST', `/customer/wishlist/${pA._id}`, null, C1);
 
   // voucher shop B không dùng được cho đơn shop A
   const bad = await call('POST', '/customer/orders/checkout', { addressId: addr._id, paymentMethod: 'cod', vouchers: { [shopA._id]: uvB._id } }, C1);
@@ -145,6 +146,8 @@ try {
 
   const co = await call('POST', '/customer/orders/checkout', { addressId: addr._id, paymentMethod: 'cod', note: 'giao giờ HC', vouchers: { [shopA._id]: uvPlat._id, [shopB._id]: uvB._id } }, C1);
   ok(co.s === 201 && co.d.orders.length === 2, 'giỏ 2 gian hàng -> tách thành 2 đơn');
+  const listedOrders = (await call('GET', '/customer/orders?page=1&limit=10', null, C1)).d.items;
+  ok(listedOrders.every((order) => Array.isArray(order.afterSales) && Array.isArray(order.reviewedProducts)), 'danh sách đơn gồm yêu cầu sau bán hàng và sản phẩm đã đánh giá');
   const ordA = co.d.orders.find((o) => o.shop === shopA._id), ordB = co.d.orders.find((o) => o.shop === shopB._id);
   ok(ordA.subtotal === 20000000 && ordA.discount === 100000 && ordA.total === 19930000 && ordA.sellerRevenue === 20000000, 'đơn A: voucher sàn do sàn chịu, shop nhận đủ tiền hàng');
   ok(ordB.subtotal === 2000000 && ordB.discount === 200000 && ordB.total === 1830000 && ordB.sellerRevenue === 1800000, 'đơn B: voucher shop do shop chịu');
@@ -165,6 +168,8 @@ try {
   ok(comp.status === 'hoan_tat' && comp.pointsEarned === 1990, 'khách xác nhận nhận hàng -> hoàn tất, +1990 điểm');
   ok((await call('GET', '/customer/points', null, C1)).d.points === 1990, 'số điểm khách đúng');
   ok((await call('POST', '/customer/reviews', { orderId: ordA._id, productId: pA._id, rating: 4, content: 'Tốt' }, C1)).s === 201, 'đánh giá sau khi nhận hàng');
+  const myReviews = await call('GET', '/customer/reviews', null, C1);
+  ok(myReviews.s === 200 && myReviews.d.total === 1 && myReviews.d.items[0].rating === 4 && myReviews.d.items[0].product.name === 'iPhone Test 128GB', 'khách xem được nội dung đánh giá của chính mình');
   ok((await call('POST', '/customer/reviews', { orderId: ordA._id, productId: pA._id, rating: 4 }, C1)).s === 409, 'không đánh giá trùng');
   ok((await call('POST', '/customer/reviews', { orderId: ordA._id, productId: pB._id, rating: 4 }, C1)).s === 400, 'không đánh giá sản phẩm ngoài đơn');
   const rvs = (await call('GET', `/products/${pA._id}/reviews`)).d;
@@ -205,6 +210,8 @@ try {
   // c) hoàn tiền sau khi hoàn tất -> thu hồi điểm
   const as2 = await call('POST', `/customer/orders/${ordA._id}/after-sales`, { type: 'hoan_tien', reason: 'Máy lỗi màn hình' }, C1);
   ok(as2.s === 201, 'yêu cầu hoàn tiền đơn đã hoàn tất');
+  const listedPending = (await call('GET', '/customer/orders?page=1&limit=10', null, C1)).d.items.find((order) => String(order._id) === String(ordA._id));
+  ok(listedPending.afterSales.some((request) => request.status === 'cho_xu_ly' && request.type === 'hoan_tien'), 'danh sách đơn phản ánh yêu cầu hoàn tiền đang chờ');
   ok((await call('POST', `/customer/orders/${ordA._id}/after-sales`, { type: 'doi_hang', reason: 'Đổi sang màu khác' }, C1)).s === 409, 'không gửi 2 yêu cầu cùng lúc');
   ok((await call('PATCH', `/seller/after-sales/${as2.d._id}`, { decision: 'reject', note: 'x' }, OA)).s === 400, 'từ chối cần ghi chú đủ dài');
   ok((await call('PATCH', `/seller/after-sales/${as2.d._id}`, { decision: 'accept', note: 'Đồng ý hoàn tiền' }, OA)).s === 200, 'seller đồng ý hoàn tiền');
@@ -242,6 +249,8 @@ try {
   ok(rl.total === 1, 'xem đánh giá theo sản phẩm');
   ok((await call('DELETE', `/staff/reviews/${rl.items[0]._id}`, null, CS)).s === 200, 'xóa đánh giá');
   ok((await call('GET', `/products/${pA._id}`)).d.ratingCount === 0, 'xóa đánh giá -> tính lại điểm sản phẩm');
+  const removedReviewOrder = (await call('GET', `/customer/orders/${ordA._id}`, null, C1)).d;
+  ok(removedReviewOrder.reviewedProducts.includes(String(pA._id)) && (await call('GET', '/customer/reviews?page=1&limit=100', null, C1)).d.total === 0, 'review đã gỡ ẩn khỏi tab đã đánh giá nhưng không mở lại lượt đánh giá');
 
   section('Chống bán quá số lượng (tranh nhau món cuối)');
   const C2 = (await call('POST', '/auth/register', { fullName: 'Khách Hai', email: 'c2@t.com', phone: '0912222222', password: 'Pass@123' })).d.token;
@@ -280,6 +289,8 @@ try {
   ok((await call('GET', '/seller/products', null, OB)).s === 403, 'gian hàng bị khóa không kinh doanh được');
   await call('PATCH', `/admin/shops/${shopB._id}/unlock`, null, A);
   ok((await call('DELETE', `/seller/products/${pA._id}`, null, OA)).s === 200, 'seller xóa sản phẩm (xóa mềm)');
+  const savedWishlist = (await call('GET', '/customer/wishlist', null, C1)).d;
+  ok(savedWishlist.find((item) => String(item._id) === String(pA._id))?.available === false, 'wishlist vẫn hiển thị sản phẩm bị xóa mềm dưới dạng không còn bán');
   ok((await call('GET', `/products/${pA._id}`)).s === 404, 'sản phẩm đã xóa không còn trên sàn');
   ok((await call('GET', `/customer/orders/${ordA._id}`, null, C1)).d.items[0].productName === 'iPhone Test 128GB', 'đơn cũ vẫn giữ thông tin sản phẩm đã xóa');
   ok((await call('DELETE', `/admin/cskh/${csk._id}`, null, A)).s === 200, 'admin xóa mềm CSKH');

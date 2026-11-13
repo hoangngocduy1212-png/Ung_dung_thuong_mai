@@ -90,9 +90,16 @@ function renderAccount() {
     h("button", { type: "button", role: "menuitem", class: cls, onclick: () => { closeAccountMenu(); handler(); } }, label);
 
   if (user.role === "customer") {
-    items.push(item("Tài khoản", comingSoon));
+    items.push(h("a", { href: "./account.html?section=profile", role: "menuitem", class: "account-menu__link", text: "Tài khoản" }));
     items.push(h("a", { href: "./orders.html", role: "menuitem", class: "account-menu__link", text: "Đơn hàng" }));
-    ["Voucher của tôi", "Điểm thưởng"].forEach((l) => items.push(item(l, comingSoon)));
+    items.push(h("a", { href: "./account.html?section=addresses", role: "menuitem", class: "account-menu__link", text: "Sổ địa chỉ" }));
+    items.push(h("a", { href: "./account.html?section=security", role: "menuitem", class: "account-menu__link", text: "Đổi mật khẩu" }));
+    items.push(h("a", { href: "./account.html?section=vouchers", role: "menuitem", class: "account-menu__link", text: "Voucher của tôi" }));
+    items.push(h("a", { href: "./account.html?section=points", role: "menuitem", class: "account-menu__link" }, "Điểm thưởng", user.points != null ? h("span", { class: "account-menu__badge", text: `${Number(user.points).toLocaleString("vi-VN")} điểm` }) : null));
+    items.push(h("a", { href: "./account.html?section=wishlist", role: "menuitem", class: "account-menu__link", text: "Yêu thích" }));
+    items.push(h("a", { href: "./account.html?section=reviews", role: "menuitem", class: "account-menu__link", text: "Đánh giá của tôi" }));
+    items.push(h("a", { href: "./account.html?section=after-sales", role: "menuitem", class: "account-menu__link", text: "Hoàn tiền / Đổi hàng" }));
+    items.push(h("a", { href: "./account.html?section=complaints", role: "menuitem", class: "account-menu__link", text: "Khiếu nại" }));
   } else if (user.role === "seller") {
     items.push(item("Vào Seller Center", comingSoon));
   } else {
@@ -675,6 +682,13 @@ async function init() {
   state.user = await refreshProfile();
   state.customer = isCustomer(state.user);
   renderAccount();
+  document.addEventListener("vouchers:changed", () => { if (state.customer) loadVouchers(); });
+  document.addEventListener("points:changed", (event) => {
+    if (!state.user || event.detail?.points == null) return;
+    state.user.points = event.detail.points;
+    const badge = $("#account-menu .account-menu__badge");
+    if (badge) badge.textContent = `${Number(event.detail.points).toLocaleString("vi-VN")} điểm`;
+  });
 
   if (state.customer) {
     try {

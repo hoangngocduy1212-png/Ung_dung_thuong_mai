@@ -1,4 +1,9 @@
-import { getOrders, getOrder, cancelOrder, requestAfterSales, confirmReceived, payOrderGroup } from "./order-service.js";
+import { getOrders, getOrder, cancelOrder, confirmReceived, payOrderGroup } from "./order-service.js";
+import { requestAfterSales } from "./aftersales-service.js";
+import { getAllMyReviews } from "./review-service.js";
+import { openReviewForm } from "./review-ui.js";
+import { getPoints } from "./points-service.js";
+import { AFTER_SALES_STATUS_LABELS, AFTER_SALES_TYPE_LABELS } from "./status-labels.js";
 import { addToCart } from "./cart-service.js";
 import { $, h, formatMoney, formatDate } from "./utils.js";
 import { mountShoppingChrome, statusLabels, orderStatusClass } from "./shopping.js";
@@ -10,9 +15,13 @@ const main = $("#page-content");
 const state = { page: 1, totalPages: 1, status: "", limit: 10, busy: false };
 const orderStatuses = ["cho_xac_nhan", "da_xac_nhan", "dang_giao", "da_giao", "hoan_tat", "da_huy", "da_tra_hang"];
 
-function isWithinReturnWindow(order) {
-  const delivered = order.deliveredAt && new Date(order.deliveredAt).getTime();
-  return delivered && Date.now() - delivered <= 7 * 86400000;
+function returnWindow(order) {
+  if (!order.deliveredAt) return { eligible: false, reason: "Chưa có ngày giao hàng để tính thời hạn yêu cầu." };
+  const deliveredAt = new Date(order.deliveredAt).getTime();
+  if (Number.isNaN(deliveredAt)) return { eligible: false, reason: "Không có ngày giao hàng hợp lệ để tính thời hạn yêu cầu." };
+  const remaining = 7 * 86400000 - (Date.now() - deliveredAt);
+  if (remaining < 0) return { eligible: false, reason: "Đã quá 7 ngày kể từ ngày giao hàng." };
+  return { eligible: true, days: Math.ceil(remaining / 86400000) };
 }
 
 function progress(order) {
@@ -55,12 +64,32 @@ async function doCancelRequest(order) {
   });
 }
 
-async function requestReturn(order, type) {
-  const title = type === "hoan_tien" ? "Yêu cầu hoàn tiền" : "Yêu cầu đổi hàng";
-  reasonModal(title, 5, async (reason) => {
-    await requestAfterSales(order._id, type, reason);
-    showToast("Đã gửi yêu cầu, chờ gian hàng xử lý");
-    await loadOrders();
+function requestReturn(order, initialType = "hoan_tien") {
+  const type = h("select", { name: "type", "aria-label": "Loại yêu cầu" },
+    h("option", { value: "hoan_tien", text: "Hoàn tiền (trả hàng)" }),
+    h("option", { value: "doi_hang", text: "Đổi hàng" }));
+  type.value = initialType;
+  const reason = h("input", { type: "text", maxlength: "120", required: true, placeholder: "Ví dụ: sản phẩm bị lỗi", "aria-label": "Lý do" });
+  const description = h("textarea", { rows: "4", maxlength: "450", placeholder: "Mô tả thêm tình trạng sản phẩm", "aria-label": "Mô tả thêm" });
+  const error = h("p", { class: "form-error", role: "alert", "aria-live": "assertive" });
+  const content = h("div", { class: "review-form" },
+    h("label", { class: "account-field" }, "Loại yêu cầu", type),
+    h("label", { class: "account-field" }, "Lý do (bắt buộc)", reason),
+    h("label", { class: "account-field" }, "Mô tả thêm", description),
+    h("p", { class: "voucher-hint", text: "Yêu cầu áp dụng cho cả đơn; hệ thống hiện chưa hỗ trợ chọn từng sản phẩm hoặc tải ảnh minh chứng." }), error);
+  const submit = h("button", { class: "btn btn--primary", type: "button", text: "Gửi yêu cầu" });
+  const close = openModal({ title: "Yêu cầu sau bán hàng", description: `Đơn ${order.code}. Chỉ gửi một yêu cầu đang chờ cho mỗi đơn.`, content, actions: [submit] });
+  submit.addEventListener("click", async () => {
+    const reasonText = reason.value.trim();
+    const descriptionText = description.value.trim();
+    if (reasonText.length < 5) { error.textContent = "Lý do cần tối thiểu 5 ký tự."; reason.focus(); return; }
+    const combinedReason = descriptionText ? `Lý do: ${reasonText}\nMô tả: ${descriptionText}` : reasonText;
+    if (combinedReason.length > 500) { error.textContent = "Lý do và mô tả cộng lại không được vượt quá 500 ký tự."; return; }
+    submit.disabled = true;
+    try {
+      await requestAfterSales(order._id, type.value, combinedReason);
+      close(); showToast("Đã gửi yêu cầu, chờ gian hàng xử lý"); await loadOrders();
+    } catch (requestError) { error.textContent = requestError.message; submit.disabled = false; }
   });
 }
 
@@ -102,41 +131,33 @@ async function buyAgain(order, button) {
   } catch (error) { showToast(error.message, { error: true }); button.disabled = false; }
 }
 
-async function reviewOrder(order) {
+async function showReview(order, item) {
+  try {
+    const reviews = await getAllMyReviews();
+    const found = reviews.find((review) => String(review.order?._id) === String(order._id) && String(review.product?._id) === String(item.product));
+    if (!found) { showToast("Đánh giá đã bị gỡ hoặc không còn khả dụng."); return; }
+    const rating = Number(found.rating) || 0;
+    const content = h("div", { class: "review-form" },
+      h("p", { class: "product-rating", text: `${"★".repeat(rating)}${"☆".repeat(5 - rating)} · ${rating}/5` }),
+      h("p", { text: found.content || "Không để lại nội dung." }),
+      found.reply?.content ? h("div", { class: "review-reply" }, h("strong", { text: "Phản hồi người bán" }), h("p", { text: found.reply.content })) : null);
+    openModal({ title: `Đánh giá ${item.productName || "sản phẩm"}`, description: `Đơn ${order.code}`, content });
+  } catch (error) { showToast(error.message, { error: true }); }
+}
+
+async function reviewOrder(order, item) {
   try {
     const detail = await getOrder(order._id);
-    const reviewed = new Set(detail.reviewedProducts || []);
-    const reviewable = (detail.items || []).filter((item) => item.product && !reviewed.has(String(item.product)));
-    if (!reviewable.length) {
-      showToast("Bạn đã đánh giá các sản phẩm trong đơn này");
-      return;
-    }
-    const uniqueProducts = [...new Map(reviewable.map((item) => [String(item.product), item])).values()];
-    const product = h("select", { "aria-label": "Sản phẩm cần đánh giá" },
-      ...uniqueProducts.map((item) => h("option", { value: String(item.product), text: `${item.productName} · ${item.variantName}` })));
-    const rating = h("select", { "aria-label": "Số sao" },
-      ...[5, 4, 3, 2, 1].map((value) => h("option", { value: String(value), text: `${value} sao` })));
-    const content = h("textarea", { maxlength: "1000", rows: "4", placeholder: "Chia sẻ trải nghiệm của bạn", "aria-label": "Nội dung đánh giá" });
-    const error = h("p", { class: "form-error", role: "alert", "aria-live": "polite" });
-    const submit = h("button", { class: "btn btn--primary", type: "button", text: "Gửi đánh giá" });
-    const close = openModal({ title: "Đánh giá sản phẩm", description: "Đánh giá chỉ áp dụng cho sản phẩm thuộc đơn hàng đã hoàn tất.", content: h("div", { class: "review-form" }, product, rating, content, error), actions: [submit] });
-    submit.addEventListener("click", async () => {
-      submit.disabled = true;
-      try {
-        await submitReview({ orderId: String(order._id), productId: product.value, rating: Number(rating.value), content: content.value.trim() });
-        close();
-        showToast("Đã gửi đánh giá");
-      } catch (e) {
-        error.textContent = e.message;
-        submit.disabled = false;
-      }
-    });
+    if (detail.status !== "hoan_tat") { showToast("Chỉ đánh giá được khi đơn đã hoàn tất.", { error: true }); return; }
+    if ((detail.reviewedProducts || []).includes(String(item.product))) return showReview(detail, item);
+    openReviewForm(detail, item, loadOrders);
   } catch (error) { showToast(error.message, { error: true }); }
 }
 
 async function showDetails(order) {
   try {
     const detail = await getOrder(order._id);
+    const reviews = (await getAllMyReviews()).filter((review) => String(review.order?._id) === String(detail._id));
     const history = h("ol", { class: "order-detail-history" },
       ...(detail.statusHistory || []).map((entry) => h("li", {}, `${statusLabels[entry.status] || entry.status} · ${formatDate(entry.at)}${entry.note ? ` · ${entry.note}` : ""}`)));
     const items = h("div", {}, ...(detail.items || []).map((item) =>
@@ -146,8 +167,24 @@ async function showDetails(order) {
       h("div", { class: "order-detail-line" }, h("span", { text: "Giảm giá" }), h("strong", { text: `−${formatMoney(detail.discount)}` })),
       h("div", { class: "order-detail-line" }, h("span", { text: "Phí vận chuyển" }), h("strong", { text: formatMoney(detail.shippingFee) })),
       h("div", { class: "order-detail-line" }, h("strong", { text: "Tổng thanh toán" }), h("strong", { text: formatMoney(detail.total) })));
-    const afterSales = h("div", {}, ...(detail.afterSales || []).map((request) =>
-      h("p", { text: `${{ huy_don: "Yêu cầu hủy", hoan_tien: "Yêu cầu hoàn tiền", doi_hang: "Yêu cầu đổi hàng" }[request.type] || request.type} · ${{ cho_xu_ly: "Chờ xử lý", da_chap_nhan: "Đã chấp nhận", bi_tu_choi: "Bị từ chối" }[request.status] || request.status}${request.reason ? ` · ${request.reason}` : ""}${request.sellerNote ? ` · Phản hồi: ${request.sellerNote}` : ""}` })));
+    const afterSales = h("div", {}, ...(detail.afterSales || []).map((request) => h("article", { class: "account-record" },
+      h("div", { class: "account-record__head" }, h("strong", { text: AFTER_SALES_TYPE_LABELS[request.type] || request.type }), h("span", { class: `account-badge account-badge--${request.status}`, text: AFTER_SALES_STATUS_LABELS[request.status] || request.status })),
+      h("p", { text: request.reason || "" }), request.sellerNote ? h("p", { class: request.status === "bi_tu_choi" ? "account-seller-note" : "", text: `Ghi chú người bán: ${request.sellerNote}` }) : null)));
+    const refundAccepted = (detail.afterSales || []).some((request) => request.type === "hoan_tien" && request.status === "da_chap_nhan");
+    let refundOutcome = null;
+    if (refundAccepted) {
+      try {
+        const points = await getPoints();
+        const revoked = (points.history || []).filter((entry) => String(entry.order) === String(detail._id) && entry.type === "revoke").reduce((sum, entry) => sum + Math.abs(Number(entry.delta || 0)), 0);
+        refundOutcome = h("section", { class: "account-compliance-note" },
+          h("strong", { text: `Đơn: ${statusLabels[detail.status] || detail.status} · Thanh toán: ${detail.payment?.status === "refunded" ? "Đã hoàn" : "Đang cập nhật"}` }),
+          h("p", { text: detail.status === "da_tra_hang" && detail.payment?.status === "refunded" ? `Điểm đã thu hồi theo lịch sử máy chủ: ${revoked}.` : "Điểm và trạng thái thanh toán lấy theo phản hồi máy chủ." }));
+      } catch (error) { refundOutcome = h("p", { class: "form-error", text: error.message }); }
+    }
+    const reviewHistory = h("div", {}, ...(reviews.map((review) => h("article", { class: "account-record" },
+      h("strong", { text: `${review.product?.name || "Sản phẩm"} · ${review.rating}/5` }),
+      h("p", { text: review.content || "Không để lại nội dung." }),
+      review.reply?.content ? h("p", { class: "account-review-reply", text: `Phản hồi người bán: ${review.reply.content}` }) : null))));
     const body = h("div", { class: "order-detail-grid" },
       h("section", { class: "shop-panel" }, h("h3", { text: "Trạng thái đơn" }), progress(detail), history),
       h("section", { class: "shop-panel" },
@@ -158,7 +195,9 @@ async function showDetails(order) {
       h("section", { class: "shop-panel" }, h("h3", { text: "Sản phẩm" }), items),
       h("section", { class: "shop-panel" }, h("h3", { text: `Tổng kết${detail.voucherCode ? ` · Voucher ${detail.voucherCode}` : ""}` }), totals,
         h("p", { text: `Điểm đã nhận: ${detail.pointsEarned || 0}` })),
-      ...(detail.afterSales?.length ? [h("section", { class: "shop-panel" }, h("h3", { text: "Yêu cầu sau bán hàng" }), afterSales)] : []));
+      ...(detail.afterSales?.length ? [h("section", { class: "shop-panel" }, h("h3", { text: "Yêu cầu sau bán hàng" }), afterSales)] : []),
+      ...(refundOutcome ? [h("section", { class: "shop-panel" }, h("h3", { text: "Kết quả hoàn tiền" }), refundOutcome)] : []),
+      ...(reviews.length ? [h("section", { class: "shop-panel" }, h("h3", { text: "Đánh giá của đơn" }), reviewHistory)] : []));
     openModal({ title: `Đơn ${detail.code}`, description: `${detail.shop?.name || "Gian hàng"} · ${statusLabels[detail.status] || detail.status}`, content: body });
   } catch (error) { showToast(error.message, { error: true }); }
 }
@@ -166,6 +205,9 @@ async function showDetails(order) {
 function orderCard(order) {
   const status = h("span", { class: orderStatusClass(order.status), text: statusLabels[order.status] || order.status });
   const actions = h("div", { class: "order-card__actions" });
+  const pendingRequest = (order.afterSales || []).find((request) => request.status === "cho_xu_ly");
+  const returnStates = ["da_giao", "hoan_tat"];
+  const returnEligibility = returnWindow(order);
   const addAction = (label, fn, cls = "btn btn--ghost") => {
     const button = h("button", { class: cls, type: "button", text: label });
     button.addEventListener("click", fn);
@@ -173,20 +215,42 @@ function orderCard(order) {
   };
   addAction("Chi tiết", () => showDetails(order));
   if (order.status === "cho_xac_nhan") addAction("Hủy đơn", () => doCancel(order));
-  if (order.status === "da_xac_nhan") addAction("Gửi yêu cầu hủy", () => doCancelRequest(order));
+  if (order.status === "da_xac_nhan" && !pendingRequest) addAction("Gửi yêu cầu hủy", () => doCancelRequest(order));
   if (order.status === "dang_giao") actions.append(h("small", { text: "Đơn đang giao nên không thể hủy." }));
   if (order.status === "da_giao") {
-    addAction("Đã nhận hàng", () => confirmReceivedAction(order), "btn btn--primary");
-    if (isWithinReturnWindow(order)) {
+    if (!pendingRequest) addAction("Đã nhận hàng", () => confirmReceivedAction(order), "btn btn--primary");
+    if (pendingRequest) {
+      addAction("Xem yêu cầu", () => showDetails(order));
+      actions.append(h("small", { text: "Đơn đang có yêu cầu chờ xử lý." }));
+    } else if (returnEligibility.eligible) {
       addAction("Yêu cầu hoàn tiền", () => requestReturn(order, "hoan_tien"));
       addAction("Yêu cầu đổi hàng", () => requestReturn(order, "doi_hang"));
+      actions.append(h("small", { text: `Còn ${returnEligibility.days} ngày để yêu cầu.` }));
+    } else {
+      actions.append(h("small", { text: returnEligibility.reason }));
     }
     if (order.deliveredAt) actions.append(h("small", { text: "Đơn sẽ tự hoàn tất sau 3 ngày kể từ ngày giao." }));
   }
   if (order.status === "hoan_tat") {
-    if (isWithinReturnWindow(order)) { addAction("Yêu cầu hoàn tiền", () => requestReturn(order, "hoan_tien")); addAction("Yêu cầu đổi hàng", () => requestReturn(order, "doi_hang")); }
-    addAction("Đánh giá sản phẩm", () => reviewOrder(order));
+    if (pendingRequest) {
+      addAction("Xem yêu cầu", () => showDetails(order));
+      actions.append(h("small", { text: "Đơn đang có yêu cầu chờ xử lý." }));
+    } else if (returnEligibility.eligible) {
+      addAction("Yêu cầu hoàn tiền", () => requestReturn(order, "hoan_tien"));
+      addAction("Yêu cầu đổi hàng", () => requestReturn(order, "doi_hang"));
+      actions.append(h("small", { text: `Còn ${returnEligibility.days} ngày để yêu cầu.` }));
+    } else actions.append(h("small", { text: returnEligibility.reason }));
+    const uniqueProducts = [...new Map((order.items || []).filter((item) => item.product).map((item) => [String(item.product), item])).values()];
+    uniqueProducts.forEach((item) => {
+      const reviewed = (order.reviewedProducts || []).includes(String(item.product));
+      addAction(reviewed ? "Xem đánh giá" : "Đánh giá sản phẩm", () => reviewOrder(order, item));
+    });
+  } else if (!returnStates.includes(order.status)) {
+    actions.append(h("small", { text: "Chỉ gửi yêu cầu hoàn tiền/đổi hàng sau khi đơn đã giao." }));
+    if (pendingRequest) addAction("Xem yêu cầu", () => showDetails(order));
+    if (order.status !== "hoan_tat") actions.append(h("small", { text: "Chỉ đánh giá sản phẩm khi đơn hoàn tất." }));
   }
+  addAction("Khiếu nại", () => { location.href = `./account.html?section=complaints&orderCode=${encodeURIComponent(order.code)}`; });
   if (order.payment?.method === "online" && order.payment?.status !== "paid" && order.status !== "da_huy") {
     addAction("Thanh toán giả lập", (event) => payUnpaidGroup(order, event.currentTarget), "btn btn--primary");
   }
@@ -255,6 +319,8 @@ async function init(user) {
   await mountShoppingChrome(user);
   renderShell();
   await loadOrders();
+  const orderId = new URLSearchParams(location.search).get("order");
+  if (orderId) await showDetails({ _id: orderId });
 }
 
 document.addEventListener("shopping:authorized", (event) => init(event.detail?.user));

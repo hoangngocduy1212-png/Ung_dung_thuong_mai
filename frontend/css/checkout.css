@@ -5,6 +5,12 @@
 .checkout-section, .checkout-summary { margin-bottom: 16px; padding: 18px; border: 1px solid #e5ecf4; border-radius: 14px; background: #fff; }
 .checkout-section h2, .checkout-summary h2 { margin: 0 0 14px; font-size: 16px; }
 .address-list { display: grid; gap: 9px; }
+.checkout-address-card { display: grid; gap: 9px; padding: 15px; border: 1px solid #cfe0f4; border-radius: 10px; background: #f7fbff; }
+.checkout-address-card__head { display: flex; flex-wrap: wrap; align-items: center; gap: 9px; }
+.checkout-address-card p { margin: 0; color: #53667c; font-size: 13px; line-height: 1.6; }
+.checkout-address-card .btn { justify-self: start; }
+.checkout-address-empty { display: grid; justify-items: start; gap: 8px; }
+.checkout-address-empty p { margin: 0; color: #687b91; font-size: 13px; }
 .address-option { display: flex; align-items: flex-start; gap: 10px; padding: 12px; border: 1px solid #e1e9f2; border-radius: 10px; cursor: pointer; }
 .address-option:has(input:checked) { border-color: #1267d5; background: #f4f9ff; }
 .address-option small { display: block; margin-top: 4px; color: #738399; line-height: 1.5; }

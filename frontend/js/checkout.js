@@ -1,5 +1,5 @@
 import { getCart } from "./cart-service.js";
-import { getAddresses, createAddress } from "./address-service.js";
+import { getAddresses, createAddress, updateAddress, deleteAddress } from "./address-service.js";
 import { checkout as placeOrder, payOrderGroup } from "./order-service.js";
 import { getAvailableVouchers, getMyVouchers, redeemVoucher, claimVoucher } from "./voucher-service.js";
 import { $, h, formatMoney, formatDate, makeImage } from "./utils.js";
@@ -13,7 +13,7 @@ const itemIds = (params.get("items") || "").split(",").filter(Boolean);
 const fingerprint = itemIds.sort().join(",") || "all";
 const RESULT_KEY = "techstore.checkout.result";
 const PENDING_KEY = "techstore.checkout.pending";
-let state = { cart: null, addresses: [], vouchers: [], points: 0, selectedVouchers: {}, pending: false };
+let state = { cart: null, addresses: [], vouchers: [], selectedVouchers: {}, selectedAddressId: null, oneTimeAddress: null, profile: null, pending: false };
 
 function isSelected(item) { return !itemIds.length || itemIds.includes(item._id); }
 function selectedCartItems() { return (state.cart?.items || []).filter(isSelected); }
@@ -75,31 +75,136 @@ function addressText(address) {
   return [address.detail, address.ward, address.district, address.province].filter(Boolean).join(", ");
 }
 
-function addressFormModal() {
+function addressIsDuplicate(candidate, exceptId) {
+  const normalize = (value) => String(value || "").trim().toLocaleLowerCase("vi-VN").replace(/\s+/g, " ");
+  return state.addresses.find((address) => String(address._id) !== String(exceptId || "") &&
+    ["receiver", "phone", "detail", "ward", "district", "province"].every((key) => normalize(address[key]) === normalize(candidate[key])));
+}
+
+function addressFormModal(address = null) {
   const form = h("form", { class: "address-form" });
+  const fieldErrors = {};
+  const values = address || { receiver: state.profile?.fullName || "", phone: state.profile?.phone || "" };
   const fields = [
-    ["receiver", "Người nhận", "text"], ["phone", "Số điện thoại", "tel"], ["detail", "Địa chỉ chi tiết", "text"],
+    ["receiver", "Họ tên người nhận", "text"], ["phone", "Số điện thoại", "tel"], ["detail", "Địa chỉ chi tiết", "text"],
     ["ward", "Phường / xã", "text"], ["district", "Quận / huyện", "text"], ["province", "Tỉnh / thành phố", "text"],
   ];
   fields.forEach(([name, label, type]) => {
-    const input = h("input", { name, type, required: ["receiver", "phone", "detail"].includes(name), autocomplete: name === "receiver" ? "name" : name === "phone" ? "tel" : "street-address" });
-    form.append(h("label", {}, label, input));
+    const input = h("input", { name, type, value: values[name] || "", required: ["receiver", "phone", "detail"].includes(name), autocomplete: name === "receiver" ? "name" : name === "phone" ? "tel" : "street-address" });
+    const error = h("small", { class: "account-field__error", dataset: { error: name }, role: "alert" });
+    fieldErrors[name] = error;
+    form.append(h("label", { class: "account-field" }, label, input, error));
   });
+  const saveBook = h("input", { type: "checkbox", name: "saveBook", checked: true });
+  const makeDefault = h("input", { type: "checkbox", name: "isDefault", checked: !!address?.isDefault || !state.addresses.length });
+  const saveOption = h("label", { class: "account-check" }, saveBook, "Lưu vào sổ địa chỉ");
+  const defaultOption = h("label", { class: "account-check" }, makeDefault, "Đặt làm địa chỉ mặc định");
+  const note = h("p", { class: "checkout-warning", text: "Địa chỉ dùng trực tiếp cho đơn này sẽ được lưu thành bản sao trong đơn hàng; thay đổi sổ địa chỉ không làm đổi đơn đã đặt." });
+  form.append(saveOption, defaultOption, note);
+  saveBook.addEventListener("change", () => { makeDefault.disabled = !saveBook.checked; });
   const error = h("p", { class: "form-error", role: "alert", "aria-live": "polite" });
-  form.append(error);
-  const save = h("button", { class: "btn btn--primary", type: "button", text: "Lưu địa chỉ" });
-  const close = openModal({ title: "Thêm địa chỉ nhận hàng", content: form, actions: [save] });
-  save.addEventListener("click", async () => {
-    if (!form.reportValidity()) return;
+  const save = h("button", { class: "btn btn--primary", type: "button", text: "Dùng địa chỉ này" });
+  const close = openModal({ title: address ? "Sửa địa chỉ nhận hàng" : "Địa chỉ nhận hàng", content: form, actions: [save] });
+  const validate = () => {
+    Object.values(fieldErrors).forEach((el) => { el.textContent = ""; });
+    const receiver = form.elements.receiver.value.trim();
+    const phone = form.elements.phone.value.trim();
+    const detail = form.elements.detail.value.trim();
+    let valid = true;
+    if (receiver.length < 2) { fieldErrors.receiver.textContent = "Tên người nhận phải có ít nhất 2 ký tự."; valid = false; }
+    if (!/^(0|\+84)\d{9,10}$/.test(phone)) { fieldErrors.phone.textContent = "Số điện thoại không hợp lệ."; valid = false; }
+    if (detail.length < 3) { fieldErrors.detail.textContent = "Địa chỉ chi tiết phải có ít nhất 3 ký tự."; valid = false; }
+    return valid;
+  };
+  const submit = async () => {
+    error.textContent = "";
+    if (!validate()) return;
     save.disabled = true;
     const data = Object.fromEntries(new FormData(form).entries());
+    const payload = {
+      receiver: String(data.receiver).trim(), phone: String(data.phone).trim(), detail: String(data.detail).trim(),
+      ward: String(data.ward || "").trim(), district: String(data.district || "").trim(), province: String(data.province || "").trim(),
+    };
+    const isDefault = makeDefault.checked;
     try {
-      state.addresses = await createAddress(data);
+      if (saveBook.checked) {
+        const duplicate = addressIsDuplicate(payload, address?._id);
+        if (duplicate) {
+          if (isDefault && !duplicate.isDefault) state.addresses = await updateAddress(duplicate._id, { isDefault: true });
+          state.selectedAddressId = duplicate._id;
+          state.oneTimeAddress = null;
+        } else {
+          state.addresses = address
+            ? await updateAddress(address._id, { ...payload, isDefault })
+            : await createAddress({ ...payload, isDefault });
+          const saved = state.addresses.find((item) => String(item._id) === String(address?._id)) || state.addresses.at(-1);
+          state.selectedAddressId = saved?._id || null;
+          state.oneTimeAddress = null;
+        }
+      } else {
+        state.selectedAddressId = null;
+        state.oneTimeAddress = payload;
+      }
       renderCheckout();
       close();
-      showToast("Đã lưu địa chỉ nhận hàng");
-    } catch (e) { error.textContent = e.message; save.disabled = false; }
+      showToast(saveBook.checked ? "Đã cập nhật địa chỉ nhận hàng" : "Địa chỉ chỉ áp dụng cho đơn này");
+    } catch (requestError) {
+      error.textContent = requestError.message;
+      save.disabled = false;
+    }
+  };
+  save.addEventListener("click", submit);
+  form.addEventListener("submit", (event) => { event.preventDefault(); submit(); });
+}
+
+function chooseDefaultAddress() {
+  return state.addresses.find((address) => address.isDefault) || state.addresses.at(-1) || null;
+}
+
+function deleteAddressInCheckout(address, closeChooser) {
+  closeChooser();
+  const remove = h("button", { class: "btn btn--primary", type: "button", text: "Xóa địa chỉ" });
+  const keep = h("button", { class: "btn btn--ghost", type: "button", text: "Giữ lại" });
+  const close = openModal({ title: "Xóa địa chỉ?", description: `Địa chỉ của ${address.receiver} sẽ bị xóa khỏi sổ. Đơn đã đặt vẫn giữ nguyên địa chỉ giao hàng.`, actions: [keep, remove] });
+  keep.addEventListener("click", close);
+  remove.addEventListener("click", async () => {
+    remove.disabled = true;
+    try {
+      state.addresses = await deleteAddress(address._id);
+      if (String(state.selectedAddressId) === String(address._id)) state.selectedAddressId = chooseDefaultAddress()?._id || null;
+      close();
+      renderCheckout();
+      if (!state.addresses.length) addressFormModal();
+    } catch (requestError) { showToast(requestError.message, { error: true }); remove.disabled = false; }
   });
+}
+
+function openAddressChooser() {
+  const content = h("div", { class: "account-modal-content" });
+  if (!state.addresses.length) content.append(h("p", { class: "account-list-empty", text: "Sổ địa chỉ chưa có địa chỉ nào." }));
+  state.addresses.forEach((address) => {
+    const radio = h("input", { type: "radio", name: "checkoutAddress", value: address._id, checked: String(state.selectedAddressId) === String(address._id) });
+    const edit = h("button", { class: "text-button", type: "button", text: "Sửa" });
+    const remove = h("button", { class: "text-button", type: "button", text: "Xóa" });
+    const row = h("div", { class: "address-option" }, radio,
+      h("span", {}, h("strong", { text: `${address.receiver} · ${address.phone}` }), h("small", { text: `${addressText(address)}${address.isDefault ? " · Mặc định" : ""}` }),
+        h("span", { class: "account-actions" }, edit, remove)));
+    radio.addEventListener("change", () => { state.selectedAddressId = address._id; state.oneTimeAddress = null; });
+    edit.addEventListener("click", () => { close(); addressFormModal(address); });
+    remove.addEventListener("click", () => deleteAddressInCheckout(address, close));
+    content.append(row);
+  });
+  const select = h("button", { class: "btn btn--primary", type: "button", text: "Chọn địa chỉ" });
+  const add = h("button", { class: "btn btn--ghost", type: "button", text: "Thêm địa chỉ mới" });
+  const other = h("button", { class: "btn btn--ghost", type: "button", text: "Giao đến địa chỉ khác cho đơn này" });
+  const close = openModal({ title: "Chọn địa chỉ giao hàng", description: "Chọn địa chỉ đã lưu, chỉnh sửa hoặc nhập địa chỉ khác cho đơn này.", content, actions: [select, add, other] });
+  select.addEventListener("click", () => {
+    const selected = content.querySelector('input[name="checkoutAddress"]:checked');
+    if (!selected) { showToast("Vui lòng chọn một địa chỉ", { error: true }); return; }
+    state.selectedAddressId = selected.value; state.oneTimeAddress = null; renderCheckout(); close();
+  });
+  add.addEventListener("click", () => { close(); addressFormModal(); });
+  other.addEventListener("click", () => { close(); addressFormModal(); });
 }
 
 function voucherOption(voucher, group, subtotal) {
@@ -147,14 +252,20 @@ function renderCheckout() {
   const groups = shopGroups();
   const items = selectedCartItems();
   const subtotal = items.filter((item) => item.available).reduce((sum, item) => sum + Number(item.lineTotal || 0), 0);
-  const addresses = h("div", { class: "address-list" });
-  state.addresses.forEach((address) => {
-    const input = h("input", { type: "radio", name: "addressId", value: address._id, checked: address.isDefault || false, required: true });
-    addresses.append(h("label", { class: "address-option" }, input,
-      h("span", {}, h("strong", { text: `${address.receiver} · ${address.phone}` }), h("small", { text: addressText(address) }))));
-  });
-  const addAddress = h("button", { class: "btn btn--ghost", type: "button", text: state.addresses.length ? "Thêm địa chỉ khác" : "Thêm địa chỉ nhận hàng" });
-  addAddress.addEventListener("click", addressFormModal);
+  const savedAddress = state.addresses.find((address) => String(address._id) === String(state.selectedAddressId));
+  const activeAddress = state.oneTimeAddress || savedAddress;
+  const addressCard = activeAddress
+    ? h("article", { class: "checkout-address-card" },
+        h("div", { class: "checkout-address-card__head" },
+          h("strong", { text: `${activeAddress.receiver} · ${activeAddress.phone}` }),
+          state.oneTimeAddress
+            ? h("span", { class: "account-badge", text: "Chỉ dùng đơn này" })
+            : savedAddress?.isDefault ? h("span", { class: "account-badge", text: "Mặc định" }) : null),
+        h("p", { text: addressText(activeAddress) }),
+        h("button", { class: "btn btn--ghost", type: "button", text: "Thay đổi", onclick: openAddressChooser }))
+    : h("div", { class: "checkout-address-empty" },
+        h("p", { text: "Chưa có địa chỉ giao hàng. Thêm địa chỉ để tiếp tục đặt hàng." }),
+        h("button", { class: "btn btn--primary", type: "button", text: "Thêm địa chỉ nhận hàng", onclick: openAddressChooser }));
 
   const shopNodes = [...groups.entries()].map(([shopId, group]) => {
     const lines = group.items.map((item) => h("div", { class: "checkout-line" },
@@ -210,7 +321,7 @@ function renderCheckout() {
   const paymentCod = h("input", { type: "radio", name: "paymentMethod", value: "cod", checked: true });
   const paymentOnline = h("input", { type: "radio", name: "paymentMethod", value: "online" });
   const note = h("textarea", { id: "seller-note", maxlength: "500", placeholder: "Lời nhắn cho người bán (không bắt buộc)", rows: "3" });
-  const place = h("button", { class: "btn btn--primary", type: "button", text: "Đặt hàng" });
+  const place = h("button", { class: "btn btn--primary", type: "button", text: "Đặt hàng", disabled: !activeAddress });
   const error = h("p", { class: "form-error", id: "checkout-error", role: "alert", "aria-live": "assertive" });
   const estimatedDiscount = Object.entries(state.selectedVouchers).reduce((sum, [shopId, voucherId]) => {
     const owned = state.vouchers.find((v) => v._id === voucherId)?.voucher;
@@ -223,11 +334,12 @@ function renderCheckout() {
     h("div", { class: "cart-total-line" }, h("span", { text: "Tiền hàng (từ dữ liệu giỏ)" }), h("strong", { text: formatMoney(subtotal) })),
     h("div", { class: "cart-total-line" }, h("span", { text: "Giảm giá dự kiến" }), h("strong", { text: formatMoney(estimatedDiscount) })),
     h("p", { class: "checkout-warning", text: "Phí vận chuyển và tổng thanh toán do máy chủ xác nhận khi đặt hàng. Mỗi gian hàng thành một đơn, phí ship được tính riêng." }),
-    h("p", { class: "voucher-hint", text: `Điểm dự kiến khi đơn hoàn tất: ${Math.floor(Math.max(0, subtotal - estimatedDiscount) / 10000)} điểm (chưa tính xác nhận cuối từ máy chủ).` }),
+    h("p", { class: "voucher-hint", text: "Điểm được máy chủ cộng khi đơn hoàn tất; số điểm thực nhận hiển thị trong tài khoản." }),
     error, place);
   const checkoutContent = h("div", { class: "checkout-layout" },
     h("div", {},
-      h("section", { class: "checkout-section" }, h("h2", { text: "1. Địa chỉ nhận hàng" }), addresses, addAddress),
+      h("section", { class: "checkout-section" }, h("h2", { text: "1. Địa chỉ nhận hàng" }), addressCard,
+        h("p", { class: "voucher-hint", text: "Đơn hàng lưu ảnh chụp địa chỉ tại thời điểm đặt; sửa sổ địa chỉ không ảnh hưởng đơn cũ." })),
       h("section", { class: "checkout-section" }, h("h2", { text: `2. Đơn hàng (${groups.size} gian hàng)` }), h("div", { class: "checkout-products" }, ...shopNodes)),
       h("section", { class: "checkout-section checkout-payment" },
         h("h2", { text: "3. Phương thức thanh toán" }),
@@ -244,14 +356,18 @@ function renderCheckout() {
 
   place.addEventListener("click", async () => {
     if (state.pending) return;
-    const addressId = main.querySelector('input[name="addressId"]:checked')?.value;
+    const addressId = state.selectedAddressId && state.addresses.some((address) => String(address._id) === String(state.selectedAddressId))
+      ? state.selectedAddressId : null;
     const invalid = items.filter((item) => !item.available);
     if (invalid.length) { error.textContent = "Có sản phẩm không còn bán hoặc hết hàng. Vui lòng quay lại giỏ để xóa hoặc sửa."; return; }
-    if (!addressId) { error.textContent = "Vui lòng thêm và chọn địa chỉ nhận hàng."; return; }
+    if (!addressId && !state.oneTimeAddress) { error.textContent = "Vui lòng thêm và chọn địa chỉ nhận hàng."; place.disabled = true; return; }
     if (!items.length) { error.textContent = "Không có sản phẩm nào được chọn."; return; }
     const paymentMethod = main.querySelector('input[name="paymentMethod"]:checked')?.value || "cod";
     const voucherPayload = Object.fromEntries(Object.entries(state.selectedVouchers).filter(([, value]) => value));
-    const payload = { cartItemIds: items.map((item) => item._id), addressId, paymentMethod, note: note.value.trim(), vouchers: voucherPayload };
+    const payload = {
+      cartItemIds: items.map((item) => item._id), ...(addressId ? { addressId } : { address: state.oneTimeAddress }),
+      paymentMethod, note: note.value.trim(), vouchers: voucherPayload,
+    };
     place.disabled = true; place.setAttribute("aria-busy", "true"); place.textContent = "Đang đặt hàng…";
     state.pending = true;
     sessionStorage.setItem(PENDING_KEY, JSON.stringify({ fingerprint, at: Date.now() }));
@@ -274,7 +390,7 @@ function renderCheckout() {
 }
 
 async function init(user) {
-  await mountShoppingChrome(user);
+  state.profile = await mountShoppingChrome(user);
   const prior = storedResult();
   if (prior) {
     renderResult(prior, prior.orders.some((o) => o.payment?.method === "online" && o.payment?.status === "unpaid"));
@@ -297,8 +413,7 @@ async function init(user) {
   }
   try {
     [state.cart, state.addresses, state.vouchers] = await Promise.all([getCart(), getAddresses(), getMyVouchers("unused")]);
-    const points = await (await import("./api.js")).request("/customer/points");
-    state.points = Number(points.points || 0);
+    state.selectedAddressId = chooseDefaultAddress()?._id || null;
     const valid = state.cart.items.filter(isSelected);
     if (!valid.length) {
       main.hidden = false;
@@ -306,6 +421,7 @@ async function init(user) {
       return;
     }
     renderCheckout();
+    if (!state.addresses.length) addressFormModal();
   } catch (error) {
     main.hidden = false;
     main.replaceChildren(h("div", { class: "error-state", role: "alert" }, h("p", { text: error.message }), h("button", { class: "btn btn--primary", type: "button", onclick: () => init(), text: "Thử lại" })));
@@ -313,4 +429,15 @@ async function init(user) {
 }
 
 document.addEventListener("shopping:authorized", (event) => init(event.detail?.user));
+document.addEventListener("addresses:changed", async () => {
+  try {
+    const selectedBefore = state.selectedAddressId;
+    state.addresses = await getAddresses();
+    if (selectedBefore && !state.addresses.some((address) => String(address._id) === String(selectedBefore))) {
+      state.selectedAddressId = chooseDefaultAddress()?._id || null;
+    }
+    if (state.addresses.some((address) => String(address._id) === String(state.selectedAddressId))) state.oneTimeAddress = null;
+    if (main.querySelector(".checkout-layout")) renderCheckout();
+  } catch (error) { showToast(error.message, { error: true }); }
+});
 requireCustomerPage();

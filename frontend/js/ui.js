@@ -1,6 +1,7 @@
 import { h } from "./utils.js";
 
 let toastTimer;
+let undoToastTimer;
 
 export function showToast(message, { error = false } = {}) {
   let toast = document.querySelector(".toast");
@@ -16,6 +17,25 @@ export function showToast(message, { error = false } = {}) {
 }
 
 export const comingSoon = () => showToast("Tính năng đang phát triển");
+
+export function showUndoToast(message, onUndo) {
+  let toast = document.querySelector(".toast");
+  if (!toast) {
+    toast = h("div", { class: "toast", role: "status", "aria-live": "polite" });
+    document.body.append(toast);
+  }
+  const undo = h("button", { class: "text-button", type: "button", text: "Hoàn tác" });
+  undo.addEventListener("click", async () => {
+    undo.disabled = true;
+    try { await onUndo(); toast.classList.remove("is-visible"); }
+    catch (error) { showToast(error.message, { error: true }); }
+  });
+  toast.replaceChildren(h("span", { text: `${message} ` }), undo);
+  toast.classList.remove("is-error");
+  toast.classList.add("is-visible");
+  clearTimeout(undoToastTimer);
+  undoToastTimer = setTimeout(() => toast.classList.remove("is-visible"), 6000);
+}
 
 const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
 

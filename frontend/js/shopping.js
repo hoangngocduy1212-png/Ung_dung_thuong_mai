@@ -4,6 +4,7 @@ import { getCart, countCartItems } from "./cart-service.js";
 import { clearSession } from "./session.js";
 import { showToast, comingSoon } from "./ui.js";
 import { getCategories, getBrands } from "./product-service.js";
+import { ORDER_STATUS_LABELS, statusClass } from "./status-labels.js";
 
 let cartChangeListenerBound = false;
 
@@ -66,10 +67,16 @@ function accountBlock(user) {
   const menuItems = [];
   const menuButton = (text, action) => h("button", { role: "menuitem", type: "button", onclick: () => { menu.hidden = true; trigger.setAttribute("aria-expanded", "false"); action(); } }, text);
   if (user.role === "customer") {
-    menuItems.push(menuButton("Tài khoản", comingSoon));
+    menuItems.push(h("a", { role: "menuitem", href: "./account.html?section=profile", text: "Tài khoản" }));
     menuItems.push(h("a", { role: "menuitem", href: "./orders.html", text: "Đơn hàng" }));
-    menuItems.push(menuButton("Voucher của tôi", comingSoon));
-    menuItems.push(menuButton("Điểm thưởng", comingSoon));
+    menuItems.push(h("a", { role: "menuitem", href: "./account.html?section=addresses", text: "Sổ địa chỉ" }));
+    menuItems.push(h("a", { role: "menuitem", href: "./account.html?section=security", text: "Đổi mật khẩu" }));
+    menuItems.push(h("a", { role: "menuitem", href: "./account.html?section=vouchers", text: "Voucher của tôi" }));
+    menuItems.push(h("a", { role: "menuitem", href: "./account.html?section=points" }, "Điểm thưởng", user.points != null ? h("span", { class: "account-menu__badge", text: `${Number(user.points).toLocaleString("vi-VN")} điểm` }) : null));
+    menuItems.push(h("a", { role: "menuitem", href: "./account.html?section=wishlist", text: "Yêu thích" }));
+    menuItems.push(h("a", { role: "menuitem", href: "./account.html?section=reviews", text: "Đánh giá của tôi" }));
+    menuItems.push(h("a", { role: "menuitem", href: "./account.html?section=after-sales", text: "Hoàn tiền / Đổi hàng" }));
+    menuItems.push(h("a", { role: "menuitem", href: "./account.html?section=complaints", text: "Khiếu nại" }));
   } else if (user.role === "seller") {
     menuItems.push(menuButton("Vào Seller Center", comingSoon));
   } else {
@@ -147,17 +154,13 @@ export async function mountShoppingChrome(userOverride) {
   return user;
 }
 
-export const statusLabels = {
-  cho_xac_nhan: "Chờ xác nhận",
-  da_xac_nhan: "Đã xác nhận",
-  dang_giao: "Đang giao",
-  da_giao: "Đã giao",
-  hoan_tat: "Hoàn tất",
-  da_huy: "Đã hủy",
-  da_tra_hang: "Đã trả hàng",
-};
+document.addEventListener("points:changed", (event) => {
+  const badgeText = `${Number(event.detail?.points || 0).toLocaleString("vi-VN")} điểm`;
+  document.querySelectorAll(".account-menu__badge").forEach((badge) => { badge.textContent = badgeText; });
+});
 
-export const orderStatusClass = (status) => `status status--${status || "unknown"}`;
+export const statusLabels = ORDER_STATUS_LABELS;
+export const orderStatusClass = statusClass;
 
 export function notifyCartChanged() {
   document.dispatchEvent(new CustomEvent("cart:changed"));

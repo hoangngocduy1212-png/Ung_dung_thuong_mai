@@ -231,3 +231,15 @@ async function init() {
 }
 
 init();
+
+document.addEventListener("reviews:changed", () => {
+  if (!state.product) return;
+  state.reviewPage = 1;
+  loadReviews(state.product._id);
+});
+
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden || !state.product) return;
+  state.reviewPage = 1;
+  loadReviews(state.product._id);
+});

@@ -9,6 +9,4 @@ export const getProducts = (params, signal) => request("/products", { auth: fals
 
 export const getProduct = (id) => request(`/products/${encodeURIComponent(id)}`, { auth: false });
 
-export const getWishlist = () => request("/customer/wishlist");
-export const addWishlist = (productId) => request(`/customer/wishlist/${encodeURIComponent(productId)}`, { method: "POST" });
-export const removeWishlist = (productId) => request(`/customer/wishlist/${encodeURIComponent(productId)}`, { method: "DELETE" });
+export { getWishlist, addWishlist, removeWishlist } from "./wishlist-service.js";

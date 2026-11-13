@@ -7,7 +7,7 @@ export function productCard(product, {
   onAdd,
 } = {}) {
   const stock = Number(product.totalStock ?? 0);
-  const out = stock <= 0;
+  const out = product.available === false || stock <= 0;
   const multi = Number(product.variantCount ?? 0) > 1;
   const fav = showActions && onFavorite
     ? h("button", {
@@ -25,7 +25,7 @@ export function productCard(product, {
         type: "button",
         disabled: out,
         onclick: (event) => onAdd(product, event.currentTarget),
-      }, out ? "Hết hàng" : multi ? "Chọn phân loại" : "Thêm vào giỏ")
+      }, product.available === false ? "Không còn bán" : out ? "Hết hàng" : multi ? "Chọn phân loại" : "Thêm vào giỏ")
     : null;
   const imageLink = h("a", { href: `./product.html?id=${encodeURIComponent(product._id)}`, "aria-label": `Xem ${product.name}` }, makeImage(product.images?.[0], product.name));
   const title = h("a", { href: `./product.html?id=${encodeURIComponent(product._id)}`, text: product.name });

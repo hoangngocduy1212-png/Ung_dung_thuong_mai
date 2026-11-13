@@ -121,8 +121,26 @@ r.delete('/cart/items/:itemId', asyncHandler(async (req, res) => {
 // ======================= Yêu thích =======================
 r.get('/wishlist', asyncHandler(async (req, res) => {
   const w = await Wishlist.findOne({ user: req.user._id });
-  const items = await Product.find({ _id: { $in: w?.products || [] }, isDeleted: false, hidden: false }).populate('shop', 'name').lean();
-  res.json(items);
+  const products = await Product.find({ _id: { $in: w?.products || [] } }).populate('shop', 'name status').lean();
+  const variants = await Variant.find({ product: { $in: products.map((product) => product._id) }, isDeleted: false }).select('product name price stock').lean();
+  const byProduct = new Map();
+  variants.forEach((variant) => {
+    const key = String(variant.product);
+    if (!byProduct.has(key)) byProduct.set(key, []);
+    byProduct.get(key).push(variant);
+  });
+  res.json(products.map((product) => {
+    const productVariants = byProduct.get(String(product._id)) || [];
+    const totalStock = productVariants.reduce((sum, variant) => sum + variant.stock, 0);
+    return {
+      ...product,
+      variants: productVariants,
+      variantCount: productVariants.length,
+      totalStock,
+      minPrice: productVariants.length ? Math.min(...productVariants.map((variant) => variant.price)) : product.minPrice,
+      available: !product.isDeleted && !product.hidden && product.shop?.status === 'active' && totalStock > 0,
+    };
+  }));
 }));
 r.post('/wishlist/:productId', asyncHandler(async (req, res) => {
   const p = await Product.findOne({ _id: req.params.productId, isDeleted: false });
@@ -185,10 +203,20 @@ r.get('/orders', asyncHandler(async (req, res) => {
   const pg = pageParams(req.query, 10);
   const f = { customer: req.user._id };
   if (req.query.status) f.status = req.query.status;
-  const [items, total] = await Promise.all([
+  const [orders, total] = await Promise.all([
     Order.find(f).sort({ createdAt: -1 }).skip(pg.skip).limit(pg.limit).populate('shop', 'name logo').lean(),
     Order.countDocuments(f),
   ]);
+  const orderIds = orders.map((order) => order._id);
+  const [afterSales, reviews] = await Promise.all([
+    AfterSales.find({ order: { $in: orderIds } }).sort({ createdAt: -1 }).lean(),
+    Review.find({ order: { $in: orderIds } }).select('order product').lean(),
+  ]);
+  const items = orders.map((order) => ({
+    ...order,
+    afterSales: afterSales.filter((request) => String(request.order) === String(order._id)),
+    reviewedProducts: reviews.filter((review) => String(review.order) === String(order._id)).map((review) => String(review.product)),
+  }));
   res.json(paged(items, total, pg));
 }));
 
@@ -203,7 +231,7 @@ r.get('/orders/:id', asyncHandler(async (req, res) => {
   if (!o) throw new AppError('Không tìm thấy đơn hàng', 404);
   const [afterSales, reviews] = await Promise.all([
     AfterSales.find({ order: o._id }).sort({ createdAt: -1 }).lean(),
-    Review.find({ order: o._id, isDeleted: false }).select('product').lean(),
+    Review.find({ order: o._id }).select('product').lean(),
   ]);
   res.json({ ...o, afterSales, reviewedProducts: reviews.map((x) => String(x.product)) });
 }));
@@ -244,6 +272,17 @@ r.get('/after-sales', asyncHandler(async (req, res) => {
 }));
 
 // ======================= Đánh giá (sau khi nhận hàng) =======================
+r.get('/reviews', asyncHandler(async (req, res) => {
+  const pg = pageParams(req.query, 10);
+  const filter = { customer: req.user._id, isDeleted: false };
+  const [items, total] = await Promise.all([
+    Review.find(filter).sort({ createdAt: -1 }).skip(pg.skip).limit(pg.limit)
+      .populate('order', 'code').populate('product', 'name images').lean(),
+    Review.countDocuments(filter),
+  ]);
+  res.json(paged(items, total, pg));
+}));
+
 r.post('/reviews', asyncHandler(async (req, res) => {
   const d = parse(z.object({ orderId: zId, productId: zId, rating: z.number().int().min(1).max(5), content: z.string().max(1000).optional() }), req.body);
   const o = await Order.findOne({ _id: d.orderId, customer: req.user._id });

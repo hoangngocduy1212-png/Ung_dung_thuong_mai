@@ -9,8 +9,13 @@ HTML, CSS và JavaScript thuần (ES modules) trong `frontend/`, gọi trực ti
 - `auth.html`: đăng nhập, đăng ký khách hàng/chủ gian hàng/nhân viên, quên và đặt lại mật khẩu.
 - `products.html`, `product.html`: danh sách/lọc sản phẩm và chi tiết sản phẩm, biến thể, đánh giá.
 - `cart.html`, `checkout.html`, `orders.html`: giỏ hàng, thanh toán/địa chỉ, lịch sử và trạng thái đơn hàng.
+- `account.html?section=...`: hồ sơ, sổ địa chỉ, bảo mật, voucher, điểm, yêu thích, đánh giá, hậu mãi và khiếu nại.
 
 Chạy: bật backend (xem bên dưới, cổng 5000), rồi mở thư mục `frontend` bằng Live Server tại `http://127.0.0.1:5500` (hoặc `npx serve -l 5500 frontend`). Địa chỉ API đặt ở `frontend/js/config.js` (`API_BASE_URL`).
+
+Checkout tải mới hồ sơ và sổ địa chỉ khi mở. Địa chỉ mặc định được chọn trước; nếu chưa có mặc định, lấy địa chỉ thêm gần nhất. Có thể lưu địa chỉ hoặc gửi trực tiếp địa chỉ chỉ dùng cho đơn hiện tại. Backend lưu snapshot địa chỉ trong đơn, nên sửa sổ địa chỉ không đổi đơn cũ. Tài khoản cần role `customer`; khách vãng lai được chuyển tới đăng nhập, vai trò khác nhận thông báo trang dành cho khách hàng.
+
+Tài liệu method, URL, body, response và mã lỗi của API khách hàng nằm trong `docs/TAI-KHOAN-API.md`. API khách hàng có danh sách review riêng tại `GET /customer/reviews`; ảnh review và ảnh yêu cầu hậu mãi hiện chưa được hỗ trợ.
 
 CORS: backend cho phép `http://127.0.0.1:5500`, `http://localhost:5500` và các origin trong `CLIENT_ORIGIN` (phân tách bằng dấu phẩy).
 
@@ -42,5 +47,5 @@ Tài khoản mẫu: `admin@shop.local / Admin@123`, `cskh@shop.local / Cskh@123`
 ## Cấu trúc
 ```
 server/src/  models/ (dữ liệu)  routes/ (API theo tác nhân)  services/ (đặt hàng, voucher, điểm, thống kê)  middleware/  seed.js
-server/test/smoke.js  (122 kiểm tra)
+server/test/smoke.js  (127 kiểm tra)
 ```

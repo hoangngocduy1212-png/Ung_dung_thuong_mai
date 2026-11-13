@@ -1333,6 +1333,7 @@
 
 .toast.is-visible {
   opacity: 1;
+  pointer-events: auto;
   transform: translateY(0);
 }
 
@@ -1484,6 +1485,8 @@
   right: 0;
   display: grid;
   min-width: 220px;
+  max-height: min(80vh, 560px);
+  overflow-y: auto;
   padding: 6px;
   border: 1px solid #e1eaf4;
   border-radius: 12px;
@@ -1541,6 +1544,13 @@
 
 .account-menu a {
   text-decoration: none;
+}
+
+.account-menu__badge {
+  float: right;
+  color: #78889b;
+  font-size: 10px;
+  font-weight: 600;
 }
 
 .account-menu .is-danger {
