@@ -1,6 +1,6 @@
 import { h, $, $$, debounce } from "./utils.js";
 import {
-  forgotPassword, isCustomer, listActiveShops, login, refreshProfile, registerCustomer, registerSeller, resetPassword, saveSession,
+  forgotPassword, homeRedirectFor, isCustomer, listActiveShops, login, refreshProfile, registerCustomer, registerSeller, resetPassword, saveSession,
 } from "./auth-service.js";
 import { getToken, setFlash } from "./session.js";
 
@@ -268,8 +268,8 @@ async function onLogin(form) {
     if (user.role === "seller" && shop && SHOP_BLOCK[shop.status]) return formError(form, SHOP_BLOCK[shop.status]);
 
     saveSession({ token, user }, form.elements.remember.checked);
-    if (!isCustomer(user)) setFlash("Tính năng đang phát triển");
-    location.replace(isCustomer(user) && state.redirect ? state.redirect : "./index.html");
+    if (!isCustomer(user) && user.role !== "cskh") setFlash("Tính năng đang phát triển");
+    location.replace(isCustomer(user) && state.redirect ? state.redirect : homeRedirectFor(user));
     await new Promise(() => {}); // giữ trạng thái loading trong lúc chuyển trang
   } catch (error) {
     if (error.status === 401 || error.status === 403) formError(form, error.message);
@@ -601,8 +601,8 @@ async function init() {
   if (getToken()) {
     const user = await refreshProfile();
     if (user) {
-      if (!isCustomer(user)) setFlash("Tính năng đang phát triển");
-      location.replace(isCustomer(user) && state.redirect ? state.redirect : "./index.html");
+      if (!isCustomer(user) && user.role !== "cskh") setFlash("Tính năng đang phát triển");
+      location.replace(isCustomer(user) && state.redirect ? state.redirect : homeRedirectFor(user));
       return;
     }
   }
