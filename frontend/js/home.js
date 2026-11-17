@@ -100,6 +100,8 @@ function renderAccount() {
     items.push(h("a", { href: "./account.html?section=reviews", role: "menuitem", class: "account-menu__link", text: "Đánh giá của tôi" }));
     items.push(h("a", { href: "./account.html?section=after-sales", role: "menuitem", class: "account-menu__link", text: "Hoàn tiền / Đổi hàng" }));
     items.push(h("a", { href: "./account.html?section=complaints", role: "menuitem", class: "account-menu__link", text: "Khiếu nại" }));
+  } else if (user.role === "cskh") {
+    items.push(h("a", { href: "./staff.html", role: "menuitem", class: "account-menu__link", text: "Vào khu vực CSKH" }));
   } else if (user.role === "seller") {
     items.push(item("Vào Seller Center", comingSoon));
   } else {

@@ -1,16 +1,34 @@
 import { Router } from 'express';
 import { z } from 'zod';
 import AppError from '../utils/AppError.js';
-import { asyncHandler, parse, pageParams, paged, escapeRegex } from '../utils/helpers.js';
+import { asyncHandler, parse, pageParams, paged, escapeRegex, zId } from '../utils/helpers.js';
 import { auth, requireRole } from '../middleware/auth.js';
 import User from '../models/User.js';
-import Order from '../models/Order.js';
+import Order, { ORDER_STATUS } from '../models/Order.js';
+import { Product } from '../models/Product.js';
 import { Review, Complaint } from '../models/Support.js';
 import { recalcRatings } from '../services/ratingService.js';
 
 // Nhân viên CSKH
 const r = Router();
 r.use(auth, requireRole('cskh'));
+
+const positiveInteger = z.string().regex(/^[1-9]\d*$/).refine((value) => Number.isSafeInteger(Number(value)) && Number(value) <= Math.floor(Number.MAX_SAFE_INTEGER / 100), 'Giá trị phân trang quá lớn');
+const querySchema = z.object({
+  q: z.string().trim().max(200).optional(),
+  scope: z.enum(['pool', 'mine', 'history']).optional(),
+  status: z.enum(ORDER_STATUS).optional(),
+  product: zId.optional(),
+  rating: z.enum(['1', '2', '3', '4', '5']).optional(),
+  page: positiveInteger.optional(),
+  limit: positiveInteger.optional(),
+});
+// Không đưa object/toán tử từ query string vào bộ lọc MongoDB.
+// scope chỉ nhận enum, tránh truy cập các thuộc tính kế thừa như __proto__.
+r.use((req, _res, next) => {
+  req.query = parse(querySchema, req.query);
+  next();
+});
 
 // ---- Tra cứu khách hàng ----
 r.get('/customers', asyncHandler(async (req, res) => {
@@ -63,16 +81,29 @@ r.get('/complaints', asyncHandler(async (req, res) => {
     history: { assignedTo: req.user._id, status: 'da_xu_ly' },
   }[scope];
   if (!f) throw new AppError('scope không hợp lệ (pool | mine | history)', 400);
-  const [items, total] = await Promise.all([Complaint.find(f).sort({ createdAt: -1 }).skip(pg.skip).limit(pg.limit).lean(), Complaint.countDocuments(f)]);
+  if (req.query.q) {
+    const rx = { $regex: escapeRegex(req.query.q), $options: 'i' };
+    f.$or = ['code', 'orderCode', 'contactName', 'contactPhone', 'contactEmail', 'reason'].map((key) => ({ [key]: rx }));
+  }
+  const sort = scope === 'history' ? { resolvedAt: -1, _id: -1 } : { createdAt: -1, _id: -1 };
+  const [items, total] = await Promise.all([Complaint.find(f).sort(sort).skip(pg.skip).limit(pg.limit).lean(), Complaint.countDocuments(f)]);
   res.json(paged(items, total, pg));
 }));
 
-const loadComplaint = async (req, { mustBeOpen = true } = {}) => {
+// Nhận quyền phụ trách và cập nhật trong CÙNG một thao tác nguyên tử.
+// Hai nhân viên đọc một đơn mới đồng thời cũng chỉ có một người nhận được đơn.
+const updateComplaint = async (req, update) => {
+  const updated = await Complaint.findOneAndUpdate({
+    _id: req.params.id,
+    status: { $in: ['moi', 'dang_xu_ly'] },
+    $or: [{ assignedTo: null }, { assignedTo: req.user._id }],
+  }, { ...update, $set: { ...update.$set, assignedTo: req.user._id } }, { new: true, runValidators: true });
+  if (updated) return updated;
   const c = await Complaint.findById(req.params.id);
   if (!c) throw new AppError('Không tìm thấy đơn khiếu nại', 404);
   if (c.assignedTo && String(c.assignedTo) !== String(req.user._id)) throw new AppError('Đơn này đang do nhân viên khác phụ trách', 403);
-  if (mustBeOpen && !['moi', 'dang_xu_ly'].includes(c.status)) throw new AppError('Đơn khiếu nại không còn ở trạng thái xử lý của CSKH', 400);
-  return c;
+  if (!['moi', 'dang_xu_ly'].includes(c.status)) throw new AppError('Đơn khiếu nại không còn ở trạng thái xử lý của CSKH', 400);
+  throw new AppError('Đơn khiếu nại vừa được cập nhật, vui lòng tải lại', 409);
 };
 
 r.get('/complaints/:id', asyncHandler(async (req, res) => {
@@ -85,38 +116,30 @@ r.get('/complaints/:id', asyncHandler(async (req, res) => {
 
 // Phản hồi khách (lần phản hồi đầu tiên = nhận xử lý đơn)
 r.post('/complaints/:id/respond', asyncHandler(async (req, res) => {
-  const { content } = parse(z.object({ content: z.string().min(2).max(2000) }), req.body);
-  const c = await loadComplaint(req);
-  c.assignedTo = c.assignedTo || req.user._id;
-  c.status = 'dang_xu_ly';
-  c.responses.push({ by: req.user._id, role: 'cskh', content });
-  await c.save();
+  const { content } = parse(z.object({ content: z.string().trim().min(2).max(2000) }), req.body);
+  const c = await updateComplaint(req, {
+    $set: { status: 'dang_xu_ly' },
+    $push: { responses: { by: req.user._id, role: 'cskh', content, at: new Date() } },
+  });
   res.json(c);
 }));
 
 // Đã giải quyết xong
 r.post('/complaints/:id/resolve', asyncHandler(async (req, res) => {
-  const { result } = parse(z.object({ result: z.string().min(3).max(2000) }), req.body);
-  const c = await loadComplaint(req);
-  c.assignedTo = c.assignedTo || req.user._id;
-  c.status = 'da_xu_ly';
-  c.result = result;
-  c.resolvedBy = req.user._id;
-  c.resolvedAt = new Date();
-  c.responses.push({ by: req.user._id, role: 'cskh', content: `Kết quả xử lý: ${result}` });
-  await c.save();
+  const { result } = parse(z.object({ result: z.string().trim().min(3).max(2000) }), req.body);
+  const c = await updateComplaint(req, {
+    $set: { status: 'da_xu_ly', result, resolvedBy: req.user._id, resolvedAt: new Date() },
+    $push: { responses: { by: req.user._id, role: 'cskh', content: `Kết quả xử lý: ${result}`, at: new Date() } },
+  });
   res.json(c);
 }));
 
 // Không xử lý được -> chuyển quản trị viên
 r.post('/complaints/:id/escalate', asyncHandler(async (req, res) => {
-  const { note } = parse(z.object({ note: z.string().min(3).max(2000) }), req.body);
-  const c = await loadComplaint(req);
-  c.assignedTo = c.assignedTo || req.user._id;
-  c.status = 'chuyen_admin';
-  c.escalateNote = note;
-  c.escalatedAt = new Date();
-  await c.save();
+  const { note } = parse(z.object({ note: z.string().trim().min(3).max(2000) }), req.body);
+  const c = await updateComplaint(req, {
+    $set: { status: 'chuyen_admin', escalateNote: note, escalatedAt: new Date() },
+  });
   res.json(c);
 }));
 
@@ -125,6 +148,11 @@ r.get('/reviews', asyncHandler(async (req, res) => {
   const pg = pageParams(req.query, 20);
   const f = { isDeleted: false };
   if (req.query.product) f.product = req.query.product;
+  if (req.query.q) {
+    const products = await Product.find({ name: { $regex: escapeRegex(req.query.q), $options: 'i' } }).select('_id').lean();
+    // Kết hợp cả bộ lọc ID và tên, kể cả sản phẩm đã ẩn/xóa mềm.
+    f.$and = [{ product: { $in: products.map((p) => p._id) } }];
+  }
   if (req.query.rating) f.rating = Number(req.query.rating);
   const [items, total] = await Promise.all([
     Review.find(f).sort({ createdAt: -1 }).skip(pg.skip).limit(pg.limit).populate('product', 'name').populate('customer', 'fullName').populate('shop', 'name').lean(),
@@ -133,11 +161,9 @@ r.get('/reviews', asyncHandler(async (req, res) => {
   res.json(paged(items, total, pg));
 }));
 r.delete('/reviews/:id', asyncHandler(async (req, res) => {
-  const rv = await Review.findOne({ _id: req.params.id, isDeleted: false });
+  const rv = await Review.findOneAndUpdate({ _id: req.params.id, isDeleted: false },
+    { $set: { isDeleted: true, deletedBy: req.user._id } }, { new: true });
   if (!rv) throw new AppError('Không tìm thấy đánh giá', 404);
-  rv.isDeleted = true;
-  rv.deletedBy = req.user._id;
-  await rv.save();
   await recalcRatings(rv.product, rv.shop);
   res.json({ message: 'Đã xóa đánh giá' });
 }));

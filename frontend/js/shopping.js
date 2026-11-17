@@ -56,13 +56,15 @@ export function requireCustomerPage() {
   return true;
 }
 
-function accountBlock(user) {
+function accountBlock(user, { onLogout } = {}) {
   const wrap = h("div", { class: "account-area shopping-account" });
   if (!user) {
     wrap.append(h("a", { class: "account-trigger", href: "./auth.html?tab=login", text: "Đăng nhập / Đăng ký" }));
     return wrap;
   }
-  const trigger = h("button", { class: "account-trigger", type: "button", "aria-haspopup": "menu", "aria-expanded": "false", "aria-controls": "shopping-account-menu" },
+  const userIcon = h("span", { class: "account-link__icon", "aria-hidden": "true" });
+  userIcon.append(document.createRange().createContextualFragment('<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.7"/><path d="M4 21a8 8 0 0 1 16 0" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>'));
+  const trigger = h("button", { class: "account-trigger", type: "button", "aria-label": `Tài khoản ${user.fullName || user.email}`, "aria-haspopup": "menu", "aria-expanded": "false", "aria-controls": "shopping-account-menu" }, userIcon,
     h("span", { class: "account-link__copy" }, h("small", { text: "Xin chào," }), h("strong", { text: user.fullName || user.email })));
   const menuItems = [];
   const menuButton = (text, action) => h("button", { role: "menuitem", type: "button", onclick: () => { menu.hidden = true; trigger.setAttribute("aria-expanded", "false"); action(); } }, text);
@@ -77,12 +79,14 @@ function accountBlock(user) {
     menuItems.push(h("a", { role: "menuitem", href: "./account.html?section=reviews", text: "Đánh giá của tôi" }));
     menuItems.push(h("a", { role: "menuitem", href: "./account.html?section=after-sales", text: "Hoàn tiền / Đổi hàng" }));
     menuItems.push(h("a", { role: "menuitem", href: "./account.html?section=complaints", text: "Khiếu nại" }));
+  } else if (user.role === "cskh") {
+    menuItems.push(h("a", { role: "menuitem", href: "./staff.html", text: "Vào khu vực CSKH" }));
   } else if (user.role === "seller") {
     menuItems.push(menuButton("Vào Seller Center", comingSoon));
   } else {
     menuItems.push(menuButton("Vào trang quản trị", comingSoon));
   }
-  menuItems.push(menuButton("Đăng xuất", () => { clearSession(); location.replace("./index.html"); }));
+  menuItems.push(menuButton("Đăng xuất", onLogout || (() => { clearSession(); location.replace("./index.html"); })));
   const menu = h("div", { class: "account-menu", id: "shopping-account-menu", role: "menu", hidden: true },
     h("div", { class: "account-menu__head" }, h("strong", { text: user.fullName || user.email }), h("small", { text: ROLE_LABEL[user.role] || "" })),
     ...menuItems);
@@ -90,18 +94,30 @@ function accountBlock(user) {
     menu.hidden = !menu.hidden;
     trigger.setAttribute("aria-expanded", String(!menu.hidden));
   });
+  document.addEventListener("click", event => {
+    if (!wrap.contains(event.target)) { menu.hidden = true; trigger.setAttribute("aria-expanded", "false"); }
+  });
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape" && !menu.hidden) {
+      menu.hidden = true;
+      trigger.setAttribute("aria-expanded", "false");
+      trigger.focus();
+    }
+  });
   wrap.append(trigger, menu);
   return wrap;
 }
 
-export async function mountShoppingChrome(userOverride) {
+/** Header/footer chung; variant="support" dùng nội dung dành cho nhân viên CSKH. */
+export async function mountShoppingChrome(userOverride, options = {}) {
   const host = $("#shopping-chrome");
   if (!host) return null;
   const user = userOverride === undefined ? await refreshProfile() : userOverride;
+  const support = options.variant === "support";
   const announcement = h("div", { class: "announcement" },
     h("div", { class: "container announcement__inner" },
-      h("span", { text: "Phí vận chuyển cố định cho mỗi đơn hàng" }),
-      h("a", { href: "./index.html#support", text: "Hỗ trợ khách hàng →" })));
+      h("span", { text: support ? "Khu vực nội bộ dành cho nhân viên chăm sóc khách hàng" : "Phí vận chuyển cố định cho mỗi đơn hàng" }),
+      h("a", { href: support ? "./index.html" : "./index.html#support", text: support ? "Về trang mua sắm →" : "Hỗ trợ khách hàng →" })));
   const icon = document.createElement("span");
   icon.className = "brand__icon";
   icon.setAttribute("aria-hidden", "true");
@@ -122,32 +138,37 @@ export async function mountShoppingChrome(userOverride) {
   const cart = h("a", { class: "cart", href: "./cart.html", "aria-label": "Giỏ hàng" },
     cartIcon, h("span", { class: "cart__count", text: "0" }), h("span", { class: "cart__label", text: "Giỏ hàng" }));
   const mainHeader = h("div", { class: "site-header" },
-    h("div", { class: "container header-main" }, brand, search, accountBlock(user), user && user.role !== "customer" ? null : cart));
-  const navItems = [h("a", { href: "./products.html", text: "Tất cả sản phẩm" })];
-  try {
-    const [categories, brands] = await Promise.all([getCategories(), getBrands()]);
-    categories.filter((category) => !category.parent).forEach((category) => navItems.push(
-      h("a", { href: `./products.html?category=${encodeURIComponent(category._id)}`, text: category.name })));
-    brands.forEach((brand) => navItems.push(
-      h("a", { href: `./products.html?brand=${encodeURIComponent(brand._id)}`, text: brand.name })));
-  } catch (error) {
-    showToast(error.message, { error: true });
+    h("div", { class: "container header-main" }, brand,
+      support ? h("div", { class: "support-header-title" }, h("span", { class: "section-kicker", text: "CHĂM SÓC KHÁCH HÀNG" }), h("strong", { text: "Trung tâm hỗ trợ" })) : search,
+      accountBlock(user, options), support || (user && user.role !== "customer") ? null : cart));
+  let nav;
+  if (!support) {
+    const navItems = [h("a", { href: "./products.html", text: "Tất cả sản phẩm" })];
+    try {
+      const [categories, brands] = await Promise.all([getCategories(), getBrands()]);
+      categories.filter((category) => !category.parent).forEach((category) => navItems.push(
+        h("a", { href: `./products.html?category=${encodeURIComponent(category._id)}`, text: category.name })));
+      brands.forEach((brand) => navItems.push(
+        h("a", { href: `./products.html?brand=${encodeURIComponent(brand._id)}`, text: brand.name })));
+    } catch (error) {
+      showToast(error.message, { error: true });
+    }
+    nav = h("nav", { class: "category-nav", "aria-label": "Danh mục và thương hiệu" },
+      h("div", { class: "container category-nav__inner" }, h("div", { class: "category-links" }, ...navItems)));
   }
-  const nav = h("nav", { class: "category-nav", "aria-label": "Danh mục và thương hiệu" },
-    h("div", { class: "container category-nav__inner" }, h("div", { class: "category-links" }, ...navItems)));
   const footer = h("footer", { class: "site-footer" },
     h("div", { class: "container footer__inner" },
       h("a", { class: "brand brand--footer", href: "./index.html", text: "TechStore" }),
-      h("p", { text: "Giỏ hàng nhiều gian hàng được tách thành các đơn riêng; phí vận chuyển tính theo từng đơn." }),
+      h("p", { text: support ? "Chăm sóc khách hàng · Tiếp nhận, hỗ trợ và theo dõi khiếu nại." : "Giỏ hàng nhiều gian hàng được tách thành các đơn riêng; phí vận chuyển tính theo từng đơn." }),
       h("small", { text: "© 2026 TechStore." })));
-  host.replaceChildren(announcement, mainHeader, nav);
+  host.replaceChildren(announcement, mainHeader, ...(nav ? [nav] : []));
   $("#shopping-footer")?.replaceWith(footer);
   try {
-    if (user?.role === "customer") cart.querySelector(".cart__count").textContent = String(countCartItems(await getCart()));
+    if (!support && user?.role === "customer") cart.querySelector(".cart__count").textContent = String(countCartItems(await getCart()));
   } catch (error) {
     showToast(error.message, { error: true });
   }
-  if (user?.role === "customer" && !cartChangeListenerBound) {
+  if (!support && user?.role === "customer" && !cartChangeListenerBound) {
     document.addEventListener("cart:changed", updateCartBadge);
     cartChangeListenerBound = true;
   }

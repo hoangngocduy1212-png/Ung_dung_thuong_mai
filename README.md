@@ -10,6 +10,7 @@ HTML, CSS và JavaScript thuần (ES modules) trong `frontend/`, gọi trực ti
 - `products.html`, `product.html`: danh sách/lọc sản phẩm và chi tiết sản phẩm, biến thể, đánh giá.
 - `cart.html`, `checkout.html`, `orders.html`: giỏ hàng, thanh toán/địa chỉ, lịch sử và trạng thái đơn hàng.
 - `account.html?section=...`: hồ sơ, sổ địa chỉ, bảo mật, voucher, điểm, yêu thích, đánh giá, hậu mãi và khiếu nại.
+- `staff.html`: khu vực CSKH, tra cứu khách/đơn hàng, tiếp nhận/phản hồi/chuyển khiếu nại, quản lý đánh giá và lịch sử xử lý. Tài khoản `cskh` đăng nhập sẽ chuyển thẳng vào đây. Hướng dẫn và hợp đồng API: `docs/CSKH.md`.
 
 Chạy: bật backend (xem bên dưới, cổng 5000), rồi mở thư mục `frontend` bằng Live Server tại `http://127.0.0.1:5500` (hoặc `npx serve -l 5500 frontend`). Địa chỉ API đặt ở `frontend/js/config.js` (`API_BASE_URL`).
 
@@ -29,10 +30,14 @@ cp .env.example .env      # sửa MONGODB_URI thành chuỗi kết nối MongoDB
 npm run seed:demo         # admin + danh mục + dữ liệu mẫu
 npm run dev               # http://localhost:5000/api/health
 npm test                  # kiểm thử toàn bộ luồng (dùng CSDL tạm rồi xóa)
+npm run test:local        # bộ smoke với MongoDB tạm cục bộ, không dùng Atlas
+npm run test:cskh         # kiểm thử riêng CSKH và các tình huống đồng thời trên DB tạm
 ```
 Atlas: tạo cluster → Database Access (user/mật khẩu) → Network Access (thêm IP của bạn) → Connect → Drivers → copy chuỗi, thay `<password>`, thêm tên DB `/ecommerce_electronics`.
 
 Tài khoản mẫu: `admin@shop.local / Admin@123`, `cskh@shop.local / Cskh@123`, `owner@shop.local / Owner@123`, `khach@shop.local / Khach@123`.
+
+Cấu hình backend đọc `server/.env`, hoặc `.env` ở thư mục gốc nếu không có cấu hình tương ứng trong `server/.env`. Biến môi trường truyền trực tiếp luôn được ưu tiên. `npm run preview:cskh` chạy API với dữ liệu demo và tài khoản `cskh@demo.local / Demo@123` trong MongoDB tạm, không thay đổi dữ liệu Atlas. Nếu đổi cổng backend, cập nhật `API_BASE_URL` trong `frontend/js/config.js` theo cổng đó.
 
 ## Các nhóm API (`/api`, gửi `Authorization: Bearer <token>`)
 | Nhóm | Tiền tố | Ghi chú |

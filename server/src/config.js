@@ -1,4 +1,9 @@
-import 'dotenv/config';
+import dotenv from 'dotenv';
+import { fileURLToPath } from 'node:url';
+
+// Chạy từ server/ hoặc thư mục gốc đều đọc được cấu hình dự án.
+// Biến môi trường được truyền trực tiếp (ví dụ DB tạm khi test) luôn được ưu tiên.
+dotenv.config({ path: [fileURLToPath(new URL('../.env', import.meta.url)), fileURLToPath(new URL('../../.env', import.meta.url))], quiet: true });
 
 export default {
   port: Number(process.env.PORT) || 5000,
