@@ -6,7 +6,9 @@ export const ROLE_LABEL = { customer: "Khách hàng", seller: "Người bán", c
 export const isCustomer = (user) => user?.role === "customer";
 
 export function homeRedirectFor(user) {
-  return user?.role === "cskh" ? "./staff.html" : "./index.html";
+  if (user?.role === "seller") return "./seller.html";
+  if (user?.role === "cskh") return "./staff.html";
+  return "./index.html";
 }
 
 export const login = (email, password) =>

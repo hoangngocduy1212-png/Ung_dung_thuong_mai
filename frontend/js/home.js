@@ -103,7 +103,7 @@ function renderAccount() {
   } else if (user.role === "cskh") {
     items.push(h("a", { href: "./staff.html", role: "menuitem", class: "account-menu__link", text: "Vào khu vực CSKH" }));
   } else if (user.role === "seller") {
-    items.push(item("Vào Seller Center", comingSoon));
+    items.push(h("a", { href: "./seller.html", role: "menuitem", class: "account-menu__link", text: "Vào Seller Center" }));
   } else {
     items.push(item("Vào trang quản trị", comingSoon));
   }

@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { z } from 'zod';
 import AppError from '../utils/AppError.js';
-import { asyncHandler, parse, pageParams, paged, escapeRegex, zId } from '../utils/helpers.js';
+import { asyncHandler, parse, pageParams, paged, escapeRegex, zId, zPhone } from '../utils/helpers.js';
 import { auth, requireRole, requireOwner, requireActiveShop } from '../middleware/auth.js';
 import { upload } from '../middleware/upload.js';
 import User from '../models/User.js';
@@ -17,6 +17,15 @@ import { parseRange, summarize } from '../services/statsService.js';
 
 const r = Router();
 r.use(auth, requireRole('seller'));
+
+// Hồ sơ người bán dùng lại các trường tài khoản hiện có, không tạo dữ liệu hồ sơ trùng.
+r.get('/profile', (req, res) => res.json(req.user));
+r.put('/profile', asyncHandler(async (req, res) => {
+  const d = parse(z.object({ fullName: z.string().min(2).max(80).optional(), phone: zPhone.optional() }), req.body);
+  Object.assign(req.user, d);
+  await req.user.save();
+  res.json(req.user);
+}));
 
 // ======================= Gian hàng =======================
 // Xem thông tin gian hàng (kể cả khi đang chờ duyệt để biết trạng thái)
@@ -109,7 +118,12 @@ r.post('/products', asyncHandler(async (req, res) => {
   await checkRefs(d);
   const { variants, ...rest } = d;
   const p = await Product.create({ ...rest, shop: req.shop._id, minPrice: Math.min(...variants.map((v) => v.price)) });
-  await Variant.insertMany(variants.map((v) => ({ product: p._id, name: v.name, sku: v.sku, price: v.price, stock: v.stock ?? 0 })));
+  try {
+    await Variant.insertMany(variants.map((v) => ({ product: p._id, name: v.name, sku: v.sku, price: v.price, stock: v.stock ?? 0 })));
+  } catch (error) {
+    await Product.deleteOne({ _id: p._id, shop: req.shop._id });
+    throw error;
+  }
   res.status(201).json((await withVariants([p.toObject()]))[0]);
 }));
 
@@ -120,15 +134,18 @@ r.put('/products/:id', asyncHandler(async (req, res) => {
   const d = parse(productIn.partial(), req.body);
   await checkRefs(d);
   const { variants, ...rest } = d;
-  Object.assign(p, rest);
-  await p.save();
   if (variants) {
     const existing = await Variant.find({ product: p._id, isDeleted: false });
+    // Xác minh tất cả ID trước khi ghi bất kỳ thay đổi nào lên sản phẩm/biến thể.
+    if (variants.some((v) => v._id && !existing.some((e) => String(e._id) === v._id))) {
+      throw new AppError('Biến thể không thuộc sản phẩm này', 400);
+    }
+    Object.assign(p, rest);
+    await p.save();
     const keep = new Set();
     for (const v of variants) {
       if (v._id) {
         const ex = existing.find((e) => String(e._id) === v._id);
-        if (!ex) throw new AppError('Biến thể không thuộc sản phẩm này', 400);
         ex.name = v.name; ex.sku = v.sku; ex.price = v.price;
         await ex.save();
         keep.add(v._id);
@@ -138,6 +155,9 @@ r.put('/products/:id', asyncHandler(async (req, res) => {
       }
     }
     for (const ex of existing) if (!keep.has(String(ex._id))) { ex.isDeleted = true; await ex.save(); }
+  } else {
+    Object.assign(p, rest);
+    await p.save();
   }
   await refreshMinPrice(p._id);
   res.json((await withVariants([(await Product.findById(p._id)).toObject()]))[0]);

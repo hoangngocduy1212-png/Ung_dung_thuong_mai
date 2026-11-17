@@ -62,6 +62,8 @@ try {
   ok(o1.s === 201, 'chủ gian hàng đăng ký tạo gian hàng chờ duyệt');
   ok((await call('POST', '/auth/register-seller', { sellerType: 'owner', fullName: 'Chủ Khác', email: 'dup@t.com', phone: '0922222223', password: 'Pass@123', shopName: ' shop  ALPHA ' })).s === 409, 'gian hàng đã có chủ -> không tạo thêm chủ');
   const OA = o1.d.token;
+  ok((await call('GET', '/seller/profile', null, OA)).d.email === 'ownera@t.com', 'seller xem được hồ sơ tài khoản của chính mình');
+  ok((await call('GET', '/seller/profile')).s === 401, 'khách vãng lai không xem được hồ sơ seller');
   ok((await call('GET', '/seller/products', null, OA)).s === 403, 'gian hàng chưa duyệt chưa được kinh doanh');
   ok((await call('GET', '/seller/shop', null, OA)).d.status === 'pending', 'seller xem được trạng thái chờ duyệt');
   const shops = (await call('GET', '/admin/shops?status=pending', null, A)).d.items;
@@ -73,6 +75,12 @@ try {
   const shopB = (await call('GET', '/admin/shops?status=pending', null, A)).d.items[0];
   await call('PATCH', `/admin/shops/${shopB._id}/approve`, null, A);
   const OB = o2.d.token;
+  const ownerProfile = await call('GET', '/seller/profile', null, OB);
+  ok(ownerProfile.s === 200 && ownerProfile.d.email === 'ownerb@t.com' && !ownerProfile.d.passwordHash, 'seller chỉ nhận hồ sơ an toàn của tài khoản theo token');
+  const profileUpdate = await call('PUT', '/seller/profile', { fullName: 'Chủ B cập nhật', phone: '0933333344' }, OB);
+  ok(profileUpdate.s === 200 && profileUpdate.d.fullName === 'Chủ B cập nhật' && profileUpdate.d.phone === '0933333344', 'seller cập nhật tên liên hệ và số điện thoại');
+  ok((await call('PUT', '/seller/profile', { phone: '123' }, OB)).s === 400, 'seller không lưu số điện thoại sai định dạng');
+  ok((await call('GET', '/seller/profile', null, reg.d.token)).s === 403, 'khách hàng không truy cập hồ sơ seller');
 
   const staffReg = await call('POST', '/auth/register-seller', { sellerType: 'staff', fullName: 'NV A', email: 'staffA@t.com', phone: '0944444444', password: 'Pass@123', shopId: shopA._id });
   ok(staffReg.s === 201, 'nhân viên đăng ký vào gian hàng');
@@ -93,6 +101,8 @@ try {
   ok(!!pB._id && !!pLast._id, 'tạo thêm sản phẩm');
   ok((await call('POST', '/seller/products', { name: 'Thiếu biến thể', category: cat._id, variants: [] }, OA)).s === 400, 'sản phẩm phải có >= 1 biến thể');
   const vA0 = pA.variants[0], vA1 = pA.variants[1], vB0 = pB.variants[0], vLast = pLast.variants[0];
+  ok((await call('PUT', `/seller/products/${pA._id}`, { name: 'Không được ghi dở', variants: [{ _id: vB0._id, name: 'Sai shop', price: 1000 }] }, OA)).s === 400, 'từ chối biến thể thuộc sản phẩm shop khác');
+  ok((await call('GET', `/seller/products/${pA._id}`, null, OA)).d.name === 'iPhone Test 128GB', 'lỗi biến thể không ghi dở thông tin sản phẩm');
 
   const stockRes = await call('PATCH', `/seller/products/${pA._id}/variants/${vA0._id}/stock`, { delta: 5 }, OA);
   ok(stockRes.d.stock === 10, 'nhập thêm tồn kho (delta)');

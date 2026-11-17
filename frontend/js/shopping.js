@@ -82,7 +82,7 @@ function accountBlock(user, { onLogout } = {}) {
   } else if (user.role === "cskh") {
     menuItems.push(h("a", { role: "menuitem", href: "./staff.html", text: "Vào khu vực CSKH" }));
   } else if (user.role === "seller") {
-    menuItems.push(menuButton("Vào Seller Center", comingSoon));
+    menuItems.push(h("a", { role: "menuitem", href: "./seller.html", text: "Vào Seller Center" }));
   } else {
     menuItems.push(menuButton("Vào trang quản trị", comingSoon));
   }
