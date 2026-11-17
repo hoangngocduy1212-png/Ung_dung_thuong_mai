@@ -1,3 +1,5 @@
+import { API_BASE_URL } from "./config.js";
+
 const moneyFormatter = new Intl.NumberFormat("vi-VN");
 
 export const formatMoney = (value) => `${moneyFormatter.format(Math.round(Number(value) || 0))}đ`;
@@ -47,6 +49,12 @@ export const PLACEHOLDER_IMAGE =
     '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"><rect width="400" height="300" fill="#eef4fa"/><rect x="140" y="95" width="120" height="85" rx="10" fill="none" stroke="#9db8d6" stroke-width="8"/><path d="M110 205h180l-14 18H124z" fill="#9db8d6"/></svg>'
   );
 
+export function assetUrl(src) {
+  if (typeof src !== "string" || !src) return PLACEHOLDER_IMAGE;
+  if (src.startsWith("/uploads/")) return new URL(src, API_BASE_URL.replace(/\/api\/?$/, "/")).href;
+  return src;
+}
+
 /** Gắn ảnh có lazy-loading và ảnh dự phòng khi lỗi. */
 export function makeImage(src, alt) {
   const img = h("img", { alt: alt || "", loading: "lazy", decoding: "async" });
@@ -54,6 +62,6 @@ export function makeImage(src, alt) {
     img.onerror = null;
     img.src = PLACEHOLDER_IMAGE;
   }, { once: true });
-  img.src = src || PLACEHOLDER_IMAGE;
+  img.src = assetUrl(src);
   return img;
 }

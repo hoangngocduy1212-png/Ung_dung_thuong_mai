@@ -78,7 +78,7 @@ function accountBlock(user) {
     menuItems.push(h("a", { role: "menuitem", href: "./account.html?section=after-sales", text: "Hoàn tiền / Đổi hàng" }));
     menuItems.push(h("a", { role: "menuitem", href: "./account.html?section=complaints", text: "Khiếu nại" }));
   } else if (user.role === "seller") {
-    menuItems.push(menuButton("Vào Seller Center", comingSoon));
+    menuItems.push(h("a", { role: "menuitem", href: "./seller.html", text: "Vào Seller Center" }));
   } else {
     menuItems.push(menuButton("Vào trang quản trị", comingSoon));
   }

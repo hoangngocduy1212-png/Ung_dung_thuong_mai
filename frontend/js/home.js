@@ -101,7 +101,7 @@ function renderAccount() {
     items.push(h("a", { href: "./account.html?section=after-sales", role: "menuitem", class: "account-menu__link", text: "Hoàn tiền / Đổi hàng" }));
     items.push(h("a", { href: "./account.html?section=complaints", role: "menuitem", class: "account-menu__link", text: "Khiếu nại" }));
   } else if (user.role === "seller") {
-    items.push(item("Vào Seller Center", comingSoon));
+    items.push(h("a", { href: "./seller.html", role: "menuitem", class: "account-menu__link", text: "Vào Seller Center" }));
   } else {
     items.push(item("Vào trang quản trị", comingSoon));
   }

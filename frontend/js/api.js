@@ -31,7 +31,8 @@ export async function request(path, options = {}) {
   const headers = { Accept: "application/json" };
   const token = auth ? getToken() : null;
   if (token) headers.Authorization = `Bearer ${token}`;
-  if (body !== undefined) headers["Content-Type"] = "application/json";
+  const isFormData = typeof FormData !== "undefined" && body instanceof FormData;
+  if (body !== undefined && !isFormData) headers["Content-Type"] = "application/json";
 
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort("timeout"), timeout);
@@ -42,7 +43,7 @@ export async function request(path, options = {}) {
     response = await fetch(`${API_BASE_URL}${path}${buildQuery(params)}`, {
       method,
       headers,
-      body: body === undefined ? undefined : JSON.stringify(body),
+      body: body === undefined ? undefined : isFormData ? body : JSON.stringify(body),
       signal: controller.signal,
     });
   } catch (error) {
