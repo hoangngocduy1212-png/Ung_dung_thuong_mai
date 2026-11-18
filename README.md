@@ -49,8 +49,21 @@ Cấu hình backend đọc `server/.env`, hoặc `.env` ở thư mục gốc n�
 | CSKH | `/staff` | customers, orders, complaints, reviews |
 | Quản trị | `/admin` | stats, customers, shops, cskh, vouchers, categories, brands, orders, complaints |
 
+## Giao diện mới (React + TypeScript — Phase 0)
+Nằm tại `frontend-react/`, sử dụng React 19 + TypeScript + Vite 8 + Tailwind CSS v4 + React Router v7:
+- Chạy song song với Vanilla frontend, không làm ảnh hưởng giao diện hiện có.
+- API Client kết nối đồng bộ Backend Port 5000.
+- Khởi động:
+  ```bash
+  cd frontend-react
+  npm install
+  npm run dev      # Mở tại http://localhost:5173
+  ```
+
 ## Cấu trúc
 ```
-server/src/  models/ (dữ liệu)  routes/ (API theo tác nhân)  services/ (đặt hàng, voucher, điểm, thống kê)  middleware/  seed.js
-server/test/smoke.js  (127 kiểm tra)
+server/src/       models/ (dữ liệu)  routes/ (API theo tác nhân)  services/ (đặt hàng, voucher, điểm, thống kê)  middleware/  seed.js
+server/test/      test suites (smoke.js, local.js, cskh.js, cskh-extended.js, cskh-ui.js - 440 tests PASS)
+frontend/         Vanilla HTML/CSS/JS (Live Server Port 5500)
+frontend-react/   React + TypeScript + Vite (Port 5173)
 ```

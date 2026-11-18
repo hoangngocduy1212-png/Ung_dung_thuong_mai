@@ -5,3 +5,9 @@ uploads/*
 .DS_Store
 Thumbs.db
 *.log
+
+# AI artifacts & test outputs
+IMPLEMENTATION_STATUS.md
+CHANGELOG_AI.md
+screenshots/
+
