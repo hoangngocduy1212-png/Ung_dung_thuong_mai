@@ -1,5 +1,6 @@
 import React from 'react';
 import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom';
+import { PageTransition } from '../../lib/motion';
 import { useAuth } from '../../hooks/useAuth';
 import { Badge } from '../../components/common/Badge';
 import { Button } from '../../components/common/Button';
@@ -180,7 +181,9 @@ export const DashboardLayout: React.FC = () => {
         </header>
 
         <main className="flex-1 p-8 overflow-y-auto">
-          <Outlet />
+          <PageTransition>
+            <Outlet />
+          </PageTransition>
         </main>
       </div>
     </div>

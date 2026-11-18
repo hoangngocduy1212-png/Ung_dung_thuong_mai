@@ -1,4 +1,5 @@
 import React, { forwardRef, useId } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -92,16 +93,22 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             </div>
           )}
         </div>
-        {error && (
-          <p
-            id={errorId}
-            role="alert"
-            aria-live="polite"
-            className="text-xs text-brand-danger font-medium mt-0.5"
-          >
-            {error}
-          </p>
-        )}
+        <AnimatePresence mode="wait">
+          {error && (
+            <motion.p
+              id={errorId}
+              role="alert"
+              aria-live="polite"
+              initial={{ opacity: 0, y: -4, height: 0 }}
+              animate={{ opacity: 1, y: 0, height: 'auto' }}
+              exit={{ opacity: 0, y: -4, height: 0 }}
+              transition={{ duration: 0.15, ease: [0.23, 1, 0.32, 1] }}
+              className="text-xs text-brand-danger font-medium mt-0.5 overflow-hidden"
+            >
+              {error}
+            </motion.p>
+          )}
+        </AnimatePresence>
         {!error && helperText && (
           <p id={helperId} className={`text-xs ${isDark ? 'text-[#8C8E94]' : 'text-brand-muted'} mt-0.5`}>
             {helperText}

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'motion/react';
 import { useCart } from '../../app/providers/CartProvider';
 import { useAuth } from '../../hooks/useAuth';
 import { customerService } from '../../services/customerService';
@@ -190,12 +191,20 @@ export const CheckoutPage: React.FC = () => {
         </p>
       </div>
 
-      {errorMessage && (
-        <div className="mb-6 p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs sm:text-sm flex items-center gap-2.5">
-          <AlertCircle className="w-5 h-5 flex-shrink-0" />
-          <span>{errorMessage}</span>
-        </div>
-      )}
+      <AnimatePresence>
+        {errorMessage && (
+          <motion.div
+            initial={{ opacity: 0, y: -8, height: 0 }}
+            animate={{ opacity: 1, y: 0, height: 'auto' }}
+            exit={{ opacity: 0, y: -8, height: 0 }}
+            transition={{ duration: 0.2 }}
+            className="mb-6 p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs sm:text-sm flex items-center gap-2.5 overflow-hidden"
+          >
+            <AlertCircle className="w-5 h-5 flex-shrink-0" />
+            <span>{errorMessage}</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Main Grid: Form Left (8 cols) & Summary Right (4 cols) */}
       <form onSubmit={handlePlaceOrder} className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
@@ -574,14 +583,17 @@ export const CheckoutPage: React.FC = () => {
             </div>
 
             {/* Submit Button */}
-            <button
+            <motion.button
               type="submit"
               disabled={isSubmitting || items.length === 0}
-              className="w-full py-3.5 bg-[#FF5C00] hover:bg-[#E55200] active:scale-[0.99] disabled:bg-neutral-300 text-white font-bold rounded-xl transition duration-150 flex items-center justify-center gap-2 shadow-xs cursor-pointer text-sm"
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.985 }}
+              transition={{ duration: 0.15 }}
+              className="w-full py-3.5 bg-[#FF5C00] hover:bg-[#E55200] disabled:bg-neutral-300 text-white font-bold rounded-xl transition duration-150 flex items-center justify-center gap-2 shadow-xs cursor-pointer text-sm select-none"
             >
               <span>{isSubmitting ? 'Đang tạo đơn hàng...' : 'Xác nhận đặt hàng'}</span>
               <ArrowRight className="w-4 h-4" />
-            </button>
+            </motion.button>
           </div>
         </div>
       </form>

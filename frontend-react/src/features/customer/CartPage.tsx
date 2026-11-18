@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'motion/react';
+import { listItemVariants } from '../../lib/motion';
 import { useCart } from '../../app/providers/CartProvider';
 import { useAuth } from '../../hooks/useAuth';
 import { EmptyState } from '../../components/common/EmptyState';
@@ -101,15 +103,24 @@ export const CartPage: React.FC = () => {
 
           {/* Item Rows */}
           <div className="divide-y divide-neutral-100">
-            {items.map((item) => {
-              const p = item.product || ({} as any);
-              const v = item.variant || ({} as any);
-              const price = v.price || p.minPrice || 0;
-              const lineTotal = price * item.quantity;
-              const img = p.images?.[0] || 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=300&q=80';
+            <AnimatePresence initial={false}>
+              {items.map((item) => {
+                const p = item.product || ({} as any);
+                const v = item.variant || ({} as any);
+                const price = v.price || p.minPrice || 0;
+                const lineTotal = price * item.quantity;
+                const img = p.images?.[0] || 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=300&q=80';
 
-              return (
-                <div key={item._id} className="grid grid-cols-12 items-center px-6 py-5 hover:bg-neutral-50/50 transition">
+                return (
+                  <motion.div
+                    key={item._id}
+                    layout
+                    variants={listItemVariants}
+                    initial="hidden"
+                    animate="visible"
+                    exit="exit"
+                    className="grid grid-cols-12 items-center px-6 py-5 hover:bg-neutral-50/50 transition overflow-hidden"
+                  >
                   {/* Product Details & Image */}
                   <div className="col-span-6 flex items-center gap-4">
                     <div className="w-16 h-16 shrink-0 bg-neutral-50 border border-neutral-200 rounded-lg p-1 flex items-center justify-center overflow-hidden">
@@ -160,17 +171,20 @@ export const CartPage: React.FC = () => {
                     <span className="text-xs sm:text-sm font-bold text-[#FF5C00] font-mono">
                       {formatPrice(lineTotal)}
                     </span>
-                    <button
+                    <motion.button
+                      whileHover={{ scale: 1.15 }}
+                      whileTap={{ scale: 0.85 }}
                       onClick={() => removeItem(item._id!)}
                       className="text-neutral-400 hover:text-red-500 transition p-1 cursor-pointer"
                       title="Xóa sản phẩm"
                     >
                       <Trash2 className="w-4 h-4" />
-                    </button>
+                    </motion.button>
                   </div>
-                </div>
+                </motion.div>
               );
             })}
+            </AnimatePresence>
           </div>
         </section>
 
@@ -240,7 +254,10 @@ export const CartPage: React.FC = () => {
             </div>
 
             {/* Checkout Button */}
-            <button
+            <motion.button
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ duration: 0.15 }}
               onClick={() => {
                 if (!isAuthenticated) {
                   navigate('/login?redirect=/checkout');
@@ -248,11 +265,11 @@ export const CartPage: React.FC = () => {
                   navigate('/checkout');
                 }
               }}
-              className="w-full py-3.5 bg-[#FF5C00] hover:bg-[#E55200] active:scale-[0.99] text-white font-bold rounded-xl transition duration-150 flex items-center justify-center gap-2 shadow-xs cursor-pointer text-sm"
+              className="w-full py-3.5 bg-[#FF5C00] hover:bg-[#E55200] text-white font-bold rounded-xl transition duration-150 flex items-center justify-center gap-2 shadow-xs cursor-pointer text-sm select-none"
             >
               <span>Tiến hành thanh toán</span>
               <ArrowRight className="w-4 h-4" />
-            </button>
+            </motion.button>
 
             {/* Trust badge */}
             <div className="pt-2 flex items-center justify-center gap-2 text-neutral-400 text-xs">

@@ -8,6 +8,7 @@ export interface CardProps {
   actions?: React.ReactNode;
   variant?: 'default' | 'surface' | 'dark';
   padding?: 'none' | 'sm' | 'md' | 'lg';
+  isHoverable?: boolean;
 }
 
 export const Card: React.FC<CardProps> = ({
@@ -18,6 +19,7 @@ export const Card: React.FC<CardProps> = ({
   actions,
   variant = 'default',
   padding = 'md',
+  isHoverable = false,
 }) => {
   const variantStyles = {
     default: 'bg-white border-brand-border text-brand-primary shadow-xs',
@@ -36,7 +38,13 @@ export const Card: React.FC<CardProps> = ({
 
   return (
     <div
-      className={`rounded-lg border overflow-hidden transition-all duration-150 ${variantStyles[variant]} ${className}`}
+      className={`rounded-lg border overflow-hidden transition-all duration-200 ease-[var(--ease-out)] ${
+        isHoverable
+          ? isDark
+            ? 'hover:border-[#3A3E47] hover:shadow-lg hover:-translate-y-0.5'
+            : 'hover:border-neutral-300 hover:shadow-md hover:-translate-y-0.5'
+          : ''
+      } ${variantStyles[variant]} ${className}`}
     >
       {(title || subtitle || actions) && (
         <div

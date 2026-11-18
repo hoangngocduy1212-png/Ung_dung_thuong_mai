@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'motion/react';
 import { catalogService } from '../../services/catalogService';
 import { customerService } from '../../services/customerService';
 import { useCart } from '../../app/providers/CartProvider';
@@ -199,13 +200,20 @@ export const ProductDetailPage: React.FC = () => {
             ))}
           </div>
 
-          {/* Main Featured Image */}
-          <div className="flex-1 bg-neutral-50 rounded-2xl p-6 flex items-center justify-center border border-neutral-200 min-h-[420px] max-h-[520px] overflow-hidden">
-            <img
-              src={images[selectedImageIndex] || images[0]}
-              alt={product.name}
-              className="max-w-full max-h-[440px] object-contain hover:scale-105 transition-transform duration-300"
-            />
+          {/* Main Featured Image with Crossfade */}
+          <div className="flex-1 bg-neutral-50 rounded-2xl p-6 flex items-center justify-center border border-neutral-200 min-h-[420px] max-h-[520px] overflow-hidden relative">
+            <AnimatePresence mode="wait">
+              <motion.img
+                key={selectedImageIndex}
+                src={images[selectedImageIndex] || images[0]}
+                alt={product.name}
+                initial={{ opacity: 0.4, scale: 0.98 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0.4, scale: 1.01 }}
+                transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
+                className="max-w-full max-h-[440px] object-contain hover:scale-105 transition-transform duration-300"
+              />
+            </AnimatePresence>
           </div>
         </div>
 
@@ -228,17 +236,20 @@ export const ProductDetailPage: React.FC = () => {
             </div>
 
             <div className="flex items-center gap-2 pt-1 flex-shrink-0">
-              <button
+              <motion.button
                 onClick={handleWishlistToggle}
+                whileHover={{ scale: 1.12 }}
+                whileTap={{ scale: 0.85 }}
+                transition={{ type: 'spring', stiffness: 450, damping: 20 }}
                 className={`p-2 rounded-full border transition cursor-pointer ${
                   isWishlisted
-                    ? 'border-red-200 bg-red-50 text-red-500'
+                    ? 'border-red-200 bg-red-50 text-red-500 shadow-xs'
                     : 'border-neutral-200 text-neutral-500 hover:text-red-500 hover:border-red-200'
                 }`}
                 title="Yêu thích"
               >
                 <Heart className={`w-5 h-5 ${isWishlisted ? 'fill-current' : ''}`} />
-              </button>
+              </motion.button>
             </div>
           </div>
 
@@ -290,12 +301,15 @@ export const ProductDetailPage: React.FC = () => {
                 {product.variants.map((v) => {
                   const isSelected = selectedVariant?._id === v._id;
                   return (
-                    <button
+                    <motion.button
                       key={v._id}
                       onClick={() => handleVariantSelect(v)}
-                      className={`rounded-lg p-2.5 text-left transition cursor-pointer border ${
+                      whileHover={{ y: -1, scale: 1.01 }}
+                      whileTap={{ scale: 0.98 }}
+                      transition={{ duration: 0.15 }}
+                      className={`rounded-lg p-2.5 text-left transition cursor-pointer border select-none ${
                         isSelected
-                          ? 'border-2 border-[#FF5C00] bg-orange-50/50'
+                          ? 'border-2 border-[#FF5C00] bg-orange-50/50 shadow-xs'
                           : 'border-neutral-200 hover:border-neutral-400 bg-white'
                       }`}
                     >
@@ -308,7 +322,7 @@ export const ProductDetailPage: React.FC = () => {
                       <div className="text-[10px] text-neutral-400 mt-0.5">
                         Tồn kho: {v.stock}
                       </div>
-                    </button>
+                    </motion.button>
                   );
                 })}
               </div>
@@ -320,23 +334,25 @@ export const ProductDetailPage: React.FC = () => {
             <div className="flex items-center gap-3">
               <span className="text-xs font-bold text-neutral-800">Số lượng</span>
               <div className="flex items-center border border-neutral-300 rounded-lg overflow-hidden bg-white">
-                <button
+                <motion.button
                   onClick={() => handleQuantityChange(-1)}
                   disabled={quantity <= 1}
+                  whileTap={{ scale: 0.88 }}
                   className="w-8 h-8 flex items-center justify-center text-neutral-600 hover:bg-neutral-100 disabled:opacity-40 transition cursor-pointer"
                 >
                   <Minus className="w-3.5 h-3.5" />
-                </button>
+                </motion.button>
                 <span className="w-10 h-8 flex items-center justify-center text-xs font-bold text-neutral-900 font-mono">
                   {quantity}
                 </span>
-                <button
+                <motion.button
                   onClick={() => handleQuantityChange(1)}
                   disabled={quantity >= currentStock}
+                  whileTap={{ scale: 0.88 }}
                   className="w-8 h-8 flex items-center justify-center text-neutral-600 hover:bg-neutral-100 disabled:opacity-40 transition cursor-pointer"
                 >
                   <Plus className="w-3.5 h-3.5" />
-                </button>
+                </motion.button>
               </div>
             </div>
 
@@ -354,31 +370,45 @@ export const ProductDetailPage: React.FC = () => {
           </div>
 
           {/* Success Message Banner */}
-          {addSuccessMessage && (
-            <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-800 text-xs flex items-center gap-2 animate-in fade-in">
-              <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-              <span>{addSuccessMessage}</span>
-            </div>
-          )}
+          <AnimatePresence>
+            {addSuccessMessage && (
+              <motion.div
+                initial={{ opacity: 0, y: -6, height: 0 }}
+                animate={{ opacity: 1, y: 0, height: 'auto' }}
+                exit={{ opacity: 0, y: -6, height: 0 }}
+                transition={{ duration: 0.2 }}
+                className="p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-800 text-xs flex items-center gap-2 overflow-hidden"
+              >
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                <span>{addSuccessMessage}</span>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           {/* Action CTAs */}
           <div className="grid grid-cols-2 gap-3.5 pt-3">
-            <button
+            <motion.button
               onClick={() => handleAddToCart(false)}
               disabled={isAdding || currentStock <= 0}
-              className="flex items-center justify-center gap-2 bg-[#FF5C00] hover:bg-[#E55200] disabled:bg-neutral-300 text-white font-bold py-3.5 px-4 rounded-xl shadow-xs transition active:scale-[0.99] cursor-pointer"
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.975 }}
+              transition={{ duration: 0.15 }}
+              className="flex items-center justify-center gap-2 bg-[#FF5C00] hover:bg-[#E55200] disabled:bg-neutral-300 text-white font-bold py-3.5 px-4 rounded-xl shadow-xs transition cursor-pointer select-none"
             >
               <ShoppingCart className="w-4 h-4" />
               <span className="text-sm">{isAdding ? 'Đang thêm...' : 'Thêm vào giỏ'}</span>
-            </button>
+            </motion.button>
 
-            <button
+            <motion.button
               onClick={() => handleAddToCart(true)}
               disabled={isAdding || currentStock <= 0}
-              className="flex items-center justify-center bg-white border-2 border-[#FF5C00] text-[#FF5C00] hover:bg-orange-50 disabled:border-neutral-300 disabled:text-neutral-400 font-bold py-3.5 px-4 rounded-xl transition active:scale-[0.99] cursor-pointer"
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.975 }}
+              transition={{ duration: 0.15 }}
+              className="flex items-center justify-center bg-white border-2 border-[#FF5C00] text-[#FF5C00] hover:bg-orange-50 disabled:border-neutral-300 disabled:text-neutral-400 font-bold py-3.5 px-4 rounded-xl transition cursor-pointer select-none"
             >
               <span className="text-sm">Mua ngay</span>
-            </button>
+            </motion.button>
           </div>
         </div>
       </section>

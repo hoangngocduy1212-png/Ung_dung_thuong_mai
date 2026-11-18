@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { motion } from 'motion/react';
 import { adminService } from '../../services/adminService';
+import { createStaggerContainer, staggerItemVariants } from '../../lib/motion';
 import type { AdminStats } from '../../types/admin';
 
 export const AdminDashboard: React.FC = () => {
@@ -46,9 +48,19 @@ export const AdminDashboard: React.FC = () => {
       </div>
 
       {/* KPI Metric Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <motion.div
+        variants={createStaggerContainer(0.05)}
+        initial="initial"
+        animate="animate"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
+      >
         {/* GMV */}
-        <div className="bg-white border border-neutral-200 rounded-lg p-5 shadow-2xs">
+        <motion.div
+          variants={staggerItemVariants}
+          whileHover={{ y: -2 }}
+          transition={{ duration: 0.18 }}
+          className="bg-white border border-neutral-200 rounded-lg p-5 shadow-2xs hover:border-neutral-300 transition-shadow"
+        >
           <div className="flex items-center justify-between text-neutral-400 mb-3">
             <span className="text-xs font-semibold text-neutral-700">Tổng GD (GMV)</span>
             <span className="text-[10px] font-mono uppercase bg-neutral-100 px-1.5 py-0.5 rounded">METRIC_GMV</span>
@@ -60,10 +72,15 @@ export const AdminDashboard: React.FC = () => {
             <span>Tổng đơn thành công:</span>
             <span className="font-mono font-medium text-neutral-700">{stats?.orderCount || 0}</span>
           </div>
-        </div>
+        </motion.div>
 
         {/* Khách hàng */}
-        <div className="bg-white border border-neutral-200 rounded-lg p-5 shadow-2xs">
+        <motion.div
+          variants={staggerItemVariants}
+          whileHover={{ y: -2 }}
+          transition={{ duration: 0.18 }}
+          className="bg-white border border-neutral-200 rounded-lg p-5 shadow-2xs hover:border-neutral-300 transition-shadow"
+        >
           <div className="flex items-center justify-between text-neutral-400 mb-3">
             <span className="text-xs font-semibold text-neutral-700">Khách hàng</span>
             <span className="text-[10px] font-mono uppercase bg-neutral-100 px-1.5 py-0.5 rounded">ENT_USERS</span>
@@ -75,10 +92,15 @@ export const AdminDashboard: React.FC = () => {
             <span>Tài khoản đã đăng ký</span>
             <Link to="/admin/users" className="text-[#FF5C00] font-semibold hover:underline">Chi tiết →</Link>
           </div>
-        </div>
+        </motion.div>
 
         {/* Cửa hàng */}
-        <div className="bg-white border border-neutral-200 rounded-lg p-5 shadow-2xs">
+        <motion.div
+          variants={staggerItemVariants}
+          whileHover={{ y: -2 }}
+          transition={{ duration: 0.18 }}
+          className="bg-white border border-neutral-200 rounded-lg p-5 shadow-2xs hover:border-neutral-300 transition-shadow"
+        >
           <div className="flex items-center justify-between text-neutral-400 mb-3">
             <span className="text-xs font-semibold text-neutral-700">Cửa hàng đối tác</span>
             <span className="text-[10px] font-mono uppercase bg-neutral-100 px-1.5 py-0.5 rounded">ENT_SHOPS</span>
@@ -90,10 +112,15 @@ export const AdminDashboard: React.FC = () => {
             <span className="text-amber-700 font-medium">Chờ duyệt: {stats?.totals?.pendingShops || 0}</span>
             <Link to="/admin/shops" className="text-[#FF5C00] font-semibold hover:underline">Duyệt →</Link>
           </div>
-        </div>
+        </motion.div>
 
         {/* Khiếu nại */}
-        <div className="bg-white border border-neutral-200 rounded-lg p-5 shadow-2xs">
+        <motion.div
+          variants={staggerItemVariants}
+          whileHover={{ y: -2 }}
+          transition={{ duration: 0.18 }}
+          className="bg-white border border-neutral-200 rounded-lg p-5 shadow-2xs hover:border-neutral-300 transition-shadow"
+        >
           <div className="flex items-center justify-between text-neutral-400 mb-3">
             <span className="text-xs font-semibold text-neutral-700">Khiếu nại chờ Admin</span>
             <span className="text-[10px] font-mono uppercase bg-red-100 text-red-700 px-1.5 py-0.5 rounded">ESCALATED</span>
@@ -105,8 +132,8 @@ export const AdminDashboard: React.FC = () => {
             <span>Trọng tài can thiệp</span>
             <Link to="/admin/complaints" className="text-red-600 font-semibold hover:underline">Xử lý ngay →</Link>
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
       {/* Main Grid: Top Shops & Action Items */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

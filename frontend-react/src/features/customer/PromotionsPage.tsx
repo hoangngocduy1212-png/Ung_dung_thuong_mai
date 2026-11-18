@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'motion/react';
 import { catalogService } from '../../services/catalogService';
 import { customerService } from '../../services/customerService';
 import { useAuth } from '../../hooks/useAuth';
+import { createStaggerContainer, staggerItemVariants } from '../../lib/motion';
 import type { PlatformVoucher } from '../../types/catalog';
 import type { UserVoucher } from '../../types/customer';
 import { Loading } from '../../components/common/Loading';
@@ -184,22 +186,28 @@ export const PromotionsPage: React.FC = () => {
       </section>
 
       {/* Global Alert Notification */}
-      {feedback && (
-        <div
-          className={`p-4 rounded-xl border flex items-center gap-3 text-xs ${
-            feedback.type === 'success'
-              ? 'bg-emerald-50 border-emerald-200 text-emerald-800'
-              : 'bg-red-50 border-red-200 text-red-800'
-          }`}
-        >
-          {feedback.type === 'success' ? (
-            <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-          ) : (
-            <AlertCircle className="w-4 h-4 text-red-600 shrink-0" />
-          )}
-          <span>{feedback.message}</span>
-        </div>
-      )}
+      <AnimatePresence>
+        {feedback && (
+          <motion.div
+            initial={{ opacity: 0, y: -8, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -8, scale: 0.98 }}
+            transition={{ duration: 0.2 }}
+            className={`p-4 rounded-xl border flex items-center gap-3 text-xs ${
+              feedback.type === 'success'
+                ? 'bg-emerald-50 border-emerald-200 text-emerald-800'
+                : 'bg-red-50 border-red-200 text-red-800'
+            }`}
+          >
+            {feedback.type === 'success' ? (
+              <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+            ) : (
+              <AlertCircle className="w-4 h-4 text-red-600 shrink-0" />
+            )}
+            <span>{feedback.message}</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Platform Vouchers Grid */}
       <section className="space-y-4">
@@ -222,16 +230,24 @@ export const PromotionsPage: React.FC = () => {
             Hiện tại chưa có mã giảm giá toàn sàn mới. Vui lòng quay lại sau!
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <motion.div
+            variants={createStaggerContainer(0.04)}
+            initial="initial"
+            animate="animate"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
+          >
             {vouchers.map((v) => {
               const isClaimed = claimedVoucherIds.has(v._id);
               const isPointsVoucher = v.pointsCost > 0;
               const isOperating = actionLoadingId === v._id;
 
               return (
-                <div
+                <motion.div
                   key={v._id}
-                  className="bg-white border border-neutral-200 rounded-xl p-5 shadow-xs hover:border-neutral-300 transition flex flex-col justify-between space-y-4 relative overflow-hidden"
+                  variants={staggerItemVariants}
+                  whileHover={{ y: -3 }}
+                  transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
+                  className="bg-white border border-neutral-200 rounded-xl p-5 shadow-xs hover:border-neutral-300 transition-shadow flex flex-col justify-between space-y-4 relative overflow-hidden"
                 >
                   {/* Scope badge */}
                   <div className="flex items-center justify-between">
@@ -279,7 +295,7 @@ export const PromotionsPage: React.FC = () => {
                         type="button"
                         onClick={() => handleRedeem(v)}
                         disabled={isOperating}
-                        className="w-full py-2 bg-neutral-900 hover:bg-neutral-800 disabled:bg-neutral-300 text-white font-bold text-xs rounded-lg transition cursor-pointer flex items-center justify-center gap-1.5 shadow-2xs"
+                        className="w-full py-2 bg-neutral-900 hover:bg-neutral-800 active:scale-[0.98] disabled:bg-neutral-300 text-white font-bold text-xs rounded-lg transition cursor-pointer flex items-center justify-center gap-1.5 shadow-2xs"
                       >
                         <Sparkles className="w-3.5 h-3.5 text-[#FF5C00]" />
                         <span>{isOperating ? 'Đang đổi...' : `Đổi bằng ${v.pointsCost.toLocaleString('vi-VN')} điểm`}</span>
@@ -289,17 +305,17 @@ export const PromotionsPage: React.FC = () => {
                         type="button"
                         onClick={() => handleClaim(v)}
                         disabled={isOperating}
-                        className="w-full py-2 bg-[#FF5C00] hover:bg-[#E55200] disabled:bg-neutral-300 text-white font-bold text-xs rounded-lg transition cursor-pointer flex items-center justify-center gap-1.5 shadow-2xs"
+                        className="w-full py-2 bg-[#FF5C00] hover:bg-[#E55200] active:scale-[0.98] disabled:bg-neutral-300 text-white font-bold text-xs rounded-lg transition cursor-pointer flex items-center justify-center gap-1.5 shadow-2xs"
                       >
                         <Gift className="w-3.5 h-3.5" />
                         <span>{isOperating ? 'Đang lưu...' : 'Lưu vào ví voucher'}</span>
                       </button>
                     )}
                   </div>
-                </div>
+                </motion.div>
               );
             })}
-          </div>
+          </motion.div>
         )}
       </section>
 

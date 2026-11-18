@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useSearchParams, useNavigate, Link } from 'react-router-dom';
+import { motion } from 'motion/react';
+import { staggerContainerVariants, staggerItemVariants, ShimmerSkeleton, AddToCartFeedback } from '../../lib/motion';
 import { catalogService } from '../../services/catalogService';
 import { useCart } from '../../app/providers/CartProvider';
-import { Loading } from '../../components/common/Loading';
 import { ErrorState } from '../../components/common/ErrorState';
 import { EmptyState } from '../../components/common/EmptyState';
 import type { Product, Category, Brand } from '../../types/catalog';
@@ -35,6 +36,7 @@ export const ProductsPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [addingId, setAddingId] = useState<string | null>(null);
+  const [showAddedFeedback, setShowAddedFeedback] = useState(false);
 
   // Filters from URL
   const q = searchParams.get('q') || '';
@@ -122,7 +124,11 @@ export const ProductsPage: React.FC = () => {
       const detail = await catalogService.getProductById(product._id);
       const firstVariant = detail.variants?.[0];
       if (firstVariant) {
-        await addToCart(product._id, firstVariant._id, 1);
+        const ok = await addToCart(product._id, firstVariant._id, 1);
+        if (ok) {
+          setShowAddedFeedback(true);
+          setTimeout(() => setShowAddedFeedback(false), 2200);
+        }
       }
     } catch {
       // Ignored
@@ -323,8 +329,10 @@ export const ProductsPage: React.FC = () => {
 
           {/* Loading / Error / Empty / Grid States */}
           {isLoading ? (
-            <div className="py-20">
-              <Loading message="Đang tải danh sách thiết bị..." />
+            <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 py-2">
+              {[...Array(8)].map((_, i) => (
+                <ShimmerSkeleton key={i} className="h-72 rounded-xl" />
+              ))}
             </div>
           ) : error ? (
             <ErrorState message={error} onRetry={fetchProducts} />
@@ -337,13 +345,22 @@ export const ProductsPage: React.FC = () => {
             />
           ) : (
             <>
-              {/* Product Grid: 4 columns */}
-              <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4" data-purpose="product-grid">
+              {/* Product Grid: 4 columns with Staggered Motion */}
+              <motion.div
+                variants={staggerContainerVariants}
+                initial="hidden"
+                animate="visible"
+                className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4"
+                data-purpose="product-grid"
+              >
                 {products.map((p) => (
-                  <article
+                  <motion.article
                     key={p._id}
+                    variants={staggerItemVariants}
+                    whileHover={{ y: -3, transition: { duration: 0.2, ease: [0.23, 1, 0.32, 1] } }}
+                    whileTap={{ scale: 0.985 }}
                     onClick={() => navigate(`/products/${p._id}`)}
-                    className="bg-white border border-neutral-200 rounded-xl p-3.5 flex flex-col justify-between hover:shadow-lg hover:border-neutral-300 transition-all duration-200 relative group cursor-pointer"
+                    className="bg-white border border-neutral-200 rounded-xl p-3.5 flex flex-col justify-between hover:shadow-lg hover:border-neutral-300 transition-all duration-200 relative group cursor-pointer select-none"
                   >
                     <div className="w-full aspect-square flex items-center justify-center p-2 mb-3 bg-neutral-50 rounded-lg overflow-hidden">
                       <img
@@ -352,7 +369,7 @@ export const ProductsPage: React.FC = () => {
                           'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=400&q=80'
                         }
                         alt={p.name}
-                        className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-200"
+                        className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-200 ease-out"
                       />
                     </div>
 
@@ -384,14 +401,14 @@ export const ProductsPage: React.FC = () => {
                     <button
                       onClick={(e) => handleQuickAdd(e, p)}
                       disabled={addingId === p._id}
-                      className="mt-3 w-full py-1.5 px-3 rounded-lg bg-neutral-100 hover:bg-[#FF5C00] hover:text-white text-neutral-800 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                      className="mt-3 w-full py-1.5 px-3 rounded-lg bg-neutral-100 hover:bg-[#FF5C00] hover:text-white text-neutral-800 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors cursor-pointer active:scale-95"
                     >
                       <ShoppingCart className="w-3.5 h-3.5" />
                       <span>{addingId === p._id ? 'Đang thêm...' : 'Thêm vào giỏ'}</span>
                     </button>
-                  </article>
+                  </motion.article>
                 ))}
-              </div>
+              </motion.div>
 
               {/* Pagination Controls */}
               {totalPages > 1 && (
@@ -444,6 +461,9 @@ export const ProductsPage: React.FC = () => {
           )}
         </section>
       </div>
+
+      {/* Floating Add-to-cart confirmation toast */}
+      <AddToCartFeedback isVisible={showAddedFeedback} />
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
+import { PageTransition } from '../../lib/motion';
 import { useAuth } from '../../hooks/useAuth';
 import {
   LayoutDashboard,
@@ -97,9 +98,11 @@ export const AccountLayout: React.FC = () => {
           </div>
         </aside>
 
-        {/* Right Content Area (9 cols) */}
+        {/* Right Content Area (9 cols) with Page Transition */}
         <main className="lg:col-span-9">
-          <Outlet />
+          <PageTransition>
+            <Outlet />
+          </PageTransition>
         </main>
       </div>
     </div>

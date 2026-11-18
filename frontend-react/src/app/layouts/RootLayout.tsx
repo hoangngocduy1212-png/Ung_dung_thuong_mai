@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom';
+import { motion, AnimatePresence } from 'motion/react';
+import { PageTransition, CartBadgePulse, dropdownVariants, fadeSlideDownVariants } from '../../lib/motion';
 import { useAuth } from '../../hooks/useAuth';
 import { useCart } from '../providers/CartProvider';
 import { catalogService } from '../../services/catalogService';
@@ -149,94 +151,102 @@ export const RootLayout: React.FC = () => {
                   </Link>
                 )}
 
-                {/* Account Menu Dropdown Box */}
-                {isAccountOpen && isAuthenticated && user && (
-                  <div className="absolute right-0 mt-2 w-56 bg-white border border-neutral-200 rounded-xl shadow-lg py-2 z-50 animate-in fade-in slide-in-from-top-1 duration-150">
-                    <div className="px-4 py-2.5 border-b border-neutral-100">
-                      <p className="text-xs font-medium text-neutral-500">Đăng nhập với tư cách</p>
-                      <p className="text-sm font-semibold text-neutral-900 truncate">
-                        {user.fullName || user.name}
-                      </p>
-                      <span className="inline-block mt-1 font-mono text-[10px] font-semibold uppercase px-1.5 py-0.5 rounded bg-neutral-100 text-neutral-700">
-                        {user.role}
-                      </span>
-                    </div>
+                {/* Account Menu Dropdown Box with Precision Spring Origin */}
+                <AnimatePresence>
+                  {isAccountOpen && isAuthenticated && user && (
+                    <motion.div
+                      variants={dropdownVariants}
+                      initial="hidden"
+                      animate="visible"
+                      exit="exit"
+                      className="absolute right-0 mt-2 w-56 bg-white border border-neutral-200 rounded-xl shadow-xl py-2 z-50 overflow-hidden"
+                    >
+                      <div className="px-4 py-2.5 border-b border-neutral-100">
+                        <p className="text-xs font-medium text-neutral-500">Đăng nhập với tư cách</p>
+                        <p className="text-sm font-semibold text-neutral-900 truncate">
+                          {user.fullName || user.name}
+                        </p>
+                        <span className="inline-block mt-1 font-mono text-[10px] font-semibold uppercase px-1.5 py-0.5 rounded bg-neutral-100 text-neutral-700">
+                          {user.role}
+                        </span>
+                      </div>
 
-                    <div className="py-1 text-xs">
-                      {user.role === 'customer' && (
-                        <>
+                      <div className="py-1 text-xs">
+                        {user.role === 'customer' && (
+                          <>
+                            <Link
+                              to="/account"
+                              onClick={() => setIsAccountOpen(false)}
+                              className="flex items-center gap-2.5 px-4 py-2 text-neutral-700 hover:bg-neutral-50 hover:text-[#FF5C00] transition-colors"
+                            >
+                              <UserIcon className="w-4 h-4" />
+                              Tổng quan tài khoản
+                            </Link>
+                            <Link
+                              to="/account/orders"
+                              onClick={() => setIsAccountOpen(false)}
+                              className="flex items-center gap-2.5 px-4 py-2 text-neutral-700 hover:bg-neutral-50 hover:text-[#FF5C00] transition-colors"
+                            >
+                              <Package className="w-4 h-4" />
+                              Lịch sử đơn hàng
+                            </Link>
+                            <Link
+                              to="/account/wishlist"
+                              onClick={() => setIsAccountOpen(false)}
+                              className="flex items-center gap-2.5 px-4 py-2 text-neutral-700 hover:bg-neutral-50 hover:text-[#FF5C00] transition-colors"
+                            >
+                              <Heart className="w-4 h-4" />
+                              Sản phẩm yêu thích
+                            </Link>
+                          </>
+                        )}
+
+                        {user.role === 'seller' && (
                           <Link
-                            to="/account"
+                            to="/seller"
                             onClick={() => setIsAccountOpen(false)}
-                            className="flex items-center gap-2.5 px-4 py-2 text-neutral-700 hover:bg-neutral-50 hover:text-[#FF5C00]"
+                            className="flex items-center gap-2.5 px-4 py-2 text-neutral-700 hover:bg-neutral-50 hover:text-[#FF5C00] transition-colors"
                           >
-                            <UserIcon className="w-4 h-4" />
-                            Tổng quan tài khoản
+                            <Store className="w-4 h-4 text-emerald-600" />
+                            Kênh Người Bán (Seller Studio)
                           </Link>
+                        )}
+
+                        {user.role === 'admin' && (
                           <Link
-                            to="/account/orders"
+                            to="/admin"
                             onClick={() => setIsAccountOpen(false)}
-                            className="flex items-center gap-2.5 px-4 py-2 text-neutral-700 hover:bg-neutral-50 hover:text-[#FF5C00]"
+                            className="flex items-center gap-2.5 px-4 py-2 text-neutral-700 hover:bg-neutral-50 hover:text-[#FF5C00] transition-colors"
                           >
-                            <Package className="w-4 h-4" />
-                            Lịch sử đơn hàng
+                            <Shield className="w-4 h-4 text-blue-600" />
+                            Bảng điều khiển Quản trị (Admin)
                           </Link>
+                        )}
+
+                        {user.role === 'cskh' && (
                           <Link
-                            to="/account/wishlist"
+                            to="/cskh"
                             onClick={() => setIsAccountOpen(false)}
-                            className="flex items-center gap-2.5 px-4 py-2 text-neutral-700 hover:bg-neutral-50 hover:text-[#FF5C00]"
+                            className="flex items-center gap-2.5 px-4 py-2 text-neutral-700 hover:bg-neutral-50 hover:text-[#FF5C00] transition-colors"
                           >
-                            <Heart className="w-4 h-4" />
-                            Sản phẩm yêu thích
+                            <Headphones className="w-4 h-4 text-purple-600" />
+                            Bàn làm việc CSKH
                           </Link>
-                        </>
-                      )}
+                        )}
+                      </div>
 
-                      {user.role === 'seller' && (
-                        <Link
-                          to="/seller"
-                          onClick={() => setIsAccountOpen(false)}
-                          className="flex items-center gap-2.5 px-4 py-2 text-neutral-700 hover:bg-neutral-50 hover:text-[#FF5C00]"
+                      <div className="border-t border-neutral-100 pt-1">
+                        <button
+                          onClick={handleLogout}
+                          className="w-full flex items-center gap-2.5 px-4 py-2 text-xs text-red-600 hover:bg-red-50 text-left cursor-pointer transition-colors"
                         >
-                          <Store className="w-4 h-4 text-emerald-600" />
-                          Kênh Người Bán (Seller Studio)
-                        </Link>
-                      )}
-
-                      {user.role === 'admin' && (
-                        <Link
-                          to="/admin"
-                          onClick={() => setIsAccountOpen(false)}
-                          className="flex items-center gap-2.5 px-4 py-2 text-neutral-700 hover:bg-neutral-50 hover:text-[#FF5C00]"
-                        >
-                          <Shield className="w-4 h-4 text-blue-600" />
-                          Bảng điều khiển Quản trị (Admin)
-                        </Link>
-                      )}
-
-                      {user.role === 'cskh' && (
-                        <Link
-                          to="/cskh"
-                          onClick={() => setIsAccountOpen(false)}
-                          className="flex items-center gap-2.5 px-4 py-2 text-neutral-700 hover:bg-neutral-50 hover:text-[#FF5C00]"
-                        >
-                          <Headphones className="w-4 h-4 text-purple-600" />
-                          Bàn làm việc CSKH
-                        </Link>
-                      )}
-                    </div>
-
-                    <div className="border-t border-neutral-100 pt-1">
-                      <button
-                        onClick={handleLogout}
-                        className="w-full flex items-center gap-2.5 px-4 py-2 text-xs text-red-600 hover:bg-red-50 text-left cursor-pointer"
-                      >
-                        <LogOut className="w-4 h-4" />
-                        Đăng xuất
-                      </button>
-                    </div>
-                  </div>
-                )}
+                          <LogOut className="w-4 h-4" />
+                          Đăng xuất
+                        </button>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
 
               {/* Shopping Cart Link */}
@@ -246,11 +256,7 @@ export const RootLayout: React.FC = () => {
               >
                 <div className="relative flex items-center justify-center">
                   <ShoppingCart className="w-5 h-5 text-neutral-800" />
-                  {itemCount > 0 && (
-                    <span className="absolute -top-1.5 -right-2 bg-[#FF5C00] text-white text-[10px] font-bold min-w-4 h-4 px-1 rounded-full flex items-center justify-center shadow-xs">
-                      {itemCount > 99 ? '99+' : itemCount}
-                    </span>
-                  )}
+                  <CartBadgePulse count={itemCount} className="absolute -top-1.5 -right-2" />
                 </div>
                 <span className="hidden sm:inline font-semibold text-[13.5px]">Giỏ hàng</span>
               </Link>
@@ -314,45 +320,55 @@ export const RootLayout: React.FC = () => {
           </div>
         </div>
 
-        {/* Mobile Navigation Drawer */}
-        {isMobileMenuOpen && (
-          <div className="sm:hidden border-t border-neutral-200 bg-white px-4 py-3 space-y-3">
-            <form onSubmit={handleSearchSubmit} className="relative w-full">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400" />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Tìm kiếm sản phẩm..."
-                className="w-full pl-9 pr-4 py-2 bg-neutral-100 rounded-lg text-sm border-none outline-none"
-              />
-            </form>
-            <div className="space-y-1 pt-1 border-t border-neutral-100">
-              <Link
-                to="/categories"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="block py-2 text-sm font-semibold text-[#FF5C00]"
-              >
-                Tất cả danh mục
-              </Link>
-              {topCategories.map((c) => (
+        {/* Mobile Navigation Drawer with Fluid Slide */}
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <motion.div
+              variants={fadeSlideDownVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              className="sm:hidden border-t border-neutral-200 bg-white px-4 py-3 space-y-3 shadow-md"
+            >
+              <form onSubmit={handleSearchSubmit} className="relative w-full">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400" />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Tìm kiếm sản phẩm..."
+                  className="w-full pl-9 pr-4 py-2 bg-neutral-100 rounded-lg text-sm border-none outline-none focus:ring-1 focus:ring-[#FF5C00]"
+                />
+              </form>
+              <div className="space-y-1 pt-1 border-t border-neutral-100">
                 <Link
-                  key={c._id}
-                  to={`/products?category=${c._id}`}
+                  to="/categories"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="block py-1.5 text-sm text-neutral-700"
+                  className="block py-2 text-sm font-semibold text-[#FF5C00]"
                 >
-                  {c.name}
+                  Tất cả danh mục
                 </Link>
-              ))}
-            </div>
-          </div>
-        )}
+                {topCategories.map((c) => (
+                  <Link
+                    key={c._id}
+                    to={`/products?category=${c._id}`}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="block py-1.5 text-sm text-neutral-700 hover:text-[#FF5C00] transition-colors"
+                  >
+                    {c.name}
+                  </Link>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </header>
 
-      {/* Main Outlet */}
+      {/* Main Outlet with Page Transition */}
       <main className="flex-1 w-full bg-[#FFFFFF]">
-        <Outlet />
+        <PageTransition>
+          <Outlet />
+        </PageTransition>
       </main>
 
       {/* Main Footer — Monolith Swiss Editorial */}

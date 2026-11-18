@@ -79,3 +79,196 @@ h1, h2, h3, h4 {
     scroll-behavior: auto !important;
   }
 }
+
+/* ================= MONOLITH SPECULAR CYBER BUTTON ================= */
+/* Adapted from luminous bottom-lit radial button with Emil Kowalski polish */
+.monolith-specular-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 0;
+  border-radius: var(--radius-lg, 8px);
+  background: radial-gradient(
+    ellipse at bottom,
+    rgba(45, 48, 56, 0.75) 0%,
+    rgba(17, 17, 19, 0.98) 60%
+  );
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08), 0 2px 8px rgba(0, 0, 0, 0.35);
+  color: rgba(244, 244, 245, 0.75);
+  transition: transform 220ms var(--ease-out),
+              box-shadow 220ms var(--ease-out),
+              color 220ms var(--ease-out),
+              background 220ms var(--ease-out);
+  overflow: hidden;
+}
+
+.monolith-specular-btn::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 15%;
+  width: 70%;
+  height: 1.5px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 92, 0, 0.45) 25%,
+    rgba(255, 255, 255, 0.95) 50%,
+    rgba(255, 92, 0, 0.45) 75%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  opacity: 0.25;
+  transition: opacity 260ms var(--ease-out),
+              width 260ms var(--ease-out),
+              left 260ms var(--ease-out);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.monolith-specular-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    ellipse at bottom,
+    rgba(255, 92, 0, 0.12) 0%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 260ms var(--ease-out);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.monolith-specular-btn:hover {
+  color: #FFFFFF;
+  transform: translateY(-2px);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18),
+              0 8px 24px -4px rgba(0, 0, 0, 0.6),
+              0 0 16px -2px rgba(255, 92, 0, 0.2);
+}
+
+.monolith-specular-btn:hover::before {
+  opacity: 1;
+  width: 85%;
+  left: 7.5%;
+}
+
+.monolith-specular-btn:hover::after {
+  opacity: 1;
+}
+
+.monolith-specular-btn:active {
+  transform: translateY(0px) scale(0.985);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12),
+              0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+/* ================= MONOLITH PRIMARY SPECULAR BUTTON ================= */
+/* Radiant brand-orange specular button with bottom-lit laser filament */
+.monolith-primary-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 0;
+  border-radius: var(--radius-lg, 8px);
+  background: radial-gradient(
+    ellipse at bottom,
+    #FF7A1A 0%,
+    #FF5C00 45%,
+    #CF4300 95%
+  );
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35),
+              inset 0 0 0 1px rgba(255, 255, 255, 0.15),
+              0 4px 16px -2px rgba(255, 92, 0, 0.45);
+  color: #FFFFFF;
+  font-weight: 700;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  transition: transform 220ms var(--ease-out),
+              box-shadow 220ms var(--ease-out),
+              background 220ms var(--ease-out);
+  overflow: hidden;
+}
+
+.monolith-primary-btn::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 15%;
+  width: 70%;
+  height: 1.5px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 235, 180, 0.6) 20%,
+    #FFFFFF 50%,
+    rgba(255, 235, 180, 0.6) 80%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  box-shadow: 0 0 8px 1px rgba(255, 255, 255, 0.6);
+  opacity: 0.45;
+  transition: opacity 260ms var(--ease-out),
+              width 260ms var(--ease-out),
+              left 260ms var(--ease-out);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.monolith-primary-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    ellipse at bottom,
+    rgba(255, 255, 255, 0.22) 0%,
+    transparent 65%
+  );
+  opacity: 0;
+  transition: opacity 260ms var(--ease-out);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.monolith-primary-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  background: radial-gradient(
+    ellipse at bottom,
+    #FF882E 0%,
+    #FF660D 45%,
+    #D94800 95%
+  );
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5),
+              inset 0 0 0 1px rgba(255, 255, 255, 0.25),
+              0 8px 24px -2px rgba(255, 92, 0, 0.6),
+              0 0 20px rgba(255, 120, 30, 0.35);
+}
+
+.monolith-primary-btn:hover:not(:disabled)::before {
+  opacity: 1;
+  width: 85%;
+  left: 7.5%;
+  box-shadow: 0 0 12px 2px rgba(255, 255, 255, 0.9);
+}
+
+.monolith-primary-btn:hover:not(:disabled)::after {
+  opacity: 1;
+}
+
+.monolith-primary-btn:active:not(:disabled) {
+  transform: translateY(0px) scale(0.985);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25),
+              inset 0 0 0 1px rgba(255, 255, 255, 0.1),
+              0 2px 8px rgba(255, 92, 0, 0.4);
+}
+
+.monolith-primary-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+}

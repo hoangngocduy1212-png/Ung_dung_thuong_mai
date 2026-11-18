@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
+import { PageTransition } from '../../lib/motion';
 import { useAuth } from '../../hooks/useAuth';
 import { sellerService } from '../../services/sellerService';
 import type { SellerShop } from '../../types/seller';
@@ -145,9 +146,11 @@ export const SellerLayout: React.FC = () => {
           </div>
         </aside>
 
-        {/* Content Outlet */}
+        {/* Content Outlet with Page Transition */}
         <main className="flex-1 p-6 sm:p-8 max-w-[1240px]">
-          <Outlet />
+          <PageTransition>
+            <Outlet />
+          </PageTransition>
         </main>
       </div>
     </div>

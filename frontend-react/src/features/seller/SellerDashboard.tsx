@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { motion } from 'motion/react';
 import { sellerService } from '../../services/sellerService';
+import { createStaggerContainer, staggerItemVariants } from '../../lib/motion';
 import type { SellerStats } from '../../types/seller';
 import type { Order } from '../../types/order';
 import { Loading } from '../../components/common/Loading';
@@ -63,9 +65,19 @@ export const SellerDashboard: React.FC = () => {
       </section>
 
       {/* 2. 4 KPI Metric Cards */}
-      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <motion.section
+        variants={createStaggerContainer(0.06)}
+        initial="initial"
+        animate="animate"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
+      >
         {/* Doanh thu */}
-        <div className="bg-white rounded-xl p-5 border border-neutral-200 shadow-xs flex items-start gap-4">
+        <motion.div
+          variants={staggerItemVariants}
+          whileHover={{ y: -2 }}
+          transition={{ duration: 0.18 }}
+          className="bg-white rounded-xl p-5 border border-neutral-200 shadow-xs hover:border-neutral-300 transition-shadow flex items-start gap-4"
+        >
           <div className="w-12 h-12 rounded-xl bg-orange-50 text-[#FF5C00] flex items-center justify-center shrink-0">
             <TrendingUp className="w-6 h-6" />
           </div>
@@ -76,10 +88,15 @@ export const SellerDashboard: React.FC = () => {
             </p>
             <span className="text-[11px] text-emerald-600 font-medium">+12% so với kỳ trước</span>
           </div>
-        </div>
+        </motion.div>
 
         {/* Đơn hàng mới */}
-        <div className="bg-white rounded-xl p-5 border border-neutral-200 shadow-xs flex items-start gap-4">
+        <motion.div
+          variants={staggerItemVariants}
+          whileHover={{ y: -2 }}
+          transition={{ duration: 0.18 }}
+          className="bg-white rounded-xl p-5 border border-neutral-200 shadow-xs hover:border-neutral-300 transition-shadow flex items-start gap-4"
+        >
           <div className="w-12 h-12 rounded-xl bg-orange-50 text-[#FF5C00] flex items-center justify-center shrink-0">
             <ShoppingBag className="w-6 h-6" />
           </div>
@@ -90,10 +107,15 @@ export const SellerDashboard: React.FC = () => {
             </p>
             <span className="text-[11px] text-emerald-600 font-medium">+8% so với kỳ trước</span>
           </div>
-        </div>
+        </motion.div>
 
         {/* Sản phẩm */}
-        <div className="bg-white rounded-xl p-5 border border-neutral-200 shadow-xs flex items-start gap-4">
+        <motion.div
+          variants={staggerItemVariants}
+          whileHover={{ y: -2 }}
+          transition={{ duration: 0.18 }}
+          className="bg-white rounded-xl p-5 border border-neutral-200 shadow-xs hover:border-neutral-300 transition-shadow flex items-start gap-4"
+        >
           <div className="w-12 h-12 rounded-xl bg-orange-50 text-[#FF5C00] flex items-center justify-center shrink-0">
             <Package className="w-6 h-6" />
           </div>
@@ -104,10 +126,15 @@ export const SellerDashboard: React.FC = () => {
             </p>
             <span className="text-[11px] text-emerald-600 font-medium">Đang trực tuyến</span>
           </div>
-        </div>
+        </motion.div>
 
         {/* Đánh giá */}
-        <div className="bg-white rounded-xl p-5 border border-neutral-200 shadow-xs flex items-start gap-4">
+        <motion.div
+          variants={staggerItemVariants}
+          whileHover={{ y: -2 }}
+          transition={{ duration: 0.18 }}
+          className="bg-white rounded-xl p-5 border border-neutral-200 shadow-xs hover:border-neutral-300 transition-shadow flex items-start gap-4"
+        >
           <div className="w-12 h-12 rounded-xl bg-orange-50 text-[#FF5C00] flex items-center justify-center shrink-0">
             <Star className="w-6 h-6" />
           </div>
@@ -125,8 +152,8 @@ export const SellerDashboard: React.FC = () => {
             </div>
             <span className="text-[11px] text-neutral-400">Tiêu chuẩn đối tác</span>
           </div>
-        </div>
-      </section>
+        </motion.div>
+      </motion.section>
 
       {/* 3. Trend Vector Chart */}
       <section className="bg-white rounded-xl p-6 border border-neutral-200 shadow-xs space-y-4">

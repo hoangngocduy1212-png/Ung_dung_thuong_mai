@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
-import { Eye, EyeOff, AlertCircle, CheckCircle2, ShieldCheck } from 'lucide-react';
+import { Eye, EyeOff, AlertCircle, CheckCircle2, ShieldCheck, LogIn, ArrowRight, UserPlus } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { authService } from '../../services/authService';
 import heroRegister from '../../assets/hero-register.jpg';
@@ -452,38 +452,49 @@ export const RegisterPage: React.FC = () => {
 
             {/* Primary Submit Button */}
             <div className="pt-2">
-              <motion.button
+              <button
                 type="submit"
                 disabled={isLoading}
-                whileHover={{ scale: 1.005 }}
-                whileTap={{ scale: 0.985 }}
-                transition={{ duration: 0.15 }}
-                className="w-full py-3.5 px-6 rounded-md bg-[#FF5C00] hover:bg-[#E05200] active:scale-[0.99] text-white font-bold text-sm tracking-wider uppercase transition-all duration-150 shadow-[0_4px_16px_rgba(255,92,0,0.35)] cursor-pointer flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed select-none"
-                data-purpose="submit-button"
+                className="monolith-primary-btn w-full py-3.5 px-6 text-sm tracking-wider uppercase select-none"
+                data-purpose="submit-register-button"
               >
                 {isLoading ? (
-                  <div className="flex items-center gap-2">
+                  <div className="relative z-10 flex items-center justify-center gap-2">
                     <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                     <span>Đang đăng ký...</span>
                   </div>
                 ) : (
-                  <span>ĐĂNG KÝ TÀI KHOẢN</span>
+                  <span className="relative z-10 flex items-center justify-center gap-2 font-bold tracking-wider">
+                    <UserPlus className="w-4 h-4" />
+                    <span>ĐĂNG KÝ TÀI KHOẢN</span>
+                  </span>
                 )}
-              </motion.button>
+              </button>
             </div>
           </form>
 
-          {/* Login Redirect Footer Link */}
-          <footer className="mt-6 text-center text-xs text-zinc-400">
-            <p>
-              Đã có tài khoản?{' '}
-              <Link
-                to="/login"
-                className="text-[#FF5C00] hover:underline font-semibold ml-1 inline-block"
-              >
-                Đăng nhập ngay.
-              </Link>
-            </p>
+          {/* ================= SECONDARY CTA: LOGIN ================= */}
+          <footer className="mt-6 pt-1" data-purpose="login-cta-section">
+            {/* Technical Monolith Divider */}
+            <div className="relative mb-4 flex items-center justify-center">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-zinc-800/80" />
+              </div>
+              <div className="relative px-3.5 bg-[#111113] text-[10px] font-mono tracking-[0.22em] text-zinc-500 uppercase font-semibold select-none">
+                ĐÃ CÓ TÀI KHOẢN TECHSTORE?
+              </div>
+            </div>
+
+            {/* Specular Cyber Login Button */}
+            <Link
+              to="/login"
+              className="monolith-specular-btn group w-full py-3.5 px-6 flex items-center justify-center gap-2.5 text-xs sm:text-sm font-semibold tracking-wider uppercase select-none no-underline"
+              data-purpose="login-redirect-button"
+            >
+              <LogIn className="w-4 h-4 text-zinc-400 group-hover:text-[#FF5C00] transition-colors duration-200 relative z-10" />
+              <span className="relative z-10 font-bold">ĐĂNG NHẬP NGAY</span>
+              <ArrowRight className="w-4 h-4 text-zinc-400 group-hover:text-white group-hover:translate-x-1 transition-all duration-200 relative z-10" />
+            </Link>
           </footer>
         </motion.div>
       </section>
