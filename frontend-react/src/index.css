@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+@theme {
+  /* ================= TYPOGRAPHY ================= */
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Be Vietnam Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* ================= MONOLITH ENGINEERING COLOR TOKENS ================= */
+  --color-brand-primary: #171717;
+  --color-brand-bg: #FFFFFF;
+  --color-brand-surface: #F5F5F5;
+  --color-brand-border: #E5E5E5;
+  --color-brand-accent: #FF5C00;
+  --color-brand-accent-hover: #E05200;
+  --color-brand-accent-subtle: #FFF7ED;
+  --color-brand-muted: #737373;
+
+  /* Semantic Feedback Colors */
+  --color-brand-success: #15803D;
+  --color-brand-success-bg: #ECFDF5;
+  --color-brand-warning: #D97706;
+  --color-brand-warning-bg: #FFFBEB;
+  --color-brand-danger: #DC2626;
+  --color-brand-danger-bg: #FEF2F2;
+
+  /* Dark Canvas Colors (Auth & Modals) */
+  --color-brand-dark-canvas: #0B0C0E;
+  --color-brand-dark-surface: #141519;
+  --color-brand-dark-border: #262930;
+
+  /* Backward Compatibility Aliases */
+  --color-brand-gray: #171717;
+  --color-primary: #171717;
+  --color-primary-dark: #0A0A0A;
+  --color-ink: #171717;
+  --color-muted: #737373;
+  --color-line: #E5E5E5;
+  --color-pale-blue: #FFF7ED;
+  --color-bg-page: #F5F5F5;
+
+  /* ================= GEOMETRY & RADIUS ================= */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-full: 9999px;
+
+  /* ================= MOTION & TIMING ================= */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+/* Base Body Setup */
+body {
+  @apply font-sans bg-[#FFFFFF] text-[#171717] antialiased;
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Headings Default Display Font */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+}
+
+/* Numeric Data Tabular Nums */
+.font-mono, [data-tabular-nums="true"] {
+  font-feature-settings: "tnum" on, "cv01" on;
+}
+
+/* Accessibility: Respect Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
