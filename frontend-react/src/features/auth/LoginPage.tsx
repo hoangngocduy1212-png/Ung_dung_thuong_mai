@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation, Link } from 'react-router-dom';
+import { useNavigate, useLocation, Link, useSearchParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { Eye, EyeOff, AlertCircle, ShieldCheck, Mail, CheckCircle2 } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
@@ -11,6 +11,7 @@ export const LoginPage: React.FC = () => {
   const { login, user, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const [searchParams] = useSearchParams();
 
   // Form states
   const [email, setEmail] = useState('');
@@ -29,6 +30,12 @@ export const LoginPage: React.FC = () => {
 
   // Redirect target from ProtectedRoute (if available)
   const fromLocation = (location.state as { from?: { pathname: string } })?.from?.pathname;
+
+  // Account mode and role check
+  const [loginChannel, setLoginChannel] = useState<'customer' | 'seller' | 'cskh' | 'admin'>(() => {
+    const channel = searchParams.get('channel');
+    return channel === 'seller' || channel === 'cskh' || channel === 'admin' ? channel : 'customer';
+  });
 
   // Auto redirect if already authenticated
   useEffect(() => {
@@ -58,6 +65,18 @@ export const LoginPage: React.FC = () => {
 
     try {
       const loggedInUser = await login({ email: trimmedEmail, password }, remember);
+      const mismatchMessages: Record<string, string> = {
+        customer: 'Tài khoản này không phải tài khoản khách hàng.',
+        seller: 'Tài khoản này không phải tài khoản chủ gian hàng.',
+        cskh: 'Tài khoản này không phải tài khoản nhân viên CSKH.',
+        admin: 'Tài khoản này không phải tài khoản quản trị viên.',
+      };
+
+      if (loggedInUser.role !== loginChannel) {
+        await authService.logout();
+        throw new Error(mismatchMessages[loginChannel]);
+      }
+
       const target = fromLocation || ROLE_HOME_PATHS[loggedInUser.role] || '/';
       navigate(target, { replace: true });
     } catch (err: any) {
@@ -97,15 +116,6 @@ export const LoginPage: React.FC = () => {
     } finally {
       setIsForgotLoading(false);
     }
-  };
-
-  // Development quick fill utility (only in dev mode)
-  const isDev = import.meta.env.DEV;
-  const setTestAccount = (testEmail: string, testPass: string) => {
-    setEmail(testEmail);
-    setPassword(testPass);
-    setRemember(true);
-    setErrorMessage(null);
   };
 
   return (
@@ -247,6 +257,30 @@ export const LoginPage: React.FC = () => {
 
           {/* Authentication Form */}
           <form onSubmit={handleSubmit} noValidate className="space-y-5" data-purpose="login-form">
+            {/* Login channel switch */}
+            {loginChannel !== 'cskh' && loginChannel !== 'admin' && (
+              <div className="grid grid-cols-2 p-1 mb-6 rounded-xl bg-zinc-900 border border-zinc-800" role="tablist" aria-label="Loại tài khoản">
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={loginChannel === 'customer'}
+                  onClick={() => { setLoginChannel('customer'); setErrorMessage(null); }}
+                  className={`py-2.5 rounded-lg text-sm font-bold transition-all ${loginChannel === 'customer' ? 'bg-[#FF5C00] text-white shadow-[0_4px_14px_rgba(255,92,0,.25)]' : 'text-zinc-400 hover:text-white'}`}
+                >
+                  Khách hàng
+                </button>
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={loginChannel === 'seller'}
+                  onClick={() => { setLoginChannel('seller'); setErrorMessage(null); }}
+                  className={`py-2.5 rounded-lg text-sm font-bold transition-all ${loginChannel === 'seller' ? 'bg-[#FF5C00] text-white shadow-[0_4px_14px_rgba(255,92,0,.25)]' : 'text-zinc-400 hover:text-white'}`}
+                >
+                  Chủ gian hàng
+                </button>
+              </div>
+            )}
+
             {/* Email Field */}
             <div className="space-y-1.5 text-left">
               <label
@@ -350,7 +384,7 @@ export const LoginPage: React.FC = () => {
           </form>
 
           {/* Footer Link */}
-          <footer className="mt-8 text-center text-xs sm:text-sm text-zinc-400">
+          <footer className="mt-8 text-center text-xs sm:text-sm text-zinc-400 space-y-4">
             <p>
               Chưa có tài khoản?{' '}
               <Link
@@ -360,46 +394,33 @@ export const LoginPage: React.FC = () => {
                 Đăng ký ngay.
               </Link>
             </p>
-          </footer>
 
-          {/* QA/Dev Quick Fill Utility */}
-          {isDev && (
-            <div className="mt-8 pt-4 border-t border-zinc-800/60 text-left">
-              <span className="text-[10px] uppercase tracking-wider text-zinc-500 font-semibold block mb-2 font-mono">
-                ⚡ Dev Quick Fill:
-              </span>
-              <div className="flex flex-wrap gap-1.5">
+            {loginChannel !== 'cskh' && loginChannel !== 'admin' && (
+              <p className="pt-4 border-t border-zinc-800/70">
+                Bạn là nhân viên CSKH / Quản trị viên?{' '}
                 <button
                   type="button"
-                  onClick={() => setTestAccount('admin@shop.local', 'Admin@123')}
-                  className="text-[11px] px-2.5 py-1 rounded bg-[#161619] hover:bg-zinc-800 text-zinc-400 hover:text-white border border-zinc-800 transition-colors cursor-pointer"
+                  onClick={() => setLoginChannel('cskh')}
+                  className="text-[#FF5C00] font-semibold hover:underline ml-1 bg-transparent border-0 p-0"
                 >
-                  Admin
+                  Chuyển sang đăng nhập nội bộ
                 </button>
-                <button
-                  type="button"
-                  onClick={() => setTestAccount('seller@shop.local', 'Seller@123')}
-                  className="text-[11px] px-2.5 py-1 rounded bg-[#161619] hover:bg-zinc-800 text-zinc-400 hover:text-white border border-zinc-800 transition-colors cursor-pointer"
-                >
-                  Seller
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setTestAccount('cskh@shop.local', 'Cskh@123')}
-                  className="text-[11px] px-2.5 py-1 rounded bg-[#161619] hover:bg-zinc-800 text-zinc-400 hover:text-white border border-zinc-800 transition-colors cursor-pointer"
-                >
-                  CSKH
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setTestAccount('customer@shop.local', 'Customer@123')}
-                  className="text-[11px] px-2.5 py-1 rounded bg-[#161619] hover:bg-zinc-800 text-zinc-400 hover:text-white border border-zinc-800 transition-colors cursor-pointer"
-                >
-                  Customer
+              </p>
+            )}
+
+            {(loginChannel === 'cskh' || loginChannel === 'admin') && (
+              <div className="pt-4 border-t border-zinc-800/70 space-y-3">
+                <div className="grid grid-cols-2 gap-2">
+                  <button type="button" onClick={() => setLoginChannel('cskh')} className={`py-2 rounded-lg text-sm font-bold border ${loginChannel === 'cskh' ? 'bg-[#FF5C00] border-[#FF5C00] text-white' : 'border-zinc-800 text-zinc-400'}`}>CSKH</button>
+                  <button type="button" onClick={() => setLoginChannel('admin')} className={`py-2 rounded-lg text-sm font-bold border ${loginChannel === 'admin' ? 'bg-[#FF5C00] border-[#FF5C00] text-white' : 'border-zinc-800 text-zinc-400'}`}>Quản trị viên</button>
+                </div>
+                <button type="button" onClick={() => setLoginChannel('customer')} className="text-zinc-400 hover:text-white hover:underline">
+                  Quay lại đăng nhập khách hàng / chủ gian hàng
                 </button>
               </div>
-            </div>
-          )}
+            )}
+          </footer>
+
         </motion.div>
       </section>
 

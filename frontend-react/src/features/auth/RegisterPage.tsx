@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { Eye, EyeOff, AlertCircle, CheckCircle2, ShieldCheck } from 'lucide-react';
@@ -19,6 +19,11 @@ export const RegisterPage: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [agreeTerms, setAgreeTerms] = useState(false);
+  const [accountType, setAccountType] = useState<'customer' | 'seller-owner' | 'seller-staff'>('customer');
+  const [shopName, setShopName] = useState('');
+  const [shopDescription, setShopDescription] = useState('');
+  const [shopId, setShopId] = useState('');
+  const [shops, setShops] = useState<Array<{ _id: string; name: string }>>([]);
 
   // Status states
   const [isLoading, setIsLoading] = useState(false);
@@ -62,6 +67,12 @@ export const RegisterPage: React.FC = () => {
     if (!agreeTerms) {
       errors.terms = 'Bạn cần đồng ý với Điều khoản sử dụng và Chính sách bảo mật.';
     }
+    if (accountType === 'seller-owner' && shopName.trim().length < 2) {
+      errors.shopName = 'Tên gian hàng cần có ít nhất 2 ký tự.';
+    }
+    if (accountType === 'seller-staff' && !shopId) {
+      errors.shopId = 'Vui lòng chọn gian hàng để đăng ký.';
+    }
 
     setFieldErrors(errors);
     return Object.keys(errors).length === 0;
@@ -80,24 +91,30 @@ export const RegisterPage: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const res = await authService.registerCustomer({
+      const basePayload = {
         fullName: fullName.trim(),
         email: email.trim().toLowerCase(),
         phone: phone.trim(),
         password,
-      });
+      };
+
+      const res = accountType === 'customer'
+        ? await authService.registerCustomer(basePayload)
+        : await authService.registerSeller(accountType === 'seller-owner'
+          ? { ...basePayload, sellerType: 'owner', shopName: shopName.trim(), shopDescription: shopDescription.trim() }
+          : { ...basePayload, sellerType: 'staff', shopId });
 
       if (res.token) {
-        setSuccessMessage('Đăng ký tài khoản thành công! Đang chuyển hướng...');
+        setSuccessMessage(accountType === 'customer'
+          ? 'Đăng ký tài khoản thành công! Đang chuyển hướng...'
+          : 'Gian hàng đã được gửi để chờ quản trị viên phê duyệt!');
         await refreshProfile();
-        setTimeout(() => {
-          navigate('/', { replace: true });
-        }, 1200);
+        setTimeout(() => navigate(accountType === 'customer' ? '/' : '/seller', { replace: true }), 1200);
       } else {
-        setSuccessMessage('Đăng ký thành công! Vui lòng đăng nhập.');
-        setTimeout(() => {
-          navigate('/login', { replace: true });
-        }, 1500);
+        setSuccessMessage(accountType === 'seller-staff'
+          ? 'Đăng ký thành công. Vui lòng chờ chủ gian hàng phê duyệt.'
+          : 'Đăng ký thành công! Vui lòng đăng nhập.');
+        setTimeout(() => navigate('/login', { replace: true }), 1500);
       }
     } catch (err: any) {
       setErrorMessage(err?.message || 'Đăng ký không thành công. Vui lòng thử lại.');
@@ -106,19 +123,25 @@ export const RegisterPage: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    if (accountType === 'seller-staff') {
+      authService.getActiveShops().then(setShops).catch(() => setShops([]));
+    }
+  }, [accountType]);
+
   return (
     <main className="w-full min-h-screen flex flex-col lg:flex-row overflow-x-hidden bg-[#0D0F12] text-zinc-300 font-sans antialiased selection:bg-[#FF5C00]/30 selection:text-white">
       {/* ================= LEFT BRAND SHOWCASE PANEL ================= */}
       <section
-        className="relative hidden lg:flex lg:w-7/12 flex-col justify-between p-12 xl:p-16 overflow-hidden select-none bg-[#0D0F12]"
+        className="relative hidden lg:flex lg:w-7/12 lg:h-screen lg:sticky lg:top-0 flex-col justify-between p-12 xl:p-16 overflow-hidden select-none bg-[#0D0F12]"
         data-purpose="hero-brand-panel"
       >
         {/* Background Image Layer */}
-        <div className="absolute inset-0 z-0 bg-[#0D0F12]">
+        <div className="absolute inset-0 z-0 overflow-hidden bg-[#0D0F12] pointer-events-none">
           <img
-            alt="TECHSTORE Monolith Architecture & Tech Showcase"
+            alt=""
             src={heroRegister}
-            className="w-full h-full object-cover object-center filter brightness-[0.72] contrast-125"
+            className="absolute inset-0 w-full h-full object-cover object-center scale-100 brightness-[0.72] contrast-125"
             loading="eager"
             decoding="sync"
           />
@@ -141,18 +164,14 @@ export const RegisterPage: React.FC = () => {
           </div>
 
           {/* Main Statement Headline */}
-          <h1 className="text-4xl xl:text-5xl font-extrabold text-white tracking-tight leading-[1.18] uppercase font-display">
-            CÔNG NGHỆ
-            <br />
-            MỞ RA
-            <br />
-            NHIỀU HƠN.
+          <h1 className="font-display text-white uppercase font-extrabold tracking-tight leading-[1.12] whitespace-nowrap">
+            <span className="block text-[clamp(24px,3vw,44px)]">
+              CÔNG NGHỆ MỞ RA NHIỀU HƠN.
+            </span>
+            <span className="block text-[clamp(11px,1.35vw,20px)] mt-2">
+              CHO MỘT NGÀY TỐT ĐẸP HƠN.
+            </span>
           </h1>
-
-          {/* Sub-statement */}
-          <p className="text-sm xl:text-base tracking-[0.2em] font-semibold text-zinc-300 uppercase mt-5 mb-5 font-mono">
-            CHO MỘT NGÀY TỐT ĐẸP HƠN.
-          </p>
 
           {/* Description Paragraph */}
           <p className="text-xs xl:text-sm text-zinc-400 font-normal leading-relaxed max-w-md">
@@ -408,7 +427,123 @@ export const RegisterPage: React.FC = () => {
               )}
             </div>
 
-            {/* Field 6: Terms & Condition Checkbox */}
+            {/* Field 6: Account Type Selection */}
+            <div className="space-y-1 text-left">
+              <label
+                htmlFor="accountType"
+                className="block text-[11px] font-semibold tracking-[0.16em] uppercase text-zinc-300 font-mono"
+              >
+                LOẠI TÀI KHOẢN
+              </label>
+              {/* Account type switch */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-5" role="tablist" aria-label="Loại tài khoản đăng ký">
+                { [
+                  ['customer', 'Khách hàng'],
+                  ['seller-owner', 'Chủ gian hàng'],
+                  ['seller-staff', 'Nhân viên gian hàng'],
+                ].map(([value, label]) => (
+                  <button
+                    key={value}
+                    type="button"
+                    role="tab"
+                    aria-selected={accountType === value}
+                    onClick={() => setAccountType(value as 'customer' | 'seller-owner' | 'seller-staff')}
+                    className={`h-12 px-2 rounded-lg text-xs font-bold leading-tight border transition-all flex items-center justify-center text-center ${accountType === value ? 'bg-[#FF5C00] border-[#FF5C00] text-white shadow-[0_4px_14px_rgba(255,92,0,.20)]' : 'bg-[#161619] border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-700'}`}
+                  >
+                    {value === 'seller-staff' ? (
+                      <span>
+                        <span className="block">Nhân viên</span>
+                        <span className="block">gian hàng</span>
+                      </span>
+                    ) : label}
+                  </button>
+                )) }
+              </div>
+            </div>
+
+            {/* Field 7: Shop Selection (for seller-staff only) */}
+            {accountType === 'seller-staff' && (
+              <div className="space-y-1 text-left">
+                <label
+                  htmlFor="shopId"
+                  className="block text-[11px] font-semibold tracking-[0.16em] uppercase text-zinc-300 font-mono"
+                >
+                  CHỌN GIAN HÀNG
+                </label>
+                <select
+                  id="shopId"
+                  name="shopId"
+                  value={shopId}
+                  onChange={(e) => setShopId(e.target.value)}
+                  disabled={isLoading}
+                  className="w-full px-4 py-2.5 bg-[#1A1D23] border border-[#2A2E37] rounded-md text-sm text-white focus:outline-none focus:border-[#FF5C00] focus:ring-1 focus:ring-[#FF5C00] transition-colors"
+                >
+                  <option value="">-- Chọn gian hàng --</option>
+                  {shops.map((shop) => (
+                    <option key={shop._id} value={shop._id}>
+                      {shop.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
+
+            {/* Field 8: Shop Name */}
+            {accountType === 'seller-owner' && (
+              <div className="space-y-1 text-left">
+                <label
+                  htmlFor="shopName"
+                  className="block text-[11px] font-semibold tracking-[0.16em] uppercase text-zinc-300 font-mono"
+                >
+                  TÊN GIAN HÀNG
+                </label>
+                <input
+                  id="shopName"
+                  name="shopName"
+                  type="text"
+                  value={shopName}
+                  onChange={(e) => setShopName(e.target.value)}
+                  placeholder="Nhập tên gian hàng"
+                  disabled={isLoading}
+                  required
+                  className={`w-full px-4 py-2.5 bg-[#1A1D23] border ${
+                    fieldErrors.shopName ? 'border-red-500' : 'border-[#2A2E37]'
+                  } rounded-md text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-[#FF5C00] focus:ring-1 focus:ring-[#FF5C00] transition-colors`}
+                />
+                {fieldErrors.shopName && (
+                  <p className="text-[11px] text-red-400 mt-0.5">{fieldErrors.shopName}</p>
+                )}
+              </div>
+            )}
+
+            {/* Field 9: Shop Description */}
+            {accountType === 'seller-owner' && (
+              <div className="space-y-1 text-left">
+                <label
+                  htmlFor="shopDescription"
+                  className="block text-[11px] font-semibold tracking-[0.16em] uppercase text-zinc-300 font-mono"
+                >
+                  MÔ TẢ GIAN HÀNG
+                </label>
+                <textarea
+                  id="shopDescription"
+                  name="shopDescription"
+                  value={shopDescription}
+                  onChange={(e) => setShopDescription(e.target.value)}
+                  placeholder="Nhập mô tả gian hàng"
+                  disabled={isLoading}
+                  required
+                  className={`w-full px-4 py-2.5 bg-[#1A1D23] border ${
+                    fieldErrors.shopDescription ? 'border-red-500' : 'border-[#2A2E37]'
+                  } rounded-md text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-[#FF5C00] focus:ring-1 focus:ring-[#FF5C00] transition-colors resize-none h-20`}
+                />
+                {fieldErrors.shopDescription && (
+                  <p className="text-[11px] text-red-400 mt-0.5">{fieldErrors.shopDescription}</p>
+                )}
+              </div>
+            )}
+
+            {/* Field 10: Terms & Condition Checkbox */}
             <div className="flex items-start pt-1.5 text-left" data-purpose="terms-checkbox">
               <div className="flex items-center h-5">
                 <input

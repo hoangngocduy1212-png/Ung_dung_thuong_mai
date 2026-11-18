@@ -7,6 +7,7 @@ import type {
   RegisterSellerData,
   User,
 } from '../types/auth';
+import type { ShopSummary } from '../types/catalog';
 
 export const authService = {
   login: async (credentials: LoginCredentials, remember = false): Promise<AuthResponse> => {
@@ -78,4 +79,6 @@ export const authService = {
 
   getCurrentUser: (): User | null => getUser(),
   getCurrentToken: (): string | null => getToken(),
+  getActiveShops: async (): Promise<ShopSummary[]> =>
+    api.get<ShopSummary[]>('/auth/shops', { auth: false }),
 };

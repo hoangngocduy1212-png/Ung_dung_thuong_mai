@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { catalogService } from '../../services/catalogService';
-import type { Category, Product, Brand } from '../../types/catalog';
+import type { Category, Product } from '../../types/catalog';
 import {
   ArrowRight,
   Star,
@@ -39,35 +39,23 @@ const DEFAULT_CATEGORIES = [
   { name: 'Nhà thông minh', slug: 'smart-home', icon: <HomeIcon className="w-7 h-7 text-neutral-700" /> },
 ];
 
-const SHOWROOMS = [
-  { city: 'Hà Nội', address: '128 Thái Hà, Đống Đa', img: 'https://images.unsplash.com/photo-1541888946425-d0fbb186f5f7?auto=format&fit=crop&w=400&q=80' },
-  { city: 'TP. Hồ Chí Minh', address: '209 Ba Tháng Hai, Quận 10', img: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=400&q=80' },
-  { city: 'Đà Nẵng', address: '153 Hàm Nghi, Thanh Khê', img: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=400&q=80' },
-  { city: 'Cần Thơ', address: '54 đường 30/4, Ninh Kiều', img: 'https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=400&q=80' },
-];
-
 export const HomePage: React.FC = () => {
   const navigate = useNavigate();
   const [categories, setCategories] = useState<Category[]>([]);
-  const [brands, setBrands] = useState<Brand[]>([]);
   const [bestsellers, setBestsellers] = useState<Product[]>([]);
   const [newArrivals, setNewArrivals] = useState<Product[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [catsRes, brandsRes, bestRes, newRes] = await Promise.allSettled([
+        const [catsRes, bestRes, newRes] = await Promise.allSettled([
           catalogService.getCategories(),
-          catalogService.getBrands(),
           catalogService.getProducts({ sort: 'popular', limit: 4 }),
           catalogService.getProducts({ sort: 'newest', limit: 4 }),
         ]);
 
         if (catsRes.status === 'fulfilled') {
           setCategories(Array.isArray(catsRes.value) ? catsRes.value : []);
-        }
-        if (brandsRes.status === 'fulfilled') {
-          setBrands(Array.isArray(brandsRes.value) ? brandsRes.value : []);
         }
         if (bestRes.status === 'fulfilled') {
           setBestsellers(bestRes.value.items || []);
@@ -310,96 +298,6 @@ export const HomePage: React.FC = () => {
                 Đang tải dữ liệu sản phẩm mới...
               </div>
             )}
-          </div>
-        </div>
-      </section>
-
-      {/* 4. BOTTOM TRIPLE SECTION: BRANDS, STORES & PROMOTION BANNER */}
-      <section className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start pt-2" data-purpose="bottom-triple-section">
-        {/* Col 1: Thương hiệu nổi bật (5 / 12) */}
-        <div className="md:col-span-5 space-y-3.5">
-          <div className="flex items-center justify-between">
-            <h2 className="text-[17px] font-bold text-neutral-900 tracking-tight">Thương hiệu nổi bật</h2>
-            <Link to="/products" className="text-xs font-medium text-neutral-500 hover:text-[#FF5C00] flex items-center gap-1">
-              <span>Xem tất cả</span>
-              <ArrowRight className="w-3 h-3" />
-            </Link>
-          </div>
-          <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
-            {(brands.length > 0 ? brands.slice(0, 6) : [
-              { _id: '1', name: 'Apple' },
-              { _id: '2', name: 'Samsung' },
-              { _id: '3', name: 'Sony' },
-              { _id: '4', name: 'Dell' },
-              { _id: '5', name: 'Asus' },
-              { _id: '6', name: 'Xiaomi' },
-            ]).map((b) => (
-              <Link
-                key={b._id}
-                to={`/products?brand=${b._id}`}
-                className="bg-[#F8F9FA] hover:bg-[#F0F2F5] rounded-xl p-2.5 h-16 flex items-center justify-center border border-transparent hover:border-neutral-200 transition-colors text-center"
-              >
-                <span className="text-[11px] font-black tracking-tight text-neutral-900 uppercase font-mono">
-                  {b.name}
-                </span>
-              </Link>
-            ))}
-          </div>
-        </div>
-
-        {/* Col 2: Hệ thống cửa hàng (3 / 12) */}
-        <div className="md:col-span-3 space-y-3.5 border-l-0 md:border-l border-neutral-200 md:pl-5">
-          <div className="flex items-center justify-between">
-            <h2 className="text-[17px] font-bold text-neutral-900 tracking-tight">Cửa hàng nổi bật</h2>
-            <Link to="/help" className="text-xs font-medium text-neutral-500 hover:text-[#FF5C00] flex items-center gap-1">
-              <span>Địa chỉ</span>
-              <ArrowRight className="w-3 h-3" />
-            </Link>
-          </div>
-          <div className="grid grid-cols-4 gap-2 text-center">
-            {SHOWROOMS.map((store, i) => (
-              <div key={i} className="group cursor-default">
-                <div className="aspect-video w-full rounded-md overflow-hidden bg-neutral-200 mb-1.5 border border-neutral-100">
-                  <img
-                    src={store.img}
-                    alt={store.city}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
-                  />
-                </div>
-                <span className="text-[11px] text-neutral-700 font-medium group-hover:text-[#FF5C00] whitespace-nowrap">
-                  {store.city}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Col 3: Khuyến mãi Banner (4 / 12) */}
-        <div className="md:col-span-4 space-y-3.5 border-l-0 md:border-l border-neutral-200 md:pl-5">
-          <div className="flex items-center justify-between">
-            <h2 className="text-[17px] font-bold text-neutral-900 tracking-tight">Khuyến mãi</h2>
-            <Link to="/products?sort=popular" className="text-xs font-medium text-neutral-500 hover:text-[#FF5C00] flex items-center gap-1">
-              <span>Xem ưu đãi</span>
-              <ArrowRight className="w-3 h-3" />
-            </Link>
-          </div>
-
-          <div
-            onClick={() => navigate('/products?sort=popular')}
-            className="relative bg-gradient-to-r from-[#FF5C00] via-[#FF6A1A] to-[#FF5400] text-white rounded-xl p-4 overflow-hidden h-[88px] flex items-center justify-between shadow-sm cursor-pointer group hover:shadow-md transition-shadow"
-          >
-            <div className="z-10 max-w-[60%]">
-              <h3 className="text-base font-extrabold leading-tight">
-                Ưu đãi<br />đến 50%
-              </h3>
-              <p className="text-[10px] text-white/90 leading-tight mt-1 line-clamp-1">
-                Thiết bị công nghệ chính hãng
-              </p>
-            </div>
-            <div className="flex items-center gap-1 text-white/90 text-xs font-semibold group-hover:translate-x-1 transition-transform">
-              <span>Khám phá ngay</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </div>
           </div>
         </div>
       </section>

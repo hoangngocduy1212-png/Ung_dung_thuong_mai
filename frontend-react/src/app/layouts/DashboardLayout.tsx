@@ -14,7 +14,6 @@ import {
   Headphones,
   ShieldCheck,
   LogOut,
-  ExternalLink,
 } from 'lucide-react';
 
 interface NavItem {
@@ -136,15 +135,17 @@ export const DashboardLayout: React.FC = () => {
               <p className="text-[11px] text-[#78889b] truncate">{user?.email}</p>
             </div>
           </div>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleLogout}
-            leftIcon={<LogOut className="w-3.5 h-3.5 text-red-500" />}
-            className="w-full text-xs justify-center hover:bg-red-50 hover:text-red-700 hover:border-red-200"
-          >
-            Đăng xuất
-          </Button>
+          {user?.role !== 'cskh' && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleLogout}
+              leftIcon={<LogOut className="w-3.5 h-3.5 text-red-500" />}
+              className="w-full text-xs justify-center hover:bg-red-50 hover:text-red-700 hover:border-red-200"
+            >
+              Đăng xuất
+            </Button>
+          )}
         </div>
       </aside>
 
@@ -155,27 +156,6 @@ export const DashboardLayout: React.FC = () => {
             <span className="text-sm font-semibold text-[#17283e]">
               Phân hệ: {navConfig.title}
             </span>
-            <span className="text-xs text-[#78889b] bg-slate-100 px-2 py-0.5 rounded">
-              Giao diện React Phase 0
-            </span>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <a
-              href={
-                user?.role === 'seller'
-                  ? 'http://localhost:5500/seller.html'
-                  : user?.role === 'cskh'
-                  ? 'http://localhost:5500/staff.html'
-                  : 'http://localhost:5500'
-              }
-              target="_blank"
-              rel="noreferrer"
-              className="text-xs text-[#1267d5] hover:underline flex items-center gap-1 bg-[#e9f3ff] px-2.5 py-1.5 rounded-lg"
-            >
-              <span>Mở phiên bản Vanilla (Port 5500)</span>
-              <ExternalLink className="w-3.5 h-3.5" />
-            </a>
           </div>
         </header>
 
