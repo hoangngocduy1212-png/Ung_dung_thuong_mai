@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
+import React, { createContext, useContext, useEffect, useState, useCallback, useRef } from 'react';
 import { useAuth } from '../../hooks/useAuth';
 import { customerService } from '../../services/customerService';
 import type { CartData, CartItem } from '../../types/customer';
@@ -18,12 +18,17 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 const GUEST_CART_KEY = 'techstore_guest_cart';
 
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
   const [cart, setCart] = useState<CartData | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
+  const isCustomer = isAuthenticated && user?.role === 'customer';
+  const userId = user?._id;
+  const userRole = user?.role;
+  const prevUserIdRef = useRef<string | undefined>(userId);
+
   const refreshCart = useCallback(async () => {
-    if (isAuthenticated) {
+    if (isCustomer) {
       try {
         setLoading(true);
         const data = await customerService.getCart();
@@ -33,7 +38,11 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       } finally {
         setLoading(false);
       }
+    } else if (isAuthenticated && userRole !== 'customer') {
+      // Tài khoản không phải khách hàng (seller, admin, cskh) -> không gọi API giỏ hàng
+      setCart({ items: [] });
     } else {
+      // Khách vãng lai (Guest) -> đọc từ localStorage, không gọi Customer API
       try {
         const stored = localStorage.getItem(GUEST_CART_KEY);
         if (stored) {
@@ -45,19 +54,24 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setCart({ items: [] });
       }
     }
-  }, [isAuthenticated]);
+  }, [isCustomer, isAuthenticated, userRole]);
 
   useEffect(() => {
+    // Đổi tài khoản hoặc đăng xuất -> reset giỏ hàng ngay lập tức để tránh lộ dữ liệu cũ
+    if (prevUserIdRef.current !== userId) {
+      setCart({ items: [] });
+      prevUserIdRef.current = userId;
+    }
     refreshCart();
-  }, [refreshCart]);
+  }, [userId, userRole, refreshCart]);
 
   const addToCart = async (productId: string, variantId: string, quantity: number = 1): Promise<boolean> => {
     try {
-      if (isAuthenticated) {
+      if (isCustomer) {
         const updated = await customerService.addToCart(productId, variantId, quantity);
         setCart(updated);
         return true;
-      } else {
+      } else if (!isAuthenticated) {
         // Guest cart
         const currentItems = cart?.items || [];
         const existingIndex = currentItems.findIndex(
@@ -82,6 +96,9 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
         localStorage.setItem(GUEST_CART_KEY, JSON.stringify(newCart));
         setCart(newCart);
         return true;
+      } else {
+        // Tài khoản không phải customer không thể thêm giỏ hàng cá nhân
+        return false;
       }
     } catch {
       return false;
@@ -90,11 +107,11 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const updateQuantity = async (itemId: string, quantity: number): Promise<boolean> => {
     try {
-      if (isAuthenticated) {
+      if (isCustomer) {
         const updated = await customerService.updateCartItem(itemId, quantity);
         setCart(updated);
         return true;
-      } else {
+      } else if (!isAuthenticated) {
         const currentItems = cart?.items || [];
         const newItems = currentItems
           .map((i) => (i._id === itemId ? { ...i, quantity } : i))
@@ -103,6 +120,8 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
         localStorage.setItem(GUEST_CART_KEY, JSON.stringify(newCart));
         setCart(newCart);
         return true;
+      } else {
+        return false;
       }
     } catch {
       return false;
@@ -111,17 +130,19 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const removeItem = async (itemId: string): Promise<boolean> => {
     try {
-      if (isAuthenticated) {
+      if (isCustomer) {
         const updated = await customerService.removeCartItem(itemId);
         setCart(updated);
         return true;
-      } else {
+      } else if (!isAuthenticated) {
         const currentItems = cart?.items || [];
         const newItems = currentItems.filter((i) => i._id !== itemId);
         const newCart: CartData = { items: newItems };
         localStorage.setItem(GUEST_CART_KEY, JSON.stringify(newCart));
         setCart(newCart);
         return true;
+      } else {
+        return false;
       }
     } catch {
       return false;
