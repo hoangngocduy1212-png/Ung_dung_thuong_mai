@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Seller Studio — Hậu mãi | TECHSTORE</title>
+<!-- Google Fonts: Be Vietnam Pro -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Be Vietnam Pro"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              DEFAULT: '#FF5722',
+              orange: '#F97316',
+              light: '#FFF0EB',
+              hover: '#EA580C',
+            },
+            surface: '#F8F9FA',
+            borderLight: '#E5E7EB',
+          }
+        }
+      }
+    }
+  </script>
+<!-- Custom Styles for Precise Aesthetics -->
+<style data-purpose="custom-typography-and-scroll">
+    body {
+      font-family: 'Be Vietnam Pro', sans-serif;
+      background-color: #F8F9FA;
+      color: #1F2937;
+    }
+    /* Custom subtle scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #d1d5db;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #9ca3af;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased text-sm">
+<!-- BEGIN: TechstoreMainHeader -->
+<header class="bg-white border-b border-gray-200 sticky top-0 z-30 shadow-xs" data-purpose="main-header">
+<div class="max-w-[1920px] mx-auto px-6 py-3 flex items-center justify-between gap-6">
+<!-- Brand Logo & Main Nav Categories dropdown indicator -->
+<div class="flex items-center gap-8 shrink-0">
+<div>
+<span class="text-2xl font-black tracking-tight text-gray-900 block leading-tight">TECHSTORE</span>
+<span class="text-xs font-bold text-[#F97316] tracking-wide block uppercase">Tất cả danh mục</span>
+</div>
+</div>
+<!-- Search Bar -->
+<div class="flex-1 max-w-2xl relative">
+<div class="relative w-full">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+<svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<input class="w-full pl-11 pr-4 py-2 bg-gray-100/80 border-transparent rounded-full text-xs placeholder-gray-400 focus:bg-white focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316] transition-all" placeholder="Tìm kiếm sản phẩm, thương hiệu, danh mục..." type="text"/>
+</div>
+</div>
+<!-- Header Category Links Navigation -->
+<nav class="hidden xl:flex items-center gap-6 text-xs font-medium text-gray-700">
+<a class="hover:text-[#F97316] transition-colors border-b-2 border-gray-900 pb-0.5 font-bold text-gray-900" href="#">Laptop</a>
+<a class="hover:text-[#F97316] transition-colors" href="#">Điện thoại</a>
+<a class="hover:text-[#F97316] transition-colors" href="#">Máy tính bảng</a>
+<a class="hover:text-[#F97316] transition-colors" href="#">Âm thanh</a>
+<a class="hover:text-[#F97316] transition-colors" href="#">Thiết bị đeo</a>
+<a class="hover:text-[#F97316] transition-colors" href="#">Phụ kiện</a>
+<a class="hover:text-[#F97316] transition-colors" href="#">Thiết bị thông minh</a>
+<a class="hover:text-[#F97316] transition-colors" href="#">Nhà thông minh</a>
+</nav>
+<!-- User Account & Cart & Promotions Actions -->
+<div class="flex items-center gap-6 shrink-0">
+<!-- Account -->
+<a class="flex items-center gap-2 text-gray-700 hover:text-[#F97316] transition-colors font-medium" href="#">
+<svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M5.121 17.804A9 9 0 0112 15a9 9 0 016.879 2.804M15 11a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="text-xs font-semibold text-gray-800">Tài khoản</span>
+</a>
+<!-- Cart -->
+<a class="flex items-center gap-2 text-gray-700 hover:text-[#F97316] transition-colors font-medium relative" href="#">
+<div class="relative">
+<svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="absolute -top-1.5 -right-2 bg-[#F97316] text-white text-[10px] font-bold rounded-full h-4 w-4 flex items-center justify-center">1</span>
+</div>
+<span class="text-xs font-semibold text-gray-800">Giỏ hàng</span>
+</a>
+<!-- Promotion Link -->
+<a class="text-xs font-bold text-[#F97316] hover:underline" href="#">
+          Khuyến mãi
+        </a>
+</div>
+</div>
+</header>
+<!-- END: TechstoreMainHeader -->
+<!-- BEGIN: MainContentWrapper -->
+<div class="flex-1 flex max-w-[1920px] w-full mx-auto p-6 gap-6" data-purpose="workspace-container">
+<!-- BEGIN: LeftSidebar -->
+<aside class="w-64 shrink-0 flex flex-col gap-6" data-purpose="seller-sidebar">
+<div>
+<h1 class="text-2xl font-bold tracking-tight text-gray-900 leading-none">Seller Studio</h1>
+<p class="text-xs text-gray-500 mt-1.5">Quản lý hoạt động bán hàng của bạn</p>
+</div>
+<!-- Navigation Menu Card -->
+<nav class="bg-white rounded-xl border border-gray-200/80 shadow-xs py-2 flex flex-col">
+<!-- Item: Tổng quan -->
+<a class="flex items-center gap-3.5 px-5 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors" href="#">
+<svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
+</svg>
+<span>Tổng quan</span>
+</a>
+<!-- Item: Sản phẩm -->
+<a class="flex items-center gap-3.5 px-5 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors" href="#">
+<svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
+</svg>
+<span>Sản phẩm</span>
+</a>
+<!-- Item: Đơn hàng -->
+<a class="flex items-center gap-3.5 px-5 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors" href="#">
+<svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
+</svg>
+<span>Đơn hàng</span>
+</a>
+<!-- Item: Hậu mãi (ACTIVE) -->
+<a class="flex items-center gap-3.5 px-5 py-3 text-sm font-semibold bg-[#FFF0EB] text-[#F97316] border-l-4 border-[#F97316] transition-colors" href="#">
+<svg class="w-5 h-5 text-[#F97316]" fill="currentColor" viewbox="0 0 24 24">
+<path d="M12.97 2.59a1.5 1.5 0 00-1.06-.44H5.25A2.25 2.25 0 003 4.4v6.66c0 .4.16.78.44 1.06l8.25 8.25a1.5 1.5 0 002.12 0l7.19-7.19a1.5 1.5 0 000-2.12l-8.03-8.47zM7.5 8.25a1.5 1.5 0 110-3 1.5 1.5 0 010 3z"></path>
+</svg>
+<span>Hậu mãi</span>
+</a>
+<!-- Item: Khuyến mãi -->
+<a class="flex items-center gap-3.5 px-5 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors" href="#">
+<svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
+</svg>
+<span>Khuyến mãi</span>
+</a>
+<!-- Item: Phân tích -->
+<a class="flex items-center gap-3.5 px-5 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors" href="#">
+<svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
+</svg>
+<span>Phân tích</span>
+</a>
+</nav>
+</aside>
+<!-- END: LeftSidebar -->
+<!-- BEGIN: MainContentArea -->
+<main class="flex-1 flex flex-col min-w-0" data-purpose="after-sales-management">
+<!-- Section Header -->
+<div class="mb-4">
+<h2 class="text-2xl font-bold tracking-tight text-gray-900 leading-snug">Hậu mãi</h2>
+<p class="text-xs text-gray-500">Quản lý các yêu cầu đổi trả, bảo hành từ khách hàng.</p>
+</div>
+<!-- Filter Controls Toolbar -->
+<div class="flex flex-wrap items-center justify-between gap-4 mb-4" data-purpose="filters-toolbar">
+<!-- Quick Tab Filters -->
+<div class="flex items-center gap-2">
+<!-- Active Tab -->
+<button class="px-4 py-1.5 text-xs font-semibold rounded-md border border-[#F97316] text-[#F97316] bg-white shadow-2xs hover:bg-[#FFF0EB]/30 transition-colors">
+            Tất cả
+          </button>
+<button class="px-4 py-1.5 text-xs font-medium rounded-md border border-gray-200 text-gray-600 bg-white hover:bg-gray-50 transition-colors">
+            Đổi trả
+          </button>
+<button class="px-4 py-1.5 text-xs font-medium rounded-md border border-gray-200 text-gray-600 bg-white hover:bg-gray-50 transition-colors">
+            Bảo hành
+          </button>
+<button class="px-4 py-1.5 text-xs font-medium rounded-md border border-gray-200 text-gray-600 bg-white hover:bg-gray-50 transition-colors">
+            Đổi sản phẩm
+          </button>
+</div>
+<!-- Dropdown Filters Right -->
+<div class="flex items-center gap-3">
+<!-- Status Dropdown -->
+<div class="relative">
+<select class="appearance-none bg-white border border-gray-200 rounded-md py-1.5 pl-3 pr-8 text-xs text-gray-700 font-medium focus:outline-none focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316]">
+<option>Tất cả trạng thái</option>
+<option>Chờ xử lý</option>
+<option>Đang xử lý</option>
+<option>Đã duyệt</option>
+<option>Đã từ chối</option>
+<option>Hoàn tất</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
+<svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+</div>
+<!-- Time Range Filter -->
+<div class="relative">
+<button class="flex items-center gap-2 bg-white border border-gray-200 rounded-md py-1.5 px-3 text-xs text-gray-700 font-medium hover:bg-gray-50 focus:outline-none focus:border-[#F97316]">
+<svg class="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Thời gian yêu cầu</span>
+<svg class="h-3.5 w-3.5 text-gray-400 ml-1" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+<!-- Two-Column Layout: Table (Left) + Detail Card (Right) -->
+<div class="grid grid-cols-12 gap-6 items-start">
+<!-- Table Column (8 Cols on xl) -->
+<div class="col-span-12 xl:col-span-8 bg-white rounded-xl border border-gray-200/80 shadow-xs flex flex-col justify-between overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse text-xs">
+<thead>
+<tr class="border-b border-gray-200 text-gray-800 font-semibold bg-gray-50/50">
+<th class="py-3 px-4">Mã yêu cầu</th>
+<th class="py-3 px-3">Mã đơn</th>
+<th class="py-3 px-3">Người yêu cầu</th>
+<th class="py-3 px-3 text-center">Loại yêu cầu</th>
+<th class="py-3 px-3">Lý do</th>
+<th class="py-3 px-3 text-center">Trạng thái</th>
+<th class="py-3 px-4">Người xử lý</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-100 text-gray-700 font-medium">
+<!-- Row 1 (Active/Selected) -->
+<tr class="bg-amber-50/40 hover:bg-amber-50/60 transition-colors cursor-pointer border-l-4 border-l-[#F97316]">
+<td class="py-3.5 px-4 font-bold text-[#F97316]">#HM2504001</td>
+<td class="py-3.5 px-3 text-gray-800">#DH2504001</td>
+<td class="py-3.5 px-3">Nguyễn Văn A</td>
+<td class="py-3.5 px-3 text-center">
+<span class="inline-block px-2.5 py-0.5 text-[11px] font-bold tracking-wider text-orange-600 bg-orange-100 rounded">
+                      RETURN
+                    </span>
+</td>
+<td class="py-3.5 px-3 text-gray-800">Sản phẩm lỗi</td>
+<td class="py-3.5 px-3 text-center">
+<span class="inline-block px-2.5 py-0.5 text-[11px] font-semibold text-amber-800 bg-amber-100 rounded-sm">
+                      Chờ xử lý
+                    </span>
+</td>
+<td class="py-3.5 px-4 text-gray-500">-</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-gray-50/70 transition-colors cursor-pointer">
+<td class="py-3.5 px-4 text-gray-800">#HM250402</td>
+<td class="py-3.5 px-3 text-gray-800">#DH2503987</td>
+<td class="py-3.5 px-3">Trần Thị B</td>
+<td class="py-3.5 px-3 text-center">
+<span class="inline-block px-2 py-0.5 text-[11px] font-bold tracking-wider text-blue-600 bg-blue-100 rounded">
+                      WARRANTY
+                    </span>
+</td>
+<td class="py-3.5 px-3 text-gray-800">Lỗi kỹ thuật</td>
+<td class="py-3.5 px-3 text-center">
+<span class="inline-block px-2.5 py-0.5 text-[11px] font-semibold text-emerald-800 bg-emerald-100 rounded-sm">
+                      Đang xử lý
+                    </span>
+</td>
+<td class="py-3.5 px-4 text-gray-800">Lê Minh C</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-gray-50/70 transition-colors cursor-pointer">
+<td class="py-3.5 px-4 text-gray-800">#HM250403</td>
+<td class="py-3.5 px-3 text-gray-800">#DH2503975</td>
+<td class="py-3.5 px-3">Phạm Quang D</td>
+<td class="py-3.5 px-3 text-center">
+<span class="inline-block px-2 py-0.5 text-[11px] font-bold tracking-wider text-purple-600 bg-purple-100 rounded">
+                      EXCHANGE
+                    </span>
+</td>
+<td class="py-3.5 px-3 text-gray-800">Sai mẫu</td>
+<td class="py-3.5 px-3 text-center">
+<span class="inline-block px-2.5 py-0.5 text-[11px] font-semibold text-blue-700 bg-blue-100 rounded-sm">
+                      Đã duyệt
+                    </span>
+</td>
+<td class="py-3.5 px-4 text-gray-800">Ngô Thị E</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-gray-50/70 transition-colors cursor-pointer">
+<td class="py-3.5 px-4 text-gray-800">#HM250404</td>
+<td class="py-3.5 px-3 text-gray-800">#DH2503950</td>
+<td class="py-3.5 px-3">Lê Hoàng F</td>
+<td class="py-3.5 px-3 text-center">
+<span class="inline-block px-2.5 py-0.5 text-[11px] font-bold tracking-wider text-orange-600 bg-orange-100 rounded">
+                      RETURN
+                    </span>
+</td>
+<td class="py-3.5 px-3 text-gray-800">Không vừa size</td>
+<td class="py-3.5 px-3 text-center">
+<span class="inline-block px-2.5 py-0.5 text-[11px] font-semibold text-rose-700 bg-rose-100 rounded-sm">
+                      Đã từ chối
+                    </span>
+</td>
+<td class="py-3.5 px-4 text-gray-800">Trần Văn G</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-gray-50/70 transition-colors cursor-pointer">
+<td class="py-3.5 px-4 text-gray-800">#HM2504005</td>
+<td class="py-3.5 px-3 text-gray-800">#DH2503921</td>
+<td class="py-3.5 px-3">Đỗ Thị H</td>
+<td class="py-3.5 px-3 text-center">
+<span class="inline-block px-2 py-0.5 text-[11px] font-bold tracking-wider text-blue-600 bg-blue-100 rounded">
+                      WARRANTY
+                    </span>
+</td>
+<td class="py-3.5 px-3 text-gray-800">Không lên nguồn</td>
+<td class="py-3.5 px-3 text-center">
+<span class="inline-block px-2.5 py-0.5 text-[11px] font-semibold text-emerald-800 bg-emerald-100 rounded-sm">
+                      Đang xử lý
+                    </span>
+</td>
+<td class="py-3.5 px-4 text-gray-800">Phạm Thị I</td>
+</tr>
+<!-- Row 6 -->
+<tr class="hover:bg-gray-50/70 transition-colors cursor-pointer">
+<td class="py-3.5 px-4 text-gray-800">#HM250406</td>
+<td class="py-3.5 px-3 text-gray-800">#DH2503902</td>
+<td class="py-3.5 px-3">Hoàng Minh K</td>
+<td class="py-3.5 px-3 text-center">
+<span class="inline-block px-2 py-0.5 text-[11px] font-bold tracking-wider text-purple-600 bg-purple-100 rounded">
+                      EXCHANGE
+                    </span>
+</td>
+<td class="py-3.5 px-3 text-gray-800">Đổi màu</td>
+<td class="py-3.5 px-3 text-center">
+<span class="inline-block px-2.5 py-0.5 text-[11px] font-semibold text-teal-800 bg-teal-100 rounded-sm">
+                      Hoàn tất
+                    </span>
+</td>
+<td class="py-3.5 px-4 text-gray-800">Nguyễn Văn L</td>
+</tr>
+<!-- Row 7 -->
+<tr class="hover:bg-gray-50/70 transition-colors cursor-pointer">
+<td class="py-3.5 px-4 text-gray-800">#HM2504007</td>
+<td class="py-3.5 px-3 text-gray-800">#DH2503876</td>
+<td class="py-3.5 px-3">Vũ Thị M</td>
+<td class="py-3.5 px-3 text-center">
+<span class="inline-block px-2.5 py-0.5 text-[11px] font-bold tracking-wider text-orange-600 bg-orange-100 rounded">
+                      RETURN
+                    </span>
+</td>
+<td class="py-3.5 px-3 text-gray-800">Sản phẩm lỗi</td>
+<td class="py-3.5 px-3 text-center">
+<span class="inline-block px-2.5 py-0.5 text-[11px] font-semibold text-emerald-800 bg-emerald-100 rounded-sm">
+                      Đang xử lý
+                    </span>
+</td>
+<td class="py-3.5 px-4 text-gray-800">Lê Minh C</td>
+</tr>
+<!-- Row 8 -->
+<tr class="hover:bg-gray-50/70 transition-colors cursor-pointer">
+<td class="py-3.5 px-4 text-gray-800">#HM2504008</td>
+<td class="py-3.5 px-3 text-gray-800">#DH2503850</td>
+<td class="py-3.5 px-3">Phan Anh N</td>
+<td class="py-3.5 px-3 text-center">
+<span class="inline-block px-2 py-0.5 text-[11px] font-bold tracking-wider text-blue-600 bg-blue-100 rounded">
+                      WARRANTY
+                    </span>
+</td>
+<td class="py-3.5 px-3 text-gray-800">Lỗi kỹ thuật</td>
+<td class="py-3.5 px-3 text-center">
+<span class="inline-block px-2.5 py-0.5 text-[11px] font-semibold text-amber-800 bg-amber-100 rounded-sm">
+                      Chờ xử lý
+                    </span>
+</td>
+<td class="py-3.5 px-4 text-gray-500">-</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Pagination Footer -->
+<div class="px-5 py-3 border-t border-gray-200 flex items-center justify-between bg-white text-xs text-gray-500">
+<div class="flex items-center gap-1.5">
+<!-- Previous Button -->
+<button class="w-8 h-8 flex items-center justify-center border border-gray-200 rounded text-gray-600 hover:bg-gray-50 disabled:opacity-50">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+<!-- Page 1 (Active) -->
+<button class="w-8 h-8 flex items-center justify-center bg-[#F97316] text-white rounded font-bold shadow-2xs">
+                1
+              </button>
+<!-- Page 2 -->
+<button class="w-8 h-8 flex items-center justify-center border border-gray-200 rounded text-gray-700 hover:bg-gray-50 font-medium">
+                2
+              </button>
+<!-- Page 3 -->
+<button class="w-8 h-8 flex items-center justify-center border border-gray-200 rounded text-gray-700 hover:bg-gray-50 font-medium">
+                3
+              </button>
+<!-- Next Button -->
+<button class="w-8 h-8 flex items-center justify-center border border-gray-200 rounded text-gray-600 hover:bg-gray-50">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+<span>Hiển thị 1 - 8 của 24 yêu cầu</span>
+</div>
+</div>
+<!-- Detail Card Column (4 Cols on xl) -->
+<div class="col-span-12 xl:col-span-4 bg-white rounded-xl border border-gray-200/80 shadow-xs p-5 flex flex-col justify-between" data-purpose="request-detail-panel">
+<div>
+<!-- Detail Header -->
+<div class="flex items-center justify-between pb-3.5 border-b border-gray-100">
+<h3 class="text-base font-bold text-gray-900">Chi tiết yêu cầu</h3>
+<span class="px-2.5 py-0.5 text-[11px] font-semibold text-amber-800 bg-amber-100 rounded-sm">
+                Chờ xử lý
+              </span>
+</div>
+<!-- Detail Metadata Grid -->
+<div class="mt-4 space-y-2.5 text-xs">
+<div class="flex justify-between items-center">
+<span class="text-gray-500">Mã yêu cầu</span>
+<span class="font-semibold text-gray-900">#HM2504001</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-gray-500">Mã đơn</span>
+<span class="font-semibold text-gray-900">#DH2504001</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-gray-500">Thời gian yêu cầu</span>
+<span class="font-medium text-gray-800">25/04/2025 10:24</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-gray-500">Người yêu cầu</span>
+<span class="font-medium text-gray-800">Nguyễn Văn A</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-gray-500">Loại yêu cầu</span>
+<span class="inline-block px-2 py-0.5 text-[10px] font-bold tracking-wider text-orange-600 bg-orange-100 rounded">
+                  RETURN
+                </span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-gray-500">Lý do</span>
+<span class="font-semibold text-gray-800">Sản phẩm lỗi</span>
+</div>
+<!-- Multiline Description -->
+<div class="pt-1">
+<div class="text-gray-500 mb-1">Mô tả</div>
+<p class="text-gray-700 bg-gray-50 p-2.5 rounded-lg border border-gray-100 leading-relaxed text-[11px]">
+                  Sản phẩm không hoạt động khi nhận hàng. Đã thử nhiều lần nhưng vẫn không lên nguồn.
+                </p>
+</div>
+<div class="flex justify-between items-center pt-1">
+<span class="text-gray-500">Người xử lý</span>
+<span class="text-gray-400">-</span>
+</div>
+</div>
+<!-- Attached Media Images -->
+<div class="mt-4 pt-3 border-t border-gray-100">
+<h4 class="text-xs font-bold text-gray-800 mb-2.5">Hình ảnh đính kèm</h4>
+<div class="grid grid-cols-4 gap-2">
+<!-- Thumbnail 1 -->
+<div class="aspect-square bg-gray-900 rounded-lg overflow-hidden border border-gray-200">
+<img alt="Ảnh lỗi sản phẩm 1" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxR-bMxGs9eYZDaR9OybqrxWRWM4OrVWSbLwI_YgHOsyPG_KozY8YbZkXUoZrH_yMLqjlmfjoKrxlOIANb-WMEDwSTtQ5H-Wz5W0BcByEgUN41CZo1uloB2SoXZvpUYL0XhhSd91yoeqXlL903rC86KnxbP-R1PdZOclhjcFAUFlxbHN23FTWpzOMT44v1SQ4VL3V1Zgb8nkZig41pVbYE4RRRYY3hOGp7DmzwKbIB"/>
+</div>
+<!-- Thumbnail 2 -->
+<div class="aspect-square bg-gray-900 rounded-lg overflow-hidden border border-gray-200">
+<img alt="Ảnh lỗi sản phẩm 2" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBvQGzn9dQqQX8tyo1GP6tW_rNNAtxeeTXVqakzTHnNDkUkvjK4jN7tcCOiZBGwo6suMOV7G2nVZel4eE5dq0pUAshAmaf7W8koTWCG9NxXQocjybSg9otecMR22JNI_y0Qp5njvIXiXkO4T6Qdbq9UkSmlf3pvAxaHH1MmlsyRvbP7WBBIe-guyO0ZKf2GfquMOD03eiEH4l-LfTQlT1b-49xw4azmwP7-E7eXWRdB"/>
+</div>
+<!-- Thumbnail 3 -->
+<div class="aspect-square bg-gray-100 rounded-lg overflow-hidden border border-gray-200">
+<img alt="Ảnh lỗi sản phẩm 3" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpPbcbPgquFghBblUchx9029DVGKGAHR2EkMLcdEt0ijM2BMWi1EdSG90MSqzUA5UNwnMx0XpZXyOYql6zXGfzCR-G6cn15qnAyetmDERqzSi96gGDsXZMeJMpU46oBVVt4NmDe8W08HgypR8ubZH-pE5uBCU-EHIWffycWzpdMArmu2yUdxlMTwGAf30E5p7S_RstQwLKSbUlTTFQtr18_wMaMiyw14OHJwVZxr6T"/>
+</div>
+<!-- Thumbnail +2 More Overlay -->
+<div class="aspect-square bg-gray-100 rounded-lg border border-gray-200 flex items-center justify-center text-gray-600 font-bold text-xs hover:bg-gray-200 transition-colors cursor-pointer">
+                  +2
+                </div>
+</div>
+</div>
+<!-- Notes & History Log Section -->
+<div class="mt-4 pt-3 border-t border-gray-100">
+<h4 class="text-xs font-bold text-gray-800 mb-2">Ghi chú và lịch sử xử lý</h4>
+<div class="relative pl-4 space-y-2 border-l border-gray-200 ml-1 mt-2">
+<!-- Timeline Event -->
+<div class="relative">
+<div class="absolute -left-[21px] top-1 h-2.5 w-2.5 rounded-full bg-[#F97316] ring-4 ring-orange-50"></div>
+<div class="text-[11px] font-bold text-gray-800">25/04/2025 10:24</div>
+<div class="text-[11px] font-semibold text-gray-700">Khách hàng gửi yêu cầu</div>
+<p class="text-[10.5px] text-gray-500 mt-0.5 leading-snug">
+                    Sản phẩm không hoạt động khi nhận hàng.
+                  </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Action Buttons -->
+<div class="pt-5 mt-4 border-t border-gray-100 grid grid-cols-2 gap-3">
+<button class="w-full py-2 px-3 border border-gray-300 rounded-lg text-xs font-bold text-gray-700 bg-white hover:bg-gray-50 active:bg-gray-100 transition-colors" type="button">
+              Từ chối
+            </button>
+<button class="w-full py-2 px-3 rounded-lg text-xs font-bold text-white bg-[#F97316] hover:bg-[#EA580C] shadow-sm transition-colors" type="button">
+              Duyệt yêu cầu
+            </button>
+</div>
+</div>
+</div>
+</main>
+<!-- END: MainContentArea -->
+</div>
+<!-- END: MainContentWrapper -->
+</body></html>

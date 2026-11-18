@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Seller Studio — Chi tiết sản phẩm</title>
+<!-- Google Fonts: Be Vietnam Pro -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Be Vietnam Pro"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              DEFAULT: '#FF5500',
+              hover: '#E04B00',
+              light: '#FFF0EB',
+              subtle: '#FFF5F0'
+            },
+            status: {
+              green: '#22C55E',
+              'green-bg': '#EBFBEE',
+              'green-text': '#15803D'
+            }
+          }
+        }
+      }
+    }
+  </script>
+<!-- BEGIN: Custom Global Styles -->
+<style data-purpose="custom-typography">
+    body {
+      font-family: 'Be Vietnam Pro', sans-serif;
+      background-color: #F8F9FA;
+      color: #1F2937;
+    }
+  </style>
+<style data-purpose="scrollbar-utilities">
+    /* Subtle border & styling */
+    .table-container th {
+      font-weight: 500;
+      color: #6B7280;
+    }
+  </style>
+<!-- END: Custom Global Styles -->
+</head>
+<body class="min-h-screen bg-[#F8F9FA] text-[#1F2937] antialiased">
+<!-- BEGIN: MainHeader -->
+<header class="bg-white border-b border-gray-200 sticky top-0 z-40" data-purpose="site-header">
+<div class="max-w-[1720px] mx-auto px-6 py-3">
+<!-- Top Row: Logo, Search Bar, User Profile & Cart -->
+<div class="flex items-center justify-between gap-6 pb-2.5">
+<!-- Logo -->
+<div class="flex items-center gap-3">
+<a class="text-xl font-black tracking-tight text-[#111827] flex items-center" href="#">
+            TECHSTORE
+          </a>
+</div>
+<!-- Search Bar -->
+<div class="flex-1 max-w-2xl relative">
+<div class="relative flex items-center">
+<span class="absolute left-4 text-gray-400">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</span>
+<input class="w-full pl-11 pr-4 py-2 bg-[#F1F3F5] hover:bg-gray-100 focus:bg-white text-xs md:text-sm rounded-full border-none focus:ring-2 focus:ring-[#FF5500] transition-colors" placeholder="Tìm kiếm sản phẩm, thương hiệu, danh mục..." type="text"/>
+</div>
+</div>
+<!-- Header Right Actions: Account, Cart, Promo -->
+<div class="flex items-center gap-6 text-sm font-medium">
+<!-- Tài khoản -->
+<a class="flex items-center gap-1.5 text-gray-800 hover:text-[#FF5500]" href="#">
+<svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M5.121 17.804A9 9 0 0112 15a9 9 0 016.879 2.804M12 12a4 4 0 100-8 4 4 0 000 8z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="font-semibold text-gray-900">Tài khoản</span>
+</a>
+<!-- Giỏ hàng -->
+<a class="flex items-center gap-1.5 text-[#FF5500]" href="#">
+<div class="relative">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="absolute -top-1 -right-1.5 bg-[#FF5500] text-white text-[10px] w-3.5 h-3.5 rounded-full flex items-center justify-center font-bold">0</span>
+</div>
+<span class="font-bold">Giỏ hàng</span>
+</a>
+<!-- Khuyến mãi -->
+<a class="font-semibold text-[#FF5500] hover:underline" href="#">
+            Khuyến mãi
+          </a>
+</div>
+</div>
+<!-- Bottom Categories Navigation Bar -->
+<nav class="flex items-center gap-6 text-[13px] font-medium pt-1 text-gray-700 overflow-x-auto whitespace-nowrap scrollbar-none" data-purpose="sub-nav-categories">
+<a class="text-[#FF5500] font-bold" href="#">Tất cả danh mục</a>
+<a class="hover:text-[#FF5500] text-gray-900 font-semibold" href="#">Laptop</a>
+<a class="hover:text-[#FF5500]" href="#">Điện thoại</a>
+<a class="hover:text-[#FF5500]" href="#">Máy tính bảng</a>
+<a class="hover:text-[#FF5500]" href="#">Âm thanh</a>
+<a class="hover:text-[#FF5500]" href="#">Thiết bị đeo</a>
+<a class="hover:text-[#FF5500]" href="#">Phụ kiện</a>
+<a class="hover:text-[#FF5500]" href="#">Thiết bị thông minh</a>
+<a class="hover:text-[#FF5500]" href="#">Nhà thông minh</a>
+</nav>
+</div>
+</header>
+<!-- END: MainHeader -->
+<!-- BEGIN: MainLayout -->
+<div class="max-w-[1720px] mx-auto px-6 py-6 flex gap-6 items-start" data-purpose="main-layout-container">
+<!-- BEGIN: LeftSidebar -->
+<aside class="w-64 flex-shrink-0" data-purpose="seller-sidebar">
+<div class="mb-4">
+<h2 class="text-xl font-bold text-gray-900 leading-tight">Seller Studio</h2>
+<p class="text-xs text-gray-400 mt-0.5">Quản lý hoạt động bán hàng của bạn</p>
+</div>
+<!-- Navigation Menu Card -->
+<div class="bg-white rounded-xl shadow-sm border border-gray-100 p-2.5 space-y-1">
+<!-- Tổng quan -->
+<a class="flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-gray-700 hover:bg-gray-50 text-sm font-medium transition-colors" href="#">
+<svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Tổng quan</span>
+</a>
+<!-- Sản phẩm (Active) -->
+<a class="flex items-center gap-3 px-3.5 py-2.5 rounded-lg bg-[#FFF0EB] text-[#FF5500] font-semibold text-sm transition-colors border-l-4 border-[#FF5500]" href="#">
+<svg class="w-5 h-5 text-[#FF5500]" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Sản phẩm</span>
+</a>
+<!-- Đơn hàng -->
+<a class="flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-gray-700 hover:bg-gray-50 text-sm font-medium transition-colors" href="#">
+<svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Đơn hàng</span>
+</a>
+<!-- Khuyến mãi -->
+<a class="flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-gray-700 hover:bg-gray-50 text-sm font-medium transition-colors" href="#">
+<svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Khuyến mãi</span>
+</a>
+<!-- Phân tích -->
+<a class="flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-gray-700 hover:bg-gray-50 text-sm font-medium transition-colors" href="#">
+<svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Phân tích</span>
+</a>
+</div>
+</aside>
+<!-- END: LeftSidebar -->
+<!-- BEGIN: MainContent -->
+<main class="flex-1 space-y-6 overflow-hidden" data-purpose="product-detail-view">
+<!-- Breadcrumb & Top Actions Header -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<!-- Back Link -->
+<a class="inline-flex items-center gap-1.5 text-sm font-semibold text-gray-800 hover:text-[#FF5500] transition-colors" href="#">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M10 19l-7-7m0 0l7-7m-7 7h18" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Quay lại danh sách sản phẩm</span>
+</a>
+<!-- Top Action Buttons -->
+<div class="flex items-center gap-2.5">
+<!-- Chỉnh sửa button -->
+<button class="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors shadow-sm" type="button">
+            Chỉnh sửa
+          </button>
+<!-- Tạm ngừng bán button -->
+<button class="px-4 py-2 border border-[#FF5500] rounded-lg text-sm font-semibold text-[#FF5500] bg-white hover:bg-[#FFF0EB] transition-colors shadow-sm" type="button">
+            Tạm ngừng bán
+          </button>
+<!-- Xem trên cửa hàng button -->
+<button class="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors shadow-sm flex items-center gap-1.5" type="button">
+<span>Xem trên cửa hàng</span>
+<svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+</div>
+<!-- Product Information Card -->
+<section class="bg-white rounded-xl shadow-sm border border-gray-100 p-6" data-purpose="product-overview-card">
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-8 items-start">
+<!-- Left: Image Gallery (5 cols on xl) -->
+<div class="xl:col-span-5 flex gap-4" data-purpose="product-gallery">
+<!-- Thumbnail list -->
+<div class="flex flex-col gap-2.5 w-16 sm:w-20">
+<!-- Thumbnail 1 (Active) -->
+<div class="w-16 h-16 sm:w-20 sm:h-20 rounded-lg border-2 border-[#FF5500] p-1 overflow-hidden bg-[#F9F9F9] cursor-pointer flex items-center justify-center">
+<svg class="w-12 h-12 text-slate-700" fill="currentColor" viewbox="0 0 64 64">
+<path d="M10 16h44a2 2 0 012 2v24H8V18a2 2 0 012-2zm-6 28h56l3 6H1l3-6z"></path>
+</svg>
+</div>
+<!-- Thumbnail 2 -->
+<div class="w-16 h-16 sm:w-20 sm:h-20 rounded-lg border border-gray-200 p-1 overflow-hidden bg-[#F9F9F9] cursor-pointer hover:border-gray-400 flex items-center justify-center">
+<svg class="w-10 h-10 text-slate-500" fill="currentColor" viewbox="0 0 64 64">
+<path d="M14 14h4v34h32v4H14z"></path>
+</svg>
+</div>
+<!-- Thumbnail 3 -->
+<div class="w-16 h-16 sm:w-20 sm:h-20 rounded-lg border border-gray-200 p-1 overflow-hidden bg-[#F9F9F9] cursor-pointer hover:border-gray-400 flex items-center justify-center">
+<svg class="w-12 h-12 text-slate-600" fill="currentColor" viewbox="0 0 64 64">
+<rect fill="#334155" height="24" rx="2" width="40" x="12" y="16"></rect>
+<rect fill="#64748B" height="6" rx="2" width="48" x="8" y="42"></rect>
+</svg>
+</div>
+<!-- Thumbnail 4 -->
+<div class="w-16 h-16 sm:w-20 sm:h-20 rounded-lg border border-gray-200 p-1 overflow-hidden bg-[#F9F9F9] cursor-pointer hover:border-gray-400 flex items-center justify-center">
+<div class="w-10 h-8 rounded bg-gray-400 opacity-60"></div>
+</div>
+</div>
+<!-- Main Big Product Image Preview -->
+<div class="flex-1 bg-[#F9F9FA] rounded-xl border border-gray-100 flex items-center justify-center min-h-[300px] p-6 relative">
+<!-- Rendered realistic laptop SVG preview -->
+<svg class="w-full max-w-[340px] drop-shadow-xl" fill="none" viewbox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+<!-- Laptop Screen -->
+<g transform="perspective(400)">
+<polygon fill="#1E293B" points="120,40 370,48 375,190 100,180" stroke="#0F172A" stroke-width="2"></polygon>
+<!-- Display Screen with dynamic orange flare -->
+<polygon fill="#0B132B" points="128,48 362,54 367,182 108,174"></polygon>
+<polygon fill="url(#orangeGlow)" opacity="0.85" points="180,50 250,52 230,178 170,176"></polygon>
+<!-- Laptop Base -->
+<polygon fill="#CBD5E1" points="50,195 385,195 350,230 20,230" stroke="#94A3B8" stroke-width="1.5"></polygon>
+<polygon fill="#94A3B8" points="60,198 375,198 348,225 32,225"></polygon>
+<rect fill="#64748B" height="15" rx="3" width="90" x="140" y="208"></rect>
+</g>
+<defs>
+<lineargradient id="orangeGlow" x1="0%" x2="100%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#FF5500"></stop>
+<stop offset="60%" stop-color="#9A3412"></stop>
+<stop offset="100%" stop-color="#1E293B"></stop>
+</lineargradient>
+</defs>
+</svg>
+</div>
+</div>
+<!-- Middle: Product Info (4 cols on xl) -->
+<div class="xl:col-span-4 space-y-3.5" data-purpose="product-text-details">
+<!-- Product Title -->
+<h1 class="text-2xl font-bold text-gray-900 tracking-tight">Laptop văn phòng</h1>
+<!-- Status Badge -->
+<div>
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#EAFBF0] text-[#15803D]">
+                Đang bán
+              </span>
+</div>
+<!-- SKU & Category -->
+<div class="text-xs text-gray-600 space-y-1">
+<p><span class="font-normal text-gray-500">SKU:</span> <span class="font-semibold text-gray-800">LT-VP-001</span></p>
+<p><span class="font-normal text-gray-500">Danh mục:</span> <span class="font-semibold text-gray-800">Laptop</span></p>
+</div>
+<hr class="border-gray-200 my-3"/>
+<!-- Description -->
+<div>
+<h3 class="text-xs font-bold text-gray-900 mb-1.5">Mô tả sản phẩm</h3>
+<p class="text-xs leading-relaxed text-gray-600">
+                Laptop văn phòng với thiết kế mỏng nhẹ, hiệu năng ổn định, phù hợp cho công việc hàng ngày như soạn thảo văn bản, họp trực tuyến và giải trí cơ bản.
+              </p>
+</div>
+</div>
+<!-- Right: Key Metrics / Quick Stats Card (3 cols on xl) -->
+<div class="xl:col-span-3 bg-[#F9FBFC] rounded-xl border border-gray-100 p-5 space-y-5" data-purpose="product-stats-panel">
+<!-- Stat 1: Tổng tồn kho -->
+<div class="flex items-start gap-4">
+<div class="text-gray-600 mt-1">
+<svg class="w-6 h-6 stroke-current text-gray-500" fill="none" viewbox="0 0 24 24">
+<path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
+</svg>
+</div>
+<div>
+<span class="text-xs text-gray-500">Tổng tồn kho</span>
+<p class="text-2xl font-bold text-gray-900 leading-tight">42</p>
+</div>
+</div>
+<!-- Stat 2: Đã bán -->
+<div class="flex items-start gap-4">
+<div class="text-[#FF5500] mt-1">
+<svg class="w-6 h-6 stroke-current" fill="none" viewbox="0 0 24 24">
+<path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
+</svg>
+</div>
+<div>
+<span class="text-xs text-gray-500">Đã bán</span>
+<p class="text-2xl font-bold text-gray-900 leading-tight">128</p>
+</div>
+</div>
+<!-- Stat 3: Đánh giá trung bình -->
+<div class="flex items-start gap-4">
+<div class="text-[#FF5500] mt-1">
+<svg class="w-6 h-6 fill-none stroke-current" viewbox="0 0 24 24">
+<path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
+</svg>
+</div>
+<div>
+<span class="text-xs text-gray-500">Đánh giá trung bình</span>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="text-2xl font-bold text-gray-900 leading-none">4.8</span>
+<!-- 5 Orange Stars -->
+<div class="flex text-[#FF5500]">
+<svg class="w-3.5 h-3.5 fill-current" viewbox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+<svg class="w-3.5 h-3.5 fill-current" viewbox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+<svg class="w-3.5 h-3.5 fill-current" viewbox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+<svg class="w-3.5 h-3.5 fill-current" viewbox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+<svg class="w-3.5 h-3.5 fill-current" viewbox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+</div>
+</div>
+<span class="text-[11px] text-gray-400">Từ 36 đánh giá</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- BEGIN: VariantsTableSection -->
+<section class="bg-white rounded-xl shadow-sm border border-gray-100 p-6" data-purpose="product-variants-table">
+<h2 class="text-base font-bold text-gray-900 mb-4">Biến thể sản phẩm</h2>
+<div class="overflow-x-auto">
+<table class="w-full text-left text-xs text-gray-600 border-collapse table-container">
+<thead>
+<tr class="border-b border-gray-100 text-gray-400 font-medium">
+<th class="py-3 px-3 w-10" scope="col">
+<input class="rounded border-gray-300 text-[#FF5500] focus:ring-[#FF5500]" type="checkbox"/>
+</th>
+<th class="py-3 px-4 font-medium" scope="col">SKU phân loại</th>
+<th class="py-3 px-4 font-medium" scope="col">Phân loại</th>
+<th class="py-3 px-4 font-medium" scope="col">Giá bán</th>
+<th class="py-3 px-4 font-medium" scope="col">Tồn kho</th>
+<th class="py-3 px-4 font-medium" scope="col">Trạng thái</th>
+<th class="py-3 px-4 font-medium text-right" scope="col">Thao tác</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-100 font-normal">
+<!-- Row 1 -->
+<tr class="hover:bg-gray-50/70 transition-colors">
+<td class="py-3 px-3">
+<input class="rounded border-gray-300 text-[#FF5500] focus:ring-[#FF5500]" type="checkbox"/>
+</td>
+<td class="py-3 px-4 text-gray-700">LT-VP-001-BK</td>
+<td class="py-3 px-4 text-gray-900">Đen / 256GB</td>
+<td class="py-3 px-4 font-medium text-gray-800">18,990,000 đ</td>
+<td class="py-3 px-4 text-gray-800">18</td>
+<td class="py-3 px-4">
+<span class="inline-block px-2.5 py-0.5 rounded text-[11px] font-semibold bg-[#EAFBF0] text-[#15803D]">
+                    Đang bán
+                  </span>
+</td>
+<td class="py-3 px-4 text-right">
+<button class="px-3.5 py-1 text-xs font-semibold text-[#FF5500] border border-[#FF5500] rounded hover:bg-[#FFF0EB] transition-colors" type="button">
+                    Chỉnh sửa
+                  </button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-gray-50/70 transition-colors">
+<td class="py-3 px-3">
+<input class="rounded border-gray-300 text-[#FF5500] focus:ring-[#FF5500]" type="checkbox"/>
+</td>
+<td class="py-3 px-4 text-gray-700">LT-VP-001-SL</td>
+<td class="py-3 px-4 text-gray-900">Bạc / 256GB</td>
+<td class="py-3 px-4 font-medium text-gray-800">18,990,000 đ</td>
+<td class="py-3 px-4 text-gray-800">12</td>
+<td class="py-3 px-4">
+<span class="inline-block px-2.5 py-0.5 rounded text-[11px] font-semibold bg-[#EAFBF0] text-[#15803D]">
+                    Đang bán
+                  </span>
+</td>
+<td class="py-3 px-4 text-right">
+<button class="px-3.5 py-1 text-xs font-semibold text-[#FF5500] border border-[#FF5500] rounded hover:bg-[#FFF0EB] transition-colors" type="button">
+                    Chỉnh sửa
+                  </button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-gray-50/70 transition-colors">
+<td class="py-3 px-3">
+<input class="rounded border-gray-300 text-[#FF5500] focus:ring-[#FF5500]" type="checkbox"/>
+</td>
+<td class="py-3 px-4 text-gray-700">LT-VP-001-BK-512</td>
+<td class="py-3 px-4 text-gray-900">Đen / 512GB</td>
+<td class="py-3 px-4 font-medium text-gray-800">21,490,000 đ</td>
+<td class="py-3 px-4 text-gray-800">7</td>
+<td class="py-3 px-4">
+<span class="inline-block px-2.5 py-0.5 rounded text-[11px] font-semibold bg-[#EAFBF0] text-[#15803D]">
+                    Đang bán
+                  </span>
+</td>
+<td class="py-3 px-4 text-right">
+<button class="px-3.5 py-1 text-xs font-semibold text-[#FF5500] border border-[#FF5500] rounded hover:bg-[#FFF0EB] transition-colors" type="button">
+                    Chỉnh sửa
+                  </button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-gray-50/70 transition-colors">
+<td class="py-3 px-3">
+<input class="rounded border-gray-300 text-[#FF5500] focus:ring-[#FF5500]" type="checkbox"/>
+</td>
+<td class="py-3 px-4 text-gray-700">LT-VP-001-SL-512</td>
+<td class="py-3 px-4 text-gray-900">Bạc / 512GB</td>
+<td class="py-3 px-4 font-medium text-gray-800">21,490,000 đ</td>
+<td class="py-3 px-4 text-gray-800">5</td>
+<td class="py-3 px-4">
+<span class="inline-block px-2.5 py-0.5 rounded text-[11px] font-semibold bg-[#EAFBF0] text-[#15803D]">
+                    Đang bán
+                  </span>
+</td>
+<td class="py-3 px-4 text-right">
+<button class="px-3.5 py-1 text-xs font-semibold text-[#FF5500] border border-[#FF5500] rounded hover:bg-[#FFF0EB] transition-colors" type="button">
+                    Chỉnh sửa
+                  </button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- END: VariantsTableSection -->
+<!-- BEGIN: EmptyStateSection -->
+<section class="bg-white rounded-xl shadow-sm border border-gray-100 p-12 text-center" data-purpose="empty-state-card">
+<div class="flex flex-col items-center justify-center">
+<!-- Cube icon with subtle stroke -->
+<div class="mb-3 text-gray-300">
+<svg class="w-12 h-12 stroke-current" fill="none" viewbox="0 0 24 24">
+<path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+</svg>
+</div>
+<h3 class="text-sm font-bold text-gray-800 mb-1">Chưa có biến thể sản phẩm</h3>
+<p class="text-xs text-gray-400">Sản phẩm này chưa có biến thể nào.</p>
+</div>
+</section>
+<!-- END: EmptyStateSection -->
+</main>
+<!-- END: MainContent -->
+</div>
+<!-- END: MainLayout -->
+</body></html>

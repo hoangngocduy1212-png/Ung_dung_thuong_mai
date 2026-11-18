@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+
+<html class="h-full bg-[#0D0F12]" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Đăng ký - TECHSTORE</title>
+<!-- Google Fonts: Inter and Be Vietnam Pro -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800;900&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script data-purpose="tailwind-config">
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              orange: '#FF5500',
+              orangeHover: '#e04b00',
+              dark: '#0D0F12',
+              surface: '#111317',
+              input: '#1A1D23',
+              border: '#2A2E37',
+              borderFocus: '#FF5500'
+            }
+          },
+          fontFamily: {
+            sans: ['"Be Vietnam Pro"', '"Inter"', 'sans-serif'],
+            inter: ['"Inter"', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+<style data-purpose="custom-styling">
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0D0F12;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #2A2E37;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #3c414d;
+    }
+
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover, 
+    input:-webkit-autofill:focus {
+      -webkit-text-fill-color: #f3f4f6;
+      -webkit-box-shadow: 0 0 0px 1000px #1A1D23 inset;
+      transition: background-color 5000s ease-in-out 0s;
+    }
+  </style>
+</head>
+<body class="h-full bg-[#0D0F12] text-zinc-300 font-sans antialiased selection:bg-[#FF5500] selection:text-white flex flex-col min-h-screen">
+<!-- BEGIN: MainContainer -->
+<main class="flex-1 grid grid-cols-1 lg:grid-cols-12 min-h-screen w-full bg-[#0D0F12]" data-purpose="auth-layout-container">
+<!-- BEGIN: LeftBrandShowcaseSection -->
+<section class="relative hidden lg:flex lg:col-span-6 xl:col-span-7 flex-col justify-between p-12 xl:p-16 overflow-hidden select-none" data-purpose="hero-brand-panel">
+<!-- Background Clean Image without embedded duplicated text -->
+<div class="absolute inset-0 z-0 bg-[#0D0F12]">
+<img alt="TECHSTORE Monolith Architecture &amp; Tech Showcase" class="w-full h-full object-cover object-center filter brightness-[0.72] contrast-125" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_ugjiCleOQ_P1nhD8ce_JN643Mn-M99b3TUGQv2CUYEYQL7C7OCef4UY82z8WscPhGeSZqzeS6Ec2WVVUsTF13nHcG90NMvYnn6AvSJjK88qmySyRtGGnqtNkSiB-VgL0tytCO7EodywAJTAg7nmQl-reqBiu0ZaBrnbgWQtVsBFf3m30R-tlFNDbxn7c8nP1gQBfx_hH8jdw4pJKpWmsi_C4WfdcItTvVjxixKI0"/>
+<!-- Clean linear gradient overlays for readability and smooth right transition -->
+<div class="absolute inset-0 bg-gradient-to-t from-[#0D0F12] via-black/40 to-[#0D0F12]/80"></div>
+<div class="absolute inset-y-0 right-0 w-36 bg-gradient-to-l from-[#0D0F12] via-[#0D0F12]/80 to-transparent"></div>
+<div class="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#0D0F12]/60 to-transparent"></div>
+</div>
+<!-- Top Typography & Statement Headline -->
+<div class="relative z-10 max-w-xl">
+<!-- Orange accent bar -->
+<div class="w-10 h-1 bg-[#FF5500] mb-5 shadow-[0_0_12px_rgba(255,85,0,0.7)]"></div>
+<!-- Brand category tags -->
+<div class="flex items-center space-x-2 text-[13px] font-bold tracking-[0.28em] uppercase text-zinc-300 mb-6 font-inter">
+<span>TECHSTORE</span>
+<span class="text-zinc-600 font-normal">|</span>
+<span class="text-zinc-400">MONOLITH</span>
+</div>
+<!-- Big statement headline (Clean, crisp, no ghost overlay) -->
+<h2 class="text-4xl xl:text-5xl font-extrabold text-white tracking-tight leading-[1.18] uppercase">
+          CÔNG NGHỆ<br/>
+          MỞ RA<br/>
+          NHIỀU HƠN.
+        </h2>
+<!-- Sub-statement -->
+<p class="text-sm xl:text-base tracking-[0.2em] font-semibold text-zinc-300 uppercase mt-5 mb-5 font-inter">
+          CHO MỘT NGÀY TỐT ĐẸP HƠN.
+        </p>
+<!-- Description Paragraph -->
+<p class="text-xs xl:text-sm text-zinc-400 font-normal leading-relaxed max-w-md">
+          Cùng TECHSTORE khám phá những công nghệ tiên tiến, kiến tạo trải nghiệm vượt trội cho cuộc sống hiện đại.
+        </p>
+</div>
+<!-- Bottom Technical Meta Tag -->
+<div class="relative z-10 mt-12">
+<div class="w-10 h-0.5 bg-[#FF5500] mb-3 opacity-90 shadow-[0_0_8px_rgba(255,85,0,0.5)]"></div>
+<p class="text-[11px] tracking-[0.25em] font-medium uppercase text-zinc-400 leading-relaxed font-inter">
+          TECHNOLOGY<br/>
+          EMPOWERS<br/>
+          A BRIGHTER<br/>
+          TOMORROW
+        </p>
+</div>
+</section>
+<!-- END: LeftBrandShowcaseSection -->
+<!-- BEGIN: RightRegistrationFormSection -->
+<section class="lg:col-span-6 xl:col-span-5 flex flex-col justify-center px-6 sm:px-12 md:px-16 lg:px-12 xl:px-16 py-12 bg-[#0D0F12] z-10 lg:border-l border-zinc-800/50" data-purpose="registration-form-panel">
+<div class="w-full max-w-md mx-auto">
+<!-- Header Brand Indicator -->
+<header class="mb-7">
+<div class="w-9 h-1 bg-[#FF5500] mb-3.5 shadow-[0_0_8px_rgba(255,85,0,0.6)]"></div>
+<div class="flex items-center space-x-2">
+<span class="block text-xs font-bold tracking-[0.25em] text-zinc-200 uppercase font-inter">
+              TECHSTORE
+            </span>
+<span class="text-zinc-600 font-normal">|</span>
+<span class="block text-xs font-medium tracking-[0.2em] text-zinc-400 uppercase font-inter">
+              ĐĂNG KÝ
+            </span>
+</div>
+<h1 class="text-3xl sm:text-[34px] font-bold text-white mt-3 mb-2 tracking-tight">
+            Tạo tài khoản.
+          </h1>
+<p class="text-xs sm:text-sm text-zinc-400 font-normal">
+            Tham gia TECHSTORE và bắt đầu hành trình công nghệ của bạn.
+          </p>
+</header>
+<!-- Form Element -->
+<form action="#" class="space-y-4" id="techstore-register-form" method="POST" onsubmit="event.preventDefault();">
+<!-- Field 1: Full Name -->
+<div class="space-y-1.5" data-purpose="input-group">
+<label class="block text-[11px] font-semibold tracking-[0.16em] uppercase text-zinc-300 font-inter" for="fullName">
+              HỌ VÀ TÊN
+            </label>
+<input class="w-full px-4 py-2.5 bg-[#1A1D23] border border-[#2A2E37] rounded-md text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-[#FF5500] focus:ring-1 focus:ring-[#FF5500] transition-colors" id="fullName" name="fullName" placeholder="Nhập họ và tên" required="" type="text"/>
+</div>
+<!-- Field 2: Email Address -->
+<div class="space-y-1.5" data-purpose="input-group">
+<label class="block text-[11px] font-semibold tracking-[0.16em] uppercase text-zinc-300 font-inter" for="email">
+              ĐỊA CHỈ EMAIL
+            </label>
+<input class="w-full px-4 py-2.5 bg-[#1A1D23] border border-[#2A2E37] rounded-md text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-[#FF5500] focus:ring-1 focus:ring-[#FF5500] transition-colors" id="email" name="email" placeholder="Nhập địa chỉ email" required="" type="email"/>
+</div>
+<!-- Field 3: Phone Number -->
+<div class="space-y-1.5" data-purpose="input-group">
+<label class="block text-[11px] font-semibold tracking-[0.16em] uppercase text-zinc-300 font-inter" for="phone">
+              SỐ ĐIỆN THOẠI
+            </label>
+<input class="w-full px-4 py-2.5 bg-[#1A1D23] border border-[#2A2E37] rounded-md text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-[#FF5500] focus:ring-1 focus:ring-[#FF5500] transition-colors" id="phone" name="phone" placeholder="Nhập số điện thoại" type="tel"/>
+</div>
+<!-- Field 4: Password -->
+<div class="space-y-1.5" data-purpose="input-group">
+<label class="block text-[11px] font-semibold tracking-[0.16em] uppercase text-zinc-300 font-inter" for="password">
+              MẬT KHẨU
+            </label>
+<div class="relative">
+<input class="w-full pl-4 pr-11 py-2.5 bg-[#1A1D23] border border-[#2A2E37] rounded-md text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-[#FF5500] focus:ring-1 focus:ring-[#FF5500] transition-colors" id="password" name="password" placeholder="Tạo mật khẩu" required="" type="password"/>
+<!-- Password reveal toggle button -->
+<button aria-label="Toggle password visibility" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-200 focus:outline-none p-1 transition-colors" onclick="togglePasswordVisibility('password', this)" type="button">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round"></path>
+<path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+</div>
+<p class="text-[11px] text-zinc-400 font-normal pt-0.5">Mật khẩu nên có ít nhất 8 ký tự.</p>
+</div>
+<!-- Field 5: Confirm Password -->
+<div class="space-y-1.5" data-purpose="input-group">
+<label class="block text-[11px] font-semibold tracking-[0.16em] uppercase text-zinc-300 font-inter" for="confirmPassword">
+              XÁC NHẬN MẬT KHẨU
+            </label>
+<div class="relative">
+<input class="w-full pl-4 pr-11 py-2.5 bg-[#1A1D23] border border-[#2A2E37] rounded-md text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-[#FF5500] focus:ring-1 focus:ring-[#FF5500] transition-colors" id="confirmPassword" name="confirmPassword" placeholder="Nhập lại mật khẩu" required="" type="password"/>
+<!-- Confirm Password reveal toggle button -->
+<button aria-label="Toggle confirm password visibility" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-200 focus:outline-none p-1 transition-colors" onclick="togglePasswordVisibility('confirmPassword', this)" type="button">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round"></path>
+<path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+</div>
+</div>
+<!-- Terms & Condition Checkbox -->
+<div class="flex items-start pt-1.5" data-purpose="terms-checkbox">
+<div class="flex items-center h-5">
+<input class="w-4 h-4 rounded border-[#2A2E37] bg-[#1A1D23] text-[#FF5500] focus:ring-[#FF5500] focus:ring-offset-[#0D0F12] focus:ring-1 cursor-pointer" id="terms" name="terms" required="" type="checkbox"/>
+</div>
+<div class="ml-2.5 text-xs text-zinc-400 leading-snug">
+<label class="cursor-pointer select-none" for="terms">
+                Tôi đồng ý với 
+                <a class="text-[#FF5500] hover:underline font-medium" href="#terms">Điều khoản sử dụng</a> và 
+                <a class="text-[#FF5500] hover:underline font-medium" href="#privacy">Chính sách bảo mật</a>.
+              </label>
+</div>
+</div>
+<!-- Primary Submit Button -->
+<div class="pt-3">
+<button class="w-full py-3.5 px-6 rounded-md bg-[#FF5500] hover:bg-[#e04b00] active:scale-[0.99] text-white font-bold text-sm tracking-wider uppercase transition-all duration-150 shadow-[0_4px_16px_rgba(255,85,0,0.35)] cursor-pointer" data-purpose="submit-button" type="submit">
+              ĐĂNG KÝ TÀI KHOẢN
+            </button>
+</div>
+</form>
+<!-- Login Redirect Footer Link -->
+<footer class="mt-8 text-center text-xs text-zinc-400">
+<p>
+            Đã có tài khoản? 
+            <a class="text-[#FF5500] hover:underline font-semibold ml-1 inline-block" href="#login">
+              Đăng nhập ngay.
+            </a>
+</p>
+</footer>
+</div>
+</section>
+<!-- END: RightRegistrationFormSection -->
+</main>
+<!-- END: MainContainer -->
+<!-- BEGIN: InteractiveScripts -->
+<script data-purpose="password-visibility-handler">
+    /**
+     * Toggles the visibility of passwords between hidden and plaintext
+     * @param {string} inputId - ID of target password input
+     * @param {HTMLElement} btn - The clicked icon button
+     */
+    function togglePasswordVisibility(inputId, btn) {
+      const input = document.getElementById(inputId);
+      if (!input) return;
+
+      const isPassword = input.type === 'password';
+      input.type = isPassword ? 'text' : 'password';
+
+      // Update icon display state
+      if (isPassword) {
+        btn.innerHTML = `
+          <svg class="w-4 h-4 text-[#FF5500]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18" />
+          </svg>
+        `;
+      } else {
+        btn.innerHTML = `
+          <svg class="w-4 h-4 text-zinc-400" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+          </svg>
+        `;
+      }
+    }
+  </script>
+<!-- END: InteractiveScripts -->
+</body></html>

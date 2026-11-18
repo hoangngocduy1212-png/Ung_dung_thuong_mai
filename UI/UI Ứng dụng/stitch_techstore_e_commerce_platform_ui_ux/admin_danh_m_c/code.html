@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "error-container": "#ffdad6", "on-secondary-fixed": "#370e00", "on-error-container": "#93000a", "on-secondary-fixed-variant": "#802a00", "secondary-fixed": "#ffdbce", "on-surface": "#1a1c1c", "on-primary-container": "#858383", "surface-container-lowest": "#ffffff", "outline-variant": "#c4c7c7", "outline": "#747878", "on-primary": "#ffffff", "on-primary-fixed-variant": "#474746", "on-tertiary": "#ffffff", "tertiary-container": "#1b1c1c", "tertiary": "#000000", "on-secondary": "#ffffff", "primary-fixed": "#e5e2e1", "on-error": "#ffffff", "tertiary-fixed": "#e3e2e2", "on-tertiary-fixed-variant": "#464747", "surface-dim": "#dadada", "tertiary-fixed-dim": "#c7c6c6", "on-background": "#1a1c1c", "inverse-surface": "#2f3131", "surface-variant": "#e2e2e2", "surface-container-high": "#e8e8e8", "surface": "#f9f9f9", "secondary": "#a33800", "on-surface-variant": "#444748", "inverse-primary": "#c8c6c5", "error": "#ba1a1a", "primary": "#000000", "primary-fixed-dim": "#c8c6c5", "surface-container-low": "#f3f3f3", "surface-tint": "#5f5e5e", "surface-container": "#eeeeee", "surface-container-highest": "#e2e2e2", "on-secondary-container": "#fffbff", "background": "#f9f9f9", "on-primary-fixed": "#1c1b1b", "surface-bright": "#f9f9f9", "inverse-on-surface": "#f1f1f1", "on-tertiary-container": "#848484", "on-tertiary-fixed": "#1b1c1c", "primary-container": "#1c1b1b", "secondary-fixed-dim": "#ffb59a", "secondary-container": "#cd4800" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "margin": "2rem", "space-xs": "0.25rem", "gutter": "1.5rem", "margin-mobile": "1rem", "space-md": "1rem", "space-lg": "1.5rem", "space-sm": "0.5rem", "space-xl": "2rem", "gutter-mobile": "1rem" }, "fontFamily": { "technical-data": ["JetBrains Mono"], "headline-lg-mobile": ["Be Vietnam Pro"], "label-md": ["Inter"], "headline-sm": ["Be Vietnam Pro"], "headline-lg": ["Be Vietnam Pro"], "headline-md": ["Be Vietnam Pro"], "label-sm": ["Inter"], "technical-code": ["JetBrains Mono"], "headline-xl-mobile": ["Be Vietnam Pro"], "body-sm": ["Inter"], "headline-xl": ["Be Vietnam Pro"], "body-md": ["Inter"], "body-lg": ["Inter"] }, "fontSize": { "technical-data": ["13px", { "lineHeight": "18px", "letterSpacing": "0.02em", "fontWeight": "500" }], "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700" }], "label-md": ["14px", { "lineHeight": "20px", "fontWeight": "500" }], "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }], "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }], "technical-code": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "400" }], "headline-xl-mobile": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }], "headline-xl": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }], "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }] } } } };</script></head><body class="bg-surface font-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-screen w-72 bg-surface-container-lowest shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-50 flex flex-col justify-between select-none"><div class="flex flex-col h-full"><div class="h-16 px-space-lg flex items-center gap-space-sm bg-surface-container-lowest border-b border-surface-container-high"><div class="w-9 h-9 rounded-lg bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-secondary text-[22px]">memory</span></div><div class="flex flex-col leading-tight"><span class="font-headline-sm text-headline-sm uppercase tracking-tight text-primary">TECHSTORE</span><span class="font-technical-code text-technical-code uppercase tracking-wider text-on-surface-variant">Admin Engine v2.4</span></div></div><div class="px-space-md py-space-sm"><div class="px-space-sm py-space-xs text-on-surface-variant font-technical-code text-technical-code uppercase tracking-wider">Hệ thống quản trị</div></div><nav class="flex-1 px-space-sm overflow-y-auto space-y-1" data-active-classes="bg-secondary-fixed text-on-secondary-fixed font-semibold border-l-4 border-secondary"><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="tong-quan" href="#"><span class="material-symbols-outlined text-[20px]">dashboard</span><span>Tổng quan</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="nguoi-dung" href="#"><span class="material-symbols-outlined text-[20px]">person</span><span>Người dùng</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="cua-hang" href="#"><span class="material-symbols-outlined text-[20px]">storefront</span><span>Cửa hàng</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="san-pham" href="#"><span class="material-symbols-outlined text-[20px]">inventory_2</span><span>Sản phẩm</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="danh-muc" href="#"><span class="material-symbols-outlined text-[20px]">category</span><span>Danh mục</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="don-hang" href="#"><span class="material-symbols-outlined text-[20px]">receipt_long</span><span>Đơn hàng</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="voucher" href="#"><span class="material-symbols-outlined text-[20px]">confirmation_number</span><span>Voucher</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="danh-gia" href="#"><span class="material-symbols-outlined text-[20px]">star</span><span>Đánh giá</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="hau-mai" href="#"><span class="material-symbols-outlined text-[20px]">verified</span><span>Hậu mãi</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="khieu-nai" href="#"><span class="material-symbols-outlined text-[20px]">report_problem</span><span>Khiếu nại</span></a><div class="pt-space-sm pb-space-xs px-space-sm text-on-surface-variant font-technical-code text-technical-code uppercase tracking-wider">Phân quyền &amp; Nhân sự</div><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="nhan-vien" href="#"><span class="material-symbols-outlined text-[20px]">badge</span><span>Nhân viên</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="vai-tro" href="#"><span class="material-symbols-outlined text-[20px]">admin_panel_settings</span><span>Vai trò</span></a></nav><div class="p-space-md bg-surface-container-low border-t border-surface-container-high"><div class="flex items-center justify-between font-technical-code text-technical-code text-on-surface-variant"><span>TRẠNG THÁI</span><span class="inline-flex items-center gap-1.5 text-secondary font-semibold"><span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>ONLINE</span></div></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 border-b border-surface-container-high flex items-center justify-between px-space-lg"><div class="flex-1 max-w-xl"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-3.5 text-on-surface-variant text-[20px]">search</span><input class="w-full h-10 pl-11 pr-4 bg-surface-container-low border border-surface-container-high rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:border-primary transition-colors" placeholder="Tìm kiếm người dùng, cửa hàng, sản phẩm, đơn hàng..." type="search"/></div></div><div class="flex items-center gap-space-md"><button class="relative w-10 h-10 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[22px]">notifications</span><span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-secondary ring-2 ring-surface-container-lowest"></span></button><div class="h-6 w-px bg-surface-container-high"></div><div class="flex items-center gap-space-sm cursor-pointer py-1 px-2 rounded-lg hover:bg-surface-container-low transition-colors"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="flex flex-col text-left"><span class="font-label-sm text-label-sm font-semibold text-on-surface leading-tight">Admin User</span><span class="font-technical-code text-technical-code text-secondary leading-none">Superadmin</span></div><span class="material-symbols-outlined text-on-surface-variant text-[18px]">expand_more</span></div></div></header><main class="w-full pt-16 min-h-screen bg-surface px-space-lg py-space-md"><div class="flex flex-col w-full">
+<!-- Breadcrumbs & Quick Path -->
+<div class="flex items-center gap-2 mb-3">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Quản trị</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">/</span>
+<span class="font-body-sm text-body-sm font-semibold text-primary">Danh mục</span>
+</div>
+<!-- Header Section with Title, Subtitle, and Tool Actions -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+<div class="flex flex-col">
+<h1 class="font-headline-lg text-headline-lg text-primary tracking-tight">Danh mục</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-0.5">
+        Quản lý danh mục sản phẩm và cấu trúc danh mục hiển thị trên cửa hàng.
+      </p>
+</div>
+<!-- Actions: Search & Add CTA Button -->
+<div class="flex items-center gap-3 self-start md:self-auto">
+<div class="relative w-64 md:w-72">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
+<input class="w-full h-10 pl-9 pr-3 bg-surface-container-lowest text-on-surface font-body-sm text-body-sm rounded-lg focus:outline-none focus:ring-1 focus:ring-secondary transition-all shadow-sm" id="category-search" placeholder="Tìm kiếm danh mục..." type="text"/>
+</div>
+<button class="h-10 px-4 bg-secondary hover:bg-secondary-container text-on-secondary rounded-lg font-label-md text-label-md font-semibold flex items-center gap-1.5 transition-all shadow-sm active:scale-95 whitespace-nowrap" id="btn-add-category">
+<span class="material-symbols-outlined text-[19px]">add</span>
+<span>Thêm danh mục</span>
+</button>
+</div>
+</div>
+<!-- Table Container (Monolith Precision Industrial Card) -->
+<div class="w-full bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<!-- Table Head -->
+<thead>
+<tr class="bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm">
+<th class="py-3.5 px-6 font-semibold min-w-[280px]">Tên danh mục</th>
+<th class="py-3.5 px-6 font-semibold min-w-[160px]">Danh mục cha</th>
+<th class="py-3.5 px-6 font-semibold min-w-[120px]">Số sản phẩm</th>
+<th class="py-3.5 px-6 font-semibold min-w-[150px]">Trạng thái hiển thị</th>
+<th class="py-3.5 px-6 font-semibold min-w-[100px] text-right">Thao tác</th>
+</tr>
+</thead>
+<tbody class="font-body-md text-body-md text-on-surface">
+<!-- GROUP 1: ĐIỆN THOẠI -->
+<!-- Parent: Điện thoại -->
+<tr class="hover:bg-surface-container-low/50 transition-colors group">
+<td class="py-3.5 px-6">
+<div class="flex items-center gap-3">
+<button class="toggle-group text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center p-0.5 rounded" data-target="group-dienthoai" type="button">
+<span class="material-symbols-outlined text-[18px] transition-transform duration-200">expand_more</span>
+</button>
+<div class="w-8 h-8 rounded-lg bg-secondary-fixed/50 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-secondary text-[20px]">smartphone</span>
+</div>
+<span class="font-headline-sm text-body-lg font-semibold text-primary tracking-tight">Điện thoại</span>
+</div>
+</td>
+<td class="py-3.5 px-6 text-on-surface-variant font-technical-data text-technical-data">—</td>
+<td class="py-3.5 px-6 font-technical-data text-technical-data font-semibold text-primary">145</td>
+<td class="py-3.5 px-6">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-[#e8f8ee] text-[#1e824c]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#27ae60]"></span>
+                Hiển thị
+              </span>
+</td>
+<td class="py-3.5 px-6 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="p-1 text-on-surface-variant hover:text-primary rounded transition-colors" title="Chỉnh sửa">
+<span class="material-symbols-outlined text-[19px]">edit</span>
+</button>
+<button class="p-1 text-error hover:bg-error-container/40 rounded transition-colors" title="Xóa">
+<span class="material-symbols-outlined text-[19px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Sub 1: iPhone -->
+<tr class="group-dienthoai bg-surface/30 hover:bg-surface-container-low/60 transition-colors">
+<td class="py-3 px-6 pl-14">
+<div class="flex items-center gap-2.5">
+<span class="font-technical-code text-on-surface-variant text-[14px] leading-none select-none">└─</span>
+<span class="text-on-surface font-medium">Điện thoại iPhone</span>
+</div>
+</td>
+<td class="py-3 px-6 text-on-surface-variant font-label-md text-label-md">Điện thoại</td>
+<td class="py-3 px-6 font-technical-data text-technical-data text-on-surface">54</td>
+<td class="py-3 px-6">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-[#e8f8ee] text-[#1e824c]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#27ae60]"></span>
+                Hiển thị
+              </span>
+</td>
+<td class="py-3 px-6 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="p-1 text-on-surface-variant hover:text-primary rounded transition-colors" title="Chỉnh sửa">
+<span class="material-symbols-outlined text-[19px]">edit</span>
+</button>
+<button class="p-1 text-error hover:bg-error-container/40 rounded transition-colors" title="Xóa">
+<span class="material-symbols-outlined text-[19px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Sub 2: Samsung -->
+<tr class="group-dienthoai bg-surface/30 hover:bg-surface-container-low/60 transition-colors">
+<td class="py-3 px-6 pl-14">
+<div class="flex items-center gap-2.5">
+<span class="font-technical-code text-on-surface-variant text-[14px] leading-none select-none">└─</span>
+<span class="text-on-surface font-medium">Điện thoại Samsung</span>
+</div>
+</td>
+<td class="py-3 px-6 text-on-surface-variant font-label-md text-label-md">Điện thoại</td>
+<td class="py-3 px-6 font-technical-data text-technical-data text-on-surface">42</td>
+<td class="py-3 px-6">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-[#e8f8ee] text-[#1e824c]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#27ae60]"></span>
+                Hiển thị
+              </span>
+</td>
+<td class="py-3 px-6 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="p-1 text-on-surface-variant hover:text-primary rounded transition-colors" title="Chỉnh sửa">
+<span class="material-symbols-outlined text-[19px]">edit</span>
+</button>
+<button class="p-1 text-error hover:bg-error-container/40 rounded transition-colors" title="Xóa">
+<span class="material-symbols-outlined text-[19px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Sub 3: Xiaomi -->
+<tr class="group-dienthoai bg-surface/30 hover:bg-surface-container-low/60 transition-colors">
+<td class="py-3 px-6 pl-14">
+<div class="flex items-center gap-2.5">
+<span class="font-technical-code text-on-surface-variant text-[14px] leading-none select-none">└─</span>
+<span class="text-on-surface font-medium">Điện thoại Xiaomi</span>
+</div>
+</td>
+<td class="py-3 px-6 text-on-surface-variant font-label-md text-label-md">Điện thoại</td>
+<td class="py-3 px-6 font-technical-data text-technical-data text-on-surface">37</td>
+<td class="py-3 px-6">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-[#e8f8ee] text-[#1e824c]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#27ae60]"></span>
+                Hiển thị
+              </span>
+</td>
+<td class="py-3 px-6 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="p-1 text-on-surface-variant hover:text-primary rounded transition-colors" title="Chỉnh sửa">
+<span class="material-symbols-outlined text-[19px]">edit</span>
+</button>
+<button class="p-1 text-error hover:bg-error-container/40 rounded transition-colors" title="Xóa">
+<span class="material-symbols-outlined text-[19px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- GROUP 2: LAPTOP -->
+<!-- Parent: Laptop -->
+<tr class="hover:bg-surface-container-low/50 transition-colors group">
+<td class="py-3.5 px-6">
+<div class="flex items-center gap-3">
+<button class="toggle-group text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center p-0.5 rounded" data-target="group-laptop" type="button">
+<span class="material-symbols-outlined text-[18px] transition-transform duration-200">expand_more</span>
+</button>
+<div class="w-8 h-8 rounded-lg bg-secondary-fixed/50 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-secondary text-[20px]">laptop_mac</span>
+</div>
+<span class="font-headline-sm text-body-lg font-semibold text-primary tracking-tight">Laptop</span>
+</div>
+</td>
+<td class="py-3.5 px-6 text-on-surface-variant font-technical-data text-technical-data">—</td>
+<td class="py-3.5 px-6 font-technical-data text-technical-data font-semibold text-primary">86</td>
+<td class="py-3.5 px-6">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-[#e8f8ee] text-[#1e824c]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#27ae60]"></span>
+                Hiển thị
+              </span>
+</td>
+<td class="py-3.5 px-6 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="p-1 text-on-surface-variant hover:text-primary rounded transition-colors" title="Chỉnh sửa">
+<span class="material-symbols-outlined text-[19px]">edit</span>
+</button>
+<button class="p-1 text-error hover:bg-error-container/40 rounded transition-colors" title="Xóa">
+<span class="material-symbols-outlined text-[19px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Sub 1: Laptop văn phòng -->
+<tr class="group-laptop bg-surface/30 hover:bg-surface-container-low/60 transition-colors">
+<td class="py-3 px-6 pl-14">
+<div class="flex items-center gap-2.5">
+<span class="font-technical-code text-on-surface-variant text-[14px] leading-none select-none">└─</span>
+<span class="text-on-surface font-medium">Laptop văn phòng</span>
+</div>
+</td>
+<td class="py-3 px-6 text-on-surface-variant font-label-md text-label-md">Laptop</td>
+<td class="py-3 px-6 font-technical-data text-technical-data text-on-surface">28</td>
+<td class="py-3 px-6">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-[#e8f8ee] text-[#1e824c]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#27ae60]"></span>
+                Hiển thị
+              </span>
+</td>
+<td class="py-3 px-6 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="p-1 text-on-surface-variant hover:text-primary rounded transition-colors" title="Chỉnh sửa">
+<span class="material-symbols-outlined text-[19px]">edit</span>
+</button>
+<button class="p-1 text-error hover:bg-error-container/40 rounded transition-colors" title="Xóa">
+<span class="material-symbols-outlined text-[19px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Sub 2: Laptop gaming -->
+<tr class="group-laptop bg-surface/30 hover:bg-surface-container-low/60 transition-colors">
+<td class="py-3 px-6 pl-14">
+<div class="flex items-center gap-2.5">
+<span class="font-technical-code text-on-surface-variant text-[14px] leading-none select-none">└─</span>
+<span class="text-on-surface font-medium">Laptop gaming</span>
+</div>
+</td>
+<td class="py-3 px-6 text-on-surface-variant font-label-md text-label-md">Laptop</td>
+<td class="py-3 px-6 font-technical-data text-technical-data text-on-surface">34</td>
+<td class="py-3 px-6">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-[#e8f8ee] text-[#1e824c]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#27ae60]"></span>
+                Hiển thị
+              </span>
+</td>
+<td class="py-3 px-6 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="p-1 text-on-surface-variant hover:text-primary rounded transition-colors" title="Chỉnh sửa">
+<span class="material-symbols-outlined text-[19px]">edit</span>
+</button>
+<button class="p-1 text-error hover:bg-error-container/40 rounded transition-colors" title="Xóa">
+<span class="material-symbols-outlined text-[19px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Sub 3: Laptop đồ họa -->
+<tr class="group-laptop bg-surface/30 hover:bg-surface-container-low/60 transition-colors">
+<td class="py-3 px-6 pl-14">
+<div class="flex items-center gap-2.5">
+<span class="font-technical-code text-on-surface-variant text-[14px] leading-none select-none">└─</span>
+<span class="text-on-surface font-medium">Laptop đồ họa</span>
+</div>
+</td>
+<td class="py-3 px-6 text-on-surface-variant font-label-md text-label-md">Laptop</td>
+<td class="py-3 px-6 font-technical-data text-technical-data text-on-surface">24</td>
+<td class="py-3 px-6">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-[#e8f8ee] text-[#1e824c]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#27ae60]"></span>
+                Hiển thị
+              </span>
+</td>
+<td class="py-3 px-6 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="p-1 text-on-surface-variant hover:text-primary rounded transition-colors" title="Chỉnh sửa">
+<span class="material-symbols-outlined text-[19px]">edit</span>
+</button>
+<button class="p-1 text-error hover:bg-error-container/40 rounded transition-colors" title="Xóa">
+<span class="material-symbols-outlined text-[19px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- GROUP 3: PHỤ KIỆN -->
+<tr class="hover:bg-surface-container-low/50 transition-colors group">
+<td class="py-3.5 px-6">
+<div class="flex items-center gap-3">
+<div class="w-5 flex items-center justify-center"></div>
+<div class="w-8 h-8 rounded-lg bg-secondary-fixed/50 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-secondary text-[20px]">headphones</span>
+</div>
+<span class="font-headline-sm text-body-lg font-semibold text-primary tracking-tight">Phụ kiện</span>
+</div>
+</td>
+<td class="py-3.5 px-6 text-on-surface-variant font-technical-data text-technical-data">—</td>
+<td class="py-3.5 px-6 font-technical-data text-technical-data font-semibold text-primary">210</td>
+<td class="py-3.5 px-6">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-[#e8f8ee] text-[#1e824c]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#27ae60]"></span>
+                Hiển thị
+              </span>
+</td>
+<td class="py-3.5 px-6 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="p-1 text-on-surface-variant hover:text-primary rounded transition-colors" title="Chỉnh sửa">
+<span class="material-symbols-outlined text-[19px]">edit</span>
+</button>
+<button class="p-1 text-error hover:bg-error-container/40 rounded transition-colors" title="Xóa">
+<span class="material-symbols-outlined text-[19px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- GROUP 4: THIẾT BỊ THÔNG MINH -->
+<tr class="hover:bg-surface-container-low/50 transition-colors group">
+<td class="py-3.5 px-6">
+<div class="flex items-center gap-3">
+<button class="toggle-group text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center p-0.5 rounded" data-target="group-smart" type="button">
+<span class="material-symbols-outlined text-[18px] -rotate-90 transition-transform duration-200">expand_more</span>
+</button>
+<div class="w-8 h-8 rounded-lg bg-secondary-fixed/50 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-secondary text-[20px]">settings_suggest</span>
+</div>
+<span class="font-headline-sm text-body-lg font-semibold text-primary tracking-tight">Thiết bị thông minh</span>
+</div>
+</td>
+<td class="py-3.5 px-6 text-on-surface-variant font-technical-data text-technical-data">—</td>
+<td class="py-3.5 px-6 font-technical-data text-technical-data font-semibold text-primary">68</td>
+<td class="py-3.5 px-6">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-surface-container-highest text-on-surface-variant">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+                Ẩn
+              </span>
+</td>
+<td class="py-3.5 px-6 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="p-1 text-on-surface-variant hover:text-primary rounded transition-colors" title="Chỉnh sửa">
+<span class="material-symbols-outlined text-[19px]">edit</span>
+</button>
+<button class="p-1 text-error hover:bg-error-container/40 rounded transition-colors" title="Xóa">
+<span class="material-symbols-outlined text-[19px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Footer / Statistical Overview Micro-Metrics -->
+<div class="px-6 py-4 bg-surface-container-low/40 flex flex-col sm:flex-row items-center justify-between gap-3 text-on-surface-variant font-technical-code text-technical-code">
+<div class="flex items-center gap-4">
+<span>TỔNG DANH MỤC: <strong class="text-primary font-semibold">10</strong></span>
+<span>•</span>
+<span>ĐANG HOẠT ĐỘNG: <strong class="text-[#1e824c] font-semibold">9</strong></span>
+<span>•</span>
+<span>ĐANG TẠM ẨN: <strong class="text-secondary font-semibold">1</strong></span>
+</div>
+<div class="text-on-surface-variant">
+        Hệ thống phân cấp 2 cấp độ tiêu chuẩn
+      </div>
+</div>
+</div>
+<!-- Modal Dialog: Thêm danh mục mới (Hidden by default, triggered by script) -->
+<div class="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm hidden items-center justify-center p-4" id="modal-category">
+<div class="bg-surface-container-lowest rounded-xl max-w-lg w-full p-6 shadow-xl relative animate-in fade-in duration-200">
+<div class="flex items-center justify-between pb-4 mb-4 border-b border-surface-container-high">
+<h3 class="font-headline-sm text-headline-sm text-primary">Tạo danh mục mới</h3>
+<button class="text-on-surface-variant hover:text-primary transition-colors" id="modal-close">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<form class="space-y-4" id="form-category">
+<div>
+<label class="block font-label-md text-label-md font-medium text-on-surface mb-1">Tên danh mục <span class="text-error">*</span></label>
+<input class="w-full h-10 px-3 bg-surface-container-low text-on-surface font-body-md text-body-md rounded-lg focus:outline-none focus:ring-1 focus:ring-secondary" placeholder="Ví dụ: Đồng hồ thông minh" required="" type="text"/>
+</div>
+<div>
+<label class="block font-label-md text-label-md font-medium text-on-surface mb-1">Danh mục cha</label>
+<select class="w-full h-10 px-3 bg-surface-container-low text-on-surface font-body-md text-body-md rounded-lg focus:outline-none focus:ring-1 focus:ring-secondary">
+<option value="">— Không có (Danh mục gốc) —</option>
+<option value="dienthoai">Điện thoại</option>
+<option value="laptop">Laptop</option>
+<option value="phukien">Phụ kiện</option>
+<option value="smart">Thiết bị thông minh</option>
+</select>
+</div>
+<div>
+<label class="block font-label-md text-label-md font-medium text-on-surface mb-1">Icon đại diện</label>
+<input class="w-full h-10 px-3 bg-surface-container-low text-on-surface font-body-md text-body-md rounded-lg focus:outline-none focus:ring-1 focus:ring-secondary" placeholder="Material symbol name (e.g. watch, mouse)" type="text"/>
+</div>
+<div>
+<label class="block font-label-md text-label-md font-medium text-on-surface mb-1">Trạng thái hiển thị</label>
+<div class="flex items-center gap-4 mt-2">
+<label class="inline-flex items-center gap-2 cursor-pointer text-sm">
+<input checked="" class="accent-secondary" name="modal_status" type="radio" value="active"/>
+<span>Hiển thị ngay</span>
+</label>
+<label class="inline-flex items-center gap-2 cursor-pointer text-sm">
+<input class="accent-secondary" name="modal_status" type="radio" value="hidden"/>
+<span>Ẩn tạm thời</span>
+</label>
+</div>
+</div>
+<div class="flex items-center justify-end gap-3 pt-4 border-t border-surface-container-high mt-6">
+<button class="h-10 px-4 rounded-lg bg-surface-container text-on-surface font-label-md text-label-md hover:bg-surface-container-high transition-colors" id="modal-cancel" type="button">
+            Hủy
+          </button>
+<button class="h-10 px-5 rounded-lg bg-secondary text-on-secondary font-label-md text-label-md font-semibold hover:bg-secondary-container transition-all" type="submit">
+            Lưu danh mục
+          </button>
+</div>
+</form>
+</div>
+</div>
+</div>
+<script>
+  (function() {
+    // 1. Highlight sidebar item for 'Danh mục'
+    const sidebarCategoryLink = document.querySelector('aside nav a[data-path="danh-muc"]');
+    if (sidebarCategoryLink) {
+      // Remove default inactive styling
+      sidebarCategoryLink.classList.remove('text-on-surface-variant');
+      // Apply active style from shell contract (secondary-fixed bg, border accent)
+      sidebarCategoryLink.classList.add('bg-secondary-fixed', 'text-on-secondary-fixed', 'font-semibold', 'border-l-4', 'border-secondary');
+      const icon = sidebarCategoryLink.querySelector('.material-symbols-outlined');
+      if (icon) {
+        icon.classList.add('text-secondary');
+      }
+    }
+
+    // 2. Expand/Collapse Category Tree Branches
+    const toggles = document.querySelectorAll('.toggle-group');
+    toggles.forEach(toggle => {
+      toggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const targetClass = toggle.getAttribute('data-target');
+        const rows = document.querySelectorAll('.' + targetClass);
+        const icon = toggle.querySelector('.material-symbols-outlined');
+        
+        let isExpanded = !icon.classList.contains('-rotate-90');
+        if (isExpanded) {
+          icon.classList.add('-rotate-90');
+          rows.forEach(r => r.classList.add('hidden'));
+        } else {
+          icon.classList.remove('-rotate-90');
+          rows.forEach(r => r.classList.remove('hidden'));
+        }
+      });
+    });
+
+    // 3. Search Filter Logic
+    const searchInput = document.getElementById('category-search');
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase().trim();
+        const rows = document.querySelectorAll('tbody tr');
+        rows.forEach(row => {
+          const text = row.textContent.toLowerCase();
+          if (text.includes(query)) {
+            row.classList.remove('hidden');
+          } else {
+            row.classList.add('hidden');
+          }
+        });
+      });
+    }
+
+    // 4. Modal Interactions
+    const modal = document.getElementById('modal-category');
+    const btnOpen = document.getElementById('btn-add-category');
+    const btnClose = document.getElementById('modal-close');
+    const btnCancel = document.getElementById('modal-cancel');
+    const form = document.getElementById('form-category');
+
+    function openModal() {
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+    }
+
+    function closeModal() {
+      if (modal) {
+        modal.classList.remove('flex');
+        modal.classList.add('hidden');
+      }
+    }
+
+    if (btnOpen) btnOpen.addEventListener('click', openModal);
+    if (btnClose) btnClose.addEventListener('click', closeModal);
+    if (btnCancel) btnCancel.addEventListener('click', closeModal);
+
+    if (modal) {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+      });
+    }
+
+    if (form) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        closeModal();
+      });
+    }
+  })();
+</script></main></div></body></html>

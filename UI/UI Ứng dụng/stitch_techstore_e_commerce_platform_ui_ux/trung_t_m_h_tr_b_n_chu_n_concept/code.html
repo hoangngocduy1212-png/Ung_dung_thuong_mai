@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Trung tâm hỗ trợ khách hàng - TECHSTORE</title>
+<!-- Google Fonts: Inter -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN with Forms & Container Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              orange: '#FF5700',
+              orangeHover: '#e04c00',
+              dark: '#111827',
+              gray: '#6B7280',
+              lightBg: '#F8F9FA'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-[#FAFAFA] text-[#1e293b] font-sans antialiased min-h-screen flex flex-col">
+<!-- BEGIN: MainHeader -->
+<header class="bg-white border-b border-gray-100" data-purpose="site-header">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<!-- Top Row: Logo, Search Bar, User Actions -->
+<div class="flex items-center justify-between h-20 gap-8">
+<!-- Logo -->
+<div class="flex-shrink-0">
+<a class="text-2xl font-black tracking-tight text-black flex items-center" href="#">
+            TECHSTORE
+          </a>
+</div>
+<!-- Header Search Input -->
+<div class="flex-1 max-w-2xl">
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<input class="w-full pl-10 pr-4 py-2.5 bg-[#F1F3F5] hover:bg-gray-100 focus:bg-white text-xs sm:text-sm rounded-full border-none focus:ring-2 focus:ring-[#FF5700] transition duration-150 placeholder-gray-500 text-gray-800" placeholder="Tìm kiếm sản phẩm, thương hiệu, danh mục..." type="text"/>
+</div>
+</div>
+<!-- Account and Cart Links -->
+<div class="flex items-center space-x-6">
+<a class="flex items-center space-x-1.5 text-sm font-semibold text-gray-800 hover:text-[#FF5700] transition-colors" href="#">
+<svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Tài khoản</span>
+</a>
+<a class="flex items-center space-x-1.5 text-sm font-semibold text-gray-800 hover:text-[#FF5700] transition-colors relative" href="#">
+<div class="relative">
+<svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="absolute -top-1.5 -right-2 bg-[#FF5700] text-white text-[10px] font-bold rounded-full h-4 w-4 flex items-center justify-center">1</span>
+</div>
+<span>Giỏ hàng</span>
+</a>
+</div>
+</div>
+<!-- Navigation Bar -->
+<nav class="flex items-center justify-between py-2.5 text-xs sm:text-sm font-semibold text-gray-700 border-t border-gray-100 overflow-x-auto whitespace-nowrap scrollbar-none" data-purpose="category-navigation">
+<div class="flex items-center space-x-6 sm:space-x-8">
+<a class="text-[#FF5700] font-bold flex items-center gap-1 hover:opacity-90" href="#">
+            Tất cả danh mục
+          </a>
+<a class="hover:text-[#FF5700] transition-colors" href="#">Laptop</a>
+<a class="hover:text-[#FF5700] transition-colors" href="#">Điện thoại</a>
+<a class="hover:text-[#FF5700] transition-colors" href="#">Máy tính bảng</a>
+<a class="hover:text-[#FF5700] transition-colors" href="#">Âm thanh</a>
+<a class="hover:text-[#FF5700] transition-colors" href="#">Thiết bị đeo</a>
+<a class="hover:text-[#FF5700] transition-colors" href="#">Phụ kiện</a>
+<a class="hover:text-[#FF5700] transition-colors" href="#">Thiết bị thông minh</a>
+<a class="hover:text-[#FF5700] transition-colors" href="#">Nhà thông minh</a>
+</div>
+<div>
+<a class="text-[#FF5700] font-bold hover:underline transition-colors pl-4" href="#">Khuyến mãi</a>
+</div>
+</nav>
+</div>
+</header>
+<!-- END: MainHeader -->
+<!-- BEGIN: MainContent -->
+<main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full" data-purpose="help-center-content">
+<!-- Title Section -->
+<section class="mb-6" data-purpose="page-title">
+<h1 class="text-3xl sm:text-4xl font-extrabold text-black tracking-tight mb-2">Hỗ trợ khách hàng</h1>
+<p class="text-gray-500 font-medium text-base">Chúng tôi luôn sẵn sàng hỗ trợ bạn</p>
+</section>
+<!-- Support Search Input Bar -->
+<section class="mb-8" data-purpose="help-search-bar">
+<div class="bg-white rounded-lg p-2.5 sm:p-3 border border-gray-200/90 shadow-sm flex items-center gap-3">
+<div class="pl-2 text-gray-400">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+</svg>
+</div>
+<input class="flex-1 border-0 focus:ring-0 text-sm sm:text-base text-gray-800 placeholder-gray-400 p-0" placeholder="Bạn cần hỗ trợ điều gì?" type="text"/>
+<button class="bg-[#FF5700] hover:bg-[#e04c00] text-white text-sm sm:text-base font-semibold px-8 py-2.5 rounded-md transition duration-150 shadow-sm">
+          Tìm kiếm
+        </button>
+</div>
+</section>
+<!-- 4 Topics Grid Section -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-10" data-purpose="support-categories-grid">
+<!-- Card 1: Đơn hàng và giao hàng -->
+<div class="bg-white rounded-xl border border-gray-200/80 p-6 flex flex-col justify-between hover:shadow-md transition-shadow">
+<div>
+<!-- Icon -->
+<div class="w-10 h-10 mb-4 text-[#FF5700] flex items-center justify-center">
+<svg class="w-9 h-9" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<!-- Title & Subtitle -->
+<h2 class="text-base font-bold text-gray-900 mb-1">Đơn hàng và giao hàng</h2>
+<p class="text-xs text-gray-500 mb-5 leading-relaxed">Tra cứu, theo dõi và các vấn đề liên quan đến đơn hàng.</p>
+<div class="border-t border-gray-100 my-4"></div>
+<!-- FAQ Links -->
+<ul class="space-y-3.5 text-xs text-gray-700 font-medium">
+<li>
+<a class="hover:text-[#FF5700] transition-colors block" href="#">Làm sao để kiểm tra trạng thái đơn hàng?</a>
+</li>
+<li>
+<a class="hover:text-[#FF5700] transition-colors block" href="#">Thời gian giao hàng là bao lâu?</a>
+</li>
+<li>
+<a class="hover:text-[#FF5700] transition-colors block" href="#">Tôi có thể thay đổi địa chỉ giao hàng không?</a>
+</li>
+</ul>
+</div>
+<!-- View All Link -->
+<div class="pt-5 border-t border-gray-100 mt-5">
+<a class="inline-flex items-center text-xs font-bold text-[#FF5700] hover:text-[#e04c00]" href="#">
+            Xem tất cả câu hỏi <span class="ml-1 text-sm">→</span>
+</a>
+</div>
+</div>
+<!-- Card 2: Thanh toán -->
+<div class="bg-white rounded-xl border border-gray-200/80 p-6 flex flex-col justify-between hover:shadow-md transition-shadow">
+<div>
+<!-- Icon -->
+<div class="w-10 h-10 mb-4 text-[#FF5700] flex items-center justify-center">
+<svg class="w-9 h-9" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<rect height="14" rx="2" width="20" x="2" y="5"></rect>
+<line x1="2" x2="22" y1="10" y2="10"></line>
+</svg>
+</div>
+<!-- Title & Subtitle -->
+<h2 class="text-base font-bold text-gray-900 mb-1">Thanh toán</h2>
+<p class="text-xs text-gray-500 mb-5 leading-relaxed">Các phương thức thanh toán và xử lý thanh toán.</p>
+<div class="border-t border-gray-100 my-4"></div>
+<!-- FAQ Links -->
+<ul class="space-y-3.5 text-xs text-gray-700 font-medium">
+<li>
+<a class="hover:text-[#FF5700] transition-colors block" href="#">Có những phương thức thanh toán nào?</a>
+</li>
+<li>
+<a class="hover:text-[#FF5700] transition-colors block" href="#">Thanh toán có an toàn không?</a>
+</li>
+<li>
+<a class="hover:text-[#FF5700] transition-colors block" href="#">Tôi có thể hủy thanh toán không?</a>
+</li>
+</ul>
+</div>
+<!-- View All Link -->
+<div class="pt-5 border-t border-gray-100 mt-5">
+<a class="inline-flex items-center text-xs font-bold text-[#FF5700] hover:text-[#e04c00]" href="#">
+            Xem tất cả câu hỏi <span class="ml-1 text-sm">→</span>
+</a>
+</div>
+</div>
+<!-- Card 3: Đổi trả và bảo hành -->
+<div class="bg-white rounded-xl border border-gray-200/80 p-6 flex flex-col justify-between hover:shadow-md transition-shadow">
+<div>
+<!-- Icon -->
+<div class="w-10 h-10 mb-4 text-[#FF5700] flex items-center justify-center">
+<svg class="w-9 h-9" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<!-- Title & Subtitle -->
+<h2 class="text-base font-bold text-gray-900 mb-1">Đổi trả và bảo hành</h2>
+<p class="text-xs text-gray-500 mb-5 leading-relaxed">Hướng dẫn đổi trả sản phẩm và thông tin bảo hành.</p>
+<div class="border-t border-gray-100 my-4"></div>
+<!-- FAQ Links -->
+<ul class="space-y-3.5 text-xs text-gray-700 font-medium">
+<li>
+<a class="hover:text-[#FF5700] transition-colors block" href="#">Điều kiện để đổi trả là gì?</a>
+</li>
+<li>
+<a class="hover:text-[#FF5700] transition-colors block" href="#">Thời gian bảo hành bao lâu?</a>
+</li>
+<li>
+<a class="hover:text-[#FF5700] transition-colors block" href="#">Làm thế nào để yêu cầu bảo hành?</a>
+</li>
+</ul>
+</div>
+<!-- View All Link -->
+<div class="pt-5 border-t border-gray-100 mt-5">
+<a class="inline-flex items-center text-xs font-bold text-[#FF5700] hover:text-[#e04c00]" href="#">
+            Xem tất cả câu hỏi <span class="ml-1 text-sm">→</span>
+</a>
+</div>
+</div>
+<!-- Card 4: Tài khoản -->
+<div class="bg-white rounded-xl border border-gray-200/80 p-6 flex flex-col justify-between hover:shadow-md transition-shadow">
+<div>
+<!-- Icon -->
+<div class="w-10 h-10 mb-4 text-[#FF5700] flex items-center justify-center">
+<svg class="w-9 h-9" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<!-- Title & Subtitle -->
+<h2 class="text-base font-bold text-gray-900 mb-1">Tài khoản</h2>
+<p class="text-xs text-gray-500 mb-5 leading-relaxed">Quản lý tài khoản và thông tin cá nhân của bạn.</p>
+<div class="border-t border-gray-100 my-4"></div>
+<!-- FAQ Links -->
+<ul class="space-y-3.5 text-xs text-gray-700 font-medium">
+<li>
+<a class="hover:text-[#FF5700] transition-colors block" href="#">Làm sao để tạo tài khoản?</a>
+</li>
+<li>
+<a class="hover:text-[#FF5700] transition-colors block" href="#">Tôi có thể thay đổi thông tin cá nhân không?</a>
+</li>
+<li>
+<a class="hover:text-[#FF5700] transition-colors block" href="#">Làm sao để đặt lại mật khẩu?</a>
+</li>
+</ul>
+</div>
+<!-- View All Link -->
+<div class="pt-5 border-t border-gray-100 mt-5">
+<a class="inline-flex items-center text-xs font-bold text-[#FF5700] hover:text-[#e04c00]" href="#">
+            Xem tất cả câu hỏi <span class="ml-1 text-sm">→</span>
+</a>
+</div>
+</div>
+</section>
+<!-- BEGIN: ContactSupportBanner -->
+<section class="bg-[#F3F4F6] rounded-2xl overflow-hidden border border-gray-200/60 shadow-sm" data-purpose="contact-support-banner">
+<div class="flex flex-col md:flex-row items-center justify-between">
+<!-- Left: Customer Support Agent Representative -->
+<div class="flex items-center w-full md:w-auto">
+<div class="w-full sm:w-72 h-44 sm:h-48 overflow-hidden flex-shrink-0">
+<img alt="Chuyên viên hỗ trợ khách hàng TECHSTORE" class="w-full h-full object-cover object-top" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCK9vb0CwR8FSSgAdVhSfrUZYQACoQr2AONSm-8ActlkkLTYiq_JbbysFxOaU13jImpL-MOlPQFxWsoM0IgM5d645w2eATxue722FkY05NRUliEM8Wc6uIquHM6LsKEVCUnI1N1cReuZM-HIxwjSoEsuCQ4n4BI1oD2MekW7OJJqBeZ6HbIif4sh64U7bkCAJPy5QcJF7j8qQWw3TBzRBvMXRyJM9mOIrUHIPn7zphY"/>
+</div>
+<!-- Middle: Text Content -->
+<div class="px-6 py-4 md:py-0">
+<h3 class="text-xl sm:text-2xl font-bold text-gray-900 mb-2">Vẫn cần hỗ trợ?</h3>
+<p class="text-xs sm:text-sm text-gray-600 max-w-md leading-relaxed font-medium">
+              Đội ngũ TECHSTORE luôn sẵn sàng giải đáp thắc mắc và hỗ trợ bạn nhanh chóng.
+            </p>
+</div>
+</div>
+<!-- Right: Action Button -->
+<div class="p-6 md:pr-10 w-full md:w-auto flex justify-end">
+<a class="inline-flex items-center justify-center bg-[#FF5700] hover:bg-[#e04c00] text-white font-semibold text-sm sm:text-base px-7 py-3 rounded-lg shadow-sm transition-all duration-150 whitespace-nowrap gap-2 w-full md:w-auto" href="#">
+<span>Liên hệ hỗ trợ</span>
+<span class="text-lg">→</span>
+</a>
+</div>
+</div>
+</section>
+<!-- END: ContactSupportBanner -->
+</main>
+<!-- END: MainContent -->
+</body></html>

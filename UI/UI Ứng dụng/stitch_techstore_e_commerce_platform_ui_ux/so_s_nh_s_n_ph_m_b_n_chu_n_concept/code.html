@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>So sánh sản phẩm - TECHSTORE</title>
+<!-- Google Fonts: Be Vietnam Pro -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Be Vietnam Pro"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              orange: '#FF5400',
+              orangeHover: '#e04a00',
+              grayBg: '#F8F9FA',
+              border: '#EAEAEA',
+              muted: '#6C757D',
+              dark: '#1A1A1A'
+            }
+          }
+        }
+      }
+    }
+  </script>
+<!-- Custom Typography & Layout Overrides -->
+<style data-purpose="custom-typography">
+    body {
+      font-family: 'Be Vietnam Pro', sans-serif;
+      color: #1A1A1A;
+      background-color: #FFFFFF;
+      -webkit-font-smoothing: antialiased;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col bg-white">
+<!-- BEGIN: MainHeader -->
+<header class="w-full bg-white border-b border-gray-100 sticky top-0 z-50">
+<div class="max-w-[1366px] mx-auto px-6 lg:px-12">
+<!-- Top Bar: Logo, Search, User & Cart Actions -->
+<div class="h-20 flex items-center justify-between gap-8">
+<!-- Logo -->
+<a class="text-2xl font-black tracking-tight text-black shrink-0 flex items-center" href="#">
+          TECHSTORE
+        </a>
+<!-- Search Box -->
+<div class="flex-1 max-w-xl">
+<div class="relative w-full">
+<span class="absolute inset-y-0 left-4 flex items-center pointer-events-none text-gray-400">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1116.65 6.65a7.5 7.5 0 010 10.6z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"></path>
+</svg>
+</span>
+<input class="w-full pl-11 pr-5 py-2.5 bg-[#F5F6F8] border-none rounded-full text-xs placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-brand-orange text-gray-700 transition" placeholder="Tìm kiếm sản phẩm, thương hiệu, danh mục..." type="text"/>
+</div>
+</div>
+<!-- Header Actions: Account & Cart -->
+<div class="flex items-center gap-7 shrink-0 text-sm font-semibold">
+<!-- Account Link -->
+<a class="flex items-center gap-2 text-gray-800 hover:text-black transition" href="#">
+<svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
+</svg>
+<span>Tài khoản</span>
+</a>
+<!-- Cart Link -->
+<a class="flex items-center gap-2 text-gray-800 hover:text-black transition relative" href="#">
+<div class="relative">
+<svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
+</svg>
+<span class="absolute -top-1.5 -right-2 bg-brand-orange text-white text-[10px] font-bold rounded-full h-4 w-4 flex items-center justify-center">
+                0
+              </span>
+</div>
+<span>Giỏ hàng</span>
+</a>
+</div>
+</div>
+<!-- Navigation Categories Bar -->
+<nav class="flex items-center justify-between text-[13px] border-t border-gray-100 font-medium">
+<div class="flex items-center gap-7">
+<!-- All Categories Trigger -->
+<a class="flex items-center gap-2 text-brand-orange py-3.5 font-semibold hover:opacity-90" href="#">
+<svg class="w-4 h-4 fill-current" viewbox="0 0 16 16">
+<path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h2A1.5 1.5 0 0 1 6 2.5v2A1.5 1.5 0 0 1 4.5 6h-2A1.5 1.5 0 0 1 1 4.5v-2zM2.5 2a.5.5 0 0 0-.5.5v2a.5.5 0 0 0 .5.5h2a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 0-.5-.5h-2zm7.5.5A1.5 1.5 0 0 1 11.5 1h2A1.5 1.5 0 0 1 15 2.5v2A1.5 1.5 0 0 1 13.5 6h-2A1.5 1.5 0 0 1 10 4.5v-2zm1.5-.5a.5.5 0 0 0-.5.5v2a.5.5 0 0 0 .5.5h2a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 0-.5-.5h-2zM1 10.5A1.5 1.5 0 0 1 2.5 9h2A1.5 1.5 0 0 1 6 10.5v2A1.5 1.5 0 0 1 4.5 14h-2A1.5 1.5 0 0 1 1 12.5v-2zm1.5-.5a.5.5 0 0 0-.5.5v2a.5.5 0 0 0 .5.5h2a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 0-.5-.5h-2zm7.5.5A1.5 1.5 0 0 1 11.5 9h2a1.5 1.5 0 0 1 1.5 1.5v2a1.5 1.5 0 0 1-1.5 1.5h-2a1.5 1.5 0 0 1-1.5-1.5v-2zm1.5-.5a.5.5 0 0 0-.5.5v2a.5.5 0 0 0 .5.5h2a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 0-.5-.5h-2z"></path>
+</svg>
+<span>Tất cả danh mục</span>
+</a>
+<!-- Main Category Links -->
+<a class="relative py-3.5 text-black font-semibold after:content-[''] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2.5px] after:bg-brand-orange" href="#">
+            Laptop
+          </a>
+<a class="py-3.5 text-gray-700 hover:text-black transition" href="#">Điện thoại</a>
+<a class="py-3.5 text-gray-700 hover:text-black transition" href="#">Máy tính bảng</a>
+<a class="py-3.5 text-gray-700 hover:text-black transition" href="#">Âm thanh</a>
+<a class="py-3.5 text-gray-700 hover:text-black transition" href="#">Thiết bị đeo</a>
+<a class="py-3.5 text-gray-700 hover:text-black transition" href="#">Phụ kiện</a>
+<a class="py-3.5 text-gray-700 hover:text-black transition" href="#">Thiết bị thông minh</a>
+<a class="py-3.5 text-gray-700 hover:text-black transition" href="#">Nhà thông minh</a>
+</div>
+<!-- Right Side Promotion Link -->
+<a class="py-3.5 text-brand-orange font-semibold hover:opacity-80 transition" href="#">
+          Khuyến mãi
+        </a>
+</nav>
+</div>
+</header>
+<!-- END: MainHeader -->
+<!-- BEGIN: PageContent -->
+<main class="flex-1 max-w-[1366px] w-full mx-auto px-6 lg:px-12 pt-5 pb-16">
+<!-- Breadcrumb -->
+<nav aria-label="Breadcrumb" class="flex items-center space-x-2 text-[12px] text-gray-500 mb-4">
+<a class="hover:text-black transition" href="#">Trang chủ</a>
+<span class="text-gray-400">•</span>
+<span class="text-gray-600 font-medium">So sánh sản phẩm</span>
+</nav>
+<!-- Page Header Title -->
+<section class="mb-8">
+<h1 class="text-3xl font-extrabold tracking-tight text-gray-900 mb-2">So sánh sản phẩm</h1>
+<p class="text-xs text-gray-500 font-normal">
+        Đặt các sản phẩm cạnh nhau để dễ dàng so sánh và lựa chọn sản phẩm phù hợp nhất với nhu cầu của bạn.
+      </p>
+</section>
+<!-- BEGIN: ComparisonMatrix -->
+<div class="overflow-x-auto bg-white" data-purpose="comparison-table-wrapper">
+<table class="w-full border-collapse border border-gray-200 text-left">
+<colgroup>
+<col class="w-[20%] bg-gray-50/50"/>
+<col class="w-[26.66%]"/>
+<col class="w-[26.66%]"/>
+<col class="w-[26.66%]"/>
+</colgroup>
+<tbody>
+<!-- Row 1: Products Overview Header -->
+<tr class="border-b border-gray-200">
+<!-- Label Column -->
+<td class="p-6 align-middle font-bold text-base text-gray-900 bg-[#F9FAFB]/80 border-r border-gray-200">
+              Sản phẩm
+            </td>
+<!-- Product 1: MacBook Air M2 -->
+<td class="p-6 align-top border-r border-gray-200 relative group">
+<button class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 p-1 transition" title="Xóa khỏi so sánh">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+<div class="flex flex-col items-center text-center">
+<div class="h-36 w-full flex items-center justify-center mb-4">
+<img alt="MacBook Air M2 13.6 inch" class="max-h-32 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGrS1j61EvRmxgpgCkAS_ocfaEHeAgunkwfOs1AdGYnrx91TOrCtBwc6Nbm1tuEnVy_0eYbnuZpTNSDt3Dtp340zO5yg8BuX6Y5-0W_yqo0AHw-dLc78u0AJ9PF53psDpIRj9JOEWkkNpsXsCXqOIdwlPZEw1OncbUFl4uIL8o7HGggV3m6eHx-ePJwwbkxvK_1GNV6UOctsTHK9ZPvwj8SJxQPyiTXdABgTeeRBYq"/>
+</div>
+<h3 class="font-bold text-[14px] text-gray-900 leading-snug px-2">
+                  MacBook Air M2 13.6 inch 8GB 256GB
+                </h3>
+</div>
+</td>
+<!-- Product 2: Dell Inspiron 15 -->
+<td class="p-6 align-top border-r border-gray-200 relative group">
+<button class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 p-1 transition" title="Xóa khỏi so sánh">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+<div class="flex flex-col items-center text-center">
+<div class="h-36 w-full flex items-center justify-center mb-4">
+<img alt="Dell Inspiron 15 3530" class="max-h-32 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDO3nX6pMAaWnpHXEdk9vueEblKBcZ_r24RwFm2Q7IdkRaqJQw8qQ8ugj2TWDOVAUEoEeci--9elccf0YqYBUnfIQEmORB3tpJ2h0Hj4DL-h651QIW-OSWgkX2OS1vnGwinqQpoLskJWZIoZOGO6aITj38KEcynk9ffXZuQIO4nHgJ6eYzWT-R21vtYswFwIEodku_AxvlvMScpig0XtmO1VtzSLHo_DRmHewxC8l9A"/>
+</div>
+<h3 class="font-bold text-[14px] text-gray-900 leading-snug px-2">
+                  Dell Inspiron 15 3530 i5 8GB 512GB
+                </h3>
+</div>
+</td>
+<!-- Product 3: HP Victus 15 -->
+<td class="p-6 align-top relative group">
+<button class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 p-1 transition" title="Xóa khỏi so sánh">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+<div class="flex flex-col items-center text-center">
+<div class="h-36 w-full flex items-center justify-center mb-4">
+<img alt="HP Victus 15 i5" class="max-h-32 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCX08rgFBGFjS68gtW9ZurwjSHs2p5ip9Np0kEoKvWuJNbjg0jmPwyjfv2wPI8-jWQnwawY5DuldMpzNQY4q74dnAKaYVJb2_Nqb9Kxtmz5t-qkLHVj5_tiE_qU848JGt-PaOnoHho8jbSCKR9oyyCh1Z5BCV95afqqJyTRqyVt66qb-5IJQoSeJQ4duUxvMbk_Od2_GPrHMQ2ckN2r-u3K0kO4C-paN1-ZqMMKVgwi"/>
+</div>
+<h3 class="font-bold text-[14px] text-gray-900 leading-snug px-2">
+                  HP Victus 15 i5 16GB 512GB
+                </h3>
+</div>
+</td>
+</tr>
+<!-- Row 2: Bộ xử lý -->
+<tr class="border-b border-gray-200">
+<td class="py-4 px-6 font-bold text-xs text-gray-800 bg-[#F9FAFB]/80 border-r border-gray-200">
+              Bộ xử lý
+            </td>
+<td class="py-4 px-6 text-center text-xs text-gray-700 font-medium border-r border-gray-200">
+              Apple M2
+            </td>
+<td class="py-4 px-6 text-center text-xs text-gray-700 font-medium border-r border-gray-200">
+              Intel Core i5-1335U
+            </td>
+<td class="py-4 px-6 text-center text-xs text-gray-700 font-medium">
+              Intel Core i5-12450H
+            </td>
+</tr>
+<!-- Row 3: RAM -->
+<tr class="border-b border-gray-200">
+<td class="py-4 px-6 font-bold text-xs text-gray-800 bg-[#F9FAFB]/80 border-r border-gray-200">
+              RAM
+            </td>
+<td class="py-4 px-6 text-center text-xs text-gray-700 font-medium border-r border-gray-200">
+              8GB
+            </td>
+<td class="py-4 px-6 text-center text-xs text-gray-700 font-medium border-r border-gray-200">
+              8GB
+            </td>
+<td class="py-4 px-6 text-center text-xs text-gray-700 font-medium">
+              16GB
+            </td>
+</tr>
+<!-- Row 4: Dung lượng lưu trữ -->
+<tr class="border-b border-gray-200">
+<td class="py-4 px-6 font-bold text-xs text-gray-800 bg-[#F9FAFB]/80 border-r border-gray-200">
+              Dung lượng lưu trữ
+            </td>
+<td class="py-4 px-6 text-center text-xs text-gray-700 font-medium border-r border-gray-200">
+              256GB SSD
+            </td>
+<td class="py-4 px-6 text-center text-xs text-gray-700 font-medium border-r border-gray-200">
+              512GB SSD
+            </td>
+<td class="py-4 px-6 text-center text-xs text-gray-700 font-medium">
+              512GB SSD
+            </td>
+</tr>
+<!-- Row 5: Kích thước màn hình -->
+<tr class="border-b border-gray-200">
+<td class="py-4 px-6 font-bold text-xs text-gray-800 bg-[#F9FAFB]/80 border-r border-gray-200">
+              Kích thước màn hình
+            </td>
+<td class="py-4 px-6 text-center text-xs text-gray-700 font-medium border-r border-gray-200">
+              13.6 inch
+            </td>
+<td class="py-4 px-6 text-center text-xs text-gray-700 font-medium border-r border-gray-200">
+              15.6 inch
+            </td>
+<td class="py-4 px-6 text-center text-xs text-gray-700 font-medium">
+              15.6 inch
+            </td>
+</tr>
+<!-- Row 6: Đồ họa -->
+<tr class="border-b border-gray-200">
+<td class="py-4 px-6 font-bold text-xs text-gray-800 bg-[#F9FAFB]/80 border-r border-gray-200">
+              Đồ họa
+            </td>
+<td class="py-4 px-6 text-center text-xs text-gray-700 font-medium border-r border-gray-200">
+              Apple Integrated Graphics
+            </td>
+<td class="py-4 px-6 text-center text-xs text-gray-700 font-medium border-r border-gray-200">
+              Intel Iris Xe Graphics
+            </td>
+<td class="py-4 px-6 text-center text-xs text-gray-700 font-medium">
+              NVIDIA GeForce RTX 3050
+            </td>
+</tr>
+<!-- Row 7: Giá & Hành động -->
+<tr>
+<td class="py-6 px-6 font-bold text-xs text-gray-800 bg-[#F9FAFB]/80 border-r border-gray-200 align-top">
+              Giá
+            </td>
+<!-- Price & Action 1 -->
+<td class="py-6 px-6 text-center border-r border-gray-200">
+<div class="text-[20px] font-extrabold text-brand-orange mb-5 tracking-tight">
+                22.990.000<span class="underline underline-offset-2">đ</span>
+</div>
+<a class="inline-block w-full py-2.5 px-4 bg-brand-orange hover:bg-brand-orangeHover text-white text-xs font-semibold rounded-md transition duration-150 shadow-sm text-center" href="#">
+                Xem chi tiết
+              </a>
+</td>
+<!-- Price & Action 2 -->
+<td class="py-6 px-6 text-center border-r border-gray-200">
+<div class="text-[20px] font-extrabold text-brand-orange mb-5 tracking-tight">
+                17.490.000<span class="underline underline-offset-2">đ</span>
+</div>
+<a class="inline-block w-full py-2.5 px-4 bg-brand-orange hover:bg-brand-orangeHover text-white text-xs font-semibold rounded-md transition duration-150 shadow-sm text-center" href="#">
+                Xem chi tiết
+              </a>
+</td>
+<!-- Price & Action 3 -->
+<td class="py-6 px-6 text-center">
+<div class="text-[20px] font-extrabold text-brand-orange mb-5 tracking-tight">
+                19.990.000<span class="underline underline-offset-2">đ</span>
+</div>
+<a class="inline-block w-full py-2.5 px-4 bg-brand-orange hover:bg-brand-orangeHover text-white text-xs font-semibold rounded-md transition duration-150 shadow-sm text-center" href="#">
+                Xem chi tiết
+              </a>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- END: ComparisonMatrix -->
+</main>
+<!-- END: PageContent -->
+</body></html>

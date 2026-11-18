@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={"darkMode":"class","theme":{"extend":{"colors":{"on-error-container":"#93000a","outline":"#747878","inverse-on-surface":"#f1f1f1","on-secondary-fixed-variant":"#802a00","background":"#f9f9f9","surface-container-low":"#f3f3f3","on-secondary-fixed":"#370e00","on-primary-fixed-variant":"#474746","primary-container":"#1c1b1b","secondary-container":"#cd4800","primary":"#000000","secondary-fixed":"#ffdbce","on-primary":"#ffffff","on-secondary":"#ffffff","surface-container-lowest":"#ffffff","on-secondary-container":"#fffbff","error-container":"#ffdad6","on-tertiary-fixed":"#1b1c1c","inverse-surface":"#2f3131","tertiary-fixed-dim":"#c7c6c6","secondary-fixed-dim":"#ffb59a","on-primary-fixed":"#1c1b1b","surface-container":"#eeeeee","surface-bright":"#f9f9f9","on-background":"#1a1c1c","surface-variant":"#e2e2e2","on-primary-container":"#858383","on-surface":"#1a1c1c","surface":"#f9f9f9","error":"#ba1a1a","on-tertiary":"#ffffff","secondary":"#a33800","inverse-primary":"#c8c6c5","on-tertiary-fixed-variant":"#464747","primary-fixed":"#e5e2e1","on-surface-variant":"#444748","surface-tint":"#5f5e5e","primary-fixed-dim":"#c8c6c5","on-error":"#ffffff","on-tertiary-container":"#848484","tertiary":"#000000","surface-dim":"#dadada","tertiary-fixed":"#e3e2e2","tertiary-container":"#1b1c1c","surface-container-high":"#e8e8e8","surface-container-highest":"#e2e2e2","outline-variant":"#c4c7c7"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-sm":"0.5rem","gutter-mobile":"1rem","space-xl":"2rem","space-lg":"1.5rem","margin-mobile":"1rem","gutter":"1.5rem","margin":"2rem","space-xs":"0.25rem","space-md":"1rem"},"fontFamily":{"body-sm":["Inter"],"technical-code":["JetBrains Mono"],"headline-sm":["Be Vietnam Pro"],"body-lg":["Inter"],"label-md":["Inter"],"headline-lg":["Be Vietnam Pro"],"headline-xl":["Be Vietnam Pro"],"headline-xl-mobile":["Be Vietnam Pro"],"headline-lg-mobile":["Be Vietnam Pro"],"headline-md":["Be Vietnam Pro"],"technical-data":["JetBrains Mono"],"body-md":["Inter"],"label-sm":["Inter"]},"fontSize":{"body-sm":["12px",{"lineHeight":"16px","fontWeight":"400"}],"technical-code":["11px",{"lineHeight":"14px","letterSpacing":"0.04em","fontWeight":"400"}],"headline-sm":["18px",{"lineHeight":"24px","fontWeight":"600"}],"body-lg":["16px",{"lineHeight":"24px","fontWeight":"400"}],"label-md":["14px",{"lineHeight":"20px","fontWeight":"500"}],"headline-lg":["32px",{"lineHeight":"40px","letterSpacing":"-0.015em","fontWeight":"700"}],"headline-xl":["48px",{"lineHeight":"56px","letterSpacing":"-0.02em","fontWeight":"700"}],"headline-xl-mobile":["32px",{"lineHeight":"40px","letterSpacing":"-0.015em","fontWeight":"700"}],"headline-lg-mobile":["24px",{"lineHeight":"32px","letterSpacing":"-0.01em","fontWeight":"700"}],"headline-md":["24px",{"lineHeight":"32px","letterSpacing":"-0.01em","fontWeight":"600"}],"technical-data":["13px",{"lineHeight":"18px","letterSpacing":"0.02em","fontWeight":"500"}],"body-md":["14px",{"lineHeight":"20px","fontWeight":"400"}],"label-sm":["12px",{"lineHeight":"16px","fontWeight":"500"}]}}}};</script></head><body class="bg-background font-body-md text-on-surface antialiased"><header class="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest/95 backdrop-blur-md shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 w-full px-margin flex items-center justify-between gap-space-lg"><div class="flex items-center gap-space-xl"><a class="flex items-center gap-space-xs group" data-path="tong-quan" href="#"><span class="font-headline-md text-headline-md tracking-tight text-primary font-bold">TECHSTORE</span><span class="h-6 w-1.5 bg-secondary-container rounded-full group-hover:scale-y-110 transition-transform"></span><span class="ml-space-xs px-space-xs py-0.5 rounded bg-surface-container-high text-on-surface-variant font-technical-code text-technical-code uppercase tracking-wider">Seller Studio</span></a></div><div class="flex-1 max-w-xl mx-auto hidden md:block"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-3 text-outline text-[20px]">search</span><input class="w-full h-10 pl-10 pr-space-md rounded-lg bg-surface-container-low text-on-surface placeholder:text-outline text-body-md focus:bg-surface-container-lowest focus:outline-none transition-all" placeholder="Tìm kiếm sản phẩm, đơn hàng, mã SKU trên sàn..." type="text"/></div></div><div class="flex items-center gap-space-lg"><nav class="hidden lg:flex items-center gap-space-lg" data-active-classes="text-secondary font-semibold"><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="khuyen-mai" href="#">Khuyến mãi</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="don-hang" href="#">Giỏ hàng</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="quan-ly-cua-hang" href="#">Tài khoản</a></nav><div class="flex items-center gap-space-sm pl-space-sm"><button aria-label="Thông báo" class="w-9 h-9 rounded-lg flex items-center justify-center bg-surface-container-low text-on-surface hover:bg-surface-container transition-colors relative"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-secondary-container"></span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></div></header><aside class="fixed left-0 top-16 bottom-0 w-72 bg-surface-container-lowest z-40 flex flex-col shadow-[0_1px_8px_rgba(0,0,0,0.03)]"><div class="p-space-lg"><div class="flex items-center gap-space-xs"><span class="font-headline-sm text-headline-sm text-primary font-bold">Seller Studio</span><span class="w-2 h-2 rounded-full bg-secondary-container"></span></div><p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Quản lý hoạt động bán hàng của bạn</p></div><nav class="flex-1 px-space-md py-space-xs space-y-1 overflow-y-auto" data-active-classes="bg-secondary-fixed text-on-secondary-fixed font-semibold border-l-4 border-secondary-container shadow-sm"><a aria-current="page" class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg transition-all bg-secondary-fixed text-on-secondary-fixed font-semibold border-l-4 border-secondary-container shadow-sm" data-path="tong-quan" href="#"><span class="material-symbols-outlined text-[20px]">dashboard</span><span class="font-label-md text-label-md">Tổng quan</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="san-pham" href="#"><span class="material-symbols-outlined text-[20px]">inventory_2</span><span class="font-label-md text-label-md">Sản phẩm</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="don-hang" href="#"><span class="material-symbols-outlined text-[20px]">receipt_long</span><span class="font-label-md text-label-md">Đơn hàng</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="khuyen-mai" href="#"><span class="material-symbols-outlined text-[20px]">local_offer</span><span class="font-label-md text-label-md">Khuyến mãi</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="phan-tich" href="#"><span class="material-symbols-outlined text-[20px]">bar_chart</span><span class="font-label-md text-label-md">Phân tích</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="hau-mai" href="#"><span class="material-symbols-outlined text-[20px]">verified_user</span><span class="font-label-md text-label-md">Hậu mãi</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="danh-gia-cua-hang" href="#"><span class="material-symbols-outlined text-[20px]">star</span><span class="font-label-md text-label-md">Đánh giá cửa hàng</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="quan-ly-cua-hang" href="#"><span class="material-symbols-outlined text-[20px]">storefront</span><span class="font-label-md text-label-md">Quản lý cửa hàng</span></a></nav><div class="p-space-md m-space-md rounded-lg bg-surface-container-low"><div class="flex items-center gap-space-sm"><div class="w-9 h-9 rounded-lg bg-primary-container text-on-primary flex items-center justify-center font-technical-data text-technical-data">99%</div><div><p class="font-label-sm text-label-sm text-on-surface font-semibold">Chỉ số vận hành</p><p class="font-technical-code text-technical-code text-outline">Tiêu chuẩn Monolith</p></div></div></div></aside><div class="pl-72"><main class="min-h-screen pt-16 w-full px-space-xl py-space-xl bg-background"><div class="flex flex-col w-full space-y-space-lg">
+<!-- 1. Card chào mừng đầu trang -->
+<section class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex items-center gap-space-lg">
+<div class="w-16 h-16 rounded-full bg-surface-container flex items-center justify-center shrink-0 text-outline">
+<span class="material-symbols-outlined text-[34px]">storefront</span>
+</div>
+<div class="space-y-1">
+<h2 class="font-headline-md text-headline-md text-on-surface font-bold tracking-tight">Xin chào!</h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-3xl leading-relaxed">
+        Chào mừng bạn đến với Seller Studio. Quản lý và phát triển hoạt động bán hàng của bạn trên TECHSTORE một cách dễ dàng.
+      </p>
+</div>
+</section>
+<!-- 2. Hàng 4 thẻ số liệu KPI -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-md">
+<!-- Thẻ 1: Doanh thu -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex items-start gap-space-md hover:bg-surface-bright transition-colors">
+<div class="w-12 h-12 rounded-lg bg-secondary-fixed/40 flex items-center justify-center shrink-0 text-secondary-container">
+<span class="material-symbols-outlined text-[26px]">leaderboard</span>
+</div>
+<div class="space-y-1 flex-1 min-w-0">
+<p class="font-label-md text-label-md text-on-surface-variant">Doanh thu</p>
+<p class="font-headline-sm text-headline-sm text-on-surface font-bold tracking-tight truncate">128.460.000 đ</p>
+<div class="flex items-center gap-1 text-[13px] font-medium text-emerald-600">
+<span class="material-symbols-outlined text-[16px]">arrow_upward</span>
+<span>12% so với kỳ trước</span>
+</div>
+</div>
+</div>
+<!-- Thẻ 2: Đơn hàng mới -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex items-start gap-space-md hover:bg-surface-bright transition-colors">
+<div class="w-12 h-12 rounded-lg bg-secondary-fixed/40 flex items-center justify-center shrink-0 text-secondary-container">
+<span class="material-symbols-outlined text-[26px]">shopping_cart</span>
+</div>
+<div class="space-y-1 flex-1 min-w-0">
+<p class="font-label-md text-label-md text-on-surface-variant">Đơn hàng mới</p>
+<p class="font-headline-sm text-headline-sm text-on-surface font-bold tracking-tight">56</p>
+<div class="flex items-center gap-1 text-[13px] font-medium text-emerald-600">
+<span class="material-symbols-outlined text-[16px]">arrow_upward</span>
+<span>8% so với kỳ trước</span>
+</div>
+</div>
+</div>
+<!-- Thẻ 3: Sản phẩm đang bán -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex items-start gap-space-md hover:bg-surface-bright transition-colors">
+<div class="w-12 h-12 rounded-lg bg-secondary-fixed/40 flex items-center justify-center shrink-0 text-secondary-container">
+<span class="material-symbols-outlined text-[26px]">inventory_2</span>
+</div>
+<div class="space-y-1 flex-1 min-w-0">
+<p class="font-label-md text-label-md text-on-surface-variant">Sản phẩm đang bán</p>
+<p class="font-headline-sm text-headline-sm text-on-surface font-bold tracking-tight">24</p>
+<div class="flex items-center gap-1 text-[13px] font-medium text-emerald-600">
+<span class="material-symbols-outlined text-[16px]">arrow_upward</span>
+<span>3% so với kỳ trước</span>
+</div>
+</div>
+</div>
+<!-- Thẻ 4: Đánh giá cửa hàng -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex items-start gap-space-md hover:bg-surface-bright transition-colors">
+<div class="w-12 h-12 rounded-lg bg-secondary-fixed/40 flex items-center justify-center shrink-0 text-secondary-container">
+<span class="material-symbols-outlined text-[26px]">star</span>
+</div>
+<div class="space-y-1 flex-1 min-w-0">
+<p class="font-label-md text-label-md text-on-surface-variant">Đánh giá cửa hàng</p>
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">4.8</span>
+<div class="flex text-secondary-container text-[16px]">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-outline">Từ 128 đánh giá</p>
+</div>
+</div>
+</section>
+<!-- 3. Biểu đồ Doanh thu theo thời gian -->
+<section class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col space-y-space-md">
+<div class="flex items-center justify-between pb-space-xs">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-bold tracking-tight">Doanh thu theo thời gian</h3>
+<div class="relative">
+<select class="appearance-none bg-surface-container-low text-on-surface font-label-md text-label-md pl-space-md pr-8 py-1.5 rounded-lg focus:outline-none cursor-pointer">
+<option>7 ngày qua</option>
+<option>30 ngày qua</option>
+<option>Quý này</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-2 text-[18px] text-outline pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- Khung Biểu đồ Vector SVG chính xác theo bản vẽ -->
+<div class="w-full h-64 pt-2 relative flex flex-col justify-between">
+<svg class="w-full h-full overflow-visible" preserveaspectratio="none" viewbox="0 0 740 200">
+<defs>
+<lineargradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#cd4800" stop-opacity="0.25"></stop>
+<stop offset="100%" stop-color="#cd4800" stop-opacity="0.0"></stop>
+</lineargradient>
+</defs>
+<!-- Grid Lines -->
+<line stroke="#f1f1f1" stroke-width="1" x1="60" x2="720" y1="20" y2="20"></line>
+<line stroke="#f1f1f1" stroke-width="1" x1="60" x2="720" y1="65" y2="65"></line>
+<line stroke="#f1f1f1" stroke-width="1" x1="60" x2="720" y1="110" y2="110"></line>
+<line stroke="#f1f1f1" stroke-width="1" x1="60" x2="720" y1="155" y2="155"></line>
+<line stroke="#f1f1f1" stroke-width="1" x1="60" x2="720" y1="190" y2="190"></line>
+<!-- Y Axis Labels -->
+<text class="text-[11px] font-technical-code fill-neutral-400" text-anchor="end" x="50" y="24">40.000.000</text>
+<text class="text-[11px] font-technical-code fill-neutral-400" text-anchor="end" x="50" y="69">30.000.000</text>
+<text class="text-[11px] font-technical-code fill-neutral-400" text-anchor="end" x="50" y="114">20.000.000</text>
+<text class="text-[11px] font-technical-code fill-neutral-400" text-anchor="end" x="50" y="159">10.000.000</text>
+<text class="text-[11px] font-technical-code fill-neutral-400" text-anchor="end" x="50" y="193">0</text>
+<!-- Gradient Area Fill -->
+<path d="M 80 150 L 180 140 L 280 145 L 380 120 L 480 148 L 580 130 L 660 120 L 720 90 L 720 190 L 80 190 Z" fill="url(#chartGradient)"></path>
+<!-- Trend Line -->
+<path d="M 80 150 L 180 140 L 280 145 L 380 120 L 480 148 L 580 130 L 660 120 L 720 90" fill="none" stroke="#cd4800" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+<!-- Data Point Circles -->
+<circle class="fill-secondary-container stroke-surface-container-lowest stroke-2 shadow-sm" cx="80" cy="150" r="4.5"></circle>
+<circle class="fill-secondary-container stroke-surface-container-lowest stroke-2 shadow-sm" cx="180" cy="140" r="4.5"></circle>
+<circle class="fill-secondary-container stroke-surface-container-lowest stroke-2 shadow-sm" cx="280" cy="145" r="4.5"></circle>
+<circle class="fill-secondary-container stroke-surface-container-lowest stroke-2 shadow-sm" cx="380" cy="120" r="4.5"></circle>
+<circle class="fill-secondary-container stroke-surface-container-lowest stroke-2 shadow-sm" cx="480" cy="148" r="4.5"></circle>
+<circle class="fill-secondary-container stroke-surface-container-lowest stroke-2 shadow-sm" cx="580" cy="130" r="4.5"></circle>
+<circle class="fill-secondary-container stroke-surface-container-lowest stroke-2 shadow-sm" cx="660" cy="120" r="4.5"></circle>
+<circle class="fill-secondary-container stroke-surface-container-lowest stroke-2 shadow-sm" cx="720" cy="90" r="4.5"></circle>
+</svg>
+<!-- X Axis Days -->
+<div class="flex justify-between pl-14 pr-2 pt-2 text-on-surface-variant font-technical-code text-technical-code">
+<span>Th 2</span>
+<span>Th 3</span>
+<span>Th 4</span>
+<span>Th 5</span>
+<span>Th 6</span>
+<span>Th 7</span>
+<span>CN</span>
+<span>Th 2</span>
+</div>
+</div>
+</section>
+<!-- 4. Bảng Đơn hàng mới nhất -->
+<section class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col space-y-space-md">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-bold tracking-tight">Đơn hàng mới nhất</h3>
+<a class="font-label-md text-label-md text-secondary-container hover:text-secondary font-semibold flex items-center gap-1 transition-colors" href="#">
+        Xem tất cả <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+<!-- Table Container -->
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm">
+<th class="py-3 px-space-md rounded-l-lg">Mã đơn hàng</th>
+<th class="py-3 px-space-md">Sản phẩm</th>
+<th class="py-3 px-space-md">Ngày đặt</th>
+<th class="py-3 px-space-md">Tổng tiền</th>
+<th class="py-3 px-space-md">Trạng thái</th>
+<th class="py-3 px-space-md text-right rounded-r-lg">Thao tác</th>
+</tr>
+</thead>
+<tbody class="divide-y-0 text-on-surface font-body-md text-body-md">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-space-md px-space-md font-technical-data text-technical-data font-semibold text-primary">#DH2504001</td>
+<td class="py-space-md px-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container-low flex items-center justify-center overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="A sleek space-gray ultra-thin office laptop open on a clean modern architectural desk with soft diffuse ambient studio light." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBr2_E7bAkMpRlF1w4RtLZ7sVRMYzr02VwMoX9bSSpA7IJ9a1-VF36zSYCjtfRwMHhh10U6iq--ci4ulj_u0QCvi_ndpZyEWy9SUPrbnAF4k4nRw4I7RRnuRW_ffHmloFC_Oc7PjdyasA9jI80zHXD_wa3gq-D357mN0fCL_cP9GSFavPOmlGXx6nDJCs8jaeqwrr5k3RK--1tf0bPB2ldVKH2vUUbgZUMtv6Tszz0x"/>
+</div>
+<div>
+<p class="font-label-md text-label-md font-medium text-on-surface">Laptop văn phòng</p>
+<p class="font-body-sm text-body-sm text-outline">1 sản phẩm</p>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-md font-technical-data text-technical-data text-on-surface-variant">25/04/2025</td>
+<td class="py-space-md px-space-md font-technical-data text-technical-data font-bold text-on-surface">18.990.000 đ</td>
+<td class="py-space-md px-space-md">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-[12px] font-medium bg-emerald-50 text-emerald-700">
+                Đang xử lý
+              </span>
+</td>
+<td class="py-space-md px-space-md text-right">
+<button class="px-space-md py-1.5 rounded-lg text-secondary-container hover:bg-secondary-fixed/30 font-label-md text-label-md font-medium transition-colors shadow-[inset_0_0_0_1px_rgba(205,72,0,0.4)]">
+                Xem chi tiết
+              </button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-space-md px-space-md font-technical-data text-technical-data font-semibold text-primary">#DH2504002</td>
+<td class="py-space-md px-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container-low flex items-center justify-center overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="Minimalist wireless true wireless earbuds in white charging case on solid light gray backdrop with smooth geometric soft shadow." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5ObhshymEneF1uaIt9uFG2wozYGEL7ujxKfoolj-10U9yeiXfhh9GOzDtSDqKDrIedzushPa6e4gD-tqC1yV7Uv2_2E_r-1dlEaJzoSC1uLVgy5zyM7hI6kTVcMJt1Ft5v60YuRVMzvpVfcVretFx8OpPpAf8jXufAkd6n1azQ73rCZmSWSwXqCgkcvDB58JVAH7hirnifW1iGUaBieHOIh7asK8TB0okyoUF3_Ux"/>
+</div>
+<div>
+<p class="font-label-md text-label-md font-medium text-on-surface">Tai nghe không dây</p>
+<p class="font-body-sm text-body-sm text-outline">2 sản phẩm</p>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-md font-technical-data text-technical-data text-on-surface-variant">24/04/2025</td>
+<td class="py-space-md px-space-md font-technical-data text-technical-data font-bold text-on-surface">2.580.000 đ</td>
+<td class="py-space-md px-space-md">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-[12px] font-medium bg-blue-50 text-blue-700">
+                Đã xác nhận
+              </span>
+</td>
+<td class="py-space-md px-space-md text-right">
+<button class="px-space-md py-1.5 rounded-lg text-secondary-container hover:bg-secondary-fixed/30 font-label-md text-label-md font-medium transition-colors shadow-[inset_0_0_0_1px_rgba(205,72,0,0.4)]">
+                Xem chi tiết
+              </button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-space-md px-space-md font-technical-data text-technical-data font-semibold text-primary">#DH2504003</td>
+<td class="py-space-md px-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container-low flex items-center justify-center overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="Modern black smart watch with sport silicone band positioned symmetrically on neutral textured background studio product shot." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNdIz8HpOh2G_ymf_ITEcgUmUockj435rCV_32KEl3edUxzuY5jIN7isxntQdqFbua2UjdORAczrxiFcNJv7LFDcMXWY9ya5VGKovMLWZqcNmv0b_MgCn5rDoO2e2aH-EA_CyC9esULktSHb_lKtCZlNnzQJv6qlBUX_mZvSi4p_x9NWoFnrRY_rPaF9UdopcfLTTF_yngYfwZdDq_vmx_CWiHitAJ74mdi9wjrZhH"/>
+</div>
+<div>
+<p class="font-label-md text-label-md font-medium text-on-surface">Đồng hồ thông minh</p>
+<p class="font-body-sm text-body-sm text-outline">1 sản phẩm</p>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-md font-technical-data text-technical-data text-on-surface-variant">24/04/2025</td>
+<td class="py-space-md px-space-md font-technical-data text-technical-data font-bold text-on-surface">4.990.000 đ</td>
+<td class="py-space-md px-space-md">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-[12px] font-medium bg-amber-50 text-amber-700">
+                Đang giao hàng
+              </span>
+</td>
+<td class="py-space-md px-space-md text-right">
+<button class="px-space-md py-1.5 rounded-lg text-secondary-container hover:bg-secondary-fixed/30 font-label-md text-label-md font-medium transition-colors shadow-[inset_0_0_0_1px_rgba(205,72,0,0.4)]">
+                Xem chi tiết
+              </button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-space-md px-space-md font-technical-data text-technical-data font-semibold text-primary">#DH2504004</td>
+<td class="py-space-md px-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container-low flex items-center justify-center overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="High-end smartphone with dark titanium frame and matte finish back casing displayed on an industrial pedestal." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhtwvulP0oL3631-DrHo5uy67aBkDCysDMu7doAmWMPthUISaipaHd4FibdAS8dtyaHbeRvXBgERbQiTxeSyL9WZ-yLUtfaAtzKJnnTV_CY7OkbjjeN6ODRTBo2w1SlNMlTec2QtN2AtIKs60W7MRPHMOdbikf0BfGBfItEc-_PkfZV7AXcVr0_2UX9_C-VtNTnJ6oL1Wn5I51ZFbgexkRPEjUg_zFeATA9_7371ui"/>
+</div>
+<div>
+<p class="font-label-md text-label-md font-medium text-on-surface">Điện thoại thông minh</p>
+<p class="font-body-sm text-body-sm text-outline">1 sản phẩm</p>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-md font-technical-data text-technical-data text-on-surface-variant">23/04/2025</td>
+<td class="py-space-md px-space-md font-technical-data text-technical-data font-bold text-on-surface">12.490.000 đ</td>
+<td class="py-space-md px-space-md">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-[12px] font-medium bg-surface-container-high text-on-surface-variant">
+                Đã giao hàng
+              </span>
+</td>
+<td class="py-space-md px-space-md text-right">
+<button class="px-space-md py-1.5 rounded-lg text-secondary-container hover:bg-secondary-fixed/30 font-label-md text-label-md font-medium transition-colors shadow-[inset_0_0_0_1px_rgba(205,72,0,0.4)]">
+                Xem chi tiết
+              </button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</div></main></div></body></html>

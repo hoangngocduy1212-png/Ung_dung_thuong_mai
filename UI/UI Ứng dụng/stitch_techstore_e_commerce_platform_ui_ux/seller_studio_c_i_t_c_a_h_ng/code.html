@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Seller Studio — Cài đặt cửa hàng | TECHSTORE</title>
+<!-- Google Fonts: Be Vietnam Pro -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome 6 for exact iconography -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Tailwind CSS v3 with forms and container-queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Be Vietnam Pro"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              DEFAULT: '#FF5722',
+              50: '#FFF5F1',
+              100: '#FFE8DF',
+              500: '#FF5722',
+              600: '#F4511E',
+              orange: '#EA580C',
+            },
+            status: {
+              activeBg: '#DCFCE7',
+              activeText: '#15803D',
+              roleOwnerBg: '#E0F2FE',
+              roleOwnerText: '#0369A1',
+              roleStaffBg: '#F3F4F6',
+              roleStaffText: '#4B5563',
+            }
+          }
+        }
+      }
+    }
+  </script>
+<!-- BEGIN: Custom Global Styles -->
+<style data-purpose="typography">
+    body {
+      font-family: 'Be Vietnam Pro', sans-serif;
+      background-color: #F8F9FA;
+      color: #1F2937;
+    }
+  </style>
+<style data-purpose="components">
+    .custom-scroll::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: #E5E7EB;
+      border-radius: 4px;
+    }
+  </style>
+<!-- END: Custom Global Styles -->
+</head>
+<body class="min-h-screen flex flex-col antialiased">
+<!-- BEGIN: MainHeader -->
+<header class="bg-white border-b border-gray-100 sticky top-0 z-50">
+<div class="max-w-[1720px] mx-auto px-6 py-3 flex items-center justify-between gap-6">
+<!-- Brand Logo -->
+<div class="flex items-center gap-8 shrink-0">
+<a class="flex flex-col" href="#">
+<span class="text-2xl font-black tracking-tight text-black leading-tight uppercase font-sans">TECHSTORE</span>
+<span class="text-sm font-semibold text-orange-600 -mt-0.5">Tất cả danh mục</span>
+</a>
+</div>
+<!-- Quick Categories & Search Bar -->
+<div class="flex-1 flex items-center justify-center max-w-4xl gap-6">
+<!-- Search Input -->
+<div class="relative w-full">
+<span class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none text-gray-400">
+<i class="fa-solid fa-magnifying-glass text-sm"></i>
+</span>
+<input class="w-full bg-[#EEF2F6] hover:bg-[#E5EAEF] focus:bg-white text-gray-800 placeholder-gray-400 text-sm rounded-full py-2.5 pl-11 pr-5 border-none outline-none transition-all focus:ring-2 focus:ring-orange-500/20" placeholder="Tìm kiếm sản phẩm, thương hiệu, danh mục..." type="text"/>
+</div>
+</div>
+<!-- Navigation & Action Links -->
+<div class="flex items-center gap-6 shrink-0 text-sm">
+<a class="text-gray-700 hover:text-orange-600 font-medium flex items-center gap-1.5 transition-colors" href="#">
+<i class="fa-regular fa-circle-user text-lg"></i>
+<span>Tài khoản</span>
+</a>
+<a class="text-gray-700 hover:text-orange-600 font-medium flex items-center gap-1.5 transition-colors" href="#">
+<div class="relative">
+<i class="fa-solid fa-cart-shopping text-lg"></i>
+<span class="absolute -top-1.5 -right-2 bg-orange-600 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">0</span>
+</div>
+<span>Giỏ hàng</span>
+</a>
+<a class="text-orange-600 font-semibold hover:text-orange-700 transition-colors ml-1" href="#">
+          Khuyến mãi
+        </a>
+</div>
+</div>
+<!-- Category Sub-bar -->
+<div class="border-t border-gray-100/80 bg-white">
+<div class="max-w-[1720px] mx-auto px-6 py-2 flex items-center gap-8 overflow-x-auto custom-scroll text-[13px] font-medium text-gray-700">
+<a class="text-black font-semibold hover:text-orange-600" href="#">Laptop</a>
+<a class="hover:text-orange-600" href="#">Điện thoại</a>
+<a class="hover:text-orange-600" href="#">Máy tính bảng</a>
+<a class="hover:text-orange-600" href="#">Âm thanh</a>
+<a class="hover:text-orange-600" href="#">Thiết bị đeo</a>
+<a class="hover:text-orange-600" href="#">Phụ kiện</a>
+<a class="hover:text-orange-600" href="#">Thiết bị thông minh</a>
+<a class="hover:text-orange-600" href="#">Nhà thông minh</a>
+</div>
+</div>
+</header>
+<!-- END: MainHeader -->
+<!-- BEGIN: MainContentWrapper -->
+<div class="flex-1 flex max-w-[1720px] w-full mx-auto px-6 py-8 gap-8 items-start">
+<!-- BEGIN: LeftSidebar -->
+<aside class="w-64 shrink-0 flex flex-col gap-6" data-purpose="seller-navigation">
+<!-- Studio Header -->
+<div class="px-2">
+<h2 class="text-2xl font-bold text-gray-900 tracking-tight">Seller Studio</h2>
+<p class="text-xs text-gray-500 mt-1">Quản lý hoạt động bán hàng của bạn</p>
+</div>
+<!-- Navigation Menu Card -->
+<nav class="bg-white rounded-xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] border border-gray-100 overflow-hidden p-2 flex flex-col gap-1">
+<!-- Tổng quan -->
+<a class="flex items-center gap-3.5 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-50 font-medium text-sm transition-colors" href="#">
+<i class="fa-solid fa-house text-gray-600 w-4 text-center"></i>
+<span>Tổng quan</span>
+</a>
+<!-- Sản phẩm -->
+<a class="flex items-center gap-3.5 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-50 font-medium text-sm transition-colors" href="#">
+<i class="fa-solid fa-cube text-gray-600 w-4 text-center"></i>
+<span>Sản phẩm</span>
+</a>
+<!-- Đơn hàng -->
+<a class="flex items-center gap-3.5 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-50 font-medium text-sm transition-colors" href="#">
+<i class="fa-regular fa-file-lines text-gray-600 w-4 text-center"></i>
+<span>Đơn hàng</span>
+</a>
+<!-- Khuyến mãi -->
+<a class="flex items-center gap-3.5 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-50 font-medium text-sm transition-colors" href="#">
+<i class="fa-solid fa-tag text-gray-600 w-4 text-center"></i>
+<span>Khuyến mãi</span>
+</a>
+<!-- Phân tích -->
+<a class="flex items-center gap-3.5 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-50 font-medium text-sm transition-colors" href="#">
+<i class="fa-solid fa-chart-simple text-gray-600 w-4 text-center"></i>
+<span>Phân tích</span>
+</a>
+<!-- Quản lý cửa hàng (Active Item) -->
+<a class="flex items-center gap-3.5 px-4 py-3 rounded-lg bg-[#FFF2EB] text-[#FF5722] font-semibold text-sm transition-colors" href="#">
+<i class="fa-solid fa-store text-[#FF5722] w-4 text-center"></i>
+<span>Quản lý cửa hàng</span>
+</a>
+</nav>
+</aside>
+<!-- END: LeftSidebar -->
+<!-- BEGIN: DashboardBody -->
+<main class="flex-1 min-w-0" data-purpose="settings-view">
+<!-- View Heading -->
+<div class="mb-7">
+<h1 class="text-2xl font-bold text-gray-900 tracking-tight">Quản lý cửa hàng</h1>
+<p class="text-sm text-gray-500 mt-1">Cập nhật thông tin cửa hàng và quản lý thành viên.</p>
+</div>
+<!-- Top Row: Store Info & Cover Photo Cards -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch mb-6">
+<!-- Left Card: Thông tin cửa hàng -->
+<div class="lg:col-span-7 bg-white rounded-xl border border-gray-100 shadow-[0_2px_12px_rgba(0,0,0,0.03)] p-6 flex flex-col justify-between" data-purpose="store-general-info">
+<div>
+<!-- Header with Edit Action -->
+<div class="flex items-center justify-between pb-5 border-b border-gray-100">
+<h2 class="text-lg font-bold text-gray-900">Thông tin cửa hàng</h2>
+<button class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#FF5722] text-[#FF5722] hover:bg-orange-50 text-xs font-semibold transition-colors">
+<i class="fa-solid fa-pen text-[11px]"></i>
+<span>Chỉnh sửa</span>
+</button>
+</div>
+<!-- Store Details Body -->
+<div class="flex items-start gap-5 py-6">
+<!-- Store Icon Container -->
+<div class="w-24 h-24 rounded-2xl bg-[#FFF6F2] border border-orange-100 flex items-center justify-center shrink-0">
+<svg class="w-14 h-14 text-[#FF5722]" fill="currentColor" viewbox="0 0 24 24">
+<path d="M19 4H5a2 2 0 00-2 2v2a3 3 0 003 3v8a2 2 0 002 2h8a2 2 0 002-2v-8a3 3 0 003-3V6a2 2 0 00-2-2zm-9 15H8v-5h2v5zm4 0h-2v-5h2v5zm4 0h-2v-5h2v5zM5 8V6h14v2a1 1 0 01-1 1h-2a1 1 0 01-1-1 1 1 0 01-2 0 1 1 0 01-1 1H8a1 1 0 01-1-1 1 1 0 01-2 0 1 1 0 01-1 1 1 1 0 01-1-1z"></path>
+</svg>
+</div>
+<!-- Store Name & Description -->
+<div class="flex-1">
+<span class="text-xs text-gray-400 block mb-1">Tên cửa hàng</span>
+<h3 class="text-xl font-bold text-gray-900 leading-snug tracking-tight">TECHSTORE Official</h3>
+<div class="mt-3">
+<span class="text-xs text-gray-400 block mb-1">Mô tả cửa hàng</span>
+<p class="text-xs text-gray-600 leading-relaxed">
+                    Cửa hàng chính hãng của TECHSTORE trên sàn thương mại điện tử. Cung cấp các sản phẩm công nghệ chính hãng, chất lượng và dịch vụ chăm sóc khách hàng tận tâm.
+                  </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Store Meta Footer Status Indicators -->
+<div class="pt-5 border-t border-gray-100 grid grid-cols-3 gap-4 text-xs">
+<div>
+<span class="text-gray-400 block mb-2 font-normal">Trạng thái cửa hàng</span>
+<span class="inline-flex items-center px-2.5 py-1 rounded bg-[#EAFBF1] text-[#22C55E] font-medium text-xs">
+                Đang hoạt động
+              </span>
+</div>
+<div>
+<span class="text-gray-400 block mb-2 font-normal">Ngày tạo</span>
+<span class="text-gray-900 font-bold text-sm block">24/04/2025</span>
+</div>
+<div>
+<span class="text-gray-400 block mb-2 font-normal">Quyền truy cập của bạn</span>
+<span class="inline-flex items-center px-2.5 py-1 rounded bg-[#EDF5FD] text-[#3B82F6] font-medium text-xs">
+                Chủ cửa hàng
+              </span>
+</div>
+</div>
+</div>
+<!-- Right Card: Ảnh bìa cửa hàng -->
+<div class="lg:col-span-5 bg-white rounded-xl border border-gray-100 shadow-[0_2px_12px_rgba(0,0,0,0.03)] p-6 flex flex-col justify-between" data-purpose="store-banner-cover">
+<div>
+<h2 class="text-lg font-bold text-gray-900 pb-5 border-b border-gray-100">Ảnh bìa cửa hàng</h2>
+<!-- Banner Image Preview -->
+<div class="mt-5 relative w-full h-44 rounded-xl overflow-hidden bg-gray-100 group">
+<img alt="Banner ảnh bìa cửa hàng hiển thị laptop, headphone, smartphone" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSNvUkOW6_vnc0gaYv_i7IV2HzLYzR8kUnq6bRIO1S5wPLVLvZ7gYOTRDXQ7uyF-CzjrqCe4OyMtF-rTurJLdwK3Iup2sX7oLYOg_ySGJazkNLiwKGX2lnAWUlXzB71gDu_0BTl_Pmw-6TxFB8Er5rR4wvxr119rfd2KIeEBcPAD-XFVj65b3AMbC2tlhRqyP3z8yhp-78nmY7AMJRNONmEdO2oQ_ih-NTwLXhbeiw"/>
+</div>
+</div>
+<!-- Banner Update Trigger & Hint -->
+<div class="mt-4 flex flex-col items-center">
+<button class="w-full py-2.5 rounded-lg bg-[#F3F6FA] hover:bg-gray-200/80 text-gray-700 font-medium text-xs flex items-center justify-center gap-2 transition-colors">
+<i class="fa-regular fa-image text-gray-500"></i>
+<span>Cập nhật ảnh bìa</span>
+</button>
+<p class="text-[11px] text-gray-400 mt-2.5 text-center">
+              Định dạng JPG, PNG. Kích thước đề xuất 1200 x 400 px.
+            </p>
+</div>
+</div>
+</div>
+<!-- Bottom Card: Thành viên cửa hàng -->
+<section class="bg-white rounded-xl border border-gray-100 shadow-[0_2px_12px_rgba(0,0,0,0.03)] p-6" data-purpose="store-member-management">
+<!-- Members Header -->
+<div class="flex items-center justify-between mb-6">
+<div>
+<h2 class="text-lg font-bold text-gray-900">Thành viên cửa hàng</h2>
+<p class="text-xs text-gray-500 mt-0.5">Quản lý thành viên và quyền truy cập của họ.</p>
+</div>
+<button class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-[#FF5722] text-[#FF5722] hover:bg-orange-50 font-semibold text-xs transition-colors">
+<i class="fa-solid fa-plus text-xs"></i>
+<span>Thêm thành viên</span>
+</button>
+</div>
+<!-- Members Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-[#F8FAFC] text-[11px] font-semibold text-gray-400 uppercase tracking-wider">
+<th class="py-3 px-4 rounded-l-md w-12 text-center">Họ</th>
+<th class="py-3 px-4">Họ và tên</th>
+<th class="py-3 px-4">Vai trò</th>
+<th class="py-3 px-4">Trạng thái</th>
+<th class="py-3 px-4">Ngày tham gia</th>
+<th class="py-3 px-4 rounded-r-md text-right w-36">Thao tác</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-100 text-xs font-normal">
+<!-- Member Row 1: Nguyễn Văn An -->
+<tr class="hover:bg-gray-50/60 transition-colors">
+<!-- Avatar Column -->
+<td class="py-4 px-4 text-center">
+<div class="w-9 h-9 rounded-full bg-[#E2E8F0] text-gray-400 flex items-center justify-center mx-auto overflow-hidden">
+<i class="fa-solid fa-user text-base mt-1"></i>
+</div>
+</td>
+<!-- Full Name Column -->
+<td class="py-4 px-4 font-semibold text-gray-900">
+                  Nguyễn Văn An
+                </td>
+<!-- Role Column -->
+<td class="py-4 px-4">
+<span class="inline-flex items-center px-2.5 py-1 rounded bg-[#EAF2FF] text-[#2563EB] font-medium text-xs">
+                    Chủ cửa hàng
+                  </span>
+</td>
+<!-- Status Column -->
+<td class="py-4 px-4">
+<span class="inline-flex items-center px-2.5 py-1 rounded bg-[#EAFBF1] text-[#22C55E] font-medium text-xs">
+                    Đang hoạt động
+                  </span>
+</td>
+<!-- Joined Date Column -->
+<td class="py-4 px-4 text-gray-600">
+                  24/04/2025
+                </td>
+<!-- Action Column -->
+<td class="py-4 px-4 text-right">
+<!-- Empty for store owner as per mockup -->
+</td>
+</tr>
+<!-- Member Row 2: Trần Thị Mai -->
+<tr class="hover:bg-gray-50/60 transition-colors">
+<!-- Avatar Column -->
+<td class="py-4 px-4 text-center">
+<div class="w-9 h-9 rounded-full bg-[#E2E8F0] text-gray-400 flex items-center justify-center mx-auto overflow-hidden">
+<i class="fa-solid fa-user text-base mt-1"></i>
+</div>
+</td>
+<!-- Full Name Column -->
+<td class="py-4 px-4 font-semibold text-gray-900">
+                  Trần Thị Mai
+                </td>
+<!-- Role Column -->
+<td class="py-4 px-4">
+<span class="inline-flex items-center px-2.5 py-1 rounded bg-[#F1F5F9] text-gray-600 font-medium text-xs">
+                    Nhân viên
+                  </span>
+</td>
+<!-- Status Column -->
+<td class="py-4 px-4">
+<span class="inline-flex items-center px-2.5 py-1 rounded bg-[#EAFBF1] text-[#22C55E] font-medium text-xs">
+                    Đang hoạt động
+                  </span>
+</td>
+<!-- Joined Date Column -->
+<td class="py-4 px-4 text-gray-600">
+                  25/04/2025
+                </td>
+<!-- Action Column -->
+<td class="py-4 px-4 text-right">
+<button class="inline-flex items-center justify-center px-4 py-1.5 rounded-lg border border-[#FF5722] text-[#FF5722] hover:bg-orange-50 font-medium text-xs transition-colors">
+                    Chỉnh sửa
+                  </button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</main>
+<!-- END: DashboardBody -->
+</div>
+<!-- END: MainContentWrapper -->
+</body></html>

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Theo dõi đơn hàng - TECHSTORE</title>
+<!-- Tailwind CSS v3 CDN with plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts: Inter -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              orange: '#f95700',
+              orangeHover: '#e04e00',
+            }
+          }
+        }
+      }
+    }
+  </script>
+<style data-purpose="custom-layout">
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f7f9fa;
+      color: #1f2937;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased">
+<!-- BEGIN: MainHeader -->
+<header class="bg-white border-b border-gray-100 sticky top-0 z-50">
+<div class="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8">
+<!-- Top Bar: Logo, Search, User, Cart -->
+<div class="flex items-center justify-between h-20 gap-8">
+<!-- Logo -->
+<a class="flex-shrink-0 flex items-center tracking-tight" data-purpose="brand-logo" href="#">
+<span class="text-2xl font-black text-black tracking-wider uppercase">TECH<span class="text-brand-orange">STORE</span></span>
+</a>
+<!-- Search Bar -->
+<div class="flex-1 max-w-2xl hidden md:block">
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+</svg>
+</div>
+<input class="w-full pl-11 pr-5 py-2.5 bg-gray-100 hover:bg-gray-100/80 focus:bg-white text-sm text-gray-800 placeholder-gray-400 rounded-full border-none focus:ring-2 focus:ring-brand-orange transition-all duration-150 outline-none" placeholder="Tìm kiếm sản phẩm, thương hiệu, danh mục..." type="text"/>
+</div>
+</div>
+<!-- Account & Cart Actions -->
+<div class="flex items-center space-x-6">
+<!-- Account Button -->
+<a class="flex items-center text-sm font-semibold text-gray-800 hover:text-brand-orange transition-colors" href="#">
+<svg class="w-5 h-5 mr-1.5 text-gray-700" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Tài khoản</span>
+</a>
+<!-- Cart Button -->
+<a class="flex items-center text-sm font-semibold text-gray-800 hover:text-brand-orange transition-colors relative" href="#">
+<div class="relative mr-1.5">
+<svg class="w-5 h-5 text-gray-800" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="absolute -top-2 -right-2 bg-brand-orange text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">1</span>
+</div>
+<span>Giỏ hàng</span>
+</a>
+</div>
+</div>
+<!-- Main Navigation Menu -->
+<nav class="flex items-center justify-between text-[13px] font-medium text-gray-700 pb-3 pt-1 border-t border-gray-100 overflow-x-auto whitespace-nowrap">
+<div class="flex items-center space-x-7">
+<a class="text-brand-orange font-bold flex items-center hover:opacity-85" href="#">
+<svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+</svg>
+            Tất cả danh mục
+          </a>
+<a class="hover:text-brand-orange transition-colors" href="#">Laptop</a>
+<a class="hover:text-brand-orange transition-colors" href="#">Điện thoại</a>
+<a class="hover:text-brand-orange transition-colors" href="#">Máy tính bảng</a>
+<a class="hover:text-brand-orange transition-colors" href="#">Âm thanh</a>
+<a class="hover:text-brand-orange transition-colors" href="#">Thiết bị đeo</a>
+<a class="hover:text-brand-orange transition-colors" href="#">Phụ kiện</a>
+<a class="hover:text-brand-orange transition-colors" href="#">Thiết bị thông minh</a>
+<a class="hover:text-brand-orange transition-colors" href="#">Nhà thông minh</a>
+</div>
+<a class="text-brand-orange font-bold hover:underline ml-4" href="#">Khuyến mãi</a>
+</nav>
+</div>
+</header>
+<!-- END: MainHeader -->
+<!-- BEGIN: MainContent -->
+<main class="flex-grow py-8">
+<div class="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+<!-- Page Title Section -->
+<section data-purpose="page-title">
+<h1 class="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">Theo dõi đơn hàng</h1>
+<p class="text-gray-500 text-sm mt-1">Nhập mã đơn hàng để xem trạng thái và thông tin chi tiết</p>
+</section>
+<!-- Order Lookup Input Card -->
+<section class="bg-[#f0f2f5] rounded-xl p-4 sm:p-5 border border-gray-200" data-purpose="lookup-bar">
+<form class="flex flex-col sm:flex-row items-center gap-4" onsubmit="event.preventDefault();">
+<label class="text-sm font-bold text-gray-900 whitespace-nowrap min-w-[100px]" for="order-code-input">
+            Mã đơn hàng
+          </label>
+<div class="relative flex-1 w-full">
+<input class="w-full bg-white text-gray-800 placeholder-gray-400 text-sm rounded-lg border border-gray-300 focus:border-brand-orange focus:ring-1 focus:ring-brand-orange px-4 py-2.5 outline-none shadow-sm" id="order-code-input" name="orderCode" placeholder="Nhập mã đơn hàng của bạn" type="text" value="#DH20250428-8924"/>
+</div>
+<button class="w-full sm:w-auto px-8 py-2.5 bg-brand-orange hover:bg-brand-orangeHover text-white text-sm font-semibold rounded-lg shadow-sm transition-all duration-150 focus:ring-2 focus:ring-offset-2 focus:ring-brand-orange whitespace-nowrap" type="submit">
+            Tra cứu
+          </button>
+</form>
+</section>
+<!-- Order Tracking Stepper Timeline -->
+<section class="bg-white rounded-xl border border-gray-200 p-6 sm:p-8 shadow-sm" data-purpose="order-status-card">
+<h2 class="text-base font-bold text-gray-900 mb-8 sm:mb-12">Trạng thái đơn hàng</h2>
+<!-- Stepper Component -->
+<div class="relative px-2 sm:px-6">
+<!-- Connecting Horizontal Line Behind Icons -->
+<div aria-hidden="true" class="absolute top-6 left-12 right-12 h-[3px] bg-gray-200 -z-0 hidden md:block">
+<!-- Progress Fill to Step 2/3 -->
+<div class="h-full bg-emerald-500 w-1/3 transition-all duration-500"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6 sm:gap-2 relative z-10">
+<!-- Step 1: Đã đặt hàng -->
+<div class="flex flex-col items-center text-center group" data-purpose="stepper-item-1">
+<div class="w-12 h-12 rounded-full bg-emerald-100 border-2 border-emerald-500 text-emerald-600 flex items-center justify-center shadow-sm">
+<!-- Clipboard Icon -->
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<h3 class="text-sm font-bold text-gray-900 mt-3.5 mb-1">Đã đặt hàng</h3>
+<p class="text-xs text-gray-500 leading-relaxed max-w-[150px]">Đơn hàng của bạn đã được ghi nhận</p>
+</div>
+<!-- Step 2: Đang xử lý -->
+<div class="flex flex-col items-center text-center group" data-purpose="stepper-item-2">
+<div class="w-12 h-12 rounded-full bg-emerald-50 border-2 border-emerald-500 text-emerald-600 flex items-center justify-center shadow-sm">
+<!-- Cog / Setting Icon -->
+<svg class="w-6 h-6 animate-[spin_6s_linear_infinite]" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<h3 class="text-sm font-bold text-gray-900 mt-3.5 mb-1">Đang xử lý</h3>
+<p class="text-xs text-gray-500 leading-relaxed max-w-[150px]">Đơn hàng đang được chuẩn bị</p>
+</div>
+<!-- Step 3: Đang giao hàng -->
+<div class="flex flex-col items-center text-center group" data-purpose="stepper-item-3">
+<div class="w-12 h-12 rounded-full bg-gray-100 border border-gray-300 text-gray-400 flex items-center justify-center">
+<!-- Delivery Truck Icon -->
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<path d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<h3 class="text-sm font-bold text-gray-500 mt-3.5 mb-1">Đang giao hàng</h3>
+<p class="text-xs text-gray-400 leading-relaxed max-w-[150px]">Đơn hàng đang được vận chuyển</p>
+</div>
+<!-- Step 4: Đã giao hàng -->
+<div class="flex flex-col items-center text-center group" data-purpose="stepper-item-4">
+<div class="w-12 h-12 rounded-full bg-gray-100 border border-gray-300 text-gray-400 flex items-center justify-center">
+<!-- Checkmark Icon -->
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+</svg>
+</div>
+<h3 class="text-sm font-bold text-gray-500 mt-3.5 mb-1">Đã giao hàng</h3>
+<p class="text-xs text-gray-400 leading-relaxed max-w-[150px]">Đơn hàng đã được giao thành công</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Details Grid: Shipping Info (Left) & Order Summary (Right) -->
+<section class="grid grid-cols-1 lg:grid-cols-2 gap-6" data-purpose="details-two-columns">
+<!-- Column Left: Shipping Info -->
+<div class="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm flex flex-col">
+<div class="bg-gray-50/80 px-6 py-4 border-b border-gray-200">
+<h2 class="text-base font-bold text-gray-900">Thông tin giao hàng</h2>
+</div>
+<div class="p-6 flex-1 text-sm">
+<dl class="space-y-4 text-gray-600">
+<div class="grid grid-cols-12 items-baseline">
+<dt class="col-span-4 font-normal text-gray-500">Người nhận</dt>
+<dd class="col-span-8 font-medium text-gray-900 flex">
+<span class="mr-2 text-gray-400">:</span>
+<span>Nguyễn Văn An</span>
+</dd>
+</div>
+<div class="grid grid-cols-12 items-baseline">
+<dt class="col-span-4 font-normal text-gray-500">Số điện thoại</dt>
+<dd class="col-span-8 font-medium text-gray-900 flex">
+<span class="mr-2 text-gray-400">:</span>
+<span>0123 456 789</span>
+</dd>
+</div>
+<div class="grid grid-cols-12 items-baseline">
+<dt class="col-span-4 font-normal text-gray-500">Địa chỉ giao hàng</dt>
+<dd class="col-span-8 font-medium text-gray-900 flex">
+<span class="mr-2 text-gray-400">:</span>
+<span>Số 12, Đường Lê Lợi, Phường Bến Nghé, Quận 1, TP. Hồ Chí Minh</span>
+</dd>
+</div>
+<div class="grid grid-cols-12 items-baseline">
+<dt class="col-span-4 font-normal text-gray-500">Đơn vị vận chuyển</dt>
+<dd class="col-span-8 font-medium text-gray-900 flex">
+<span class="mr-2 text-gray-400">:</span>
+<span>Giao Hàng Nhanh (GHN Express)</span>
+</dd>
+</div>
+<div class="grid grid-cols-12 items-baseline">
+<dt class="col-span-4 font-normal text-gray-500">Dự kiến giao hàng</dt>
+<dd class="col-span-8 font-semibold text-emerald-600 flex">
+<span class="mr-2 text-gray-400 font-normal">:</span>
+<span>28/04/2025 - 30/04/2025</span>
+</dd>
+</div>
+</dl>
+</div>
+</div>
+<!-- Column Right: Product Summary -->
+<div class="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm flex flex-col">
+<div class="bg-gray-50/80 px-6 py-4 border-b border-gray-200">
+<h2 class="text-base font-bold text-gray-900">Tóm tắt sản phẩm</h2>
+</div>
+<div class="p-0 flex-1 overflow-x-auto">
+<table class="w-full text-left text-sm">
+<thead class="bg-gray-50/50 text-gray-500 text-xs font-semibold uppercase tracking-wider border-b border-gray-200">
+<tr>
+<th class="py-3.5 px-6" scope="col">Sản phẩm</th>
+<th class="py-3.5 px-4 text-right" scope="col">Đơn giá</th>
+<th class="py-3.5 px-6 text-center" scope="col">Số lượng</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-100">
+<!-- Item 1: Laptop -->
+<tr class="hover:bg-gray-50/50 transition-colors">
+<td class="py-4 px-6 flex items-center space-x-3.5">
+<div class="w-14 h-14 bg-gray-100 rounded-lg p-1.5 flex items-center justify-center border border-gray-200 shrink-0">
+<img alt="Laptop Dell Inspiron 15" class="max-h-full max-w-full object-contain mix-blend-multiply" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDL2PZUJLRvSLoOcdkay3e3FrjSclvoCJnayRBM6AL0peaJFoVSMsVu9L1AgaP-f_9Xlwmq8FF0NsVgrXh-hqjamdoTNkIHby1wp03yUxRwP_8UnG8cGeQJ_MVKLDjUYur14uXkpBw8HB19sVmSXdutPlsCOG77cyN2gqyh_xR4W4mNqfiAcI72hjZJUU4ZFcHVIt7aiMIVPesO_Pn8aQ5RUeX9ZXy2yy0kP_Ou4FJl"/>
+</div>
+<div>
+<p class="font-semibold text-gray-900 line-clamp-1">Laptop Dell Inspiron 15 3530</p>
+<span class="text-xs text-gray-400">Màu Bạc | Core i5 | 16GB</span>
+</div>
+</td>
+<td class="py-4 px-4 text-right font-medium text-gray-800 whitespace-nowrap">
+                    17.490.000₫
+                  </td>
+<td class="py-4 px-6 text-center font-medium text-gray-600 whitespace-nowrap">
+                    1
+                  </td>
+</tr>
+<!-- Item 2: Headphones -->
+<tr class="hover:bg-gray-50/50 transition-colors">
+<td class="py-4 px-6 flex items-center space-x-3.5">
+<div class="w-14 h-14 bg-gray-100 rounded-lg p-1.5 flex items-center justify-center border border-gray-200 shrink-0">
+<img alt="Tai nghe Sony WH-1000XM5" class="max-h-full max-w-full object-contain mix-blend-multiply" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5f-9QVhCsOZoq60FGtH32ChoU05Ms0fO1xTPfc8q-m514zZBiu_lxFpaP9P4THaiK7TKmX4qySt8PQeW-B8CenRkhBA9EwgJ5FJficAwvmhpQf1FBEB5XsVE_cIEjgWZgIhgPmjiFTDyY7bL10yzN29tK3KbeGn3vCLl3ahUKFvweRewJlbYP0gVkg9X-8gjlDGpJkeWrj9ITAug-jf8WzxYyWDMIsh_86sr24xRj"/>
+</div>
+<div>
+<p class="font-semibold text-gray-900 line-clamp-1">Tai nghe Sony WH-1000XM5</p>
+<span class="text-xs text-gray-400">Màu Đen | Chống ồn chủ động</span>
+</div>
+</td>
+<td class="py-4 px-4 text-right font-medium text-gray-800 whitespace-nowrap">
+                    7.490.000₫
+                  </td>
+<td class="py-4 px-6 text-center font-medium text-gray-600 whitespace-nowrap">
+                    1
+                  </td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Total Footer in Card -->
+<div class="border-t border-gray-200 bg-gray-50/60 px-6 py-4 flex items-center justify-between text-sm">
+<span class="text-gray-500 font-medium">Tổng tiền thanh toán:</span>
+<span class="text-lg font-bold text-brand-orange">24.980.000₫</span>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- END: MainContent -->
+<!-- BEGIN: Footer -->
+<footer class="bg-white border-t border-gray-200 mt-12 py-6 text-center text-xs text-gray-500">
+<div class="max-w-[1320px] mx-auto px-4">
+<p>© 2025 TECHSTORE. Tất cả các quyền được bảo lưu.</p>
+</div>
+</footer>
+<!-- END: Footer -->
+</body></html>

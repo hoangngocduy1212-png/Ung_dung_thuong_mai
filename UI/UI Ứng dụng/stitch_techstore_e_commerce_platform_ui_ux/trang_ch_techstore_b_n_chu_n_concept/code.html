@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TECHSTORE - Công nghệ kiến tạo tương lai</title>
+<!-- Google Fonts: Inter & Montserrat -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Montserrat:wght@700;800;900&amp;display=swap" rel="stylesheet"/>
+<!-- FontAwesome Icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Tailwind CSS CDN with Forms & Container Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              orange: '#FF5C00',
+              hoverOrange: '#e55200',
+              dark: '#111111',
+              muted: '#6B7280',
+              lightGray: '#F5F5F7',
+              cardBg: '#F3F4F6',
+              borderLight: '#E5E7EB',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            logo: ['Montserrat', 'Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+<!-- Custom Styles for Precise Aesthetics matching original design -->
+<style data-purpose="custom-layout">
+    body {
+      background-color: #FFFFFF;
+      color: #1A1A1A;
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    
+    .tech-card {
+      background-color: #F8F9FA;
+      transition: all 0.2s ease-in-out;
+    }
+    .tech-card:hover {
+      background-color: #F0F2F5;
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-900 selection:bg-brand-orange selection:text-white">
+<!-- BEGIN: MainHeader -->
+<header class="w-full bg-white border-b border-gray-100" data-purpose="site-header">
+<div class="max-w-[1320px] mx-auto px-4 lg:px-6">
+<!-- Topbar Row: Logo, Search Bar, Account & Cart -->
+<div class="flex items-center justify-between py-3.5 gap-6">
+<!-- Logo Area -->
+<a class="flex items-center gap-2 group flex-shrink-0" data-purpose="brand-logo" href="#">
+<span class="font-logo font-black text-[22px] tracking-tight text-black flex items-center">
+            TECHSTORE
+          </span>
+</a>
+<!-- Central Search Bar -->
+<div class="flex-1 max-w-[620px] mx-auto">
+<div class="relative w-full">
+<span class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none text-gray-400">
+<i class="fa-solid fa-magnifying-glass text-sm"></i>
+</span>
+<input class="w-full pl-10 pr-4 py-2 bg-[#F1F3F5] hover:bg-[#EBEEF2] focus:bg-white text-[13.5px] rounded-full border-none focus:ring-1 focus:ring-brand-orange transition-all placeholder:text-gray-400 text-gray-800" placeholder="Tìm kiếm sản phẩm, thương hiệu, danh mục..." type="text"/>
+</div>
+</div>
+<!-- Right Side: Account and Shopping Cart -->
+<div class="flex items-center gap-7 flex-shrink-0 text-[14px]">
+<!-- User Account Link -->
+<a class="flex items-center gap-2 font-medium text-gray-800 hover:text-brand-orange transition-colors" href="#">
+<i class="fa-regular fa-circle-user text-xl"></i>
+<span>Tài khoản</span>
+</a>
+<!-- Cart Link with Badge -->
+<a class="flex items-center gap-2 font-medium text-gray-800 hover:text-brand-orange transition-colors relative" href="#">
+<div class="relative flex items-center justify-center">
+<i class="fa-solid fa-cart-shopping text-lg"></i>
+<span class="absolute -top-2 -right-2.5 bg-brand-orange text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">0</span>
+</div>
+<span>Giỏ hàng</span>
+</a>
+</div>
+</div>
+<!-- Navigation Row: All Categories, Sub-menus, and Promo -->
+<div class="flex items-center justify-between border-t border-gray-100 py-2.5 text-[13px] font-medium text-gray-700">
+<!-- All Categories Button -->
+<a class="flex items-center gap-2 text-brand-orange font-semibold hover:opacity-90" href="#">
+<i class="fa-solid fa-table-cells-large text-sm"></i>
+<span>Tất cả danh mục</span>
+</a>
+<!-- Main Categories Horizontal Bar -->
+<nav class="flex items-center space-x-6 overflow-x-auto no-scrollbar font-normal text-gray-800">
+<a class="hover:text-brand-orange transition-colors whitespace-nowrap" href="#">Laptop</a>
+<a class="hover:text-brand-orange transition-colors whitespace-nowrap" href="#">Điện thoại</a>
+<a class="hover:text-brand-orange transition-colors whitespace-nowrap" href="#">Máy tính bảng</a>
+<a class="hover:text-brand-orange transition-colors whitespace-nowrap" href="#">Âm thanh</a>
+<a class="hover:text-brand-orange transition-colors whitespace-nowrap" href="#">Thiết bị đeo</a>
+<a class="hover:text-brand-orange transition-colors whitespace-nowrap" href="#">Phụ kiện</a>
+<a class="hover:text-brand-orange transition-colors whitespace-nowrap" href="#">Thiết bị thông minh</a>
+<a class="hover:text-brand-orange transition-colors whitespace-nowrap" href="#">Nhà thông minh</a>
+</nav>
+<!-- Promotion Hotlink -->
+<a class="text-brand-orange font-semibold hover:opacity-90 whitespace-nowrap flex items-center gap-1" href="#">
+<span>Khuyến mãi</span>
+</a>
+</div>
+</div>
+</header>
+<!-- END: MainHeader -->
+<!-- BEGIN: MainContent -->
+<main class="max-w-[1320px] mx-auto px-4 lg:px-6 pt-3 pb-12 space-y-9" data-purpose="main-layout">
+<!-- BEGIN: HeroSection Banner -->
+<section class="relative w-full rounded-2xl overflow-hidden shadow-sm" data-purpose="hero-banner">
+<!-- Dark gradient background -->
+<div class="relative w-full min-h-[340px] md:min-h-[380px] bg-gradient-to-r from-[#0C0D0F] via-[#16171B] to-[#121316] flex items-center px-8 sm:px-14 py-10">
+<!-- Left Banner Typography & CTA -->
+<div class="max-w-md z-10 text-white space-y-4">
+<h1 class="text-3xl sm:text-4xl lg:text-[42px] font-extrabold leading-[1.15] tracking-tight">
+            Công nghệ<br/>kiến tạo tương lai
+          </h1>
+<p class="text-gray-300 text-sm sm:text-base font-normal leading-relaxed">
+            Khám phá thiết bị phù hợp,<br/>nâng tầm trải nghiệm mỗi ngày.
+          </p>
+<div class="pt-2">
+<a class="inline-flex items-center gap-2 bg-brand-orange hover:bg-brand-hoverOrange text-white font-semibold text-sm px-6 py-2.5 rounded-lg shadow-md hover:shadow-lg transition-all duration-200" href="#">
+<span>Mua ngay</span>
+<i class="fa-solid fa-arrow-right text-xs"></i>
+</a>
+</div>
+</div>
+<!-- Central & Right Banner Visual Hardware Composite -->
+<div class="absolute right-0 top-0 bottom-0 w-3/5 pointer-events-none flex items-center justify-end pr-8 overflow-hidden">
+<div class="relative w-full h-full flex items-center justify-end">
+<!-- Sleek Open Laptop with subtle warm underglow -->
+<img alt="Laptop High-tech" class="w-[50%] max-w-[380px] object-contain drop-shadow-[0_20px_25px_rgba(255,92,0,0.15)] translate-y-3 z-10" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDsbBPM5LO1gJp7PfU1_RZcMmd_-QaOClrDp2cmynUAZ7go1EH-L10-JX_ADOiaYQNpzdVrizNBQxSPKGg5ICS-Mi_bW75dUhLR-lPuvRjprHKWcE3hjJAbUsUbIWvLIR9m4Bjvr4uldX2vt6-ltROuITHkel3UKfYsmEFO5BgtA1vrxZmjt9g7TlC2RHG7B1hvN1ps9Cjv4i_K3EZZnFADE2Yxn-pwODe_SIWr5dKK"/>
+<!-- Over-ear Wireless Headphones -->
+<img alt="Headphones" class="w-[30%] max-w-[210px] object-contain drop-shadow-2xl z-20 -ml-10 filter brightness-95" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAM8ytaBiC7gngcVTbo76J4Cc_4sPVUhqfRI8INWO-14ExS68X1xm5_oRvHVA7o_a5BuLCyqux8IR2PS4usvrw7Ml94unXQJZraqxPRpQPTOmYoWAnJhYsw_qG_qZrZXWTDx_nmjYpwKOnG1s-OZZBMyfl2U0u_lLYJVK8Xg-5Rqgum9rhE0SufGR5bih_EEUgFYdRhgl1UvhUwKqx_mNOIs_cQZ-_LI2QFKvEM7pYj"/>
+<!-- Flagship Smartphone -->
+<img alt="Smartphone" class="w-[20%] max-w-[150px] object-contain drop-shadow-2xl z-20 ml-2" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBamPWWgQptZnPHNs-85iOOq1QKfSdREitiORZ2s10QOhgV-QvZCAI12lidRaq7Z42RMOW_ObuXeIlPWIlWqOACbKyb5iJ4_N3iqv90ij-4-1eDrTzBvN82-paGm9mmhCuJBIlgo_V01_nbNf3ftDomphRWzwB1Bg755DC4OxBgV6L97YvmxQmQjxLZwIr4MWR1_sFXVYPjDPBEtbzO_5BlLYIvm1EtfQGCPjg_IEaZ"/>
+</div>
+</div>
+<!-- Top Right Tech Watermark / Slogan -->
+<div class="absolute top-6 right-8 text-right font-mono text-[10px] tracking-widest text-gray-500 uppercase leading-relaxed pointer-events-none select-none hidden sm:block">
+          PEOPLE<br/>DEVICES<br/>&amp; ANGKFER<br/>TOM&amp;GOW
+        </div>
+<!-- Banner Pagination Dots -->
+<div class="absolute bottom-5 right-10 flex items-center gap-2 z-20">
+<span class="w-2.5 h-2.5 rounded-full bg-brand-orange ring-2 ring-brand-orange/30"></span>
+<span class="w-2.5 h-2.5 rounded-full bg-gray-500/60 hover:bg-gray-400 cursor-pointer"></span>
+<span class="w-2.5 h-2.5 rounded-full bg-gray-500/60 hover:bg-gray-400 cursor-pointer"></span>
+</div>
+</div>
+</section>
+<!-- END: HeroSection Banner -->
+<!-- BEGIN: FeaturedCategories Section -->
+<section data-purpose="featured-categories">
+<!-- Section Header -->
+<div class="flex items-center justify-between mb-3.5">
+<h2 class="text-[17px] font-bold text-gray-900 tracking-tight">Danh mục nổi bật</h2>
+<a class="text-xs font-medium text-gray-600 hover:text-brand-orange flex items-center gap-1 transition-colors" href="#">
+<span>Xem tất cả</span>
+<i class="fa-solid fa-arrow-right text-[10px]"></i>
+</a>
+</div>
+<!-- Categories 8-Item Grid -->
+<div class="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-8 gap-3">
+<!-- Category 1: Laptop -->
+<a class="tech-card rounded-xl p-3 flex flex-col items-center justify-center group border border-transparent hover:border-gray-200" href="#">
+<div class="h-16 w-full flex items-center justify-center mb-2">
+<img alt="Laptop" class="max-h-14 max-w-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-200" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8WuGVXgn_B8EURLHnRjPs0sNodTk0_M6P5wwcWf82lRmpo5QqSqJBGSvfH3eAjvy-Yep2Q2DuOheYmxgZ-OLDwQs-F5R_6trnZ0kO0vrU-ghBvXheZ4NFoRNch-emVUBshLRCgzVNl0IzvEysbCAWYNWoO73rl2SnJE77d0Y0gRCzEbTaXJSmJdUAbed74cryQXCY9Vw5Q_yk_yc38Xvwd7ikP7GJJCKdOenuxT84"/>
+</div>
+<span class="text-xs text-gray-700 font-medium group-hover:text-brand-orange text-center">Laptop</span>
+</a>
+<!-- Category 2: Điện thoại -->
+<a class="tech-card rounded-xl p-3 flex flex-col items-center justify-center group border border-transparent hover:border-gray-200" href="#">
+<div class="h-16 w-full flex items-center justify-center mb-2">
+<img alt="Điện thoại" class="max-h-14 max-w-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-200" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCS8yrxyCYLv6D3LrSxpICp4FnPgxXeX3vHyEGiIuxEwDk4fPLie7khQh0Kd-lS1mrhdjcSSvA7wxUXgsQKi1k1CSEC-fEmJBDRT-GIJ3PnIShE1zr9ns0XZjByNiOhO9MLg3C5Eo0L8d1vYEVKgxTYn75SObcfX4I0mZ4GM4nLsPvFdvzyGgoBfvz0SrM0fmDwCKRU5oFF9X0OHOTZSsRISY4GS0NmuWtmxRFNBWrY"/>
+</div>
+<span class="text-xs text-gray-700 font-medium group-hover:text-brand-orange text-center">Điện thoại</span>
+</a>
+<!-- Category 3: Máy tính bảng -->
+<a class="tech-card rounded-xl p-3 flex flex-col items-center justify-center group border border-transparent hover:border-gray-200" href="#">
+<div class="h-16 w-full flex items-center justify-center mb-2">
+<img alt="Máy tính bảng" class="max-h-14 max-w-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-200" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWLWyId1iBnTqTzcyje9yekFWII28lbDOBPrDZlrCWaU7cdtm6bHcI4fELyZWqhDhxdNe-ZPAPXoixcb9s43oKOaN1t98APNrQ2YciMrbtK8PtDCigirMPl0bsVXNIag8Ff69-BTdvEHcyNuSIsQIb3lUcx0SYHZ5w9-kiDhNfdkn4Jp1mfe58v0oTflo9CR9IKb5FGSdoQgNBcosYOQ_VAoma0NQS_bWOXTX_8AcB"/>
+</div>
+<span class="text-xs text-gray-700 font-medium group-hover:text-brand-orange text-center whitespace-nowrap">Máy tính bảng</span>
+</a>
+<!-- Category 4: Âm thanh -->
+<a class="tech-card rounded-xl p-3 flex flex-col items-center justify-center group border border-transparent hover:border-gray-200" href="#">
+<div class="h-16 w-full flex items-center justify-center mb-2">
+<img alt="Âm thanh" class="max-h-14 max-w-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-200" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDfxAmjber77F5IqAa3jgDscv53QtgRYL6Nham4HqjUp8ud3f0ixzT8FI2UqzOO8PJM_XSAQMgFjiifLzRhg8OSARm6q06ro7BcQkKsKWbOHrkSN9Rndr9F-3u78eKMz5NalksgEFE7fpw0xmE0yIGPiVYjPSqRX5g3l3N-eLSGngJqiTQWp09Hrf7yKwLQxp0aJKIPiZRkmTXfLXav-6dDnG_eLdvfD-icnN1wx6eA"/>
+</div>
+<span class="text-xs text-gray-700 font-medium group-hover:text-brand-orange text-center">Âm thanh</span>
+</a>
+<!-- Category 5: Thiết bị đeo -->
+<a class="tech-card rounded-xl p-3 flex flex-col items-center justify-center group border border-transparent hover:border-gray-200" href="#">
+<div class="h-16 w-full flex items-center justify-center mb-2">
+<img alt="Thiết bị đeo" class="max-h-14 max-w-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-200" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCEWuVUZKB63kdllsSd69oE7hP33qmNUpFu69Zod14jV6ZyJ3471ismFk6Pf9G8Gz8UmbYcf2AMgJqUOGMLqmvnqPOylSCKiWz6-6_cbI164s4A-Qi3BIGiS8NYKXiAwc1Xf8L-Dz6N8pblie0ZaYcKdx8oTZwuQ7XMa4rZ3IuczLDMg7oQGn0EE2We77S06SSH2DiHrGHSIRSi52FP_KgITid0RNGetTMKyrzjaxgC"/>
+</div>
+<span class="text-xs text-gray-700 font-medium group-hover:text-brand-orange text-center whitespace-nowrap">Thiết bị đeo</span>
+</a>
+<!-- Category 6: Phụ kiện -->
+<a class="tech-card rounded-xl p-3 flex flex-col items-center justify-center group border border-transparent hover:border-gray-200" href="#">
+<div class="h-16 w-full flex items-center justify-center mb-2">
+<img alt="Phụ kiện" class="max-h-14 max-w-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-200" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBe97D6u1Ux0183LEEDRWN3m0hpLDeebDYRbDp5t5UaYt6hhQTBay3QFnr-j8fz33p2XCqmp74flSou-ijPG6T1GOcztAk8fG1s6U9GGSI3kloGDAqAOBt4zOJJ0Nzwo8EMpXnDVBvwokEu8Ea3inokrt8FSTw4lCrq2vDyyVFZ2O74MY6GMAszHSCfHGndRkxBD1Tux6VCv5GzY-yix3QR5eSevoGUXmgRhI7152cZ"/>
+</div>
+<span class="text-xs text-gray-700 font-medium group-hover:text-brand-orange text-center">Phụ kiện</span>
+</a>
+<!-- Category 7: Thiết bị thông minh -->
+<a class="tech-card rounded-xl p-3 flex flex-col items-center justify-center group border border-transparent hover:border-gray-200" href="#">
+<div class="h-16 w-full flex items-center justify-center mb-2">
+<img alt="Thiết bị thông minh" class="max-h-14 max-w-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-200" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAsTpdk9jjDMd_Q_6rb1dWZM81uomVDhiIawy8tMFxTsU_PkYIPL_XydLZkjW1D6Whp-uIaHbTztS9IgpMF4AEchjxX5JbP0VMc4BxWuhGoggmUil03qGxkN0kksJcxnYf-5Jz2pWB7L9fFVw24TkU0tJbLCXyLGbScA7Wfo1aHsw0y2NTuGIJbezSszKqYbPgy7Qqs2SX7VAkwWjsJ6U-UsMKJOjiabEG-DdPDdiXU"/>
+</div>
+<span class="text-xs text-gray-700 font-medium group-hover:text-brand-orange text-center leading-tight">Thiết bị<br/>thông minh</span>
+</a>
+<!-- Category 8: Nhà thông minh -->
+<a class="tech-card rounded-xl p-3 flex flex-col items-center justify-center group border border-transparent hover:border-gray-200" href="#">
+<div class="h-16 w-full flex items-center justify-center mb-2">
+<img alt="Nhà thông minh" class="max-h-14 max-w-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-200" src="https://lh3.googleusercontent.com/aida-public/AB6AXuByTkRTHhaUBvnGs_jeZRBuDFHd9ldLEJS5EcXbUL9sB_D4ZlRZHNcyzeVgFAo-aaGzkhyWDixabhcrvMNGPNgLdHd14OyCthfutHhDfVryi5-D9nq4zQO9_phneJbgicOHdhdMbEmFEVn0YcvuwaxyVUvGyC1fxKC_gtFg2yEeK2dlvUeYyEaqlONXPIZ8qWBzbBdamDGi4hWdzB4BLFzk0l1w3vNb7oxqrfUV65uD"/>
+</div>
+<span class="text-xs text-gray-700 font-medium group-hover:text-brand-orange text-center whitespace-nowrap">Nhà thông minh</span>
+</a>
+</div>
+</section>
+<!-- END: FeaturedCategories Section -->
+<!-- BEGIN: DualProductColumns Section (Best Sellers & New Arrivals) -->
+<section class="grid grid-cols-1 lg:grid-cols-2 gap-7" data-purpose="bestseller-and-new-arrivals">
+<!-- Left Column: Sản phẩm bán chạy -->
+<div class="space-y-3.5">
+<div class="flex items-center justify-between">
+<h2 class="text-[17px] font-bold text-gray-900 tracking-tight">Sản phẩm bán chạy</h2>
+<a class="text-xs font-medium text-gray-600 hover:text-brand-orange flex items-center gap-1 transition-colors" href="#">
+<span>Xem tất cả</span>
+<i class="fa-solid fa-arrow-right text-[10px]"></i>
+</a>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+<!-- Item 1 -->
+<div class="tech-card rounded-xl p-3 flex flex-col items-center text-center group cursor-pointer border border-transparent hover:border-gray-200">
+<div class="h-20 w-full flex items-center justify-center mb-2">
+<img alt="Laptop hiệu năng cao" class="max-h-16 max-w-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfmTtJ02pDGY9l_Xa82qqKvQD2ThNBp2hYZFWceayRMdXGMbj1a9rN16_OALCMDwpBeEz1kKxFZFrRblXThwy9rfGe7B7p8PEFid_X_ohOdI3YNddOCUSrGln4hpxxgewGywWzpXG-ou6OV5VzKPhfWg8T5TejFsUUoB3d-p-mesuGAN-4XXr1mSr7lRdjyqC_zJPiknPOLOvDGFEvjWJUdD6spampRq6tdP6dERTr"/>
+</div>
+<h3 class="text-[12px] font-medium text-gray-800 line-clamp-1 mb-1">Laptop hiệu năng cao</h3>
+<div class="flex items-center justify-center text-brand-orange text-[10px] space-x-0.5">
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="tech-card rounded-xl p-3 flex flex-col items-center text-center group cursor-pointer border border-transparent hover:border-gray-200">
+<div class="h-20 w-full flex items-center justify-center mb-2">
+<img alt="Điện thoại thông minh" class="max-h-16 max-w-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCuRa4L8vooHZzlwwYvBf2SSOGsXLViNUJtthKHN6pZ9WpFQeUiMH9xGwfRAH3jF3-i-kw-pMQMbFpFgJXyQMeaKI7fWzZ1gtzGrrVMw3xOQFznR41WgfORKCgAiFUSVCfeY-IMJl_vcrEHgzw6OP5SPL-At7Yq8nGMycyczfj0KmtMmFcrqLt0v66FocPu_xdZseOH8-GKQ3llVSHVZJeoLgJTswoMPNAim2pJnAJF"/>
+</div>
+<h3 class="text-[12px] font-medium text-gray-800 line-clamp-1 mb-1">Điện thoại thông minh</h3>
+<div class="flex items-center justify-center text-brand-orange text-[10px] space-x-0.5">
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="tech-card rounded-xl p-3 flex flex-col items-center text-center group cursor-pointer border border-transparent hover:border-gray-200">
+<div class="h-20 w-full flex items-center justify-center mb-2">
+<img alt="Tại nghe thông dây" class="max-h-16 max-w-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBi4d-UcJqTy8kur5u5FBxHF7LXToGZRxFDKFfhwuLa3hGLiG6k9_vphNAaybDbaVP6jTzlAhozFPs2W9nq7ieLbkUd0NXY2Y2o3vclYAWDi6qU3fqjz9wdjq6XS3UT4zqcTFg3OKZ_N8JfPx-Eg79pcsim9o54OsirV-lD3DCPYqtXHXWWvVQx3uFfzmjrITcRXJxU8lpjDosuo2xrqZDx6yp93k0QT_J07fbrGp9c"/>
+</div>
+<h3 class="text-[12px] font-medium text-gray-800 line-clamp-1 mb-1">Tai nghe thông dây</h3>
+<div class="flex items-center justify-center text-brand-orange text-[10px] space-x-0.5">
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+</div>
+</div>
+<!-- Item 4 -->
+<div class="tech-card rounded-xl p-3 flex flex-col items-center text-center group cursor-pointer border border-transparent hover:border-gray-200">
+<div class="h-20 w-full flex items-center justify-center mb-2">
+<img alt="Đồng hồ thông minh" class="max-h-16 max-w-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-ObMXMwk3cRbRKTmCKp758afc4dP4_uHsxtFQW8-AxGzEzyz1PBujtGtsxZVv16bpN2xza56IRnj_v_RKWUrj6eE2h-Yaj5yAHc8tqisxVJm9wikAnfiWfqfZK9erSP_2uz7KqYn-mwMwBXSEvCFrzFHenjHrOCS5QhfWW3qJ6I4oqlN4B4OqWB2dxVW8mVqyF-x7ry76JI4fFSIrdNGFKkmDV849PLi6qHLeVxTM"/>
+</div>
+<h3 class="text-[12px] font-medium text-gray-800 line-clamp-1 mb-1">Đồng hồ thông minh</h3>
+<div class="flex items-center justify-center text-brand-orange text-[10px] space-x-0.5">
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Sản phẩm mới -->
+<div class="space-y-3.5">
+<div class="flex items-center justify-between">
+<h2 class="text-[17px] font-bold text-gray-900 tracking-tight">Sản phẩm mới</h2>
+<a class="text-xs font-medium text-gray-600 hover:text-brand-orange flex items-center gap-1 transition-colors" href="#">
+<span>Xem tất cả</span>
+<i class="fa-solid fa-arrow-right text-[10px]"></i>
+</a>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+<!-- New Item 1 -->
+<div class="tech-card rounded-xl p-3 flex flex-col items-center text-center group cursor-pointer border border-transparent hover:border-gray-200">
+<div class="h-20 w-full flex items-center justify-center mb-2">
+<img alt="Laptop mỏng nhẹ" class="max-h-16 max-w-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBln1rbceTq9sqdLVCMKgI1ht4z9_5DfPiQLm1Oir1JCaSzInQ1tK9zGQeWjNV2w_ZxQCgaSiW7EmSc_2NW_o6B2yaDDIWHQIHAWR7iL3uMIIyi3kWl6ujTBZSL9J_6UnbOZcf2cJbdLFZJu55Pb5F0n6Dt_k8tiiyKfO8A1FpeS83X6I3m2SaEotgGC142rslP2orCJOQRV-1ojY4mzatnfSPgz3aQ1bTlzs7ZFg1F"/>
+</div>
+<h3 class="text-[12px] font-medium text-gray-800 line-clamp-1 mb-1">Laptop mỏng nhẹ</h3>
+<div class="flex items-center justify-center text-brand-orange text-[10px] space-x-0.5">
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+<i class="fa-regular fa-star"></i>
+</div>
+</div>
+<!-- New Item 2 -->
+<div class="tech-card rounded-xl p-3 flex flex-col items-center text-center group cursor-pointer border border-transparent hover:border-gray-200">
+<div class="h-20 w-full flex items-center justify-center mb-2">
+<img alt="Điện thoại mới" class="max-h-16 max-w-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBc6o7ixZmt1T1175wbqRr9RFqK_VqOGAh8y7oRGu7vTwDeFB8iDbGZaIbciJskaqgWKUuX7xyXobi5ffHnz2TW7Udy-FA6G-LDBOMsKCmYhzmdbcDHFxrni-N8evs8WteYEshgLewIwGqEUC66NYsUaqzPzUjx9_AvFsB7cT1yd-lIrNa5r7zgz_eR48MSRdBxG4K4A9XVeoMYGB3mUyEr3_dPoMgF-ogCFU0GCmt2"/>
+</div>
+<h3 class="text-[12px] font-medium text-gray-800 line-clamp-1 mb-1">Điện thoại mới</h3>
+<div class="flex items-center justify-center text-brand-orange text-[10px] space-x-0.5">
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+<i class="fa-regular fa-star"></i>
+</div>
+</div>
+<!-- New Item 3 -->
+<div class="tech-card rounded-xl p-3 flex flex-col items-center text-center group cursor-pointer border border-transparent hover:border-gray-200">
+<div class="h-20 w-full flex items-center justify-center mb-2">
+<img alt="Tai nghe true wireless" class="max-h-16 max-w-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDc3mbKM_akc_wJQiQzd39NidqS7P0mtVCu3Wij_PFJTQ-zAPGOaUyq2Xyk7JzZVdqIoy3drFw91hFs0vASou8IuIesNu68TmpzdIL2fF7amrsz8nuSP0X6P3vW5WUTRZLLZRDHXqr46szS4osESbwsTIZYf3F4OoCSQ1eTRkTMNw5W0Mk2U5J2eHjvOQKITDdqjouJ-HdMIDPExlA71bSZ63ql7xdTNMMkFIkZSYsZ"/>
+</div>
+<h3 class="text-[12px] font-medium text-gray-800 line-clamp-1 mb-1">Tai nghe true wireless</h3>
+<div class="flex items-center justify-center text-brand-orange text-[10px] space-x-0.5">
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+</div>
+</div>
+<!-- New Item 4 -->
+<div class="tech-card rounded-xl p-3 flex flex-col items-center text-center group cursor-pointer border border-transparent hover:border-gray-200">
+<div class="h-20 w-full flex items-center justify-center mb-2">
+<img alt="Camera thông minh" class="max-h-16 max-w-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1iMph17lEsrSpFYEWZ1ziEz8i68TJX5Ycc0cZjGjV-wB3XugXYPIiEv3nLcEaJu47DLnX5ffA3k7dC7c3hVca9SNkAdxdx-TB_0wMhNFUn4sp3JGJ2rvP_9nS0RTH_QsE4GJmhdgNZ-EpqmI2gJ6r5l3J_VmeygfDAPwLh2Jw3I7NoIggHNjaPqqlpi0x9AOGjhdwXSlbLxEil47sIXWDCJHRfKBF4_KIBwmbQMTN"/>
+</div>
+<h3 class="text-[12px] font-medium text-gray-800 line-clamp-1 mb-1">Camera thông minh</h3>
+<div class="flex items-center justify-center text-brand-orange text-[10px] space-x-0.5">
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+<i class="fa-regular fa-star"></i>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- END: DualProductColumns Section -->
+<!-- BEGIN: BottomTripleSection (Brands, Stores & Promo Banner) -->
+<section class="grid grid-cols-1 md:grid-cols-12 gap-6 items-start pt-1" data-purpose="bottom-triple-section">
+<!-- Column 1: Thương hiệu nổi bật (4.5 / 12) -->
+<div class="md:col-span-5 space-y-3.5">
+<div class="flex items-center justify-between">
+<h2 class="text-[17px] font-bold text-gray-900 tracking-tight">Thương hiệu nổi bật</h2>
+<a class="text-xs font-medium text-gray-600 hover:text-brand-orange flex items-center gap-1 transition-colors" href="#">
+<span>Xem tất cả</span>
+<i class="fa-solid fa-arrow-right text-[10px]"></i>
+</a>
+</div>
+<div class="grid grid-cols-6 gap-2">
+<!-- Brand 1: Apple -->
+<div class="tech-card rounded-xl p-2.5 h-16 flex items-center justify-center hover:shadow-sm border border-transparent hover:border-gray-200 cursor-pointer">
+<i class="fa-brands fa-apple text-2xl text-black"></i>
+</div>
+<!-- Brand 2: Samsung -->
+<div class="tech-card rounded-xl p-2.5 h-16 flex items-center justify-center hover:shadow-sm border border-transparent hover:border-gray-200 cursor-pointer">
+<span class="text-[11px] font-black tracking-tight text-gray-900 uppercase">SAMSUNG</span>
+</div>
+<!-- Brand 3: Sony -->
+<div class="tech-card rounded-xl p-2.5 h-16 flex items-center justify-center hover:shadow-sm border border-transparent hover:border-gray-200 cursor-pointer">
+<span class="text-[12px] font-black tracking-widest text-gray-900 uppercase">SONY</span>
+</div>
+<!-- Brand 4: Dell -->
+<div class="tech-card rounded-xl p-2.5 h-16 flex items-center justify-center hover:shadow-sm border border-transparent hover:border-gray-200 cursor-pointer">
+<div class="w-7 h-7 rounded-full border border-blue-600 flex items-center justify-center">
+<span class="text-[9px] font-black text-blue-600 tracking-tighter">DELL</span>
+</div>
+</div>
+<!-- Brand 5: Asus -->
+<div class="tech-card rounded-xl p-2.5 h-16 flex items-center justify-center hover:shadow-sm border border-transparent hover:border-gray-200 cursor-pointer">
+<span class="text-[12px] font-extrabold italic text-gray-900 uppercase tracking-tighter">ASUS</span>
+</div>
+<!-- Brand 6: Xiaomi (Mi) -->
+<div class="tech-card rounded-xl p-2.5 h-16 flex items-center justify-center hover:shadow-sm border border-transparent hover:border-gray-200 cursor-pointer">
+<div class="w-6 h-6 rounded-md bg-[#FF6900] flex items-center justify-center text-white text-[11px] font-bold">
+              mi
+            </div>
+</div>
+</div>
+</div>
+<!-- Column 2: Cửa hàng nổi bật (3.5 / 12) -->
+<div class="md:col-span-3 space-y-3.5 border-l-0 md:border-l border-gray-200 md:pl-5">
+<div class="flex items-center justify-between">
+<h2 class="text-[17px] font-bold text-gray-900 tracking-tight">Cửa hàng nổi bật</h2>
+<a class="text-xs font-medium text-gray-600 hover:text-brand-orange flex items-center gap-1 transition-colors" href="#">
+<span>Xem tất cả</span>
+<i class="fa-solid fa-arrow-right text-[10px]"></i>
+</a>
+</div>
+<div class="grid grid-cols-4 gap-2 text-center">
+<!-- Store 1: Hà Nội -->
+<a class="group" href="#">
+<div class="aspect-video w-full rounded-md overflow-hidden bg-gray-200 mb-1.5 border border-gray-100">
+<img alt="Showroom Hà Nội" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAyy6ftwT5UAxNU0zraN7XE-B70A3HU3LDjJhwoj0IRinSZTEBJbKEgIXQ70XkOrYWH_zdgAZVxe0F3bHhlZYn4wFuDTYg1iLMcnn-3wfd5Sod0q8gTLR0QYrFgFXwXU4a5CwJ57PF9Ce1-_x3-1Gsi400mT0Q83cesy5imzKYaO95B1YnnuuTtAkvi50SugctQ7v4qdH-ZO8W4hCxdDwdQfhg680RG3gsZux4PGYK6"/>
+</div>
+<span class="text-[11px] text-gray-700 font-medium group-hover:text-brand-orange whitespace-nowrap">Hà Nội</span>
+</a>
+<!-- Store 2: TP. Hồ Chí Minh -->
+<a class="group" href="#">
+<div class="aspect-video w-full rounded-md overflow-hidden bg-gray-200 mb-1.5 border border-gray-100">
+<img alt="Showroom TP. HCM" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD__iogTyGAhab9kdCwQHDYZNKyYPHTGlpQOtGn0ZMKPP7q8ZyGnwuNwOjk6JvvLbd7rBgd_LH_HpamuDofHiHWBxgb2qL55XoL5JLfJkIvQNlDHOvhsodr5OlNkJNlNIuAGW7x8uUVjxUBS2LaicvO2Kp6dkTcUXt5aW6Q8T5x3serLwmrgQlcTr7cThReNYisVE3tNR2mPD51egy2tDioi2rzyfi2u1T89sSlTVdS"/>
+</div>
+<span class="text-[11px] text-gray-700 font-medium group-hover:text-brand-orange whitespace-nowrap">TP. Hồ Chí Minh</span>
+</a>
+<!-- Store 3: Đà Nẵng -->
+<a class="group" href="#">
+<div class="aspect-video w-full rounded-md overflow-hidden bg-gray-200 mb-1.5 border border-gray-100">
+<img alt="Showroom Đà Nẵng" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnDRusXHyWqy1lE6We_zpvXw6GzHeMmw5vblUsq2083mIhHw_z0EcCCjKGoWws0gywi0Js_Fujhzf3deDfWjrIN5BvhLEDFk1WBl6xtUsS0ooT6gREmva3TMsM_Dm4Lc-oErahAYzH3OItpwTTF50mFnVAEZL2TJo1yKixTwoX_bzBuLrxB68Zbky6y0zZfCEHJlS5domqThlpa9OCp8YUUPUAWo9qi2LzpG3gFjIT"/>
+</div>
+<span class="text-[11px] text-gray-700 font-medium group-hover:text-brand-orange whitespace-nowrap">Đà Nẵng</span>
+</a>
+<!-- Store 4: Cần Thơ -->
+<a class="group" href="#">
+<div class="aspect-video w-full rounded-md overflow-hidden bg-gray-200 mb-1.5 border border-gray-100">
+<img alt="Showroom Cần Thơ" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200" src="https://lh3.googleusercontent.com/aida-public/AB6AXuADhQ4zU7RjeTN_cAGINymIDG8Jo0o_Pn_42SzxQQ74JTrYVilqX3r6xWgbvrg_Co_D44sl6y_v2Ss9M_qKkd7CDmJxbLG0UqkZqb1G3bIqpOBS6UVE94aihUVpBVeamfQi0VjrVX9rgeIrJEIyp36bNedEiKScRwZCqA0KJoLuZeXVlulZ8rWJapPpQo6yROJG84I6XdMqRmAioZqlYqzFKX8pVHYzyVoWiZ6tyTsM"/>
+</div>
+<span class="text-[11px] text-gray-700 font-medium group-hover:text-brand-orange whitespace-nowrap">Cần Thơ</span>
+</a>
+</div>
+</div>
+<!-- Column 3: Khuyến mãi Banner (4 / 12) -->
+<div class="md:col-span-4 space-y-3.5 border-l-0 md:border-l border-gray-200 md:pl-5">
+<div class="flex items-center justify-between">
+<h2 class="text-[17px] font-bold text-gray-900 tracking-tight">Khuyến mãi</h2>
+<a class="text-xs font-medium text-gray-600 hover:text-brand-orange flex items-center gap-1 transition-colors" href="#">
+<span>Xem tất cả</span>
+<i class="fa-solid fa-arrow-right text-[10px]"></i>
+</a>
+</div>
+<!-- Orange Promotion Mini Banner Card -->
+<div class="relative bg-gradient-to-r from-[#FF5C00] via-[#FF6A1A] to-[#FF5400] text-white rounded-xl p-4 overflow-hidden h-[88px] flex items-center justify-between shadow-sm cursor-pointer group">
+<!-- Text Area -->
+<div class="z-10 max-w-[55%]">
+<h3 class="text-base font-extrabold leading-tight">Ưu đãi<br/>đến 50%</h3>
+<p class="text-[9.5px] text-white/90 leading-tight mt-1 line-clamp-1">Thiết bị công nghệ ghé thăm ngay</p>
+</div>
+<!-- Composite Products Image Area -->
+<div class="absolute right-1 top-0 bottom-0 w-[45%] flex items-center justify-end">
+<img alt="Promo Laptop" class="w-16 object-contain z-10 translate-y-2 group-hover:scale-105 transition-transform" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIJWp_gIxEyPhe5rgnHjjTQi_kfx5rAy97NaEqA9FXwe49x7hlkVFGy9kGtLYwwGwNnoU56j3FllGj88oZWLUai5R6b6vARa15_zX7CO3_XvGz4gFY1fOpxcchxctvDxcLHhujWpNHsaRLBTDvqzWpTomrnHcK7AXhJYSr5lP0bhx6gYb8soTtYqzFZHjaRnCaO3HBEH5HUlLMvt9g2nWFEmZ0sty5YZLeE6-Z5XDa"/>
+<img alt="Promo Headphones" class="w-14 object-contain z-20 -ml-5 group-hover:scale-105 transition-transform" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAT-PqE3isAUzDBKx80BUiPB83d0n0scZ0V7zKaECiXgRrv58b6XeXea_olfPDSk-HyYvkX7gzruB-lQsRBsjS4juzITdnxJ55rbOfFtnOP9Vu1aiLcxKSrgbHI9Ri9TFpExYGLx-J6cJWL7mWbz8hfsOTVbkM1vPORFlPznmwuguZK3SsXKtoCAb2ML_XlKbg8IapFMPY5v2PAJfXkOQFsjeXCjZP1GAWRTyyLWJBM"/>
+<img alt="Promo Phone" class="w-8 object-contain z-30 -ml-2 group-hover:scale-105 transition-transform" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhLSf1NU9gDf2c67oK1BSEngPgY0T1vZYIpVA-tcryf4ayNFaaJGYTzr6CYFMF0quABrMwlvDQ-KOktNvqyBnQHBqq10OBx8QT1-mT98VfzNWwV8DbZ73HmTnC0mPT3vGcEPiQGfHMBCbnWWrzVv8SrxJ8SoRz0jo_3F9Pt6qQHk-KMVdzHrUT5328Cn1kryUD0bBsrYn7a-0dUdvS4ngWDcP8ZYsnY1dUUa-YJW16"/>
+</div>
+<!-- Circular decor icon -->
+<div class="absolute bottom-1 left-4 text-white/40 text-xs">
+<i class="fa-solid fa-rotate-left"></i>
+</div>
+</div>
+</div>
+</section>
+<!-- END: BottomTripleSection -->
+</main>
+<!-- END: MainContent -->
+<!-- BEGIN: MainFooter -->
+<footer class="w-full bg-[#FBFBFB] border-t border-gray-200 pt-10 pb-8 mt-10" data-purpose="site-footer">
+<div class="max-w-[1320px] mx-auto px-4 lg:px-6">
+<div class="grid grid-cols-2 md:grid-cols-5 gap-8 mb-8 text-[12.5px]">
+<!-- Column 1: Brand Info -->
+<div class="col-span-2 md:col-span-1 space-y-3">
+<div class="flex items-center gap-2">
+<div class="w-1.5 h-4 bg-brand-orange rounded-full"></div>
+<span class="font-logo font-black text-[18px] tracking-tight text-black">
+              TECHSTORE
+            </span>
+</div>
+<p class="text-gray-500 text-xs leading-relaxed">
+            Công nghệ kiến tạo tương lai
+          </p>
+</div>
+<!-- Column 2: Về chúng tôi -->
+<div class="space-y-2.5">
+<h4 class="font-bold text-gray-900 text-[13px]">Về chúng tôi</h4>
+<ul class="space-y-2 text-gray-600">
+<li><a class="hover:text-brand-orange transition-colors" href="#">Giới thiệu</a></li>
+<li><a class="hover:text-brand-orange transition-colors" href="#">Tuyển dụng</a></li>
+</ul>
+</div>
+<!-- Column 3: Hỗ trợ khách hàng -->
+<div class="space-y-2.5">
+<h4 class="font-bold text-gray-900 text-[13px]">Hỗ trợ khách hàng</h4>
+<ul class="space-y-2 text-gray-600">
+<li><a class="hover:text-brand-orange transition-colors" href="#">Trung tâm trợ giúp</a></li>
+<li><a class="hover:text-brand-orange transition-colors" href="#">Hướng dẫn mua hàng</a></li>
+<li><a class="hover:text-brand-orange transition-colors" href="#">Chính sách bảo hành</a></li>
+</ul>
+</div>
+<!-- Column 4: Chính sách -->
+<div class="space-y-2.5">
+<h4 class="font-bold text-gray-900 text-[13px]">Chính sách</h4>
+<ul class="space-y-2 text-gray-600">
+<li><a class="hover:text-brand-orange transition-colors" href="#">Chính sách đổi trả</a></li>
+<li><a class="hover:text-brand-orange transition-colors" href="#">Chính sách bảo mật</a></li>
+<li><a class="hover:text-brand-orange transition-colors" href="#">Điều khoản sử dụng</a></li>
+</ul>
+</div>
+<!-- Column 5: Kết nối với chúng tôi -->
+<div class="col-span-2 md:col-span-1 space-y-3">
+<h4 class="font-bold text-gray-900 text-[13px]">Kết nối với chúng tôi</h4>
+<div class="flex items-center space-x-3 text-gray-900 text-lg">
+<a class="hover:text-brand-orange transition-colors" href="#"><i class="fa-brands fa-facebook"></i></a>
+<a class="hover:text-brand-orange transition-colors" href="#"><i class="fa-brands fa-youtube"></i></a>
+<a class="hover:text-brand-orange transition-colors" href="#"><i class="fa-brands fa-instagram"></i></a>
+<a class="hover:text-brand-orange transition-colors" href="#"><i class="fa-brands fa-telegram"></i></a>
+</div>
+</div>
+</div>
+</div>
+</footer>
+<!-- END: MainFooter -->
+</body></html>

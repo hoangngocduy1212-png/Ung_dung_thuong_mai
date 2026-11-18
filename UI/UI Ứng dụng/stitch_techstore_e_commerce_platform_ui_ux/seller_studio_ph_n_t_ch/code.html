@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Seller Studio — Phân tích | TECHSTORE</title>
+<!-- Tailwind CSS CDN with Forms and Container Queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts: Be Vietnam Pro -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Configuration -->
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Be Vietnam Pro"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              orange: '#F95721',
+              lightOrange: '#FFF3EE',
+              hoverOrange: '#EA4A15',
+              dark: '#1E232A',
+              muted: '#6C727F',
+              border: '#E8EAED',
+              bg: '#F8F9FA'
+            }
+          }
+        }
+      }
+    }
+  </script>
+<!-- Custom Typography & Visual Refinements -->
+<style data-purpose="custom-typography">
+    body {
+      font-family: 'Be Vietnam Pro', sans-serif;
+      background-color: #F8F9FA;
+      color: #1E232A;
+      -webkit-font-smoothing: antialiased;
+    }
+  </style>
+<style data-purpose="ui-components">
+    /* Subtle custom card shadow matching design snapshot */
+    .studio-card-shadow {
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.02), 0 1px 2px 0 rgba(0, 0, 0, 0.04);
+    }
+    .sidebar-active-indicator {
+      box-shadow: inset 4px 0 0 #F95721;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-[#F8F9FA] flex flex-col text-[#222]">
+<!-- BEGIN: SiteHeader -->
+<header class="w-full bg-white border-b border-gray-100 shadow-sm sticky top-0 z-50">
+<div class="max-w-[1760px] mx-auto px-6 py-2.5">
+<!-- Top Row: Logo, Search Bar, User Profile & Actions -->
+<div class="flex items-center justify-between gap-8 h-12">
+<!-- TechStore Logo -->
+<a class="flex items-center gap-1 shrink-0 font-extrabold tracking-tight text-xl text-black select-none" href="#">
+<span>TECHSTORE</span>
+</a>
+<!-- Global Search Bar -->
+<div class="flex-1 max-w-2xl relative">
+<div class="relative flex items-center w-full">
+<span class="absolute left-4 text-gray-400">
+<!-- Magnifying Glass Icon -->
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</span>
+<input class="w-full pl-11 pr-4 py-2 text-sm bg-[#EEF2F6] hover:bg-[#E8EDF3] focus:bg-white text-gray-800 placeholder-gray-400 rounded-full border-none focus:ring-2 focus:ring-[#F95721] transition duration-150 outline-none" placeholder="Tìm kiếm sản phẩm, thương hiệu, danh mục..." type="text"/>
+</div>
+</div>
+<!-- Right Navigation: Account, Cart, Promotions -->
+<div class="flex items-center space-x-7 shrink-0 text-sm font-medium">
+<!-- Tài khoản -->
+<a class="flex items-center gap-2 text-gray-800 hover:text-[#F95721] transition-colors" href="#">
+<svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span class="font-semibold text-gray-900">Tài khoản</span>
+</a>
+<!-- Giỏ hàng -->
+<a class="flex items-center gap-2 text-gray-800 hover:text-[#F95721] transition-colors relative" href="#">
+<div class="relative">
+<svg class="w-5 h-5 text-[#F95721]" fill="none" stroke="currentColor" stroke-width="1.9" viewbox="0 0 24 24">
+<path d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<span class="font-semibold text-gray-900">Giỏ hàng</span>
+</a>
+<!-- Khuyến mãi -->
+<a class="font-semibold text-[#F95721] hover:text-[#d8400e] transition-colors" href="#">
+            Khuyến mãi
+          </a>
+</div>
+</div>
+<!-- Categories Navigation Bar -->
+<nav class="flex items-center space-x-7 pt-3 pb-1 text-[13.5px] font-medium border-t border-transparent text-gray-700 overflow-x-auto scrollbar-none">
+<a class="text-[#F95721] font-semibold whitespace-nowrap hover:text-[#e04513]" href="#">Tất cả danh mục</a>
+<a class="hover:text-[#F95721] whitespace-nowrap" href="#">Laptop</a>
+<a class="hover:text-[#F95721] whitespace-nowrap" href="#">Điện thoại</a>
+<a class="hover:text-[#F95721] whitespace-nowrap" href="#">Máy tính bảng</a>
+<a class="hover:text-[#F95721] whitespace-nowrap" href="#">Âm thanh</a>
+<a class="hover:text-[#F95721] whitespace-nowrap" href="#">Thiết bị đeo</a>
+<a class="hover:text-[#F95721] whitespace-nowrap" href="#">Phụ kiện</a>
+<a class="hover:text-[#F95721] whitespace-nowrap" href="#">Thiết bị thông minh</a>
+<a class="hover:text-[#F95721] whitespace-nowrap" href="#">Nhà thông minh</a>
+</nav>
+</div>
+</header>
+<!-- END: SiteHeader -->
+<!-- BEGIN: MainContainer -->
+<div class="max-w-[1760px] w-full mx-auto px-6 py-8 flex-1 flex gap-8">
+<!-- BEGIN: SellerSidebar -->
+<aside class="w-64 shrink-0 flex flex-col space-y-4 select-none" data-purpose="seller-navigation">
+<!-- Studio Header Details -->
+<div class="px-2 pb-2">
+<h2 class="text-2xl font-bold text-gray-900 tracking-tight leading-snug">Seller Studio</h2>
+<p class="text-xs text-gray-500 mt-1">Quản lý hoạt động bán hàng của bạn</p>
+</div>
+<!-- Navigation List Card -->
+<div class="bg-white rounded-xl border border-gray-200/80 studio-card-shadow overflow-hidden p-2 space-y-1">
+<!-- 1. Tổng quan -->
+<a class="flex items-center gap-3.5 px-4 py-3 rounded-lg text-gray-700 font-semibold text-sm hover:bg-gray-50 transition-colors" href="#">
+<svg class="w-5 h-5 text-gray-800" fill="currentColor" viewbox="0 0 24 24">
+<path d="M11.47 3.841a.75.75 0 0 1 1.06 0l8.69 8.69a.75.75 0 1 0 1.06-1.061l-8.689-8.69a2.25 2.25 0 0 0-3.182 0l-8.69 8.69a.75.75 0 1 0 1.061 1.06l8.69-8.689Z"></path>
+<path d="m12 5.432 8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 0 1-.75-.75v-4.5a.75.75 0 0 0-.75-.75h-3a.75.75 0 0 0-.75.75V21a.75.75 0 0 1-.75.75H5.625a1.875 1.875 0 0 1-1.875-1.875v-6.198a2.29 2.29 0 0 0 .091-.086L12 5.432Z"></path>
+</svg>
+<span>Tổng quan</span>
+</a>
+<!-- 2. Sản phẩm -->
+<a class="flex items-center gap-3.5 px-4 py-3 rounded-lg text-gray-700 font-semibold text-sm hover:bg-gray-50 transition-colors" href="#">
+<svg class="w-5 h-5 text-gray-800" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="m21 7.5-9-5.25L3 7.5m18 0-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span>Sản phẩm</span>
+</a>
+<!-- 3. Đơn hàng -->
+<a class="flex items-center gap-3.5 px-4 py-3 rounded-lg text-gray-700 font-semibold text-sm hover:bg-gray-50 transition-colors" href="#">
+<svg class="w-5 h-5 text-gray-800" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span>Đơn hàng</span>
+</a>
+<!-- 4. Khuyến mãi -->
+<a class="flex items-center gap-3.5 px-4 py-3 rounded-lg text-gray-700 font-semibold text-sm hover:bg-gray-50 transition-colors" href="#">
+<svg class="w-5 h-5 text-gray-800 -rotate-45" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 0 0 5.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 0 0 9.568 3Z" stroke-linecap="round" stroke-linejoin="round"></path>
+<path d="M6 6h.008v.008H6V6Z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span>Khuyến mãi</span>
+</a>
+<!-- 5. Phân tích (ACTIVE ITEM) -->
+<a class="flex items-center gap-3.5 px-4 py-3 rounded-lg text-[#F95721] font-semibold text-sm bg-[#FFF1EB] transition-colors relative" href="#">
+<!-- Active bar indicator on left side -->
+<div class="absolute left-0 top-1.5 bottom-1.5 w-1 bg-[#F95721] rounded-r"></div>
+<svg class="w-5 h-5 text-[#F95721]" fill="currentColor" viewbox="0 0 24 24">
+<path d="M18.375 2.25c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h1.5c.621 0 1.125-.504 1.125-1.125V3.375c0-.621-.504-1.125-1.125-1.125h-1.5ZM11.25 7.5c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h1.5c.621 0 1.125-.504 1.125-1.125v-12c0-.621-.504-1.125-1.125-1.125h-1.5ZM4.125 12c-.621 0-1.125.504-1.125 1.125v7.5c0 .621.504 1.125 1.125 1.125h1.5c.621 0 1.125-.504 1.125-1.125v-7.5c0-.621-.504-1.125-1.125-1.125h-1.5Z"></path>
+</svg>
+<span>Phân tích</span>
+</a>
+</div>
+</aside>
+<!-- END: SellerSidebar -->
+<!-- BEGIN: MainContentArea -->
+<main class="flex-1 space-y-6" data-purpose="analytics-dashboard">
+<!-- Top Title Bar and Filter Controls -->
+<div class="flex items-start justify-between">
+<div>
+<h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">Phân tích</h1>
+<p class="text-sm text-gray-500 mt-1">Theo dõi hiệu quả kinh doanh và hiểu rõ hơn về khách hàng của bạn.</p>
+</div>
+<!-- Date Range Filter Dropdown Button -->
+<div class="relative">
+<button class="inline-flex items-center gap-2.5 px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#F95721] transition shadow-sm" type="button">
+<!-- Calendar Icon -->
+<svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" stroke-linecap="round" stroke-linejoin="round"></path>
+<path d="M9 14h.008v.008H9V14Zm3 0h.008v.008H12V14Zm3 0h.008v.008H15V14Z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span>7 ngày qua</span>
+<!-- Chevron Down Icon -->
+<svg class="w-4 h-4 text-gray-500 ml-1" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="m19.5 8.25-7.5 7.5-7.5-7.5" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+</div>
+</div>
+<!-- Section Card 1: Đơn hàng theo thời gian -->
+<section class="bg-white rounded-xl border border-gray-200 studio-card-shadow p-6">
+<header class="mb-4">
+<h2 class="text-base font-bold text-gray-900 leading-6">Đơn hàng theo thời gian</h2>
+<p class="text-xs text-gray-500 mt-0.5">Tổng số đơn hàng của shop theo thời gian.</p>
+</header>
+<!-- Empty State Container for Orders Chart -->
+<div class="py-14 flex flex-col items-center justify-center text-center">
+<!-- Graphic Icon: Web Browser / Chart Window with Info Pill -->
+<div class="relative w-28 h-24 mb-4 flex items-center justify-center">
+<!-- Window Container -->
+<div class="w-24 h-20 bg-gradient-to-b from-[#E2E8F0] to-[#EEF2F6] rounded-xl p-1.5 shadow-inner flex flex-col border border-gray-200/80">
+<!-- Window top dots -->
+<div class="flex items-center space-x-1 mb-2 px-1">
+<span class="w-1.5 h-1.5 rounded-full bg-gray-400"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-gray-400"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-gray-400"></span>
+</div>
+<!-- Inner bar representations -->
+<div class="flex-1 bg-white/70 rounded-lg flex items-end justify-center gap-1.5 pb-2 px-3">
+<span class="w-2.5 h-4 bg-gray-400 rounded-sm"></span>
+<span class="w-2.5 h-7 bg-gray-500 rounded-sm"></span>
+<span class="w-2.5 h-5 bg-gray-400 rounded-sm"></span>
+</div>
+</div>
+<!-- Information Badge Overlay -->
+<div class="absolute -bottom-1 -right-0.5 w-6 h-6 rounded-full bg-[#94A3B8] text-white flex items-center justify-center shadow font-bold text-xs">
+<span>i</span>
+</div>
+</div>
+<h3 class="text-sm font-bold text-gray-800 mb-1">Chưa có dữ liệu</h3>
+<p class="text-xs text-gray-500">Hiện chưa có đơn hàng để hiển thị biểu đồ.</p>
+</div>
+</section>
+<!-- Section Card 2: Sản phẩm bán chạy -->
+<section class="bg-white rounded-xl border border-gray-200 studio-card-shadow p-6">
+<header class="mb-4">
+<h2 class="text-base font-bold text-gray-900 leading-6">Sản phẩm bán chạy</h2>
+<p class="text-xs text-gray-500 mt-0.5">Top sản phẩm có số lượng bán cao nhất.</p>
+</header>
+<!-- Empty State Container for Best Sellers -->
+<div class="py-14 flex flex-col items-center justify-center text-center">
+<!-- Graphic Icon: Open Product Delivery Box with subtle rays -->
+<div class="relative w-28 h-24 mb-4 flex items-center justify-center">
+<!-- Radiating dashes above the open box -->
+<div class="absolute -top-1 flex space-x-2">
+<span class="w-0.5 h-2 bg-gray-300 -rotate-12 rounded-full"></span>
+<span class="w-0.5 h-2.5 bg-gray-300 rounded-full"></span>
+<span class="w-0.5 h-2 bg-gray-300 rotate-12 rounded-full"></span>
+</div>
+<!-- Stylized 3D Open Package Isometric SVG -->
+<svg class="w-20 h-20 text-gray-300 drop-shadow-sm" fill="none" viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+<!-- Left side of box -->
+<polygon fill="#CBD5E1" points="18,48 50,65 50,90 18,72"></polygon>
+<!-- Right side of box -->
+<polygon fill="#94A3B8" points="50,65 82,48 82,72 50,90"></polygon>
+<!-- Top open flaps -->
+<polygon fill="#E2E8F0" points="50,65 18,48 28,34 60,49"></polygon>
+<polygon fill="#F1F5F9" points="50,65 82,48 72,34 40,49"></polygon>
+<!-- Top back flaps open up -->
+<polygon fill="#E2E8F0" opacity="0.8" points="18,48 48,32 38,20 10,36"></polygon>
+<polygon fill="#CBD5E1" opacity="0.8" points="82,48 52,32 62,20 90,36"></polygon>
+</svg>
+</div>
+<h3 class="text-sm font-bold text-gray-800 mb-1">Chưa có dữ liệu</h3>
+<p class="text-xs text-gray-500">Hiện chưa có dữ liệu sản phẩm để hiển thị.</p>
+</div>
+</section>
+</main>
+<!-- END: MainContentArea -->
+</div>
+<!-- END: MainContainer -->
+</body></html>

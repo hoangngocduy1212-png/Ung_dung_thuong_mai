@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kết quả tìm kiếm - TECHSTORE</title>
+<!-- Google Fonts: Be Vietnam Pro -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              DEFAULT: '#FF5C00',
+              50: '#FFF5F0',
+              100: '#FFE8DC',
+              500: '#FF5C00',
+              600: '#E65200',
+              700: '#CC4600',
+            }
+          },
+          fontFamily: {
+            sans: ['"Be Vietnam Pro"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+<!-- Custom Typography & Layout Overrides -->
+<style data-purpose="base-styling">
+    body {
+      font-family: 'Be Vietnam Pro', sans-serif;
+      background-color: #F8F9FA;
+      color: #1E293B;
+      -webkit-font-smoothing: antialiased;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+<!-- BEGIN: MainHeader -->
+<header class="bg-white border-b border-gray-100 shadow-sm sticky top-0 z-50">
+<!-- Top row: Brand Logo, Search Bar, User Profile & Cart -->
+<div class="max-w-[1340px] mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between gap-6">
+<!-- Brand Logo -->
+<a class="flex items-center gap-1 text-2xl font-extrabold tracking-tight text-gray-900 group" href="#">
+<span>TECHSTORE</span>
+<span class="w-2.5 h-2.5 rounded-full bg-brand group-hover:scale-125 transition-transform"></span>
+</a>
+<!-- Search Field with pre-filled query -->
+<div class="flex-1 max-w-2xl relative">
+<div class="relative flex items-center">
+<span class="absolute left-4 text-gray-400 pointer-events-none">
+<svg class="w-4 h-4 stroke-current" fill="none" stroke-width="2" viewbox="0 0 24 24">
+<path d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</span>
+<input class="w-full bg-gray-100/90 text-sm text-gray-800 placeholder-gray-400 pl-11 pr-4 py-2.5 rounded-full border-none focus:ring-2 focus:ring-brand focus:bg-white transition-all shadow-inner" placeholder="Tìm kiếm sản phẩm, thương hiệu..." type="text" value="laptop gaming"/>
+</div>
+</div>
+<!-- Action items: Account & Cart -->
+<div class="flex items-center gap-6 text-sm font-medium text-gray-700">
+<!-- Account -->
+<a class="flex items-center gap-2 hover:text-brand transition-colors" href="#">
+<svg class="w-5 h-5 stroke-current text-gray-600" fill="none" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span>Tài khoản</span>
+</a>
+<!-- Cart with badge -->
+<a class="flex items-center gap-2 hover:text-brand transition-colors relative" href="#">
+<div class="relative">
+<svg class="w-5 h-5 stroke-current text-gray-600" fill="none" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span class="absolute -top-2 -right-2 bg-brand text-white text-[10px] font-bold px-1.5 py-0.2 rounded-full leading-tight">0</span>
+</div>
+<span>Giỏ hàng</span>
+</a>
+</div>
+</div>
+<!-- Navigation category links row -->
+<div class="border-t border-gray-100 bg-white">
+<div class="max-w-[1340px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between text-sm">
+<div class="flex items-center space-x-7 py-2.5 overflow-x-auto scrollbar-none">
+<!-- All Categories button -->
+<button class="flex items-center gap-2 font-semibold text-brand hover:text-brand-600 transition-colors whitespace-nowrap" type="button">
+<svg class="w-4 h-4 stroke-current" fill="none" stroke-width="2.5" viewbox="0 0 24 24">
+<path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span>Tất cả danh mục</span>
+</button>
+<!-- Category items -->
+<a class="font-semibold text-brand border-b-2 border-brand pb-1 whitespace-nowrap" href="#">Laptop</a>
+<a class="text-gray-600 hover:text-brand transition-colors whitespace-nowrap" href="#">Điện thoại</a>
+<a class="text-gray-600 hover:text-brand transition-colors whitespace-nowrap" href="#">Máy tính bảng</a>
+<a class="text-gray-600 hover:text-brand transition-colors whitespace-nowrap" href="#">Âm thanh</a>
+<a class="text-gray-600 hover:text-brand transition-colors whitespace-nowrap" href="#">Thiết bị đeo</a>
+<a class="text-gray-600 hover:text-brand transition-colors whitespace-nowrap" href="#">Phụ kiện</a>
+<a class="text-gray-600 hover:text-brand transition-colors whitespace-nowrap" href="#">Thiết bị thông minh</a>
+<a class="text-gray-600 hover:text-brand transition-colors whitespace-nowrap" href="#">Nhà thông minh</a>
+</div>
+<!-- Right Promotion Link -->
+<a class="hidden md:inline-flex items-center text-sm font-semibold text-brand hover:underline whitespace-nowrap ml-4" href="#">
+          Khuyến mãi
+        </a>
+</div>
+</div>
+</header>
+<!-- END: MainHeader -->
+<!-- BEGIN: MainContent -->
+<main class="max-w-[1340px] mx-auto px-4 sm:px-6 lg:px-8 py-4 flex-1 w-full">
+<!-- Breadcrumb Component -->
+<nav aria-label="Breadcrumb" class="flex items-center space-x-2 text-xs text-gray-500 mb-4">
+<a class="hover:text-brand transition-colors" href="#">Trang chủ</a>
+<span>›</span>
+<span class="text-gray-800 font-medium">Kết quả tìm kiếm</span>
+</nav>
+<!-- BEGIN: HeroSearchBanner -->
+<section class="relative rounded-2xl bg-gradient-to-r from-[#F5F6F8] via-[#ECEFF2] to-[#0A0D14] overflow-hidden mb-6 shadow-sm border border-gray-100 flex flex-col md:flex-row items-center justify-between min-h-[145px]">
+<!-- Left Banner Info -->
+<div class="p-6 md:p-8 z-10">
+<h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 tracking-tight mb-2">Kết quả tìm kiếm</h1>
+<p class="text-sm md:text-base text-gray-600">
+          Tìm thấy <span class="font-bold text-brand">24</span> kết quả cho "<span class="font-medium text-gray-800">laptop gaming</span>"
+        </p>
+</div>
+<!-- Right Banner Visual Banner & Slogan -->
+<div class="relative w-full md:w-3/5 h-44 md:h-full bg-[#07090E] flex items-center justify-between px-6 md:px-10 overflow-hidden">
+<!-- Background subtle glow -->
+<div class="absolute inset-0 bg-gradient-to-r from-transparent via-[#FF1447]/10 to-[#8B00FF]/15 pointer-events-none"></div>
+<!-- ROG / Laptop Graphic Representation -->
+<div class="relative flex items-center justify-center py-2">
+<img alt="ROG Gaming Laptop Render" class="h-32 md:h-36 object-contain drop-shadow-[0_10px_20px_rgba(255,40,40,0.25)]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuALSgiMldLt2m5kZiB4WA-BodxCr3-aHRbwkklrYoSuEI5U5Q5hxdAFF1ITsuRUxaatH-q-580X_uuYr6a6IshfiS_AfCQyqAeX5EsEainuCCuFQ9GRuIaDh7ZsoISsRNaeBtMTIGcYR1VS9f6fASLlMAYGj05dKSzpQ43YmMFIr3rMUfYni4w0SavptiwE7jER83IuRO4cAC4GMyMLPDp9hqW2B5pBiRJcD2Y54SP5"/>
+</div>
+<!-- Banner Typography -->
+<div class="text-right z-10 pl-4">
+<p class="text-white font-extrabold text-base md:text-lg tracking-wider uppercase leading-snug drop-shadow-md">
+            HIỆU NĂNG BỨT PHÁ
+          </p>
+<p class="text-gray-200 font-medium text-xs md:text-sm tracking-wide mt-1">
+            TRẢI NGHIỆM GAME ĐỈNH CAO
+          </p>
+</div>
+</div>
+</section>
+<!-- END: HeroSearchBanner -->
+<!-- BEGIN: SearchResultsLayout (Sidebar Filter + Products Grid) -->
+<div class="flex flex-col lg:flex-row gap-6 items-start">
+<!-- BEGIN: FilterSidebar -->
+<aside class="w-full lg:w-64 bg-white rounded-xl p-5 shadow-sm border border-gray-100 flex-shrink-0" data-purpose="search-filters">
+<!-- Filter Group: Thương hiệu -->
+<div class="mb-6">
+<h3 class="text-sm font-bold text-gray-900 mb-3.5 tracking-tight">Thương hiệu</h3>
+<div class="space-y-2.5 text-xs text-gray-600">
+<!-- Brand Checkbox Items -->
+<label class="flex items-center justify-between cursor-pointer group">
+<span class="flex items-center gap-2.5">
+<input checked="" class="w-4 h-4 rounded text-brand border-gray-300 focus:ring-brand accent-[#FF5C00]" type="checkbox"/>
+<span class="font-medium text-gray-800">ASUS</span>
+</span>
+<span class="text-gray-400 group-hover:text-brand">(6)</span>
+</label>
+<label class="flex items-center justify-between cursor-pointer group">
+<span class="flex items-center gap-2.5">
+<input class="w-4 h-4 rounded text-brand border-gray-300 focus:ring-brand accent-[#FF5C00]" type="checkbox"/>
+<span>Acer</span>
+</span>
+<span class="text-gray-400 group-hover:text-brand">(6)</span>
+</label>
+<label class="flex items-center justify-between cursor-pointer group">
+<span class="flex items-center gap-2.5">
+<input class="w-4 h-4 rounded text-brand border-gray-300 focus:ring-brand accent-[#FF5C00]" type="checkbox"/>
+<span>MSI</span>
+</span>
+<span class="text-gray-400 group-hover:text-brand">(5)</span>
+</label>
+<label class="flex items-center justify-between cursor-pointer group">
+<span class="flex items-center gap-2.5">
+<input class="w-4 h-4 rounded text-brand border-gray-300 focus:ring-brand accent-[#FF5C00]" type="checkbox"/>
+<span>Lenovo</span>
+</span>
+<span class="text-gray-400 group-hover:text-brand">(4)</span>
+</label>
+<label class="flex items-center justify-between cursor-pointer group">
+<span class="flex items-center gap-2.5">
+<input class="w-4 h-4 rounded text-brand border-gray-300 focus:ring-brand accent-[#FF5C00]" type="checkbox"/>
+<span>Dell</span>
+</span>
+<span class="text-gray-400 group-hover:text-brand">(3)</span>
+</label>
+<label class="flex items-center justify-between cursor-pointer group">
+<span class="flex items-center gap-2.5">
+<input class="w-4 h-4 rounded text-brand border-gray-300 focus:ring-brand accent-[#FF5C00]" type="checkbox"/>
+<span>HP</span>
+</span>
+<span class="text-gray-400 group-hover:text-brand">(2)</span>
+</label>
+</div>
+<button class="mt-3 text-xs font-semibold text-brand hover:underline inline-flex items-center gap-1" type="button">
+            Xem thêm <span>→</span>
+</button>
+</div>
+<hr class="border-gray-100 my-4"/>
+<!-- Filter Group: Khoảng giá -->
+<div class="mb-6">
+<h3 class="text-sm font-bold text-gray-900 mb-3.5 tracking-tight">Khoảng giá</h3>
+<div class="space-y-2.5 text-xs text-gray-600">
+<label class="flex items-center justify-between cursor-pointer group">
+<span class="flex items-center gap-2.5">
+<input class="w-4 h-4 text-brand border-gray-300 focus:ring-brand accent-[#FF5C00]" name="price_range" type="radio"/>
+<span>Dưới 20 triệu</span>
+</span>
+<span class="text-gray-400 group-hover:text-brand">(6)</span>
+</label>
+<label class="flex items-center justify-between cursor-pointer group">
+<span class="flex items-center gap-2.5">
+<input checked="" class="w-4 h-4 text-brand border-gray-300 focus:ring-brand accent-[#FF5C00]" name="price_range" type="radio"/>
+<span class="font-medium text-gray-800">20 - 30 triệu</span>
+</span>
+<span class="text-gray-400 group-hover:text-brand">(10)</span>
+</label>
+<label class="flex items-center justify-between cursor-pointer group">
+<span class="flex items-center gap-2.5">
+<input class="w-4 h-4 text-brand border-gray-300 focus:ring-brand accent-[#FF5C00]" name="price_range" type="radio"/>
+<span>30 - 40 triệu</span>
+</span>
+<span class="text-gray-400 group-hover:text-brand">(5)</span>
+</label>
+<label class="flex items-center justify-between cursor-pointer group">
+<span class="flex items-center gap-2.5">
+<input class="w-4 h-4 text-brand border-gray-300 focus:ring-brand accent-[#FF5C00]" name="price_range" type="radio"/>
+<span>Trên 40 triệu</span>
+</span>
+<span class="text-gray-400 group-hover:text-brand">(3)</span>
+</label>
+</div>
+</div>
+<hr class="border-gray-100 my-4"/>
+<!-- Filter Group: Cấu hình -->
+<div>
+<h3 class="text-sm font-bold text-gray-900 mb-3.5 tracking-tight">Cấu hình</h3>
+<div class="space-y-2.5 text-xs text-gray-600">
+<label class="flex items-center justify-between cursor-pointer group">
+<span class="flex items-center gap-2.5">
+<input class="w-4 h-4 rounded text-brand border-gray-300 focus:ring-brand accent-[#FF5C00]" type="checkbox"/>
+<span>RAM 16GB trở lên</span>
+</span>
+<span class="text-gray-400 group-hover:text-brand">(18)</span>
+</label>
+<label class="flex items-center justify-between cursor-pointer group">
+<span class="flex items-center gap-2.5">
+<input class="w-4 h-4 rounded text-brand border-gray-300 focus:ring-brand accent-[#FF5C00]" type="checkbox"/>
+<span>SSD 256GB trở lên</span>
+</span>
+<span class="text-gray-400 group-hover:text-brand">(20)</span>
+</label>
+<label class="flex items-center justify-between cursor-pointer group">
+<span class="flex items-center gap-2.5">
+<input class="w-4 h-4 rounded text-brand border-gray-300 focus:ring-brand accent-[#FF5C00]" type="checkbox"/>
+<span>Card đồ họa RTX</span>
+</span>
+<span class="text-gray-400 group-hover:text-brand">(14)</span>
+</label>
+<label class="flex items-center justify-between cursor-pointer group">
+<span class="flex items-center gap-2.5">
+<input class="w-4 h-4 rounded text-brand border-gray-300 focus:ring-brand accent-[#FF5C00]" type="checkbox"/>
+<span>Màn hình 144Hz trở lên</span>
+</span>
+<span class="text-gray-400 group-hover:text-brand">(16)</span>
+</label>
+</div>
+</div>
+</aside>
+<!-- END: FilterSidebar -->
+<!-- BEGIN: ProductsContainer -->
+<section class="flex-1 w-full" data-purpose="product-list">
+<!-- Sorting and Count Bar -->
+<div class="flex flex-wrap items-center justify-between gap-4 pb-4 mb-2">
+<!-- Sort Options -->
+<div class="flex items-center gap-2 text-xs">
+<span class="text-gray-600 font-medium mr-1">Sắp xếp theo:</span>
+<button class="bg-brand text-white font-medium px-3.5 py-1.5 rounded-md shadow-sm transition hover:bg-brand-600" type="button">
+              Liên quan
+            </button>
+<button class="bg-white text-gray-700 font-normal px-3.5 py-1.5 rounded-md border border-gray-200 hover:bg-gray-50 transition" type="button">
+              Giá thấp đến cao
+            </button>
+<button class="bg-white text-gray-700 font-normal px-3.5 py-1.5 rounded-md border border-gray-200 hover:bg-gray-50 transition" type="button">
+              Giá cao đến thấp
+            </button>
+<button class="bg-white text-gray-700 font-normal px-3.5 py-1.5 rounded-md border border-gray-200 hover:bg-gray-50 transition" type="button">
+              Mới nhất
+            </button>
+</div>
+<!-- Total results indicator -->
+<div class="text-xs text-gray-500">
+            Hiển thị <span class="font-bold text-gray-800">24</span> kết quả
+          </div>
+</div>
+<!-- Product Grid (4 columns on lg, 2 columns on sm) -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Product Card 1: ASUS ROG Strix G16 -->
+<div class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm hover:shadow-md transition-shadow relative flex flex-col justify-between group">
+<!-- Wishlist Button -->
+<button aria-label="Thêm vào yêu thích" class="absolute top-3 right-3 text-gray-400 hover:text-red-500 transition-colors z-10">
+<svg class="w-5 h-5 fill-none stroke-current" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+<!-- Product Visual -->
+<div class="w-full aspect-[4/3] flex items-center justify-center p-2 mb-3 bg-gray-50/50 rounded-lg group-hover:scale-105 transition-transform duration-200">
+<img alt="ASUS ROG Strix G16 G614Ji" class="max-h-28 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJqI7hv33c7XCtf0M7sRM_NUkxiAWpxmr7BFc5SYVQkoLq-BrtjpAMERGrAoFaQmXxz9Ipbtyy_PABBPmZ4_zIPTGW55DtZOF2xG_XYXL7hg3raq3VGzXRtcoOIu1fVUqIQ9aL_H3vS-NYgA-9XYUNiIeCc42MYEeK1E1zMLxI3TQ9kJDiGkN8QqE-a7DgNXPPIMsWabm2bJDfOQ9sxXtBpEN8MAELHK5etzQmWKre"/>
+</div>
+<!-- Meta details -->
+<div>
+<h4 class="text-xs font-semibold text-gray-900 line-clamp-1 group-hover:text-brand transition-colors" title="ASUS ROG Strix G16 G614Ji">
+                ASUS ROG Strix G16 G614Ji
+              </h4>
+<p class="text-base font-extrabold text-brand mt-1.5">
+                32.990.000<span class="text-xs align-top underline">đ</span>
+</p>
+<!-- Reviews & Rating -->
+<div class="flex items-center gap-1 mt-2 text-[11px] text-gray-500">
+<div class="flex text-amber-400">
+<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+</div>
+<span>(28)</span>
+</div>
+</div>
+<!-- Action Button -->
+<div class="mt-3.5 pt-2 border-t border-gray-50">
+<button class="w-full py-2 bg-brand hover:bg-brand-600 text-white font-medium text-xs rounded-lg transition-colors shadow-sm">
+                Xem chi tiết
+              </button>
+</div>
+</div>
+<!-- Product Card 2: MSI Katana 15 -->
+<div class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm hover:shadow-md transition-shadow relative flex flex-col justify-between group">
+<button aria-label="Thêm vào yêu thích" class="absolute top-3 right-3 text-gray-400 hover:text-red-500 transition-colors z-10">
+<svg class="w-5 h-5 fill-none stroke-current" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+<div class="w-full aspect-[4/3] flex items-center justify-center p-2 mb-3 bg-gray-50/50 rounded-lg group-hover:scale-105 transition-transform duration-200">
+<img alt="MSI Katana 15 B13VEK" class="max-h-28 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXlGBaPooK6medATPAJMX9LcXHgCDJqi0TIwBEzEWZ4d3T5cDckOdNoWGLV53-vJ9G7WYECZQlz4LViWhCDz_5ZwCFIlclL9TRG-xJ4-X_yQuvcbwJLwgw5XkqXA2-sfuxph8NTZu4-F7fZ_McFHFCUQZ38VB-tDKqtxm6ePftiqk1NIec2oeZZgHJ52KhnPr2_hVOngUgUJWMIpwKYTzWaD_tDOHxJV5iDadgkKcc"/>
+</div>
+<div>
+<h4 class="text-xs font-semibold text-gray-900 line-clamp-1 group-hover:text-brand transition-colors" title="MSI Katana 15 B13VEK">
+                MSI Katana 15 B13VEK
+              </h4>
+<p class="text-base font-extrabold text-brand mt-1.5">
+                25.990.000<span class="text-xs align-top underline">đ</span>
+</p>
+<div class="flex items-center gap-1 mt-2 text-[11px] text-gray-500">
+<div class="flex text-amber-400">
+<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+</div>
+<span>(34)</span>
+</div>
+</div>
+<div class="mt-3.5 pt-2 border-t border-gray-50">
+<button class="w-full py-2 bg-brand hover:bg-brand-600 text-white font-medium text-xs rounded-lg transition-colors shadow-sm">
+                Xem chi tiết
+              </button>
+</div>
+</div>
+<!-- Product Card 3: Acer Nitro 5 -->
+<div class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm hover:shadow-md transition-shadow relative flex flex-col justify-between group">
+<button aria-label="Thêm vào yêu thích" class="absolute top-3 right-3 text-gray-400 hover:text-red-500 transition-colors z-10">
+<svg class="w-5 h-5 fill-none stroke-current" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+<div class="w-full aspect-[4/3] flex items-center justify-center p-2 mb-3 bg-gray-50/50 rounded-lg group-hover:scale-105 transition-transform duration-200">
+<img alt="Acer Nitro 5 AN515-58" class="max-h-28 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJsTpaxjsKWywUSuwQEHwf_PZhPIyLC1W4Otds26iUma4U5hP9UHpJ-QFJz_e9w4982oJfaEoFoRt6_ATNYpN_1ACp8L8pT7VaNTvBt4r_1bNw2Ju2r_sCCaIkTEYcr0GOHuZcuADEOoTp_s8RbUnjnM9e5xkQfl7Xpyl9r6LJW1KCJY0_Tz5plOLA63D_s3EA3lKcKQZzS_WdnfWvHSxo6mdn9CmbCg1hwzH9W-nV"/>
+</div>
+<div>
+<h4 class="text-xs font-semibold text-gray-900 line-clamp-1 group-hover:text-brand transition-colors" title="Acer Nitro 5 AN515-58">
+                Acer Nitro 5 AN515-58
+              </h4>
+<p class="text-base font-extrabold text-brand mt-1.5">
+                22.490.000<span class="text-xs align-top underline">đ</span>
+</p>
+<div class="flex items-center gap-1 mt-2 text-[11px] text-gray-500">
+<div class="flex text-amber-400">
+<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+</div>
+<span>(19)</span>
+</div>
+</div>
+<div class="mt-3.5 pt-2 border-t border-gray-50">
+<button class="w-full py-2 bg-brand hover:bg-brand-600 text-white font-medium text-xs rounded-lg transition-colors shadow-sm">
+                Xem chi tiết
+              </button>
+</div>
+</div>
+<!-- Product Card 4: Lenovo Legion 5 -->
+<div class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm hover:shadow-md transition-shadow relative flex flex-col justify-between group">
+<button aria-label="Thêm vào yêu thích" class="absolute top-3 right-3 text-gray-400 hover:text-red-500 transition-colors z-10">
+<svg class="w-5 h-5 fill-none stroke-current" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+<div class="w-full aspect-[4/3] flex items-center justify-center p-2 mb-3 bg-gray-50/50 rounded-lg group-hover:scale-105 transition-transform duration-200">
+<img alt="Lenovo Legion 5 15ARH7" class="max-h-28 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBO37z93UZe1ZtARi7nN5QHJEfRvvMh-4s-b0eYbKCSeYwrA28uJrp4cJt9xDeDngXa-pB64VEW1sfDrtO3zGOt1nM70kcwNFVKei30qiY7J01FAuyzbyUnpgBAcQ7n3O2-pv8SygV4IsM_FeJc0qDbNqXW6Iq2tXZbX6GPfJmNvXslosHRLCma2StSESnFfazyyeyzQ5z8FAUE3X-eWD1Xh7bdiiarzYLocIDKWrTp"/>
+</div>
+<div>
+<h4 class="text-xs font-semibold text-gray-900 line-clamp-1 group-hover:text-brand transition-colors" title="Lenovo Legion 5 15ARH7">
+                Lenovo Legion 5 15ARH7
+              </h4>
+<p class="text-base font-extrabold text-brand mt-1.5">
+                29.990.000<span class="text-xs align-top underline">đ</span>
+</p>
+<div class="flex items-center gap-1 mt-2 text-[11px] text-gray-500">
+<div class="flex text-amber-400">
+<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+</div>
+<span>(27)</span>
+</div>
+</div>
+<div class="mt-3.5 pt-2 border-t border-gray-50">
+<button class="w-full py-2 bg-brand hover:bg-brand-600 text-white font-medium text-xs rounded-lg transition-colors shadow-sm">
+                Xem chi tiết
+              </button>
+</div>
+</div>
+<!-- Product Card 5: Dell G15 5530 -->
+<div class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm hover:shadow-md transition-shadow relative flex flex-col justify-between group">
+<button aria-label="Thêm vào yêu thích" class="absolute top-3 right-3 text-gray-400 hover:text-red-500 transition-colors z-10">
+<svg class="w-5 h-5 fill-none stroke-current" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+<div class="w-full aspect-[4/3] flex items-center justify-center p-2 mb-3 bg-gray-50/50 rounded-lg group-hover:scale-105 transition-transform duration-200">
+<img alt="Dell G15 5530" class="max-h-28 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA562P-lJG5xMo9-nL0c2JgALRWHJA69jpU0gOTEnpMpPA0P0XBpYyYvJCVrdF20T2bv16UWw4ke0auo620hqf2eu16Dn6Qyynnv4Tz5_ihEFP3lO4KG0YNuvdpqzkUarw65RdF-RCX5FjijZue6_2BEuJNr474n7Ng3ipclOjz-7U5XMups9sEBb7szVI2FATeTvzVX3d3z-N9WEA4EZhWRENDNUXHj3Q0m5YKrctx"/>
+</div>
+<div>
+<h4 class="text-xs font-semibold text-gray-900 line-clamp-1 group-hover:text-brand transition-colors" title="Dell G15 5530">
+                Dell G15 5530
+              </h4>
+<p class="text-base font-extrabold text-brand mt-1.5">
+                23.990.000<span class="text-xs align-top underline">đ</span>
+</p>
+<div class="flex items-center gap-1 mt-2 text-[11px] text-gray-500">
+<div class="flex text-amber-400">
+<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+</div>
+<span>(16)</span>
+</div>
+</div>
+<div class="mt-3.5 pt-2 border-t border-gray-50">
+<button class="w-full py-2 bg-brand hover:bg-brand-600 text-white font-medium text-xs rounded-lg transition-colors shadow-sm">
+                Xem chi tiết
+              </button>
+</div>
+</div>
+<!-- Product Card 6: HP Victus 16 -->
+<div class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm hover:shadow-md transition-shadow relative flex flex-col justify-between group">
+<button aria-label="Thêm vào yêu thích" class="absolute top-3 right-3 text-gray-400 hover:text-red-500 transition-colors z-10">
+<svg class="w-5 h-5 fill-none stroke-current" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+<div class="w-full aspect-[4/3] flex items-center justify-center p-2 mb-3 bg-gray-50/50 rounded-lg group-hover:scale-105 transition-transform duration-200">
+<img alt="HP Victus 16-r123TX" class="max-h-28 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBe-EAW5Z8hVbq1TApsP65r5I4KG5roNkVqSxOtxnE5lupgINn8mY-ZPb-r4GcJGHHkPr06erRoOgjVRdFM8h_rKHNLvVZrun8BfFumdcoMMj-5uapyrxc1BOY_ZjY3MtfaEc_34WQo_YrNH30owtKkCOTtTSVYOiJmIGYbwnHEkry-FtePPASb5AX5WQHQJQzFoyigtwhtz8NRfduKeQvu9MI6GdJffr2VQ31SfNZY"/>
+</div>
+<div>
+<h4 class="text-xs font-semibold text-gray-900 line-clamp-1 group-hover:text-brand transition-colors" title="HP Victus 16-r123TX">
+                HP Victus 16-r123TX
+              </h4>
+<p class="text-base font-extrabold text-brand mt-1.5">
+                21.490.000<span class="text-xs align-top underline">đ</span>
+</p>
+<div class="flex items-center gap-1 mt-2 text-[11px] text-gray-500">
+<div class="flex text-amber-400">
+<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+</div>
+<span>(12)</span>
+</div>
+</div>
+<div class="mt-3.5 pt-2 border-t border-gray-50">
+<button class="w-full py-2 bg-brand hover:bg-brand-600 text-white font-medium text-xs rounded-lg transition-colors shadow-sm">
+                Xem chi tiết
+              </button>
+</div>
+</div>
+<!-- Product Card 7: ASUS TUF Gaming A15 -->
+<div class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm hover:shadow-md transition-shadow relative flex flex-col justify-between group">
+<button aria-label="Thêm vào yêu thích" class="absolute top-3 right-3 text-gray-400 hover:text-red-500 transition-colors z-10">
+<svg class="w-5 h-5 fill-none stroke-current" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+<div class="w-full aspect-[4/3] flex items-center justify-center p-2 mb-3 bg-gray-50/50 rounded-lg group-hover:scale-105 transition-transform duration-200">
+<img alt="ASUS TUF Gaming A15 FA507NU" class="max-h-28 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBaBkg3VxjXsxDv-K8eZxsgEgXKdkVjJTaUWNNBKpoRTX0Dz9j_MDv37YnYdc9I8TccthdCE6ccUWp8AJkAFSR1WM4pdWib9Qb_W8M0cJmfIrws9LreaJPGA9gGzR4YCo7uKzGOq-vu8PP9VedaJGBmWTaCwj4Bj5mCyyIeS54lPw4MJhhehfNyZCRVzf2e7InsCjTBUQJ2BFNgD021n5knGezaCW8wuWg65xPdtfIo"/>
+</div>
+<div>
+<h4 class="text-xs font-semibold text-gray-900 line-clamp-1 group-hover:text-brand transition-colors" title="ASUS TUF Gaming A15 FA507NU">
+                ASUS TUF Gaming A15 FA507NU
+              </h4>
+<p class="text-base font-extrabold text-brand mt-1.5">
+                27.990.000<span class="text-xs align-top underline">đ</span>
+</p>
+<div class="flex items-center gap-1 mt-2 text-[11px] text-gray-500">
+<div class="flex text-amber-400">
+<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+</div>
+<span>(31)</span>
+</div>
+</div>
+<div class="mt-3.5 pt-2 border-t border-gray-50">
+<button class="w-full py-2 bg-brand hover:bg-brand-600 text-white font-medium text-xs rounded-lg transition-colors shadow-sm">
+                Xem chi tiết
+              </button>
+</div>
+</div>
+<!-- Product Card 8: MSI Cyborg 15 -->
+<div class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm hover:shadow-md transition-shadow relative flex flex-col justify-between group">
+<button aria-label="Thêm vào yêu thích" class="absolute top-3 right-3 text-gray-400 hover:text-red-500 transition-colors z-10">
+<svg class="w-5 h-5 fill-none stroke-current" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+<div class="w-full aspect-[4/3] flex items-center justify-center p-2 mb-3 bg-gray-50/50 rounded-lg group-hover:scale-105 transition-transform duration-200">
+<img alt="MSI Cyborg 15 A13VE" class="max-h-28 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWk68KaRm1Irv9YzJ769pq38qKHEbc0JgCWC_czzsY6QAbozPAaT_gGLOlZBGH_pynoZEnO-PLNnX-Av-JXWGXwqcMNhcDeZPd9RIOr64bgfD58m3Ulbf1F7gUZYIYloerd0Dtxng6UewomnrzkngoyeWTa28O3k5RPiu0tP6gVAyQ5g8dieVyxJc4_hNbyfAJEPHhPKLOT8-VrJpjwesGPV55aUdfWKJnThN19q6T"/>
+</div>
+<div>
+<h4 class="text-xs font-semibold text-gray-900 line-clamp-1 group-hover:text-brand transition-colors" title="MSI Cyborg 15 A13VE">
+                MSI Cyborg 15 A13VE
+              </h4>
+<p class="text-base font-extrabold text-brand mt-1.5">
+                19.990.000<span class="text-xs align-top underline">đ</span>
+</p>
+<div class="flex items-center gap-1 mt-2 text-[11px] text-gray-500">
+<div class="flex text-amber-400">
+<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+</div>
+<span>(24)</span>
+</div>
+</div>
+<div class="mt-3.5 pt-2 border-t border-gray-50">
+<button class="w-full py-2 bg-brand hover:bg-brand-600 text-white font-medium text-xs rounded-lg transition-colors shadow-sm">
+                Xem chi tiết
+              </button>
+</div>
+</div>
+</div>
+<!-- BEGIN: Pagination -->
+<nav aria-label="Pagination Navigation" class="flex items-center justify-center space-x-1.5 mt-8 mb-4">
+<!-- Previous Button -->
+<a class="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-500 hover:border-gray-300 hover:text-gray-800 transition" href="#">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</a>
+<!-- Page 1 (Active) -->
+<a class="w-8 h-8 flex items-center justify-center rounded-lg bg-brand text-white text-xs font-bold shadow-sm" href="#">
+            1
+          </a>
+<!-- Page 2 -->
+<a class="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 text-xs font-medium transition" href="#">
+            2
+          </a>
+<!-- Page 3 -->
+<a class="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 text-xs font-medium transition" href="#">
+            3
+          </a>
+<!-- Page 4 -->
+<a class="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 text-xs font-medium transition" href="#">
+            4
+          </a>
+<!-- Next Button -->
+<a class="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-500 hover:border-gray-300 hover:text-gray-800 transition" href="#">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</a>
+</nav>
+<!-- END: Pagination -->
+</section>
+<!-- END: ProductsContainer -->
+</div>
+<!-- END: SearchResultsLayout -->
+</main>
+<!-- END: MainContent -->
+<!-- BEGIN: MinimalFooter -->
+<footer class="bg-white border-t border-gray-200 py-6 mt-12 text-center text-xs text-gray-500">
+<div class="max-w-[1340px] mx-auto px-4">
+<p>© 2024 TECHSTORE. Hệ thống bán lẻ thiết bị công nghệ &amp; laptop hàng đầu.</p>
+</div>
+</footer>
+<!-- END: MinimalFooter -->
+</body></html>

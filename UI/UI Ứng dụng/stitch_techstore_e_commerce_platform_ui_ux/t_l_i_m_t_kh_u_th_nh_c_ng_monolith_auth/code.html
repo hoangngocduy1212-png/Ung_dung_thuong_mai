@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_blank" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}
+@keyframes toastProgress {
+  from { width: 100%; }
+  to { width: 0%; }
+}
+.animate-progress {
+  animation: toastProgress 4s linear forwards;
+}
+</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "brand-orange": "#FF5500", "brand-orange-hover": "#e04b00", "dark-bg": "#0c0d10", "dark-card": "#14161a", "dark-input": "#181a20", "dark-border": "#282c35", "dark-subtext": "#9ca3af" }, "fontFamily": { "headline": [ "Be Vietnam Pro", "sans-serif" ], "body": [ "Inter", "sans-serif" ], "mono": [ "JetBrains Mono", "monospace" ] } } } };</script></head><body class="bg-[#0c0d10] font-body text-gray-200 min-h-screen flex flex-col justify-between selection:bg-[#FF5500] selection:text-white relative overflow-x-hidden">
+<!-- Subtle Ambient Glow -->
+<div class="fixed top-0 left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-[#FF5500]/[0.06] rounded-full blur-[140px] pointer-events-none"></div>
+<!-- Top Floating Success Toast (Dark Tech Style) -->
+<div class="fixed top-6 right-4 sm:right-6 z-50 transition-all duration-500 ease-out transform -translate-y-16 opacity-0 pointer-events-none max-w-[420px] w-full" id="floating-toast">
+<div class="relative bg-[#14161a]/95 backdrop-blur-xl border border-emerald-500/40 rounded-xl p-4 shadow-[0_12px_40px_rgba(0,0,0,0.8),0_0_20px_rgba(16,185,129,0.15)] overflow-hidden">
+<!-- Glowing Top Accent -->
+<div class="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-emerald-400 to-transparent"></div>
+<div class="flex items-start gap-3.5">
+<div class="w-9 h-9 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shrink-0 shadow-[0_0_12px_rgba(16,185,129,0.25)]">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div class="flex-1 min-w-0 pr-2">
+<div class="flex items-center gap-2 mb-1">
+<span class="font-headline text-sm font-bold text-white tracking-tight">Đổi mật khẩu thành công!</span>
+<span class="font-mono text-[9px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-semibold border border-emerald-500/30">256-BIT SECURED</span>
+</div>
+<p class="font-body text-xs text-gray-300 leading-relaxed">
+          Tài khoản của bạn đã được cập nhật bảo mật 256-bit. Đang chuyển hướng về trang đăng nhập...
+        </p>
+</div>
+<button class="text-gray-400 hover:text-white transition-colors p-1" onclick="dismissToast()" title="Đóng">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<!-- Progress Countdown Bar -->
+<div class="mt-3 w-full bg-[#1e222a] h-1 rounded-full overflow-hidden">
+<div class="h-full bg-emerald-400 rounded-full" id="toast-progress-bar"></div>
+</div>
+</div>
+</div>
+<!-- Header -->
+<header class="w-full bg-[#0c0d10]/90 backdrop-blur-xl border-b border-[#21252d] z-20"><div class="h-16 max-w-7xl mx-auto px-6 flex items-center justify-between"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-lg bg-[#FF5500] flex items-center justify-center text-white shadow-[0_0_15px_rgba(255,85,0,0.3)]"><span class="material-symbols-outlined text-[18px]">terminal</span></div><div class="flex flex-col"><div class="flex items-center gap-2"><span class="w-4 h-0.5 bg-[#FF5500]"></span><span class="font-mono text-[11px] font-bold uppercase tracking-widest text-gray-300">TECHSTORE</span></div><span class="font-headline text-[15px] font-bold uppercase tracking-tight text-white leading-none">MONOLITH</span></div></div><div class="flex items-center gap-3"><div class="flex items-center gap-1.5 px-3 py-1 rounded bg-[#181a20] border border-[#2a2e37] font-mono text-[11px] text-gray-300"><span class="material-symbols-outlined text-[14px] text-[#FF5500]">lock</span><span>FIPS 140-3 COMPLIANT</span></div><div class="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded bg-[#181a20] border border-[#2a2e37] font-mono text-[11px] text-gray-400"><span class="material-symbols-outlined text-[14px] text-gray-400">verified_user</span><span>256-BIT ENCRYPTION</span></div></div></div></header>
+<!-- Main Form Section -->
+<main class="flex-1 flex flex-col items-center justify-center px-4 sm:px-6 py-10 z-10"><div class="flex flex-col w-full items-center justify-center">
+<!-- Ambient Atmospheric Backing Glow -->
+<div class="relative w-full max-w-[540px]">
+<div class="absolute -top-16 -left-12 w-64 h-64 bg-[#FF5500]/10 rounded-full blur-3xl pointer-events-none"></div>
+<div class="absolute -bottom-16 -right-12 w-64 h-64 bg-[#FF5500]/5 rounded-full blur-3xl pointer-events-none"></div>
+<!-- Main Security Card -->
+<div class="relative bg-[#14161a] rounded-2xl border border-[#282d37] shadow-[0_16px_50px_rgba(0,0,0,0.7)] overflow-hidden">
+<!-- Precision Top Brand Accent Bar -->
+<div class="h-1 w-full bg-gradient-to-r from-transparent via-[#FF5500] to-transparent"></div>
+<!-- Inner Content Container -->
+<div class="p-6 sm:p-8 flex flex-col gap-6">
+<!-- Header Section -->
+<div class="flex flex-col items-start gap-4">
+<div class="w-full flex items-center justify-between">
+<!-- Security Shield Badge -->
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-[#1c1f26] border border-[#2e333d] flex items-center justify-center text-[#FF5500] shadow-[0_0_12px_rgba(255,85,0,0.15)]">
+<span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">shield_person</span>
+</div>
+<div class="flex flex-col">
+<span class="font-mono text-[11px] text-[#FF5500] uppercase tracking-wider font-semibold">SEC_LAYER_04</span>
+<span class="font-mono text-[10px] text-gray-400 font-medium tracking-tight">ENCRYPTED PROTOCOL</span>
+</div>
+</div>
+<!-- Category Pill -->
+<div class="px-3 py-1 rounded-full bg-[#1b1e24] border border-[#2b303b] font-mono text-[11px] text-gray-300 uppercase tracking-wider flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-[#FF5500] animate-pulse"></span>
+              XÁC THỰC BẢO MẬT
+</div>
+</div>
+<div class="flex flex-col gap-2 mt-1">
+<div class="w-8 h-1 bg-[#FF5500] rounded-full"></div>
+<h1 class="font-headline text-2xl sm:text-3xl font-bold tracking-tight text-white">
+              Đặt lại mật khẩu mới
+            </h1>
+<p class="font-body text-sm text-gray-400 leading-relaxed">
+              Vui lòng thiết lập mật khẩu mới cho tài khoản email <span class="font-mono text-xs font-semibold text-white px-2 py-0.5 rounded bg-[#1e222a] border border-[#303644]">nguyen***@gmail.com</span> để củng cố phòng tuyến truy cập.
+            </p>
+</div>
+</div>
+<!-- Inline Interactive Success Announcement Modal / Banner (Appears on Success) -->
+<div class="hidden transition-all duration-500 ease-out p-4 sm:p-5 rounded-xl bg-gradient-to-br from-[#121b16] to-[#14161a] border border-emerald-500/40 shadow-[0_0_30px_rgba(16,185,129,0.15)] flex flex-col gap-3" id="confirmation-banner">
+<div class="flex items-start gap-3.5">
+<div class="w-9 h-9 rounded-lg bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 shrink-0 shadow-[0_0_15px_rgba(16,185,129,0.3)]">
+<span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+<div class="flex-1 flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-mono text-xs font-bold text-white uppercase tracking-wider">ĐỔI MẬT KHẨU THÀNH CÔNG!</span>
+<span class="inline-flex items-center gap-1 font-mono text-[10px] text-emerald-400 font-semibold px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/30">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+          KÍCH HOẠT
+        </span>
+</div>
+<span class="font-body text-xs text-gray-300 mt-1">
+        Tài khoản của bạn đã được cập nhật bảo mật 256-bit. Phiên xác thực cũ đã được thu hồi an toàn.
+      </span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-2 border-t border-[#1e2721] font-mono text-[11px]">
+<span class="text-gray-400 flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px] text-emerald-400 animate-spin">sync</span>
+      Tự động chuyển hướng sau <strong class="text-emerald-400 font-bold" id="countdown-text">4s</strong>
+</span>
+<a class="px-3 py-1 rounded bg-emerald-500 hover:bg-emerald-600 text-black font-bold uppercase tracking-wider transition-colors inline-flex items-center gap-1 text-[11px] shadow-[0_0_10px_rgba(16,185,129,0.4)]" href="#" onclick="alert('Chuyển hướng đến trang Đăng nhập thành công!');">
+<span>Đăng nhập ngay</span>
+<span class="material-symbols-outlined text-[13px]">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Interactive Form Core -->
+<form class="flex flex-col gap-5" id="reset-password-form" onsubmit="event.preventDefault(); handleFormSubmit();">
+<!-- Field 1: New Password -->
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<label class="font-mono text-[11px] uppercase tracking-wider text-gray-300 font-semibold" for="new-password">
+                MẬT KHẨU MỚI
+              </label>
+<span class="font-mono text-[11px] uppercase tracking-wider text-gray-400" id="strength-label">
+                Độ mạnh: <span class="font-medium text-gray-500">Chưa nhập</span>
+</span>
+</div>
+<div class="relative flex items-center">
+<div class="absolute left-3.5 flex items-center pointer-events-none text-gray-400">
+<span class="material-symbols-outlined text-[20px]">lock</span>
+</div>
+<input autocomplete="new-password" class="w-full h-11 pl-11 pr-11 bg-[#181a20] border border-[#2e333d] rounded-lg font-body text-sm text-white placeholder:text-gray-500 transition-all outline-none focus:border-[#FF5500] focus:ring-1 focus:ring-[#FF5500]" id="new-password" oninput="evaluatePassword(this.value)" placeholder="Nhập mật khẩu mới của bạn" type="password"/>
+<button aria-label="Toggle password visibility" class="absolute right-2.5 w-8 h-8 rounded flex items-center justify-center text-gray-400 hover:text-white transition-colors focus:outline-none" id="toggle-pwd-btn" onclick="toggleFieldVisibility('new-password', 'toggle-pwd-icon')" type="button">
+<span class="material-symbols-outlined text-[19px]" id="toggle-pwd-icon">visibility</span>
+</button>
+</div>
+<!-- Dynamic Password Strength Segmented Bar -->
+<div class="flex flex-col gap-2 pt-1">
+<div class="grid grid-cols-4 gap-1.5 w-full h-1.5">
+<div class="h-full rounded-full bg-[#232731] transition-all duration-300" id="bar-1"></div>
+<div class="h-full rounded-full bg-[#232731] transition-all duration-300" id="bar-2"></div>
+<div class="h-full rounded-full bg-[#232731] transition-all duration-300" id="bar-3"></div>
+<div class="h-full rounded-full bg-[#232731] transition-all duration-300" id="bar-4"></div>
+</div>
+<!-- Rule Checklist Matrix -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 font-body text-xs text-gray-400">
+<div class="flex items-center gap-1.5 transition-colors" id="rule-len">
+<span class="material-symbols-outlined text-[16px] text-gray-500 rule-icon">radio_button_unchecked</span>
+<span>Tối thiểu 8 ký tự</span>
+</div>
+<div class="flex items-center gap-1.5 transition-colors" id="rule-case">
+<span class="material-symbols-outlined text-[16px] text-gray-500 rule-icon">radio_button_unchecked</span>
+<span>Chữ hoa &amp; chữ thường</span>
+</div>
+<div class="flex items-center gap-1.5 transition-colors" id="rule-num">
+<span class="material-symbols-outlined text-[16px] text-gray-500 rule-icon">radio_button_unchecked</span>
+<span>Ít nhất 1 số (0-9)</span>
+</div>
+<div class="flex items-center gap-1.5 transition-colors" id="rule-spec">
+<span class="material-symbols-outlined text-[16px] text-gray-500 rule-icon">radio_button_unchecked</span>
+<span>Ký tự đặc biệt (!@#$%^&amp;*)</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Field 2: Confirm Password -->
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<label class="font-mono text-[11px] uppercase tracking-wider text-gray-300 font-semibold" for="confirm-password">
+                XÁC NHẬN MẬT KHẨU MỚI
+              </label>
+<span class="font-mono text-[11px] uppercase tracking-wider text-gray-400 flex items-center gap-1" id="match-status">
+                Chờ xác nhận
+              </span>
+</div>
+<div class="relative flex items-center">
+<div class="absolute left-3.5 flex items-center pointer-events-none text-gray-400">
+<span class="material-symbols-outlined text-[20px]">verified</span>
+</div>
+<input autocomplete="new-password" class="w-full h-11 pl-11 pr-11 bg-[#181a20] border border-[#2e333d] rounded-lg font-body text-sm text-white placeholder:text-gray-500 transition-all outline-none focus:border-[#FF5500] focus:ring-1 focus:ring-[#FF5500]" id="confirm-password" oninput="verifyMatch()" placeholder="Nhập lại mật khẩu mới" type="password"/>
+<button aria-label="Toggle password visibility" class="absolute right-2.5 w-8 h-8 rounded flex items-center justify-center text-gray-400 hover:text-white transition-colors focus:outline-none" id="toggle-cpwd-btn" onclick="toggleFieldVisibility('confirm-password', 'toggle-cpwd-icon')" type="button">
+<span class="material-symbols-outlined text-[19px]" id="toggle-cpwd-icon">visibility</span>
+</button>
+</div>
+</div>
+<!-- Security Session Invalidation Option -->
+<div class="flex items-start gap-3 p-3.5 rounded-lg bg-[#181a20] border border-[#262a33]">
+<input checked="" class="mt-0.5 w-4 h-4 rounded border-[#383e4c] bg-[#14161a] text-[#FF5500] accent-[#FF5500] focus:ring-0 cursor-pointer" id="revoke-sessions" type="checkbox"/>
+<label class="font-body text-xs text-gray-300 leading-tight cursor-pointer select-none" for="revoke-sessions">
+<span class="font-semibold text-white">Đăng xuất khỏi tất cả các thiết bị khác</span>
+<span class="block text-gray-400 mt-0.5">Khuyến nghị: Vô hiệu hóa ngay lập tức các phiên đăng nhập di động và desktop còn lại để ngăn chặn xâm nhập.</span>
+</label>
+</div>
+<!-- Action Core Trigger Buttons -->
+<div class="flex flex-col gap-2.5 pt-1">
+<button class="w-full h-12 bg-[#FF5500] hover:bg-[#e04b00] disabled:opacity-85 disabled:cursor-not-allowed text-white font-mono text-[13px] font-bold tracking-wider uppercase rounded-lg shadow-[0_4px_20px_rgba(255,85,0,0.35)] hover:shadow-[0_4px_25px_rgba(255,85,0,0.5)] flex items-center justify-center gap-2 active:scale-[0.99] transition-all cursor-pointer" id="submit-btn" type="submit">
+<span class="material-symbols-outlined text-[19px]" id="submit-icon">key</span>
+<span id="submit-text">LƯU MẬT KHẨU MỚI</span>
+</button>
+<a class="w-full h-10 bg-transparent hover:bg-[#181a20] text-gray-300 hover:text-[#FF5500] font-mono text-xs uppercase tracking-wider rounded-lg flex items-center justify-center gap-2 transition-colors border border-transparent hover:border-[#2a2e38]" href="#" onclick="event.preventDefault();">
+<span class="material-symbols-outlined text-[16px]">arrow_back</span>
+<span>Quay lại Đăng nhập</span>
+</a>
+</div>
+</form>
+<!-- Footer / Support Hotline Info -->
+<div class="flex items-center justify-between pt-3 border-t border-[#232731]">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded-full bg-[#1b1e24] flex items-center justify-center text-[#FF5500]">
+<span class="material-symbols-outlined text-[16px]">support_agent</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body text-xs text-gray-300 font-medium">Hỗ trợ bảo mật khẩn cấp</span>
+<span class="font-mono text-[11px] text-gray-400">Hotline: <strong class="text-[#FF5500] font-semibold">1900 8899</strong> (24/7)</span>
+</div>
+</div>
+<div class="font-mono text-[11px] text-gray-400 px-2.5 py-1 rounded bg-[#181a20] border border-[#262a33] hidden sm:block">
+            NODE // 0x4B2E
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+  function toggleFieldVisibility(inputId, iconId) {
+    var field = document.getElementById(inputId);
+    var icon = document.getElementById(iconId);
+    if (!field || !icon) return;
+    if (field.type === 'password') {
+      field.type = 'text';
+      icon.textContent = 'visibility_off';
+    } else {
+      field.type = 'password';
+      icon.textContent = 'visibility';
+    }
+  }
+
+  function evaluatePassword(val) {
+    var hasLen = val.length >= 8;
+    var hasCase = /[A-Z]/.test(val) && /[a-z]/.test(val);
+    var hasNum = /[0-9]/.test(val);
+    var hasSpec = /[!@#$%^&*(),.?":{}|<>]/.test(val);
+
+    updateRule('rule-len', hasLen);
+    updateRule('rule-case', hasCase);
+    updateRule('rule-num', hasNum);
+    updateRule('rule-spec', hasSpec);
+
+    var score = 0;
+    if (hasLen) score++;
+    if (hasCase) score++;
+    if (hasNum) score++;
+    if (hasSpec) score++;
+
+    var labelEl = document.getElementById('strength-label');
+    var b1 = document.getElementById('bar-1');
+    var b2 = document.getElementById('bar-2');
+    var b3 = document.getElementById('bar-3');
+    var b4 = document.getElementById('bar-4');
+    var bars = [b1, b2, b3, b4];
+
+    // Reset default styling
+    bars.forEach(function(b) {
+      b.className = 'h-full rounded-full bg-[#232731] transition-all duration-300';
+    });
+
+    if (val.length === 0) {
+      labelEl.innerHTML = 'Độ mạnh: <span class="font-medium text-gray-500">Chưa nhập</span>';
+      verifyMatch();
+      return;
+    }
+
+    if (score <= 1) {
+      labelEl.innerHTML = 'Độ mạnh: <span class="font-semibold text-rose-500">Rất yếu</span>';
+      b1.className = 'h-full rounded-full bg-rose-500 transition-all duration-300';
+    } else if (score === 2) {
+      labelEl.innerHTML = 'Độ mạnh: <span class="font-semibold text-amber-500">Trung bình</span>';
+      b1.className = 'h-full rounded-full bg-amber-500 transition-all duration-300';
+      b2.className = 'h-full rounded-full bg-amber-500 transition-all duration-300';
+    } else if (score === 3) {
+      labelEl.innerHTML = 'Độ mạnh: <span class="font-semibold text-[#FF5500]">Mạnh</span>';
+      b1.className = 'h-full rounded-full bg-[#FF5500] transition-all duration-300';
+      b2.className = 'h-full rounded-full bg-[#FF5500] transition-all duration-300';
+      b3.className = 'h-full rounded-full bg-[#FF5500] transition-all duration-300';
+    } else {
+      labelEl.innerHTML = 'Độ mạnh: <span class="font-semibold text-emerald-400">Rất an toàn</span>';
+      bars.forEach(function(b) {
+        b.className = 'h-full rounded-full bg-emerald-400 transition-all duration-300';
+      });
+    }
+
+    verifyMatch();
+  }
+
+  function updateRule(elementId, passed) {
+    var el = document.getElementById(elementId);
+    if (!el) return;
+    var icon = el.querySelector('.rule-icon');
+    if (passed) {
+      el.classList.add('text-gray-200');
+      el.classList.remove('text-gray-400');
+      if (icon) {
+        icon.textContent = 'check_circle';
+        icon.className = 'material-symbols-outlined text-[16px] text-[#FF5500] rule-icon';
+        icon.style.fontVariationSettings = "'FILL' 1";
+      }
+    } else {
+      el.classList.remove('text-gray-200');
+      el.classList.add('text-gray-400');
+      if (icon) {
+        icon.textContent = 'radio_button_unchecked';
+        icon.className = 'material-symbols-outlined text-[16px] text-gray-500 rule-icon';
+        icon.style.fontVariationSettings = "'FILL' 0";
+      }
+    }
+  }
+
+  function verifyMatch() {
+    var p1 = document.getElementById('new-password').value;
+    var p2 = document.getElementById('confirm-password').value;
+    var status = document.getElementById('match-status');
+
+    if (!p2) {
+      status.className = 'font-mono text-[11px] uppercase tracking-wider text-gray-400 flex items-center gap-1';
+      status.innerHTML = 'Chờ xác nhận';
+      return;
+    }
+
+    if (p1 === p2 && p1.length > 0) {
+      status.className = 'font-mono text-[11px] uppercase tracking-wider text-[#FF5500] font-medium flex items-center gap-1';
+      status.innerHTML = '<span class="material-symbols-outlined text-[14px]">check</span> Khớp mật khẩu';
+    } else {
+      status.className = 'font-mono text-[11px] uppercase tracking-wider text-rose-500 font-medium flex items-center gap-1';
+      status.innerHTML = '<span class="material-symbols-outlined text-[14px]">close</span> Chưa khớp mật khẩu';
+    }
+  }
+
+  var countdownInterval = null;
+
+  function showToastNotification() {
+    var toast = document.getElementById('floating-toast');
+    var progressBar = document.getElementById('toast-progress-bar');
+    if (!toast) return;
+
+    toast.classList.remove('-translate-y-16', 'opacity-0', 'pointer-events-none');
+    toast.classList.add('translate-y-0', 'opacity-100', 'pointer-events-auto');
+
+    if (progressBar) {
+      progressBar.classList.remove('animate-progress');
+      void progressBar.offsetWidth; // trigger reflow
+      progressBar.classList.add('animate-progress');
+    }
+
+    setTimeout(function() {
+      dismissToast();
+    }, 4200);
+  }
+
+  function dismissToast() {
+    var toast = document.getElementById('floating-toast');
+    if (!toast) return;
+    toast.classList.add('-translate-y-16', 'opacity-0', 'pointer-events-none');
+    toast.classList.remove('translate-y-0', 'opacity-100', 'pointer-events-auto');
+  }
+
+  function startCountdown(seconds) {
+    var countdownEl = document.getElementById('countdown-text');
+    var remaining = seconds;
+    if (countdownInterval) clearInterval(countdownInterval);
+
+    countdownInterval = setInterval(function() {
+      remaining--;
+      if (countdownEl) {
+        countdownEl.textContent = remaining + 's';
+      }
+      if (remaining <= 0) {
+        clearInterval(countdownInterval);
+      }
+    }, 1000);
+  }
+
+  function handleFormSubmit() {
+    var p1 = document.getElementById('new-password').value;
+    var p2 = document.getElementById('confirm-password').value;
+    var btn = document.getElementById('submit-btn');
+    var icon = document.getElementById('submit-icon');
+    var text = document.getElementById('submit-text');
+    var banner = document.getElementById('confirmation-banner');
+
+    // If empty for quick testing, auto-fill standard strong demo password
+    if (!p1 && !p2) {
+      document.getElementById('new-password').value = 'Monolith@2025Secure';
+      document.getElementById('confirm-password').value = 'Monolith@2025Secure';
+      evaluatePassword('Monolith@2025Secure');
+      p1 = 'Monolith@2025Secure';
+      p2 = 'Monolith@2025Secure';
+    }
+
+    if (p1.length < 8 || p1 !== p2) {
+      alert('Vui lòng hoàn thiện đúng tiêu chuẩn độ mạnh mật khẩu và đảm bảo mật khẩu khớp nhau.');
+      return;
+    }
+
+    // Step 1: Loading state in 0.8s
+    btn.disabled = true;
+    btn.className = "w-full h-12 bg-[#c04000] text-white font-mono text-[13px] font-bold tracking-wider uppercase rounded-lg flex items-center justify-center gap-2 cursor-wait transition-all shadow-[0_4px_20px_rgba(255,85,0,0.2)]";
+    icon.textContent = 'autorenew';
+    icon.className = 'material-symbols-outlined text-[19px] animate-spin text-white';
+    text.textContent = 'ĐANG MÃ HÓA & ĐỒNG BỘ 256-BIT...';
+
+    setTimeout(function() {
+      // Step 2: Button success state
+      btn.className = "w-full h-12 bg-emerald-600 hover:bg-emerald-500 text-white font-mono text-[13px] font-bold tracking-wider uppercase rounded-lg shadow-[0_4px_25px_rgba(16,185,129,0.4)] flex items-center justify-center gap-2 transition-all cursor-pointer";
+      icon.textContent = 'verified';
+      icon.className = 'material-symbols-outlined text-[20px] text-white';
+      text.textContent = 'HOÀN TẤT ĐẶT LẠI MẬT KHẨU';
+      btn.disabled = false;
+
+      // Step 3: Trigger inline animated card banner
+      if (banner) {
+        banner.classList.remove('hidden');
+        banner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+
+      // Step 4: Trigger sleek Dark-Tech Floating Toast
+      showToastNotification();
+
+      // Step 5: Countdown feedback
+      startCountdown(4);
+
+    }, 800);
+  }
+</script></main>
+<!-- Footer -->
+<footer class="w-full bg-[#0c0d10] border-t border-[#1c1f26] py-4 z-20"><div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-2 font-mono text-[11px] text-gray-400"><div class="flex items-center gap-2"><span class="inline-block w-1.5 h-1.5 rounded-full bg-[#FF5500]"></span><span>SECURE GATEWAY CLUSTER // US-EAST-01</span></div><div><span>© 2025 TECHSTORE MONOLITH. ALL PROTOCOLS RESERVED.</span></div></div></footer></body></html>

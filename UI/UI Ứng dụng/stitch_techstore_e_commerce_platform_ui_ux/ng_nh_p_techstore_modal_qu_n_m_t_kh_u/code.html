@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+
+<html class="h-full bg-[#111113]" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Đăng nhập — TECHSTORE MONOLITH</title>
+<!-- Google Fonts: Inter & Orbitron for Tech Monolith typography -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Orbitron:wght@600;700;800;900&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN with Forms -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              orange: '#FF5400',
+              orangeHover: '#E04800',
+              dark: '#111113',
+              card: '#161619',
+              border: '#28282D',
+              muted: '#71717A'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Orbitron', 'sans-serif'],
+            tech: ['Space Grotesk', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+<!-- BEGIN: Custom Styles -->
+<style data-purpose="custom-typography">
+    .font-monolith {
+      font-family: 'Orbitron', sans-serif;
+      letter-spacing: 0.18em;
+    }
+    .tracking-widest-plus {
+      letter-spacing: 0.28em;
+    }
+    .tracking-editorial {
+      letter-spacing: 0.16em;
+    }
+  </style>
+<style data-purpose="form-glow">
+    .focus-monolith:focus {
+      border-color: #FF5400;
+      box-shadow: 0 0 0 1px #FF5400, 0 0 16px -2px rgba(255, 84, 0, 0.25);
+    }
+  </style>
+<!-- END: Custom Styles -->
+</head>
+<body class="h-full text-zinc-300 font-sans antialiased selection:bg-[#FF5400] selection:text-white flex flex-col justify-center">
+<!-- BEGIN: MainContainer -->
+<main class="w-full min-h-screen flex flex-col lg:flex-row overflow-x-hidden bg-[#111113]">
+<!-- BEGIN: LeftHeroSection -->
+<section class="relative lg:w-7/12 w-full min-h-[520px] lg:min-h-screen flex flex-col justify-between overflow-hidden p-8 sm:p-12 lg:p-16 select-none" data-purpose="branding-visual-presentation">
+<!-- Background Image Layer -->
+<div class="absolute inset-0 z-0">
+<img alt="TECHSTORE Monolith Laptop on stone altar" class="w-full h-full object-cover object-left lg:object-center filter brightness-[0.9] contrast-[1.05] opacity-60" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCknLiyFZQK1LNJ6oAFyH0_jjJ0EfmyHC_G5HaKDrO8cM0JJWCRphLvSWmkmWyPcmqRKFtiDqXR0KHFjkSmT9jBThgFYXZczFJpNsGNMBbK62IuQifw9F08uHqKpaR2QGoTEYyu3GbsrzPj7O-QDCpkR75mT3N5WSWBlXtGoZFSytqUywTFndncUeGdaW2tbtx7aazBQlP9hSdKR5Jf5K1HXagzNCughzlSUx4gosOv"/>
+<!-- Dark gradient vignette overlay to reinforce readability & cinematic atmosphere -->
+<div class="absolute inset-0 bg-gradient-to-t from-[#111113] via-transparent to-[#111113]/70 lg:bg-gradient-to-r lg:from-transparent lg:via-[#111113]/20 lg:to-[#111113]"></div>
+</div>
+<!-- Top Branding Text Overlay -->
+<div class="relative z-10 max-w-xl">
+<!-- Orange accent line -->
+<div class="w-9 h-[3px] bg-[#FF5400] mb-4"></div>
+<!-- Header Subtitle -->
+<p class="font-tech text-xs tracking-widest-plus text-zinc-400 uppercase font-semibold mb-2">
+          TECHSTORE
+        </p>
+<!-- Brand Main Title -->
+<h1 class="font-monolith text-4xl sm:text-5xl lg:text-6xl font-bold tracking-widest text-white leading-tight uppercase drop-shadow-md">
+          MONOLITH
+        </h1>
+<!-- Slogan in Vietnamese -->
+<p class="mt-8 font-tech text-xs sm:text-sm tracking-editorial uppercase text-zinc-300 font-medium leading-relaxed max-w-sm">
+          CÔNG NGHỆ KIẾN TẠO<br/>NHỮNG ĐIỀU LỚN HƠN
+        </p>
+<!-- Technical spec points 1 -->
+<div class="mt-8 space-y-1">
+<p class="font-tech text-[11px] tracking-widest-plus text-zinc-400 uppercase leading-snug">
+            THIẾT BỊ<br/>
+            KẾT NỐI<br/>
+            TƯƠNG LAI
+          </p>
+<div class="w-8 h-[2px] bg-[#FF5400] mt-3"></div>
+</div>
+</div>
+<!-- Bottom Floating Subtext Details -->
+<div class="relative z-10 mt-auto pt-16 flex flex-col sm:flex-row justify-between items-end gap-6">
+<!-- Bottom left small tagline -->
+<div class="space-y-1">
+<p class="font-tech text-[10px] tracking-widest-plus text-zinc-500 uppercase leading-relaxed">
+            TECHNOLOGY<br/>
+            FOR A BRIGHTER<br/>
+            TOMORROW
+          </p>
+</div>
+<!-- Bottom right pillar tagline -->
+<div class="hidden sm:block text-left sm:text-right space-y-1">
+<p class="font-tech text-[10px] tracking-widest-plus text-zinc-400 uppercase leading-relaxed">
+            PEOPLE<br/>
+            DEVICES<br/>
+            A BRIGHTER<br/>
+            TOMORROW
+          </p>
+<div class="w-8 h-[2px] bg-[#FF5400] sm:ml-auto mt-2"></div>
+</div>
+</div>
+</section>
+<!-- END: LeftHeroSection -->
+<!-- BEGIN: RightAuthSection -->
+<section class="lg:w-5/12 w-full bg-[#111113] flex flex-col justify-center items-center px-6 py-12 sm:px-12 lg:px-16 xl:px-20 z-10" data-purpose="user-authentication-form">
+<div class="w-full max-w-md">
+<!-- Header Branding & Category -->
+<header class="mb-10" data-purpose="auth-header">
+<!-- Orange horizontal bar accent -->
+<div class="w-10 h-1 bg-[#FF5400] mb-5"></div>
+<!-- Category Title -->
+<div class="mb-6">
+<h2 class="font-tech text-xs tracking-widest-plus text-zinc-300 font-bold uppercase">
+              TECHSTORE
+            </h2>
+<p class="font-tech text-[10px] tracking-widest-plus text-zinc-500 uppercase mt-0.5">
+              MONOLITH
+            </p>
+</div>
+<!-- Main Greeting Title -->
+<h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-3">
+            Chào mừng trở lại.
+          </h2>
+<!-- Subtitle / Hint -->
+<p class="text-zinc-400 text-sm sm:text-base leading-normal">
+            Đăng nhập để tiếp tục trải nghiệm TECHSTORE.
+          </p>
+</header>
+<!-- Authentication Form -->
+<form action="#" class="space-y-6" data-purpose="login-form" method="POST">
+<!-- Email Field Group -->
+<div class="space-y-2">
+<label class="block font-tech text-xs uppercase tracking-widest font-semibold text-zinc-400" for="email">
+              ĐỊA CHỈ EMAIL
+            </label>
+<div class="relative">
+<input autocomplete="email" class="w-full bg-[#161619] border border-zinc-800 rounded-lg px-4 py-3.5 text-zinc-100 text-sm placeholder-zinc-500 transition-colors duration-200 outline-none focus-monolith" id="email" name="email" placeholder="Nhập địa chỉ email của bạn" required="" type="email"/>
+</div>
+</div>
+<!-- Password Field Group -->
+<div class="space-y-2">
+<label class="block font-tech text-xs uppercase tracking-widest font-semibold text-zinc-400" for="password">
+              MẬT KHẨU
+            </label>
+<div class="relative flex items-center">
+<input autocomplete="current-password" class="w-full bg-[#161619] border border-zinc-800 rounded-lg pl-4 pr-11 py-3.5 text-zinc-100 text-sm placeholder-zinc-500 transition-colors duration-200 outline-none focus-monolith" id="password" name="password" placeholder="Nhập mật khẩu của bạn" required="" type="password"/>
+<!-- Password Lock / Visibility Icon -->
+<button aria-label="Ẩn hoặc hiển thị mật khẩu" class="absolute right-3.5 text-zinc-500 hover:text-zinc-300 transition-colors p-1" data-purpose="password-visibility-toggle" id="toggle-password" type="button">
+<!-- Lock / Eye Icon (SVG) -->
+<svg class="w-5 h-5 fill-current" id="lock-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a4 4 0 00-4 4v2H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-1V6a4 4 0 00-4-4zm2 6V6a2 2 0 10-4 0v2h4zm-3 5a1 1 0 112 0v2a1 1 0 11-2 0v-2z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+<!-- Extra Options: Remember Me & Forgot Password -->
+<div class="flex items-center justify-between text-xs sm:text-sm pt-1">
+<label class="flex items-center space-x-2.5 cursor-pointer select-none">
+<input class="w-4 h-4 rounded bg-[#161619] border-zinc-700 text-[#FF5400] focus:ring-0 focus:ring-offset-0 cursor-pointer" id="remember-me" name="remember" type="checkbox"/>
+<span class="text-zinc-400 hover:text-zinc-300 font-normal">Ghi nhớ đăng nhập</span>
+</label>
+<a class="text-[#FF5400] hover:text-[#ff6a1f] font-medium transition-colors" href="#forgot-password">
+              Quên mật khẩu?
+            </a>
+</div>
+<!-- Submit CTA Button -->
+<div class="pt-2">
+<button class="w-full bg-[#FF5400] hover:bg-[#e64c00] active:scale-[0.99] text-white font-bold py-3.5 px-6 rounded-lg text-sm uppercase tracking-widest shadow-lg shadow-orange-950/40 transition-all duration-200 ease-in-out cursor-pointer" type="submit">
+              ĐĂNG NHẬP
+            </button>
+</div>
+<!-- Registration Prompt Footer -->
+<div class="text-center pt-4">
+<p class="text-sm text-zinc-400">
+              Chưa có tài khoản? 
+              <a class="text-[#FF5400] hover:text-[#ff6a1f] font-semibold ml-1 transition-colors" href="#register">
+                Đăng ký ngay.
+              </a>
+</p>
+</div>
+</form>
+<!-- END: Form -->
+</div>
+</section>
+<!-- END: RightAuthSection -->
+</main>
+<!-- END: MainContainer -->
+<!-- BEGIN: Interactive Scripts -->
+<script data-purpose="password-visibility">
+    const toggleButton = document.getElementById('toggle-password');
+    const passwordInput = document.getElementById('password');
+
+    if (toggleButton && passwordInput) {
+      toggleButton.addEventListener('click', () => {
+        const isPassword = passwordInput.getAttribute('type') === 'password';
+        passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
+      });
+    }
+  </script>
+<!-- END: Interactive Scripts -->
+<!-- BEGIN: ForgotPasswordModal -->
+<div aria-labelledby="modal-recovery-title" aria-modal="true" class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto" id="forgot-password-modal" role="dialog" style="background: rgba(0, 0, 0, 0.78); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);">
+<div class="relative w-full max-w-lg bg-[#141417] border border-[#28282f] rounded-2xl shadow-2xl p-6 sm:p-8 text-zinc-300 transform transition-all duration-300 ease-out select-none">
+<!-- Top Accent Bar -->
+<div class="w-10 h-1 bg-[#FF5400] mb-6 rounded-full"></div>
+<!-- Close Button -->
+<button aria-label="Đóng modal" class="absolute top-6 right-6 text-zinc-400 hover:text-white p-2 rounded-lg hover:bg-zinc-800/60 transition-colors cursor-pointer outline-none" id="close-recovery-modal" type="button">
+<svg class="w-5 h-5 fill-current" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" fill-rule="evenodd"></path>
+</svg>
+</button>
+<!-- Header with Monolith Shield Icon -->
+<div class="flex items-start gap-4 mb-5">
+<div class="w-12 h-12 rounded-xl bg-[#FF5400]/10 border border-[#FF5400]/30 flex items-center justify-center text-[#FF5400] flex-shrink-0">
+<svg class="w-6 h-6 fill-current" viewbox="0 0 24 24">
+<path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 6c1.4 0 2.5 1.1 2.5 2.5V11h1c.55 0 1 .45 1 1v5c0 .55-.45 1-1 1h-7c-.55 0-1-.45-1-1v-5c0-.55.45-1 1-1h1V9.5C9.5 8.1 10.6 7 12 7zm0 2c-.28 0-.5.22-.5.5V11h1V9.5c0-.28-.22-.5-.5-.5z"></path>
+</svg>
+</div>
+<div>
+<p class="font-tech text-[10px] tracking-widest-plus text-[#FF5400] uppercase font-bold mb-1">
+          BẢO MẬT &amp; KHÔI PHỤC
+        </p>
+<h3 class="text-2xl sm:text-3xl font-bold text-white tracking-tight leading-snug" id="modal-recovery-title">
+          Khôi phục mật khẩu
+        </h3>
+</div>
+</div>
+<!-- Description -->
+<p class="text-zinc-400 text-sm leading-relaxed mb-6 font-normal">
+      Nhập địa chỉ email liên kết với tài khoản TECHSTORE của bạn. Chúng tôi sẽ gửi mã xác thực (OTP) hoặc đường dẫn đặt lại mật khẩu an toàn.
+    </p>
+<!-- Recovery Form -->
+<form class="space-y-5" onsubmit="event.preventDefault();">
+<!-- Input with mail icon -->
+<div class="space-y-2">
+<div class="flex items-center justify-between">
+<label class="block font-tech text-xs uppercase tracking-widest font-semibold text-zinc-400" for="recovery-email">
+            ĐỊA CHỈ EMAIL
+          </label>
+<button class="text-[11px] font-tech text-[#FF5400] hover:text-[#ff6a1f] tracking-wide transition-colors" type="button">
+            Khôi phục qua SĐT?
+          </button>
+</div>
+<div class="relative flex items-center">
+<div class="absolute left-4 text-zinc-500 pointer-events-none flex items-center">
+<svg class="w-5 h-5 fill-current" viewbox="0 0 20 20">
+<path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
+<path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
+</svg>
+</div>
+<input class="w-full bg-[#18191d] border border-zinc-800 rounded-lg pl-11 pr-4 py-3.5 text-zinc-100 text-sm placeholder-zinc-500 transition-colors duration-200 outline-none focus-monolith" id="recovery-email" name="recovery-email" placeholder="name@example.com" required="" type="email"/>
+</div>
+</div>
+<!-- Information notice -->
+<div class="p-3 bg-[#18191d] border border-zinc-800/80 rounded-lg flex items-center gap-3 text-xs text-zinc-400">
+<span class="text-[#FF5400] text-base font-bold">•</span>
+<span>Hệ thống Monolith sẽ mã hóa liên kết khôi phục và có hiệu lực trong vòng 15 phút.</span>
+</div>
+<!-- CTA Buttons -->
+<div class="space-y-3 pt-1">
+<button class="w-full bg-[#FF5400] hover:bg-[#e64c00] active:scale-[0.99] text-white font-bold py-3.5 px-6 rounded-lg text-sm uppercase tracking-widest shadow-lg shadow-orange-950/40 transition-all duration-200 ease-in-out cursor-pointer" type="submit">
+          GỬI YÊU CẦU KHÔI PHỤC
+        </button>
+<button class="w-full bg-transparent hover:bg-zinc-800/50 text-zinc-400 hover:text-zinc-200 font-medium py-2.5 px-4 rounded-lg text-xs uppercase tracking-widest transition-colors duration-200 text-center" id="back-to-login-btn" type="button">
+          Quay lại đăng nhập
+        </button>
+</div>
+</form>
+<!-- Security & Helpdesk Footer -->
+<div class="mt-6 pt-5 border-t border-zinc-800/70 text-center text-xs text-zinc-500">
+<p>Cần hỗ trợ thêm? Liên hệ bộ phận CSKH TECHSTORE: <a class="text-[#FF5400] hover:underline font-semibold" href="tel:19008888">1900 xxxx</a></p>
+</div>
+</div>
+</div>
+<!-- END: ForgotPasswordModal --></body></html>

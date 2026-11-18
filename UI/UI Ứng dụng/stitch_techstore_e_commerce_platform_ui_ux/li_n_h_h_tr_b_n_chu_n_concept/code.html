@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Liên hệ hỗ trợ - TECHSTORE</title>
+<!-- Google Fonts: Be Vietnam Pro -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 with Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Custom Configuration -->
+<script data-purpose="tailwind-config">
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              orange: '#FF5722',
+              'orange-hover': '#F4511E',
+              'orange-light': '#FFF0EB',
+              dark: '#1E232A',
+              muted: '#717784',
+              border: '#E2E8F0',
+              input: '#E2E8F0'
+            }
+          },
+          fontFamily: {
+            sans: ['"Be Vietnam Pro"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+<!-- Custom Styles for Typography & Elements -->
+<style data-purpose="custom-typography">
+    body {
+      font-family: 'Be Vietnam Pro', sans-serif;
+      color: #1E232A;
+      background-color: #FFFFFF;
+      -webkit-font-smoothing: antialiased;
+    }
+    input::placeholder, textarea::placeholder {
+      color: #94A3B8;
+      font-size: 0.9375rem;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+<!-- BEGIN: MainHeader -->
+<header class="w-full bg-white border-b border-gray-100" data-purpose="main-header">
+<div class="max-w-[1240px] mx-auto px-4 lg:px-8 py-3.5">
+<div class="flex items-center justify-between gap-6">
+<!-- Logo Area -->
+<a aria-label="TECHSTORE Trang chủ" class="flex items-center gap-1.5 flex-shrink-0" href="#">
+<span class="text-[22px] font-black tracking-tight text-[#111827]">TECHSTORE</span>
+<span class="w-2.5 h-2.5 rounded-full bg-[#FF5722] inline-block mb-1"></span>
+</a>
+<!-- Search Bar -->
+<div class="flex-1 max-w-[620px] relative hidden md:block">
+<div class="relative flex items-center">
+<span class="absolute left-4 text-gray-400 pointer-events-none">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</span>
+<input class="w-full pl-11 pr-4 py-2 bg-[#F1F3F6] border-none rounded-full text-sm text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#FF5722]/20 transition-all" placeholder="Tìm kiếm sản phẩm, thương hiệu, danh mục..." type="text"/>
+</div>
+</div>
+<!-- Right Action Links -->
+<div class="flex items-center gap-6 flex-shrink-0 text-sm font-medium text-gray-700">
+<a class="flex items-center gap-2 hover:text-[#FF5722] transition-colors" href="#">
+<svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Tài khoản</span>
+</a>
+<a class="flex items-center gap-2 hover:text-[#FF5722] transition-colors" href="#">
+<div class="relative">
+<svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<span>Giỏ hàng</span>
+</a>
+<a class="font-bold text-[#FF5722] hover:underline transition-all" href="#">
+            Khuyến mãi
+          </a>
+</div>
+</div>
+<!-- Navigation Categories Bar -->
+<nav aria-label="Danh mục hàng" class="flex items-center gap-7 pt-4 text-[13.5px] font-medium overflow-x-auto whitespace-nowrap scrollbar-none">
+<a class="text-[#FF5722] font-bold flex items-center gap-1.5 hover:opacity-90" href="#">
+<span class="inline-block">Tất cả danh mục</span>
+</a>
+<a class="text-gray-700 hover:text-[#FF5722] transition-colors" href="#">Laptop</a>
+<a class="text-gray-700 hover:text-[#FF5722] transition-colors" href="#">Điện thoại</a>
+<a class="text-gray-700 hover:text-[#FF5722] transition-colors" href="#">Máy tính bảng</a>
+<a class="text-gray-700 hover:text-[#FF5722] transition-colors" href="#">Âm thanh</a>
+<a class="text-gray-700 hover:text-[#FF5722] transition-colors" href="#">Thiết bị đeo</a>
+<a class="text-gray-700 hover:text-[#FF5722] transition-colors" href="#">Phụ kiện</a>
+<a class="text-gray-700 hover:text-[#FF5722] transition-colors" href="#">Thiết bị thông minh</a>
+<a class="text-gray-700 hover:text-[#FF5722] transition-colors" href="#">Nhà thông minh</a>
+</nav>
+</div>
+</header>
+<!-- END: MainHeader -->
+<!-- BEGIN: MainContent -->
+<main class="w-full flex-1 max-w-[1240px] mx-auto px-4 lg:px-8 pt-8 pb-12" data-purpose="support-page-content">
+<!-- Title Section -->
+<section class="mb-8" data-purpose="page-title">
+<h1 class="text-3xl font-extrabold text-[#111827] tracking-tight">Liên hệ hỗ trợ</h1>
+<p class="text-sm md:text-base text-gray-500 mt-1 font-normal">Chúng tôi luôn sẵn sàng lắng nghe và hỗ trợ bạn</p>
+</section>
+<!-- Content Grid: Form (Left) & Contact Channels (Right) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-7">
+<!-- Column Left: Contact Request Form -->
+<section class="lg:col-span-7 bg-white rounded-2xl border border-gray-200/90 p-6 sm:p-8" data-purpose="support-form-container">
+<div class="mb-6">
+<h2 class="text-xl font-bold text-gray-900 tracking-tight">Gửi yêu cầu hỗ trợ</h2>
+<p class="text-sm text-gray-500 mt-1">Vui lòng điền đầy đủ thông tin để chúng tôi có thể hỗ trợ bạn nhanh chóng hơn.</p>
+</div>
+<form action="#" class="space-y-4" data-purpose="contact-form" method="POST" onsubmit="event.preventDefault();">
+<!-- Họ tên Field -->
+<div class="flex flex-col sm:flex-row sm:items-center">
+<label class="w-full sm:w-44 text-[13.5px] font-semibold text-gray-800 mb-1 sm:mb-0" for="full_name">
+              Họ tên <span class="text-red-500">*</span>
+</label>
+<div class="flex-1">
+<input class="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:border-[#FF5722] focus:ring-1 focus:ring-[#FF5722] outline-none transition" id="full_name" name="full_name" placeholder="Nhập họ tên của bạn" required="" type="text"/>
+</div>
+</div>
+<!-- Email Field -->
+<div class="flex flex-col sm:flex-row sm:items-center">
+<label class="w-full sm:w-44 text-[13.5px] font-semibold text-gray-800 mb-1 sm:mb-0" for="email">
+              Email <span class="text-red-500">*</span>
+</label>
+<div class="flex-1">
+<input class="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:border-[#FF5722] focus:ring-1 focus:ring-[#FF5722] outline-none transition" id="email" name="email" placeholder="Nhập email của bạn" required="" type="email"/>
+</div>
+</div>
+<!-- Chủ đề Field -->
+<div class="flex flex-col sm:flex-row sm:items-center">
+<label class="w-full sm:w-44 text-[13.5px] font-semibold text-gray-800 mb-1 sm:mb-0" for="topic">
+              Chủ đề <span class="text-red-500">*</span>
+</label>
+<div class="flex-1 relative">
+<select class="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm text-gray-600 focus:border-[#FF5722] focus:ring-1 focus:ring-[#FF5722] outline-none transition appearance-none bg-white cursor-pointer" id="topic" name="topic" required="">
+<option disabled="" selected="" value="">Chọn chủ đề</option>
+<option value="order">Tình trạng đơn hàng &amp; Vận chuyển</option>
+<option value="warranty">Bảo hành &amp; Sửa chữa thiết bị</option>
+<option value="payment">Thanh toán &amp; Hóa đơn VAT</option>
+<option value="feedback">Khiếu nại &amp; Góp ý dịch vụ</option>
+<option value="other">Vấn đề khác</option>
+</select>
+</div>
+</div>
+<!-- Mã đơn hàng Field -->
+<div class="flex flex-col sm:flex-row sm:items-center">
+<label class="w-full sm:w-44 text-[13.5px] font-semibold text-gray-800 mb-1 sm:mb-0 leading-tight" for="order_id">
+              Mã đơn hàng <br class="hidden sm:inline"/><span class="text-gray-500 font-normal text-xs">(không bắt buộc)</span>
+</label>
+<div class="flex-1">
+<input class="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:border-[#FF5722] focus:ring-1 focus:ring-[#FF5722] outline-none transition" id="order_id" name="order_id" placeholder="Nhập mã đơn hàng (nếu có)" type="text"/>
+</div>
+</div>
+<!-- Nội dung yêu cầu Field -->
+<div class="flex flex-col sm:flex-row sm:items-start pt-1">
+<label class="w-full sm:w-44 text-[13.5px] font-semibold text-gray-800 mb-1 sm:mb-0 pt-2" for="message">
+              Nội dung yêu cầu <span class="text-red-500">*</span>
+</label>
+<div class="flex-1">
+<textarea class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:border-[#FF5722] focus:ring-1 focus:ring-[#FF5722] outline-none transition resize-y" id="message" name="message" placeholder="Nhập nội dung yêu cầu của bạn" required="" rows="4"></textarea>
+</div>
+</div>
+<!-- Submit Button Action -->
+<div class="pt-4 flex sm:justify-start">
+<button class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3 bg-[#FF5722] hover:bg-[#F4511E] text-white text-[15px] font-bold rounded-xl shadow-sm transition duration-200 transform active:scale-95" type="submit">
+<span>Gửi yêu cầu</span>
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+</svg>
+</button>
+</div>
+</form>
+</section>
+<!-- Column Right: Support Channels & Notice -->
+<section class="lg:col-span-5 bg-white rounded-2xl border border-gray-200/90 p-6 sm:p-8 flex flex-col justify-between" data-purpose="support-channels-container">
+<div>
+<!-- Header for Channels -->
+<div class="mb-5">
+<h2 class="text-xl font-bold text-gray-900 tracking-tight">Các kênh hỗ trợ</h2>
+<p class="text-sm text-gray-500 mt-1">Bạn có thể liên hệ với chúng tôi qua các kênh dưới đây.</p>
+</div>
+<!-- Channels List -->
+<div class="space-y-3.5">
+<!-- Email Channel Card -->
+<div class="flex items-center gap-4 p-4 rounded-xl border border-gray-200 hover:border-[#FF5722]/40 transition-colors bg-white">
+<div class="w-12 h-12 rounded-full bg-[#FFF3EE] flex items-center justify-center flex-shrink-0 text-[#FF5722]">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
+</svg>
+</div>
+<div>
+<h3 class="text-base font-bold text-gray-900 leading-snug">Email</h3>
+<p class="text-[13px] text-gray-500 font-normal">Gửi yêu cầu hỗ trợ qua email</p>
+</div>
+</div>
+<!-- Hotline Channel Card -->
+<div class="flex items-center gap-4 p-4 rounded-xl border border-gray-200 hover:border-[#FF5722]/40 transition-colors bg-white">
+<div class="w-12 h-12 rounded-full bg-[#FFF3EE] flex items-center justify-center flex-shrink-0 text-[#FF5722]">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
+</svg>
+</div>
+<div>
+<h3 class="text-base font-bold text-gray-900 leading-snug">Điện thoại</h3>
+<p class="text-[13px] text-gray-500 font-normal">Liên hệ tổng đài hỗ trợ</p>
+</div>
+</div>
+<!-- Operating Hours Channel Card -->
+<div class="flex items-center gap-4 p-4 rounded-xl border border-gray-200 hover:border-[#FF5722]/40 transition-colors bg-white">
+<div class="w-12 h-12 rounded-full bg-[#FFF3EE] flex items-center justify-center flex-shrink-0 text-[#FF5722]">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
+</svg>
+</div>
+<div>
+<h3 class="text-base font-bold text-gray-900 leading-snug">Giờ hoạt động</h3>
+<p class="text-[13px] text-gray-500 font-normal">Thời gian hỗ trợ khách hàng</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Lưu ý Bullet Points -->
+<div class="mt-7 pt-4 border-t border-gray-100">
+<h4 class="text-sm font-bold text-gray-900 mb-3">Một số lưu ý</h4>
+<ul class="space-y-2 text-[13px] text-gray-600">
+<li class="flex items-start gap-2.5">
+<span class="w-1.5 h-1.5 rounded-full bg-[#FF5722] mt-1.5 flex-shrink-0"></span>
+<span>Vui lòng cung cấp thông tin chính xác để được hỗ trợ nhanh hơn.</span>
+</li>
+<li class="flex items-start gap-2.5">
+<span class="w-1.5 h-1.5 rounded-full bg-[#FF5722] mt-1.5 flex-shrink-0"></span>
+<span>Chúng tôi sẽ phản hồi trong thời gian sớm nhất.</span>
+</li>
+<li class="flex items-start gap-2.5">
+<span class="w-1.5 h-1.5 rounded-full bg-[#FF5722] mt-1.5 flex-shrink-0"></span>
+<span>Đối với các vấn đề khẩn cấp, vui lòng liên hệ qua điện thoại.</span>
+</li>
+</ul>
+</div>
+</section>
+</div>
+<!-- BEGIN: BottomSupportBanner -->
+<section class="mt-8 bg-[#F3F4F6] rounded-2xl overflow-hidden border border-gray-200/80 shadow-sm" data-purpose="customer-support-banner">
+<div class="flex flex-col md:flex-row items-center justify-between p-6 sm:p-8 gap-6">
+<!-- Customer Support Image & Main Callout -->
+<div class="flex flex-col sm:flex-row items-center gap-6 text-center sm:text-left">
+<!-- Specialist Representative Avatar -->
+<div class="relative w-32 h-32 md:w-36 md:h-36 rounded-xl overflow-hidden flex-shrink-0 shadow-sm border-2 border-white">
+<img alt="Chuyên viên hỗ trợ khách hàng TECHSTORE" class="w-full h-full object-cover object-top" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcUjJMUVYMxqA5RUatC7OxkSoV_72ci1MKiPksqEoT-HFbR48hfOYX89GF5tAX6PcqswIirxlj1hFON1xLAkYeA95cQqqpNcsbNP08mAkgreLC1Rt-oWXjAD4IrGpp8EPvRNvs-XyD1xdCZK2uczs8S8ef_RiVquw9iLUGUnEYPIRqy6OKi58QxzRof-sCK262wTteYuPhLQxVLukjmmYDkgqfbZtQVPPAxwl2C_j2"/>
+</div>
+<!-- Banner Text Info -->
+<div>
+<h3 class="text-xl sm:text-2xl font-bold text-gray-900 tracking-tight leading-snug">
+              Chúng tôi luôn ở đây để hỗ trợ bạn
+            </h3>
+<p class="text-sm sm:text-[15px] text-gray-600 mt-2 max-w-xl font-normal leading-relaxed">
+              Đội ngũ TECHSTORE cam kết mang đến trải nghiệm mua sắm tốt nhất cho bạn.
+            </p>
+</div>
+</div>
+<!-- Banner Action Button -->
+<div class="flex-shrink-0 w-full sm:w-auto">
+<a class="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-7 py-3.5 bg-[#FF5722] hover:bg-[#F4511E] text-white font-bold text-[15px] rounded-xl shadow transition duration-200 transform active:scale-95 whitespace-nowrap" href="tel:19001000">
+<span>Liên hệ ngay</span>
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+</svg>
+</a>
+</div>
+</div>
+</section>
+<!-- END: BottomSupportBanner -->
+</main>
+<!-- END: MainContent -->
+<!-- BEGIN: MinimalFooter -->
+<footer class="w-full border-t border-gray-100 py-4 text-center text-xs text-gray-400" data-purpose="page-footer">
+<p>© 2024 TECHSTORE. Tất cả các quyền được bảo lưu.</p>
+</footer>
+<!-- END: MinimalFooter -->
+</body></html>

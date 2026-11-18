@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "error-container": "#ffdad6", "on-secondary-fixed": "#370e00", "on-error-container": "#93000a", "on-secondary-fixed-variant": "#802a00", "secondary-fixed": "#ffdbce", "on-surface": "#1a1c1c", "on-primary-container": "#858383", "surface-container-lowest": "#ffffff", "outline-variant": "#c4c7c7", "outline": "#747878", "on-primary": "#ffffff", "on-primary-fixed-variant": "#474746", "on-tertiary": "#ffffff", "tertiary-container": "#1b1c1c", "tertiary": "#000000", "on-secondary": "#ffffff", "primary-fixed": "#e5e2e1", "on-error": "#ffffff", "tertiary-fixed": "#e3e2e2", "on-tertiary-fixed-variant": "#464747", "surface-dim": "#dadada", "tertiary-fixed-dim": "#c7c6c6", "on-background": "#1a1c1c", "inverse-surface": "#2f3131", "surface-variant": "#e2e2e2", "surface-container-high": "#e8e8e8", "surface": "#f9f9f9", "secondary": "#a33800", "on-surface-variant": "#444748", "inverse-primary": "#c8c6c5", "error": "#ba1a1a", "primary": "#000000", "primary-fixed-dim": "#c8c6c5", "surface-container-low": "#f3f3f3", "surface-tint": "#5f5e5e", "surface-container": "#eeeeee", "surface-container-highest": "#e2e2e2", "on-secondary-container": "#fffbff", "background": "#f9f9f9", "on-primary-fixed": "#1c1b1b", "surface-bright": "#f9f9f9", "inverse-on-surface": "#f1f1f1", "on-tertiary-container": "#848484", "on-tertiary-fixed": "#1b1c1c", "primary-container": "#1c1b1b", "secondary-fixed-dim": "#ffb59a", "secondary-container": "#cd4800" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "margin": "2rem", "space-xs": "0.25rem", "gutter": "1.5rem", "margin-mobile": "1rem", "space-md": "1rem", "space-lg": "1.5rem", "space-sm": "0.5rem", "space-xl": "2rem", "gutter-mobile": "1rem" }, "fontFamily": { "technical-data": ["JetBrains Mono"], "headline-lg-mobile": ["Be Vietnam Pro"], "label-md": ["Inter"], "headline-sm": ["Be Vietnam Pro"], "headline-lg": ["Be Vietnam Pro"], "headline-md": ["Be Vietnam Pro"], "label-sm": ["Inter"], "technical-code": ["JetBrains Mono"], "headline-xl-mobile": ["Be Vietnam Pro"], "body-sm": ["Inter"], "headline-xl": ["Be Vietnam Pro"], "body-md": ["Inter"], "body-lg": ["Inter"] }, "fontSize": { "technical-data": ["13px", { "lineHeight": "18px", "letterSpacing": "0.02em", "fontWeight": "500" }], "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700" }], "label-md": ["14px", { "lineHeight": "20px", "fontWeight": "500" }], "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }], "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }], "technical-code": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "400" }], "headline-xl-mobile": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }], "headline-xl": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }], "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }] } } } };</script></head><body class="bg-surface font-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-screen w-72 bg-surface-container-lowest shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-50 flex flex-col justify-between select-none"><div class="flex flex-col h-full"><div class="h-16 px-space-lg flex items-center gap-space-sm bg-surface-container-lowest border-b border-surface-container-high"><div class="w-9 h-9 rounded-lg bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-secondary text-[22px]">memory</span></div><div class="flex flex-col leading-tight"><span class="font-headline-sm text-headline-sm uppercase tracking-tight text-primary">TECHSTORE</span><span class="font-technical-code text-technical-code uppercase tracking-wider text-on-surface-variant">Admin Engine v2.4</span></div></div><div class="px-space-md py-space-sm"><div class="px-space-sm py-space-xs text-on-surface-variant font-technical-code text-technical-code uppercase tracking-wider">Hệ thống quản trị</div></div><nav class="flex-1 px-space-sm overflow-y-auto space-y-1" data-active-classes="bg-secondary-fixed text-on-secondary-fixed font-semibold border-l-4 border-secondary"><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="tong-quan" href="#"><span class="material-symbols-outlined text-[20px]">dashboard</span><span>Tổng quan</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="nguoi-dung" href="#"><span class="material-symbols-outlined text-[20px]">person</span><span>Người dùng</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="cua-hang" href="#"><span class="material-symbols-outlined text-[20px]">storefront</span><span>Cửa hàng</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="san-pham" href="#"><span class="material-symbols-outlined text-[20px]">inventory_2</span><span>Sản phẩm</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="danh-muc" href="#"><span class="material-symbols-outlined text-[20px]">category</span><span>Danh mục</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="don-hang" href="#"><span class="material-symbols-outlined text-[20px]">receipt_long</span><span>Đơn hàng</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="voucher" href="#"><span class="material-symbols-outlined text-[20px]">confirmation_number</span><span>Voucher</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="danh-gia" href="#"><span class="material-symbols-outlined text-[20px]">star</span><span>Đánh giá</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="hau-mai" href="#"><span class="material-symbols-outlined text-[20px]">verified</span><span>Hậu mãi</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="khieu-nai" href="#"><span class="material-symbols-outlined text-[20px]">report_problem</span><span>Khiếu nại</span></a><div class="pt-space-sm pb-space-xs px-space-sm text-on-surface-variant font-technical-code text-technical-code uppercase tracking-wider">Phân quyền &amp; Nhân sự</div><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="nhan-vien" href="#"><span class="material-symbols-outlined text-[20px]">badge</span><span>Nhân viên</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="vai-tro" href="#"><span class="material-symbols-outlined text-[20px]">admin_panel_settings</span><span>Vai trò</span></a></nav><div class="p-space-md bg-surface-container-low border-t border-surface-container-high"><div class="flex items-center justify-between font-technical-code text-technical-code text-on-surface-variant"><span>TRẠNG THÁI</span><span class="inline-flex items-center gap-1.5 text-secondary font-semibold"><span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>ONLINE</span></div></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 border-b border-surface-container-high flex items-center justify-between px-space-lg"><div class="flex-1 max-w-xl"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-3.5 text-on-surface-variant text-[20px]">search</span><input class="w-full h-10 pl-11 pr-4 bg-surface-container-low border border-surface-container-high rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:border-primary transition-colors" placeholder="Tìm kiếm người dùng, cửa hàng, sản phẩm, đơn hàng..." type="search"/></div></div><div class="flex items-center gap-space-md"><button class="relative w-10 h-10 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[22px]">notifications</span><span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-secondary ring-2 ring-surface-container-lowest"></span></button><div class="h-6 w-px bg-surface-container-high"></div><div class="flex items-center gap-space-sm cursor-pointer py-1 px-2 rounded-lg hover:bg-surface-container-low transition-colors"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="flex flex-col text-left"><span class="font-label-sm text-label-sm font-semibold text-on-surface leading-tight">Admin User</span><span class="font-technical-code text-technical-code text-secondary leading-none">Superadmin</span></div><span class="material-symbols-outlined text-on-surface-variant text-[18px]">expand_more</span></div></div></header><main class="w-full pt-16 min-h-screen bg-surface px-space-lg py-space-md"><div class="flex flex-col w-full space-y-space-lg">
+<!-- Top Breadcrumb & Page Action Header -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md">
+<div class="flex flex-col space-y-1">
+<div class="flex items-center gap-2 font-technical-code text-technical-code text-on-surface-variant">
+<span class="hover:text-primary cursor-pointer transition-colors">Quản trị</span>
+<span class="text-outline-variant">/</span>
+<span class="text-secondary font-semibold">Voucher</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-primary tracking-tight">Voucher</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Quản lý các mã giảm giá và chương trình khuyến mãi của hệ thống.</p>
+</div>
+<!-- Primary Action: + Tạo voucher -->
+<div class="flex items-center gap-space-sm self-start md:self-auto">
+<button class="inline-flex items-center gap-2 px-space-lg py-2.5 rounded-lg bg-secondary text-on-secondary font-label-md text-label-md font-semibold hover:bg-secondary-container active:scale-[0.99] transition-all shadow-[0_4px_14px_rgba(163,56,0,0.2)]">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>Tạo voucher</span>
+</button>
+</div>
+</div>
+<!-- Filter & Search Toolbar Panel -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-[0_1px_8px_rgba(0,0,0,0.03)] flex flex-col md:flex-row items-stretch md:items-center justify-between gap-space-md">
+<div class="flex flex-col sm:flex-row items-center gap-space-md flex-1 max-w-3xl">
+<!-- Search Input -->
+<div class="relative w-full sm:w-80">
+<span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
+<input class="w-full h-10 pl-11 pr-4 bg-surface-container-low rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:bg-surface-container-lowest transition-colors" id="voucher-search" placeholder="Tìm kiếm theo mã voucher..." type="text"/>
+</div>
+<!-- Status Filter Dropdown -->
+<div class="relative w-full sm:w-56">
+<select class="w-full h-10 px-4 bg-surface-container-low rounded-lg font-label-md text-label-md text-on-surface appearance-none cursor-pointer focus:outline-none focus:bg-surface-container-lowest pr-10">
+<option value="all">Tất cả trạng thái</option>
+<option value="active">Đang hoạt động</option>
+<option value="expiring">Sắp hết hạn</option>
+<option value="expired">Đã hết hạn</option>
+<option value="paused">Tạm ngưng</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant text-[20px]">expand_more</span>
+</div>
+</div>
+<!-- Reset / Refresh Button -->
+<div class="flex items-center justify-end">
+<button class="inline-flex items-center gap-2 h-10 px-4 rounded-lg bg-surface-container-low text-on-surface font-label-md text-label-md hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[18px]">sync</span>
+<span>Làm mới</span>
+</button>
+</div>
+</div>
+<!-- Voucher Listing Card -->
+<div class="bg-surface-container-lowest rounded-xl shadow-[0_1px_8px_rgba(0,0,0,0.03)] overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low/75 text-on-surface-variant font-technical-code text-technical-code uppercase tracking-wider">
+<th class="py-3.5 px-space-lg font-semibold">Mã voucher</th>
+<th class="py-3.5 px-space-md font-semibold">Loại ưu đãi</th>
+<th class="py-3.5 px-space-md font-semibold">Giá trị</th>
+<th class="py-3.5 px-space-md font-semibold">Thời hạn</th>
+<th class="py-3.5 px-space-md font-semibold">Lượt sử dụng</th>
+<th class="py-3.5 px-space-md font-semibold">Trạng thái</th>
+<th class="py-3.5 px-space-lg font-semibold text-right">Thao tác</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-high font-body-sm text-body-sm">
+<!-- Row 1: TECH10 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors group">
+<td class="py-4 px-space-lg">
+<div class="flex items-center gap-2">
+<span class="font-technical-data text-technical-data font-bold tracking-tight text-primary">TECH10</span>
+<button class="text-on-surface-variant opacity-0 group-hover:opacity-100 hover:text-secondary transition-all" onclick="navigator.clipboard.writeText('TECH10')" title="Sao chép mã">
+<span class="material-symbols-outlined text-[16px]">content_copy</span>
+</button>
+</div>
+</td>
+<td class="py-4 px-space-md text-on-surface">Giảm theo phần trăm</td>
+<td class="py-4 px-space-md font-technical-data text-technical-data font-bold text-primary">10%</td>
+<td class="py-4 px-space-md font-technical-code text-technical-code text-on-surface-variant">01/06/2024 - 30/06/2024</td>
+<td class="py-4 px-space-md font-technical-data text-technical-data text-on-surface">120 / 500</td>
+<td class="py-4 px-space-md">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 font-label-sm text-label-sm font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                Đang hoạt động
+              </span>
+</td>
+<td class="py-4 px-space-lg text-right">
+<div class="inline-flex items-center justify-end gap-1">
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors" title="Chỉnh sửa">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2: FREESHIP -->
+<tr class="hover:bg-surface-container-low/50 transition-colors group">
+<td class="py-4 px-space-lg">
+<div class="flex items-center gap-2">
+<span class="font-technical-data text-technical-data font-bold tracking-tight text-primary">FREESHIP</span>
+<button class="text-on-surface-variant opacity-0 group-hover:opacity-100 hover:text-secondary transition-all" onclick="navigator.clipboard.writeText('FREESHIP')" title="Sao chép mã">
+<span class="material-symbols-outlined text-[16px]">content_copy</span>
+</button>
+</div>
+</td>
+<td class="py-4 px-space-md text-on-surface">Miễn phí vận chuyển</td>
+<td class="py-4 px-space-md font-technical-data text-technical-data font-bold text-primary">Tối đa 50.000đ</td>
+<td class="py-4 px-space-md font-technical-code text-technical-code text-on-surface-variant">15/05/2024 - 31/07/2024</td>
+<td class="py-4 px-space-md font-technical-data text-technical-data text-on-surface">320 / 1.000</td>
+<td class="py-4 px-space-md">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 font-label-sm text-label-sm font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                Đang hoạt động
+              </span>
+</td>
+<td class="py-4 px-space-lg text-right">
+<div class="inline-flex items-center justify-end gap-1">
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors" title="Chỉnh sửa">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors" title="Thêm tùy chọn">
+<span class="material-symbols-outlined text-[18px]">more_horiz</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3: TECHSOK -->
+<tr class="hover:bg-surface-container-low/50 transition-colors group">
+<td class="py-4 px-space-lg">
+<div class="flex items-center gap-2">
+<span class="font-technical-data text-technical-data font-bold tracking-tight text-primary">TECHSOK</span>
+<button class="text-on-surface-variant opacity-0 group-hover:opacity-100 hover:text-secondary transition-all" onclick="navigator.clipboard.writeText('TECHSOK')" title="Sao chép mã">
+<span class="material-symbols-outlined text-[16px]">content_copy</span>
+</button>
+</div>
+</td>
+<td class="py-4 px-space-md text-on-surface">Giảm số tiền</td>
+<td class="py-4 px-space-md font-technical-data text-technical-data font-bold text-primary">50.000đ</td>
+<td class="py-4 px-space-md font-technical-code text-technical-code text-on-surface-variant">01/06/2024 - 15/06/2024</td>
+<td class="py-4 px-space-md font-technical-data text-technical-data text-on-surface">45 / 200</td>
+<td class="py-4 px-space-md">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed-variant font-label-sm text-label-sm font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                Sắp hết hạn
+              </span>
+</td>
+<td class="py-4 px-space-lg text-right">
+<div class="inline-flex items-center justify-end gap-1">
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors" title="Chỉnh sửa">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors" title="Thêm tùy chọn">
+<span class="material-symbols-outlined text-[18px]">more_horiz</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4: WELCOME -->
+<tr class="hover:bg-surface-container-low/50 transition-colors group">
+<td class="py-4 px-space-lg">
+<div class="flex items-center gap-2">
+<span class="font-technical-data text-technical-data font-bold tracking-tight text-primary">WELCOME</span>
+<button class="text-on-surface-variant opacity-0 group-hover:opacity-100 hover:text-secondary transition-all" onclick="navigator.clipboard.writeText('WELCOME')" title="Sao chép mã">
+<span class="material-symbols-outlined text-[16px]">content_copy</span>
+</button>
+</div>
+</td>
+<td class="py-4 px-space-md text-on-surface">Giảm theo phần trăm</td>
+<td class="py-4 px-space-md font-technical-data text-technical-data font-bold text-primary">15%</td>
+<td class="py-4 px-space-md font-technical-code text-technical-code text-on-surface-variant">10/05/2024 - 10/06/2024</td>
+<td class="py-4 px-space-md font-technical-data text-technical-data text-on-surface">200 / 200</td>
+<td class="py-4 px-space-md">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+                Đã hết hạn
+              </span>
+</td>
+<td class="py-4 px-space-lg text-right">
+<div class="inline-flex items-center justify-end gap-1">
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors" title="Chỉnh sửa">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors" title="Thêm tùy chọn">
+<span class="material-symbols-outlined text-[18px]">more_horiz</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 5: VIP100K -->
+<tr class="hover:bg-surface-container-low/50 transition-colors group">
+<td class="py-4 px-space-lg">
+<div class="flex items-center gap-2">
+<span class="font-technical-data text-technical-data font-bold tracking-tight text-primary">VIP100K</span>
+<button class="text-on-surface-variant opacity-0 group-hover:opacity-100 hover:text-secondary transition-all" onclick="navigator.clipboard.writeText('VIP100K')" title="Sao chép mã">
+<span class="material-symbols-outlined text-[16px]">content_copy</span>
+</button>
+</div>
+</td>
+<td class="py-4 px-space-md text-on-surface">Giảm số tiền</td>
+<td class="py-4 px-space-md font-technical-data text-technical-data font-bold text-primary">100.000đ</td>
+<td class="py-4 px-space-md font-technical-code text-technical-code text-on-surface-variant">01/07/2024 - 31/07/2024</td>
+<td class="py-4 px-space-md font-technical-data text-technical-data text-on-surface">0 / 300</td>
+<td class="py-4 px-space-md">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span>
+                Tạm ngưng
+              </span>
+</td>
+<td class="py-4 px-space-lg text-right">
+<div class="inline-flex items-center justify-end gap-1">
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors" title="Chỉnh sửa">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors" title="Thêm tùy chọn">
+<span class="material-symbols-outlined text-[18px]">more_horiz</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination Footer -->
+<div class="px-space-lg py-space-md bg-surface-container-lowest flex flex-col sm:flex-row items-center justify-end gap-space-lg font-body-sm text-body-sm text-on-surface-variant">
+<!-- Items per page selector -->
+<div class="flex items-center gap-space-sm">
+<span>Hiển thị</span>
+<div class="relative inline-flex items-center">
+<select class="appearance-none h-8 pl-3 pr-7 bg-surface-container-low text-on-surface font-technical-data text-technical-data rounded cursor-pointer focus:outline-none">
+<option value="10">10</option>
+<option value="20">20</option>
+<option value="50">50</option>
+</select>
+<span class="material-symbols-outlined absolute right-1.5 pointer-events-none text-on-surface-variant text-[16px]">expand_more</span>
+</div>
+</div>
+<!-- Range indicator -->
+<div class="font-technical-code text-technical-code text-on-surface">
+        1 - 5 của 5
+      </div>
+<!-- Page navigation buttons -->
+<div class="flex items-center gap-1">
+<button class="w-8 h-8 rounded-lg flex items-center justify-center bg-surface-container-low text-on-surface-variant/40 cursor-not-allowed" disabled="">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center bg-secondary text-on-secondary font-label-sm text-label-sm font-semibold shadow-sm">
+          1
+        </button>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center bg-surface-container-low text-on-surface-variant/40 cursor-not-allowed" disabled="">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Empty State Illustration / Quick Creation Box -->
+<div class="w-full bg-surface-container-lowest rounded-xl p-space-xl flex flex-col items-center justify-center text-center shadow-[0_1px_8px_rgba(0,0,0,0.03)] space-y-space-md">
+<!-- Icon Container -->
+<div class="relative w-16 h-16 rounded-2xl bg-secondary-fixed flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[32px]">confirmation_number</span>
+<!-- Sparkle micro accent -->
+<span class="material-symbols-outlined absolute -top-1.5 -right-1.5 text-secondary text-[18px] animate-pulse">arrow_back_ios_new</span>
+</div>
+<!-- Empty State Content -->
+<div class="max-w-md space-y-1">
+<h3 class="font-headline-sm text-headline-sm text-primary">Chưa có voucher nào</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Tạo voucher đầu tiên để triển khai các chương trình khuyến mãi cho khách hàng.</p>
+</div>
+<!-- Secondary Action Button -->
+<button class="inline-flex items-center gap-2 px-space-lg py-2.5 rounded-lg bg-secondary text-on-secondary font-label-md text-label-md font-semibold hover:bg-secondary-container active:scale-[0.99] transition-all shadow-[0_4px_14px_rgba(163,56,0,0.2)]">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>Tạo voucher</span>
+</button>
+</div>
+</div>
+<script>
+  // Highlight the active sidebar menu link for "Voucher"
+  (function initSidebarActiveState() {
+    const navLinks = document.querySelectorAll('aside nav a[data-path]');
+    navLinks.forEach(link => {
+      if (link.getAttribute('data-path') === 'voucher') {
+        link.className = 'flex items-center gap-space-sm px-space-md py-2.5 rounded-lg font-label-md text-label-md transition-all bg-secondary-fixed text-on-secondary-fixed font-semibold border-l-4 border-secondary';
+        const icon = link.querySelector('.material-symbols-outlined');
+        if (icon) {
+          icon.classList.add('text-secondary');
+          icon.style.fontVariationSettings = "'FILL' 1";
+        }
+      } else {
+        link.classList.remove('bg-secondary-fixed', 'text-on-secondary-fixed', 'font-semibold', 'border-l-4', 'border-secondary');
+      }
+    });
+  })();
+
+  // Instant front-end filter for demo
+  const searchInput = document.getElementById('voucher-search');
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase().trim();
+      const rows = document.querySelectorAll('tbody tr');
+      rows.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        row.style.display = text.includes(query) ? '' : 'none';
+      });
+    });
+  }
+</script></main></div></body></html>

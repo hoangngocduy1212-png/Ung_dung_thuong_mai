@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Khuyến mãi - TECHSTORE</title>
+<!-- Google Fonts: Be Vietnam Pro -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN v3 with plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Be Vietnam Pro"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              DEFAULT: '#FF5C00',
+              hover: '#E55200',
+              light: '#FFF6F0'
+            }
+          }
+        }
+      }
+    }
+  </script>
+<style data-purpose="custom-typography">
+    body {
+      font-family: 'Be Vietnam Pro', sans-serif;
+      color: #171717;
+      background-color: #FFFFFF;
+      -webkit-font-smoothing: antialiased;
+    }
+  </style>
+</head>
+<body class="bg-white text-neutral-900 min-h-screen">
+<!-- BEGIN: MainHeader -->
+<header class="border-b border-neutral-100 bg-white sticky top-0 z-50">
+<div class="max-w-[1366px] mx-auto px-6 lg:px-12">
+<!-- Top Row: Logo, Search, User, Cart -->
+<div class="flex items-center justify-between py-3.5 gap-6">
+<!-- Logo -->
+<a class="flex items-center tracking-tight text-neutral-900 font-extrabold text-xl shrink-0" href="#">
+<span>TECHSTORE</span>
+<span class="inline-block w-2 h-2 rounded-full bg-[#FF5C00] ml-0.5 mb-1.5"></span>
+</a>
+<!-- Search Bar -->
+<div class="flex-1 max-w-2xl px-2">
+<div class="relative w-full">
+<span class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none text-neutral-400">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1010.5 18a7.5 7.5 0 006.15-3.35z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</span>
+<input class="w-full bg-[#F3F4F6] text-sm text-neutral-700 pl-10 pr-4 py-2 rounded-full border-none focus:ring-2 focus:ring-[#FF5C00] focus:bg-white transition-all placeholder:text-neutral-400 font-normal outline-none" placeholder="Tìm kiếm sản phẩm, thương hiệu, danh mục..." type="text"/>
+</div>
+</div>
+<!-- Account, Cart & Promotion -->
+<div class="flex items-center space-x-6 shrink-0 text-sm font-medium">
+<!-- Tài khoản -->
+<a class="flex items-center gap-1.5 text-neutral-800 hover:text-[#FF5C00] transition" href="#">
+<svg class="w-5 h-5 text-neutral-700" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span>Tài khoản</span>
+</a>
+<!-- Giỏ hàng -->
+<a class="flex items-center gap-1.5 text-neutral-800 hover:text-[#FF5C00] transition" href="#">
+<div class="relative">
+<svg class="w-5 h-5 text-[#FF5C00]" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span class="absolute -top-1.5 -right-2 bg-[#FF5C00] text-white text-[10px] font-bold rounded-full h-4 w-4 flex items-center justify-center leading-none">0</span>
+</div>
+<span>Giỏ hàng</span>
+</a>
+<!-- Khuyến mãi -->
+<a class="text-[#FF5C00] font-semibold hover:opacity-90" href="#">
+            Khuyến mãi
+          </a>
+</div>
+</div>
+<!-- Navigation Categories Bar -->
+<nav class="flex items-center space-x-7 py-2.5 text-sm font-medium overflow-x-auto no-scrollbar">
+<!-- Tất cả danh mục -->
+<a class="flex items-center gap-1.5 text-[#FF5C00] font-semibold shrink-0" href="#">
+<svg class="w-4 h-4 fill-current" viewbox="0 0 24 24">
+<path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"></path>
+</svg>
+<span>Tất cả danh mục</span>
+</a>
+<!-- Menu links -->
+<a class="text-neutral-700 hover:text-[#FF5C00] transition shrink-0" href="#">Laptop</a>
+<a class="text-neutral-700 hover:text-[#FF5C00] transition shrink-0" href="#">Điện thoại</a>
+<a class="text-neutral-700 hover:text-[#FF5C00] transition shrink-0" href="#">Máy tính bảng</a>
+<a class="text-neutral-700 hover:text-[#FF5C00] transition shrink-0" href="#">Âm thanh</a>
+<a class="text-neutral-700 hover:text-[#FF5C00] transition shrink-0" href="#">Thiết bị đeo</a>
+<a class="text-neutral-700 hover:text-[#FF5C00] transition shrink-0" href="#">Phụ kiện</a>
+<a class="text-neutral-700 hover:text-[#FF5C00] transition shrink-0" href="#">Thiết bị thông minh</a>
+<a class="text-neutral-700 hover:text-[#FF5C00] transition shrink-0" href="#">Nhà thông minh</a>
+</nav>
+</div>
+</header>
+<!-- END: MainHeader -->
+<!-- BEGIN: MainContent -->
+<main class="max-w-[1366px] mx-auto px-6 lg:px-12 py-8">
+<!-- Page Title -->
+<h1 class="text-[32px] font-bold tracking-tight text-neutral-900 mb-6">
+      Khuyến mãi
+    </h1>
+<!-- BEGIN: HeroPromoBanner -->
+<section class="w-full bg-[#F3F4F6] rounded-2xl overflow-hidden mb-10 shadow-sm border border-neutral-100/80">
+<div class="grid grid-cols-1 md:grid-cols-12 items-center">
+<!-- Banner Text Content -->
+<div class="md:col-span-5 p-8 lg:p-12 z-10">
+<h2 class="text-2xl lg:text-[30px] font-bold text-neutral-900 leading-tight mb-3">
+            Ưu đãi công nghệ dành cho bạn
+          </h2>
+<p class="text-neutral-600 text-sm lg:text-base leading-relaxed mb-6 font-normal">
+            Khám phá các chương trình khuyến mãi hấp dẫn với nhiều sản phẩm công nghệ yêu thích.
+          </p>
+<a class="inline-flex items-center text-[#FF5C00] font-semibold text-sm hover:underline group" href="#">
+<span>Xem điều kiện áp dụng</span>
+<span class="ml-1.5 transition-transform group-hover:translate-x-1">→</span>
+</a>
+</div>
+<!-- Banner Visual Display -->
+<div class="md:col-span-7 relative h-64 md:h-80 w-full overflow-hidden flex items-end justify-center">
+<!-- Background Composite Showcase Image -->
+<img alt="Các thiết bị công nghệ hiện đại laptop, tai nghe, điện thoại" class="w-full h-full object-cover object-center" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-pvC8g5bzMAUpsMMj5tL9qGexgUoz75qmwL10ly75g-mGNFYUGpBFkEfNfRd-7psLzdueKnEEpLbk6W2027ZhMk3pCWLxPRTQj7xUfQcKnvIEiG10nXXGBY56mu_9tqbtD1QpKVFcLUvrVEtFugFKKOiLJdactagRA8F_9IgJtKQcw5qhvurXDZoLDn5ehocYc-06jtw5yR8sEoP8w5h3vNPMNKJNs7SXWrHsWoXC"/>
+</div>
+</div>
+</section>
+<!-- END: HeroPromoBanner -->
+<!-- BEGIN: PromotionCampaigns -->
+<section class="mb-14" data-purpose="promotions-grid">
+<h2 class="text-[22px] font-bold text-neutral-900 mb-6">
+        Các chương trình khuyến mãi
+      </h2>
+<!-- 4 Columns Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+<!-- Card 1: Laptop -->
+<div class="bg-white rounded-xl border border-neutral-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col">
+<div class="aspect-[4/3] bg-neutral-100 overflow-hidden">
+<img alt="Laptop ưu đãi đặc biệt" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5CI0_md4F_LOGC4lSdoYIAbTsyewD7-MWVucVJLHDu3pdL0DkqsHqIQyYCiW4UZzTjFj6JexTSBVTqUXHb8Z60m1Jomrl_ZeKKxHz9Ok0C1AkONz28R8NRV-mfaO1lzgdChvO6IBH-7FMYkTLJxHoSN8kJFqbmfdM5lLprbL9aoQ3sZcu5NVmLIEsGbp9cH_j0-moRq2TAIc3RMUJqJ3xcthSVslBzGW9R6pEiCdl"/>
+</div>
+<div class="p-4 flex flex-col flex-1 justify-between">
+<div>
+<h3 class="font-bold text-base text-neutral-900 mb-2">
+                Laptop ưu đãi đặc biệt
+              </h3>
+<div class="flex items-center text-xs text-neutral-500 mb-4 font-normal">
+<svg class="w-3.5 h-3.5 mr-1 text-neutral-400 stroke-[2]" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<circle cx="12" cy="12" r="9"></circle>
+<path d="M12 7v5l3 2" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span>Thời gian áp dụng</span>
+</div>
+</div>
+<a class="w-full bg-[#FF5C00] hover:bg-[#E55200] text-white font-medium text-sm py-2 rounded-lg text-center block transition" href="#">
+              Xem sản phẩm
+            </a>
+</div>
+</div>
+<!-- Card 2: Điện thoại giá tốt -->
+<div class="bg-white rounded-xl border border-neutral-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col">
+<div class="aspect-[4/3] bg-neutral-100 overflow-hidden">
+<img alt="Điện thoại giá tốt" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9zkruoZxkoathCtyk8f1GIdvnSVGWgWyQJEWqFn0I8VIoqK6H5-e1wwNWy-cUFhf36k_bWJDpOaGShmpTgYHNQmMjIOy8sS1IO9GVuHz2AtcT77IA_kBa1Ctgh5DqzHAFYp4OLmvClwDG4vin3ZsGK0DatFL3z4KAYdqEeIjnxJI7teqY8vF2f5VBLz0OcSGmkbA-bdr1-68HY-savAe1tLpQYhw-Qu5ywow69XQB"/>
+</div>
+<div class="p-4 flex flex-col flex-1 justify-between">
+<div>
+<h3 class="font-bold text-base text-neutral-900 mb-2">
+                Điện thoại giá tốt
+              </h3>
+<div class="flex items-center text-xs text-neutral-500 mb-4 font-normal">
+<svg class="w-3.5 h-3.5 mr-1 text-neutral-400 stroke-[2]" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<circle cx="12" cy="12" r="9"></circle>
+<path d="M12 7v5l3 2" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span>Thời gian áp dụng</span>
+</div>
+</div>
+<a class="w-full bg-[#FF5C00] hover:bg-[#E55200] text-white font-medium text-sm py-2 rounded-lg text-center block transition" href="#">
+              Xem sản phẩm
+            </a>
+</div>
+</div>
+<!-- Card 3: Phụ kiện công nghệ giảm giá -->
+<div class="bg-white rounded-xl border border-neutral-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col">
+<div class="aspect-[4/3] bg-neutral-100 overflow-hidden">
+<img alt="Phụ kiện công nghệ giảm giá" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsBRRbEg77hTz5DjA6KHiMAqr2SwVxTwiZ5eQ-Wuu8qg_pmzMY0jol0YQVNJEkZ3DGkWprh34pbziWTWbf8AFlC7r-PlT6wD2yW_xpQqxZCBTyZfzyrch7BXXw_pGOcoAWw45Rxf3oKTmcWiyrB3fbugehFWjz5pB3cUgvlccHsBFjG-1KfiDBSM3aV8CHHjfCDu9nQMLhgITjyfJLezpGRvcWzYgAaaCL_LvzN1BQ"/>
+</div>
+<div class="p-4 flex flex-col flex-1 justify-between">
+<div>
+<h3 class="font-bold text-base text-neutral-900 mb-2">
+                Phụ kiện công nghệ giảm giá
+              </h3>
+<div class="flex items-center text-xs text-neutral-500 mb-4 font-normal">
+<svg class="w-3.5 h-3.5 mr-1 text-neutral-400 stroke-[2]" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<circle cx="12" cy="12" r="9"></circle>
+<path d="M12 7v5l3 2" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span>Thời gian áp dụng</span>
+</div>
+</div>
+<a class="w-full bg-[#FF5C00] hover:bg-[#E55200] text-white font-medium text-sm py-2 rounded-lg text-center block transition" href="#">
+              Xem sản phẩm
+            </a>
+</div>
+</div>
+<!-- Card 4: Thiết bị thông minh ưu đãi -->
+<div class="bg-white rounded-xl border border-neutral-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col">
+<div class="aspect-[4/3] bg-neutral-100 overflow-hidden">
+<img alt="Thiết bị thông minh ưu đãi" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEcnBoxKv42X-NmesfUP12bE31tXp4UEoRakBl5Z6zOdjzJKddiJogDlttK4cxWErPTGtLR-qP8U66rJZ6gjhjFYCPDv1hgn40tYPf6Iq60BsY64OQ81uHc6tDYECFXTSvUug5QmXdD4-VMfVE0jEwQYW7hFZU1cnfc09jL_iqXTs2lTUN-QergLvjy_eRdfIWOvoSlOuPGqKLp7z4KNm4-afuVzdO7IOhaOu2NmU9"/>
+</div>
+<div class="p-4 flex flex-col flex-1 justify-between">
+<div>
+<h3 class="font-bold text-base text-neutral-900 mb-2">
+                Thiết bị thông minh ưu đãi
+              </h3>
+<div class="flex items-center text-xs text-neutral-500 mb-4 font-normal">
+<svg class="w-3.5 h-3.5 mr-1 text-neutral-400 stroke-[2]" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<circle cx="12" cy="12" r="9"></circle>
+<path d="M12 7v5l3 2" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span>Thời gian áp dụng</span>
+</div>
+</div>
+<a class="w-full bg-[#FF5C00] hover:bg-[#E55200] text-white font-medium text-sm py-2 rounded-lg text-center block transition" href="#">
+              Xem sản phẩm
+            </a>
+</div>
+</div>
+</div>
+</section>
+<!-- END: PromotionCampaigns -->
+</main>
+<!-- END: MainContent -->
+</body></html>

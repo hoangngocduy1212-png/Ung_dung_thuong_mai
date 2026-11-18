@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Danh mục điện thoại - TECHSTORE</title>
+<!-- Tailwind CSS v3 CDN with forms & container queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Font Awesome Icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Google Fonts: Inter -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              orange: '#f95900',
+              orangeHover: '#e04f00',
+            }
+          }
+        }
+      }
+    }
+  </script>
+<!-- BEGIN: Custom Styles -->
+<style data-purpose="base-styling">
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #ffffff;
+      color: #1a1a1a;
+      -webkit-font-smoothing: antialiased;
+    }
+  </style>
+<style data-purpose="banner-custom-elements">
+    /* Subtle custom gradient matching the mockup's high-tech hero banner */
+    .banner-gradient {
+      background: linear-gradient(90deg, #f3f4f6 0%, #ebeef3 50%, #e2e7ee 100%);
+    }
+    .custom-scroll::-webkit-scrollbar {
+      width: 4px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background-color: #cbd5e1;
+      border-radius: 4px;
+    }
+  </style>
+<!-- END: Custom Styles -->
+</head>
+<body class="min-h-screen flex flex-col justify-between text-sm">
+<!-- BEGIN: MainHeader -->
+<header class="w-full bg-white border-b border-gray-100 sticky top-0 z-50">
+<div class="max-w-[1366px] mx-auto px-6 h-16 flex items-center justify-between gap-6">
+<!-- Brand Logo -->
+<a aria-label="TECHSTORE Trang chủ" class="flex items-center gap-1.5 focus:outline-none" href="#">
+<span class="text-2xl font-black tracking-wider text-black">TECHSTORE</span>
+</a>
+<!-- Center Search Pill Input -->
+<div class="flex-1 max-w-2xl relative" data-purpose="search-bar">
+<div class="relative w-full">
+<span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
+<i class="fa-solid fa-magnifying-glass text-sm"></i>
+</span>
+<input class="w-full pl-9 pr-4 py-2 text-xs bg-gray-100/90 border border-transparent rounded-full focus:bg-white focus:border-brand-orange focus:ring-1 focus:ring-brand-orange text-gray-700 placeholder-gray-400 outline-none transition-all" placeholder="Tìm kiếm sản phẩm, thương hiệu, danh mục..." type="text"/>
+</div>
+</div>
+<!-- Right Header Actions (Account & Cart) -->
+<div class="flex items-center gap-6">
+<!-- Account -->
+<a class="flex items-center gap-2 text-gray-800 hover:text-brand-orange transition-colors" href="#">
+<i class="fa-regular fa-circle-user text-xl"></i>
+<span class="font-medium text-xs">Tài khoản</span>
+</a>
+<!-- Cart with Badge -->
+<a class="flex items-center gap-2 text-gray-800 hover:text-brand-orange transition-colors relative" href="#">
+<div class="relative flex items-center">
+<i class="fa-solid fa-cart-shopping text-lg"></i>
+<span class="absolute -top-1.5 -right-2 bg-brand-orange text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center border border-white">
+              0
+            </span>
+</div>
+<span class="font-medium text-xs ml-1">Giỏ hàng</span>
+</a>
+</div>
+</div>
+</header>
+<!-- END: MainHeader -->
+<!-- BEGIN: CategoryNavigation -->
+<nav class="w-full bg-white border-b border-gray-100" data-purpose="primary-navigation">
+<div class="max-w-[1366px] mx-auto px-6 flex items-center justify-between text-xs font-medium">
+<div class="flex items-center space-x-6 overflow-x-auto py-2.5">
+<!-- All categories dropdown trigger -->
+<button class="flex items-center gap-1.5 text-brand-orange font-semibold hover:opacity-90 whitespace-nowrap" type="button">
+<i class="fa-solid fa-border-all text-sm"></i>
+<span>Tất cả danh mục</span>
+</button>
+<!-- Navigation Links -->
+<a class="text-gray-700 hover:text-brand-orange whitespace-nowrap transition-colors" href="#">Laptop</a>
+<a class="text-brand-orange font-semibold relative py-1 border-b-2 border-brand-orange whitespace-nowrap" href="#">Điện thoại</a>
+<a class="text-gray-700 hover:text-brand-orange whitespace-nowrap transition-colors" href="#">Máy tính bảng</a>
+<a class="text-gray-700 hover:text-brand-orange whitespace-nowrap transition-colors" href="#">Âm thanh</a>
+<a class="text-gray-700 hover:text-brand-orange whitespace-nowrap transition-colors" href="#">Thiết bị đeo</a>
+<a class="text-gray-700 hover:text-brand-orange whitespace-nowrap transition-colors" href="#">Phụ kiện</a>
+<a class="text-gray-700 hover:text-brand-orange whitespace-nowrap transition-colors" href="#">Thiết bị thông minh</a>
+<a class="text-gray-700 hover:text-brand-orange whitespace-nowrap transition-colors" href="#">Nhà thông minh</a>
+</div>
+<!-- Promotion Highlight Link -->
+<a class="text-brand-orange font-semibold hover:underline whitespace-nowrap pl-4" href="#">Khuyến mãi</a>
+</div>
+</nav>
+<!-- END: CategoryNavigation -->
+<!-- BEGIN: MainContent -->
+<main class="w-full max-w-[1366px] mx-auto px-6 py-4 flex-1">
+<!-- Breadcrumb -->
+<nav aria-label="Breadcrumb" class="flex items-center gap-2 text-xs text-gray-500 mb-4">
+<a class="hover:text-brand-orange transition-colors" href="#">Trang chủ</a>
+<i class="fa-solid fa-play text-[7px] text-gray-400"></i>
+<span class="text-gray-900 font-semibold">Điện thoại</span>
+</nav>
+<!-- BEGIN: CategoryBanner -->
+<section class="banner-gradient rounded-xl mb-6 overflow-hidden relative shadow-sm border border-gray-100 flex flex-col md:flex-row items-center justify-between min-h-[175px]" data-purpose="category-hero-banner">
+<!-- Text content -->
+<div class="p-6 md:p-8 max-w-lg z-10">
+<h1 class="text-2xl md:text-3xl font-extrabold text-black mb-2.5 tracking-tight">Điện thoại</h1>
+<p class="text-xs text-gray-600 leading-relaxed">
+          Kết nối liền mạch, hiệu năng vượt trội, thiết kế thời thượng.<br class="hidden sm:inline"/>
+          Khám phá các dòng điện thoại chính hãng từ những thương hiệu hàng đầu, đáp ứng mọi nhu cầu của bạn.
+        </p>
+</div>
+<!-- Banner Imagery Placeholder matching visual balance -->
+<div class="flex items-center justify-end h-full px-6 py-2">
+<img alt="Điện thoại chính hãng cao cấp" class="h-36 md:h-40 object-contain drop-shadow-md rounded-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDnYLODckGoh6HxidZwIlDXcDrEX0YXM_b0tgBZJfZnIHMIVWr05pboLd5pL3RXrRsnFdBS5LHF-yWK2npFyMh3gIRUTKm9-y5enH2pY538IXCg0-o4uPW1x16orrzhl7zv3Bgogz-R4Gd-VFMf-WM_X7pA2YemF57XO7ZoUNFP9ONYuCY8vXRkStwT0QBdzAIVyoIE_XdiFaRx7rsLqNQ3_NWdvbpbbGBiJTkQb2jX"/>
+</div>
+</section>
+<!-- END: CategoryBanner -->
+<!-- BEGIN: CatalogLayout (Sidebar + Products) -->
+<div class="flex flex-col lg:flex-row gap-6">
+<!-- BEGIN: FilterSidebar -->
+<aside class="w-full lg:w-52 flex-shrink-0" data-purpose="filters-sidebar">
+<div class="bg-white border border-gray-200/80 rounded-lg p-3.5 divide-y divide-gray-100 space-y-4">
+<!-- Filter Group 1: Thương hiệu -->
+<div class="pt-1 first:pt-0">
+<div class="flex items-center justify-between font-bold text-gray-900 text-xs mb-2.5">
+<span>Thương hiệu</span>
+<i class="fa-solid fa-chevron-up text-[10px] text-gray-400"></i>
+</div>
+<div class="space-y-1.5 text-xs text-gray-600">
+<label class="flex items-center justify-between cursor-pointer hover:text-brand-orange">
+<span class="flex items-center gap-2">
+<input class="rounded border-gray-300 text-brand-orange focus:ring-brand-orange h-3.5 w-3.5" type="checkbox"/>
+                  Apple
+                </span>
+</label>
+<label class="flex items-center justify-between cursor-pointer hover:text-brand-orange">
+<span class="flex items-center gap-2">
+<input class="rounded border-gray-300 text-brand-orange focus:ring-brand-orange h-3.5 w-3.5" type="checkbox"/>
+                  Samsung
+                </span>
+<span class="text-gray-400 text-[11px]">(28)</span>
+</label>
+<label class="flex items-center justify-between cursor-pointer hover:text-brand-orange">
+<span class="flex items-center gap-2">
+<input class="rounded border-gray-300 text-brand-orange focus:ring-brand-orange h-3.5 w-3.5" type="checkbox"/>
+                  Xiaomi
+                </span>
+</label>
+<label class="flex items-center justify-between cursor-pointer hover:text-brand-orange">
+<span class="flex items-center gap-2">
+<input class="rounded border-gray-300 text-brand-orange focus:ring-brand-orange h-3.5 w-3.5" type="checkbox"/>
+                  OPPO
+                </span>
+<span class="text-gray-400 text-[11px]">(16)</span>
+</label>
+<label class="flex items-center justify-between cursor-pointer hover:text-brand-orange">
+<span class="flex items-center gap-2">
+<input class="rounded border-gray-300 text-brand-orange focus:ring-brand-orange h-3.5 w-3.5" type="checkbox"/>
+                  vivo
+                </span>
+<span class="text-gray-400 text-[11px]">(12)</span>
+</label>
+<label class="flex items-center justify-between cursor-pointer hover:text-brand-orange">
+<span class="flex items-center gap-2">
+<input class="rounded border-gray-300 text-brand-orange focus:ring-brand-orange h-3.5 w-3.5" type="checkbox"/>
+                  realme
+                </span>
+<span class="text-gray-400 text-[11px]">(12)</span>
+</label>
+<a class="inline-flex items-center gap-1 text-xs text-brand-orange font-medium mt-1 hover:underline" href="#">
+                Xem thêm <i class="fa-solid fa-arrow-right text-[10px]"></i>
+</a>
+</div>
+</div>
+<!-- Filter Group 2: Khoảng giá -->
+<div class="pt-3">
+<div class="flex items-center justify-between font-bold text-gray-900 text-xs mb-2.5">
+<span>Khoảng giá</span>
+</div>
+<div class="space-y-1.5 text-xs text-gray-600">
+<label class="flex items-center justify-between cursor-pointer hover:text-brand-orange">
+<span class="flex items-center gap-2">
+<input class="rounded border-gray-300 text-brand-orange focus:ring-brand-orange h-3.5 w-3.5" type="checkbox"/>
+                  Dưới 5 triệu
+                </span>
+</label>
+<label class="flex items-center justify-between cursor-pointer hover:text-brand-orange">
+<span class="flex items-center gap-2">
+<input class="rounded border-gray-300 text-brand-orange focus:ring-brand-orange h-3.5 w-3.5" type="checkbox"/>
+                  5 - 10 triệu
+                </span>
+</label>
+<label class="flex items-center justify-between cursor-pointer hover:text-brand-orange">
+<span class="flex items-center gap-2">
+<input class="rounded border-gray-300 text-brand-orange focus:ring-brand-orange h-3.5 w-3.5" type="checkbox"/>
+                  20 - 30 triệu
+                </span>
+</label>
+<label class="flex items-center justify-between cursor-pointer hover:text-brand-orange">
+<span class="flex items-center gap-2">
+<input class="rounded border-gray-300 text-brand-orange focus:ring-brand-orange h-3.5 w-3.5" type="checkbox"/>
+                  Trên 30 triệu
+                </span>
+<span class="text-gray-400 text-[11px]">(8)</span>
+</label>
+</div>
+</div>
+<!-- Filter Group 3: Dung lượng lưu trữ -->
+<div class="pt-3">
+<div class="flex items-center justify-between font-bold text-gray-900 text-xs mb-2.5">
+<span>Dung lượng lưu trữ</span>
+</div>
+<div class="space-y-1.5 text-xs text-gray-600">
+<label class="flex items-center justify-between cursor-pointer hover:text-brand-orange">
+<span class="flex items-center gap-2">
+<input class="rounded border-gray-300 text-brand-orange focus:ring-brand-orange h-3.5 w-3.5" type="checkbox"/>
+                  128GB
+                </span>
+</label>
+<label class="flex items-center justify-between cursor-pointer hover:text-brand-orange">
+<span class="flex items-center gap-2">
+<input class="rounded border-gray-300 text-brand-orange focus:ring-brand-orange h-3.5 w-3.5" type="checkbox"/>
+                  256GB
+                </span>
+</label>
+<label class="flex items-center justify-between cursor-pointer hover:text-brand-orange">
+<span class="flex items-center gap-2">
+<input class="rounded border-gray-300 text-brand-orange focus:ring-brand-orange h-3.5 w-3.5" type="checkbox"/>
+                  512GB
+                </span>
+<span class="text-gray-400 text-[11px]">(6)</span>
+</label>
+</div>
+</div>
+</div>
+</aside>
+<!-- END: FilterSidebar -->
+<!-- BEGIN: ProductsContainer -->
+<section class="flex-1" data-purpose="product-list-section">
+<!-- Sorting Controls -->
+<div class="flex items-center gap-2 mb-4" data-purpose="sorting-bar">
+<span class="text-xs font-bold text-gray-900 mr-1">Sắp xếp theo:</span>
+<button class="px-3.5 py-1 text-xs font-semibold text-white bg-brand-orange rounded-full shadow-sm">
+            Liên quan
+          </button>
+<button class="px-3.5 py-1 text-xs font-normal text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-full transition-colors">
+            Giá thấp đến cao
+          </button>
+<button class="px-3.5 py-1 text-xs font-normal text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-full transition-colors">
+            Giá cao đến thấp
+          </button>
+<button class="px-3.5 py-1 text-xs font-normal text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-full transition-colors">
+            Mới nhất
+          </button>
+</div>
+<!-- Product Grid (4 columns x 2 rows) -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="products-grid">
+<!-- Product Card 1 -->
+<article class="bg-white border border-gray-200/80 rounded-xl p-3.5 flex flex-col justify-between hover:shadow-md transition-shadow relative group">
+<button class="absolute top-3 right-3 text-gray-400 hover:text-brand-orange transition-colors" title="Thêm vào yêu thích">
+<i class="fa-regular fa-heart text-sm"></i>
+</button>
+<div class="w-full flex items-center justify-center py-2 h-44">
+<img alt="iPhone 15 128GB" class="max-h-full object-contain group-hover:scale-105 transition-transform duration-200" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBT4krsNYJguIjRVlMpIdm5TwSekvIHEdDV9X8hu5LaxuuJQOM0hzgVjo3poiWMS5RyrDIx1CHZBTM01DOFD8EzYR46yADFkYYPDdqszwvRQqIIsoX4AAYDRUDYxRPwLjwpKMGYXZarWi4tKwmXofZ4f1hiX1Zk61psmkIcxW3idVOK1PhlYOHn5aaElFk6LEGYLs1PdTS3f8iVZZXoyww4xRHs4Z5vmdbKfCHquFIb"/>
+</div>
+<div class="pt-2">
+<div class="flex items-center justify-between mb-1">
+<h3 class="text-xs font-bold text-gray-900 truncate">iPhone 15 128GB</h3>
+<i class="fa-solid fa-chevron-down text-[10px] text-gray-400"></i>
+</div>
+<p class="text-brand-orange font-bold text-sm leading-tight">22.990.000₫</p>
+<!-- Rating & Reviews -->
+<div class="flex items-center gap-1.5 mt-2 text-[11px] text-gray-500">
+<div class="flex text-amber-500 text-[10px]">
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star-half-stroke"></i>
+</div>
+<span>(124)</span>
+</div>
+</div>
+</article>
+<!-- Product Card 2 -->
+<article class="bg-white border border-gray-200/80 rounded-xl p-3.5 flex flex-col justify-between hover:shadow-md transition-shadow relative group">
+<button class="absolute top-3 right-3 text-gray-400 hover:text-brand-orange transition-colors" title="Thêm vào yêu thích">
+<i class="fa-regular fa-heart text-sm"></i>
+</button>
+<div class="w-full flex items-center justify-center py-2 h-44">
+<img alt="Samsung Galaxy S24 256GB" class="max-h-full object-contain group-hover:scale-105 transition-transform duration-200" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBb69sCR3Ca-N1Ekzij4kTGFHf9joutZJvc4hhI2gIAB5jZpc9rwVDk3HTW3uePy3mLpg0DLdPgbHdB53PjcEsuCK7ANwVtakLf9Tquwb-gypxSOwRAPA59b09nEWuACyEhAlpGnNkZqJ8sFXLzun_qt6nts-N4M_PdxZ-Wfyx1X69E5WdYC30_OfB7fK-ZjAiC_7FhQPhriqKO9ZFUzKMRnuZ3aEEYRES2oRSIIdQT"/>
+</div>
+<div class="pt-2">
+<div class="flex items-center justify-between mb-1">
+<h3 class="text-xs font-bold text-gray-900 truncate">Samsung Galaxy S24 256GB</h3>
+<i class="fa-solid fa-chevron-down text-[10px] text-gray-400"></i>
+</div>
+<p class="text-brand-orange font-bold text-sm leading-tight">18.490.000₫</p>
+<div class="flex items-center gap-1.5 mt-2 text-[11px] text-gray-500">
+<div class="flex text-amber-500 text-[10px]">
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+</div>
+<span>(14)</span>
+</div>
+</div>
+</article>
+<!-- Product Card 3 -->
+<article class="bg-white border border-gray-200/80 rounded-xl p-3.5 flex flex-col justify-between hover:shadow-md transition-shadow relative group">
+<button class="absolute top-3 right-3 text-gray-400 hover:text-brand-orange transition-colors" title="Thêm vào yêu thích">
+<i class="fa-regular fa-heart text-sm"></i>
+</button>
+<div class="w-full flex items-center justify-center py-2 h-44">
+<img alt="Xiaomi 14 256GB" class="max-h-full object-contain group-hover:scale-105 transition-transform duration-200" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDv3Px7o9bfzW2ewaxwPPX1wGn5n9NzJXB24dQaVwsLTTyuVhfAj4iFqiTfPxHUXM50Ds2uP2u0oA8WIdW9BvAC69C-2DF5Nx3EL6SRiSGE5vFuw6HkgxYtNp3GanAjaQO9LRG0bUEzkgNXb6_fpeLmuHEHnURyHcCV4dIo9mvj_RY2f_tnyJWrF3RuZl55-odko_y_PlKySUeWXsex1m_xmWQcz-cjO9cMYhYVnRpN"/>
+</div>
+<div class="pt-2">
+<div class="flex items-center justify-between mb-1">
+<h3 class="text-xs font-bold text-gray-900 truncate">Xiaomi 14 256GB</h3>
+<i class="fa-solid fa-chevron-down text-[10px] text-gray-400"></i>
+</div>
+<p class="text-brand-orange font-bold text-sm leading-tight">16.990.000₫</p>
+<div class="flex items-center gap-1.5 mt-2 text-[11px] text-gray-500">
+<div class="flex text-amber-500 text-[10px]">
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star-half-stroke"></i>
+</div>
+<span>(76)</span>
+</div>
+</div>
+</article>
+<!-- Product Card 4 -->
+<article class="bg-white border border-gray-200/80 rounded-xl p-3.5 flex flex-col justify-between hover:shadow-md transition-shadow relative group">
+<button class="absolute top-3 right-3 text-gray-400 hover:text-brand-orange transition-colors" title="Thêm vào yêu thích">
+<i class="fa-regular fa-heart text-sm"></i>
+</button>
+<div class="w-full flex items-center justify-center py-2 h-44">
+<img alt="OPPO Reno11 256GB" class="max-h-full object-contain group-hover:scale-105 transition-transform duration-200" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdXcGZrwE0eISYGJbgmdKATNmGbnHxrUn5JMPjcbftjRcQdX4jQZ7MYHY8hXNVv3Zfgp7YiKeIFZq3O_-m6O1rPAmeDoelCWYP8BNR2bYtw1bmkp3Tuxfq-VqDDyUx6H5LQhzKI7ziYCtM9vw34mlXdqgEqLx7qUCadOPFvuE-3F24Mc6CkHxtnEK3Gn9N-7ko80pFkJ2rRFF4sxSzVm2rrgAXAkRm0llGJ3uak9UN"/>
+</div>
+<div class="pt-2">
+<div class="flex items-center justify-between mb-1">
+<h3 class="text-xs font-bold text-gray-900 truncate">OPPO Reno11 256GB</h3>
+<i class="fa-solid fa-chevron-down text-[10px] text-gray-400"></i>
+</div>
+<p class="text-brand-orange font-bold text-sm leading-tight">10.990.000₫</p>
+<div class="flex items-center gap-1.5 mt-2 text-[11px] text-gray-500">
+<div class="flex text-amber-500 text-[10px]">
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+</div>
+<span>(64)</span>
+</div>
+</div>
+</article>
+<!-- Product Card 5 -->
+<article class="bg-white border border-gray-200/80 rounded-xl p-3.5 flex flex-col justify-between hover:shadow-md transition-shadow relative group">
+<button class="absolute top-3 right-3 text-gray-400 hover:text-brand-orange transition-colors" title="Thêm vào yêu thích">
+<i class="fa-regular fa-heart text-sm"></i>
+</button>
+<div class="w-full flex items-center justify-center py-2 h-44">
+<img alt="vivo X100 256GB" class="max-h-full object-contain group-hover:scale-105 transition-transform duration-200" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1Q8_kfDsi8oGUV_Q-UTqQgkhRbh5l_uhc6oFsKwmOWEu6WEskCLG5w9ORMt92fxY0zdpf-6wa910O1vpFnVP-hh1-d8RyD4zBW_O5bZ-oaiBWgM08xfsftMjjWQa1qcALhRth9ouHn-DJT_ntM_lo2Yy_JNgFKB6y6F3sg1ZyuQxwcu7TV7H4f9ZfaHyAHuC-V8YhmljYweAxQ7a7TguAcNGAi0k9XTn-vcbRzHjb"/>
+</div>
+<div class="pt-2">
+<div class="flex items-center justify-between mb-1">
+<h3 class="text-xs font-bold text-gray-900 truncate">vivo X100 256GB</h3>
+<i class="fa-solid fa-chevron-down text-[10px] text-gray-400"></i>
+</div>
+<p class="text-brand-orange font-bold text-sm leading-tight">16.490.000₫</p>
+<div class="flex items-center gap-1.5 mt-2 text-[11px] text-gray-500">
+<div class="flex text-amber-500 text-[10px]">
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star-half-stroke"></i>
+</div>
+<span>(52)</span>
+</div>
+</div>
+</article>
+<!-- Product Card 6 -->
+<article class="bg-white border border-gray-200/80 rounded-xl p-3.5 flex flex-col justify-between hover:shadow-md transition-shadow relative group">
+<button class="absolute top-3 right-3 text-gray-400 hover:text-brand-orange transition-colors" title="Thêm vào yêu thích">
+<i class="fa-regular fa-heart text-sm"></i>
+</button>
+<div class="w-full flex items-center justify-center py-2 h-44">
+<img alt="realme 12 Pro+ 256GB" class="max-h-full object-contain group-hover:scale-105 transition-transform duration-200" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHN8E6P_Hnz4JZrKpIjRgyro9RS5wGEj9VqCzTef3rkoxUQIC3OsQLlQYRaQdcZW2AUJqWzgphWzfeF0zT6c1heY7aJZ6NPu6BUOApNNu1siWDBwcMoQShYU1nEAMHh_BXVxxQWY-MtSOafnialKwOVcYEVaZ3sBgIAbtc0Pm_G3PynW0b4OslsvgrIPqaqSki4Of4RLb6Q1uV3rXsKXp5LLUCTElsFjWY6XWax55p"/>
+</div>
+<div class="pt-2">
+<div class="flex items-center justify-between mb-1">
+<h3 class="text-xs font-bold text-gray-900 truncate">realme 12 Pro+ 256GB</h3>
+<i class="fa-solid fa-chevron-down text-[10px] text-gray-400"></i>
+</div>
+<p class="text-brand-orange font-bold text-sm leading-tight">9.990.000₫</p>
+<div class="flex items-center gap-1.5 mt-2 text-[11px] text-gray-500">
+<div class="flex text-amber-500 text-[10px]">
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+</div>
+<span>(48)</span>
+</div>
+</div>
+</article>
+<!-- Product Card 7 -->
+<article class="bg-white border border-gray-200/80 rounded-xl p-3.5 flex flex-col justify-between hover:shadow-md transition-shadow relative group">
+<button class="absolute top-3 right-3 text-gray-400 hover:text-brand-orange transition-colors" title="Thêm vào yêu thích">
+<i class="fa-regular fa-heart text-sm"></i>
+</button>
+<div class="w-full flex items-center justify-center py-2 h-44">
+<img alt="Samsung Galaxy Z Flip5 256GB" class="max-h-full object-contain group-hover:scale-105 transition-transform duration-200" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHt79W6UZGdcQqqm9S9aDGYHyhgH60msyJaoZaAhvXdVkfFZ8ka3yeD80ipKAbzlhnsme2FXvVhal5Ud_TXACmql1jWL5a27dzfn5ttCxe-p0PRywxpiWkznBAuzPKKfQN11TXtaGNe-TscIcW_6lM8792yP_KVdykVjvJkAHyq2odkeFOmtIUJmaVXgGkRC_v64Tah929DB_lYwsoO9nM5Ug_1PWwoZ0MYziBc8Hu"/>
+</div>
+<div class="pt-2">
+<div class="flex items-center justify-between mb-1">
+<h3 class="text-xs font-bold text-gray-900 truncate">Samsung Galaxy Z Flip5 256GB</h3>
+<i class="fa-solid fa-chevron-down text-[10px] text-gray-400"></i>
+</div>
+<p class="text-brand-orange font-bold text-sm leading-tight">21.990.000₫</p>
+<div class="flex items-center gap-1.5 mt-2 text-[11px] text-gray-500">
+<div class="flex text-amber-500 text-[10px]">
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+</div>
+<span>(36)</span>
+</div>
+</div>
+</article>
+<!-- Product Card 8 -->
+<article class="bg-white border border-gray-200/80 rounded-xl p-3.5 flex flex-col justify-between hover:shadow-md transition-shadow relative group">
+<button class="absolute top-3 right-3 text-gray-400 hover:text-brand-orange transition-colors" title="Thêm vào yêu thích">
+<i class="fa-regular fa-heart text-sm"></i>
+</button>
+<div class="w-full flex items-center justify-center py-2 h-44">
+<img alt="iPhone 15 Pro 256GB" class="max-h-full object-contain group-hover:scale-105 transition-transform duration-200" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCu8DcTeZkhDsRhWfkJ_dt2q-vE2q2ugkPwCC_2b8dqdjYh4a1EknNNayNqqUPdDQt83dRB_ILLB_Lr8Ut2AmyRQBm1SWr_HQHc0rXtXcqvGpeO5ks0mZwWK2V8AwWJexgWYMBZM7yXgPuEwO8DSc1OgHtCPi7gMyfBa0lVq1jLjZM6zvIhh6qpUoinpksPbWjXjpfhBOrogq_cPX6ZZFp89gM8XSTqjbUV8IGPwnDy"/>
+</div>
+<div class="pt-2">
+<div class="flex items-center justify-between mb-1">
+<h3 class="text-xs font-bold text-gray-900 truncate">iPhone 15 Pro 256GB</h3>
+<i class="fa-solid fa-chevron-down text-[10px] text-gray-400"></i>
+</div>
+<p class="text-brand-orange font-bold text-sm leading-tight">28.990.000₫</p>
+<div class="flex items-center gap-1.5 mt-2 text-[11px] text-gray-500">
+<div class="flex text-amber-500 text-[10px]">
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+</div>
+<span>(92)</span>
+</div>
+</div>
+</article>
+</div>
+<!-- BEGIN: Pagination -->
+<nav aria-label="Pagination" class="flex items-center justify-center gap-1.5 my-8">
+<button aria-label="Trang trước" class="w-8 h-8 flex items-center justify-center rounded border border-gray-200 text-gray-500 hover:border-gray-300 hover:text-gray-800 transition-colors text-xs">
+<i class="fa-solid fa-chevron-left text-[10px]"></i>
+</button>
+<button class="w-8 h-8 flex items-center justify-center rounded bg-brand-orange text-white font-bold text-xs shadow-sm">
+            1
+          </button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-gray-200 text-gray-700 hover:border-brand-orange hover:text-brand-orange transition-colors text-xs font-medium">
+            2
+          </button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-gray-200 text-gray-700 hover:border-brand-orange hover:text-brand-orange transition-colors text-xs font-medium">
+            3
+          </button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-gray-200 text-gray-700 hover:border-brand-orange hover:text-brand-orange transition-colors text-xs font-medium">
+            4
+          </button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-gray-200 text-gray-700 hover:border-brand-orange hover:text-brand-orange transition-colors text-xs font-medium">
+            5
+          </button>
+<button aria-label="Trang sau" class="w-8 h-8 flex items-center justify-center rounded border border-gray-200 text-gray-500 hover:border-gray-300 hover:text-gray-800 transition-colors text-xs">
+<i class="fa-solid fa-chevron-right text-[10px]"></i>
+</button>
+</nav>
+<!-- END: Pagination -->
+</section>
+<!-- END: ProductsContainer -->
+</div>
+<!-- END: CatalogLayout -->
+</main>
+<!-- END: MainContent -->
+<script data-purpose="card-interactions">
+    // Add simple interactive feedback for wishlist toggles
+    document.querySelectorAll('[title="Thêm vào yêu thích"]').forEach(button => {
+      button.addEventListener('click', (e) => {
+        e.preventDefault();
+        const icon = button.querySelector('i');
+        if (icon.classList.contains('fa-regular')) {
+          icon.classList.remove('fa-regular', 'text-gray-400');
+          icon.classList.add('fa-solid', 'text-red-500');
+        } else {
+          icon.classList.remove('fa-solid', 'text-red-500');
+          icon.classList.add('fa-regular', 'text-gray-400');
+        }
+      });
+    });
+  </script>
+</body></html>
