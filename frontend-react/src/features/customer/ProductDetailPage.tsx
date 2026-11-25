@@ -7,6 +7,7 @@ import { useCart } from '../../app/providers/CartProvider';
 import { useAuth } from '../../hooks/useAuth';
 import { Loading } from '../../components/common/Loading';
 import { ErrorState } from '../../components/common/ErrorState';
+import { ProductImage } from '../../components/common/ProductImage';
 import type { Product, ProductVariant, ProductReview } from '../../types/catalog';
 import {
   Star,
@@ -108,7 +109,7 @@ export const ProductDetailPage: React.FC = () => {
       const ok = await addToCart(product._id, selectedVariant._id, quantity);
       if (ok) {
         if (buyNow) {
-          navigate('/checkout');
+          navigate(`/checkout?buyNow=1&variantId=${selectedVariant._id}`);
         } else {
           setAddSuccessMessage(`Đã thêm ${quantity} sản phẩm vào giỏ hàng thành công!`);
           setTimeout(() => setAddSuccessMessage(null), 3500);
@@ -195,7 +196,14 @@ export const ProductDetailPage: React.FC = () => {
                     : 'border-neutral-200 hover:border-neutral-400'
                 }`}
               >
-                <img src={img} alt={`Thumbnail ${idx + 1}`} className="object-contain w-full h-full" />
+                <img
+                  src={img}
+                  alt={`Thumbnail ${idx + 1}`}
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=200&q=80';
+                  }}
+                  className="object-contain w-full h-full"
+                />
               </div>
             ))}
           </div>
@@ -207,6 +215,9 @@ export const ProductDetailPage: React.FC = () => {
                 key={selectedImageIndex}
                 src={images[selectedImageIndex] || images[0]}
                 alt={product.name}
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800&q=80';
+                }}
                 initial={{ opacity: 0.4, scale: 0.98 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0.4, scale: 1.01 }}
@@ -572,9 +583,10 @@ export const ProductDetailPage: React.FC = () => {
                 className="group cursor-pointer flex flex-col p-3 rounded-xl border border-neutral-200 hover:border-neutral-300 hover:shadow-md transition-all"
               >
                 <div className="w-full aspect-square rounded-lg bg-neutral-50 flex items-center justify-center p-2 mb-2 overflow-hidden">
-                  <img
-                    src={sp.images?.[0] || 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=300&q=80'}
+                  <ProductImage
+                    src={sp.images}
                     alt={sp.name}
+                    category={product.category?.name}
                     className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform"
                   />
                 </div>

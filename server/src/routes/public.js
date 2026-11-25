@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import mongoose from 'mongoose';
 import { asyncHandler, escapeRegex, pageParams, paged } from '../utils/helpers.js';
 import AppError from '../utils/AppError.js';
 import Shop from '../models/Shop.js';
@@ -19,11 +20,11 @@ r.get('/brands', asyncHandler(async (_req, res) => {
 
 // ---- Danh sách + tìm kiếm + lọc + sắp xếp sản phẩm ----
 const SORTS = {
-  newest: { createdAt: -1 },
-  price_asc: { minPrice: 1 },
-  price_desc: { minPrice: -1 },
-  popular: { soldCount: -1 },
-  rating: { ratingAvg: -1, ratingCount: -1 },
+  newest: { createdAt: -1, _id: -1 },
+  price_asc: { minPrice: 1, _id: -1 },
+  price_desc: { minPrice: -1, _id: -1 },
+  popular: { soldCount: -1, _id: -1 },
+  rating: { ratingAvg: -1, ratingCount: -1, _id: -1 },
 };
 
 r.get('/products', asyncHandler(async (req, res) => {
@@ -36,8 +37,38 @@ r.get('/products', asyncHandler(async (req, res) => {
   if (shop) filter.shop = { $in: activeShops.filter((id) => String(id) === String(shop)) };
   if (q) filter.name = { $regex: escapeRegex(q), $options: 'i' };
   if (category) {
-    const children = await Category.find({ parent: category, isDeleted: false }).select('_id').lean(); // gồm cả danh mục con
-    filter.category = { $in: [category, ...children.map((c) => c._id)] };
+    let targetId = category;
+    if (!mongoose.Types.ObjectId.isValid(category)) {
+      // Hỗ trợ ánh xạ slug hoặc tên danh mục (không phân biệt hoa/thường, không dấu)
+      const allCats = await Category.find({ isDeleted: false }).lean();
+      const normalize = (s) => (s || '').toLowerCase().replace(/đ/g, 'd').replace(/Đ/g, 'd').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/g, '');
+      const normTarget = normalize(category);
+      const aliasMap = {
+        phone: 'dienthoai',
+        laptop: 'laptop',
+        tablet: 'maytinhbang',
+        audio: 'amthanh',
+        wearable: 'thietbideo',
+        accessories: 'phukien',
+        pc: 'linhkienpc',
+        desktop: 'maytinhban',
+      };
+      const mappedTarget = aliasMap[normTarget] || normTarget;
+
+      const found = allCats.find((c) => {
+        const n = normalize(c.name);
+        return n === normTarget || n === mappedTarget || n.includes(normTarget) || normTarget.includes(n);
+      });
+      if (found) targetId = found._id;
+    }
+
+    if (mongoose.Types.ObjectId.isValid(targetId)) {
+      const children = await Category.find({ parent: targetId, isDeleted: false }).select('_id').lean(); // gồm cả danh mục con
+      filter.category = { $in: [targetId, ...children.map((c) => c._id)] };
+    } else {
+      // Không tìm thấy danh mục hợp lệ: lọc rỗng an toàn, tránh CastError
+      filter.category = new mongoose.Types.ObjectId();
+    }
   }
   if (brand) filter.brand = brand;
   if (minPrice || maxPrice) {

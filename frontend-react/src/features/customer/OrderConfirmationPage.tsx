@@ -16,6 +16,23 @@ export const OrderConfirmationPage: React.FC = () => {
 
   const [order, setOrder] = useState<Order | null>(null);
   const [loading, setLoading] = useState(false);
+  const [isPaying, setIsPaying] = useState(false);
+
+  const handlePayNow = async () => {
+    const targetGroup = order?.groupCode || groupCode;
+    if (!targetGroup) return;
+    try {
+      setIsPaying(true);
+      const res = await customerService.createVNPayUrl(targetGroup);
+      if (res.paymentUrl) {
+        window.location.href = res.paymentUrl;
+      }
+    } catch (err: any) {
+      alert(err?.message || 'Không thể kết nối cổng VNPay. Vui lòng thử lại sau.');
+    } finally {
+      setIsPaying(false);
+    }
+  };
 
   useEffect(() => {
     if (orderId) {
@@ -198,6 +215,18 @@ export const OrderConfirmationPage: React.FC = () => {
                   {formatPrice(order?.total)}
                 </span>
               </div>
+
+              {order?.payment?.method === 'online' && order?.payment?.status === 'unpaid' && (
+                <button
+                  type="button"
+                  onClick={handlePayNow}
+                  disabled={isPaying}
+                  className="mt-3 w-full py-2.5 bg-[#FF5C00] hover:bg-[#E55200] disabled:bg-neutral-300 text-white font-bold text-xs rounded-xl transition flex items-center justify-center gap-1.5 shadow-xs cursor-pointer active:scale-[0.98]"
+                >
+                  <CreditCard className="w-4 h-4" />
+                  <span>{isPaying ? 'Đang kết nối VNPay...' : 'Thanh toán VNPay ngay'}</span>
+                </button>
+              )}
             </div>
           </div>
         </div>

@@ -23,6 +23,7 @@ const orderSchema = new mongoose.Schema(
       },
     ],
     shippingAddress: { receiver: String, phone: String, detail: String, ward: String, district: String, province: String },
+    shippingMethod: { type: String, enum: ['standard', 'express'], default: 'standard' },
     note: String,
     subtotal: { type: Number, required: true },
     shippingFee: { type: Number, default: 0 },

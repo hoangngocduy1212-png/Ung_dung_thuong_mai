@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { staggerContainerVariants, staggerItemVariants, ShimmerSkeleton } from '../../lib/motion';
 import { catalogService } from '../../services/catalogService';
+import { ProductImage } from '../../components/common/ProductImage';
 import type { Category, Product, Brand } from '../../types/catalog';
 import {
   ArrowRight,
@@ -90,6 +91,9 @@ export const HomePage: React.FC = () => {
     return price.toLocaleString('vi-VN') + ' đ';
   };
 
+  const rootCategories = categories.filter((c) => !c.parent);
+  const displayCategories = rootCategories.length > 0 ? rootCategories : categories;
+
   return (
     <div className="max-w-[1320px] mx-auto px-4 lg:px-6 pt-4 pb-16 space-y-10">
       {/* 1. HERO SECTION BANNER */}
@@ -171,7 +175,7 @@ export const HomePage: React.FC = () => {
           className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 gap-3"
         >
           {categories.length > 0
-            ? categories.slice(0, 8).map((cat) => {
+            ? displayCategories.slice(0, 8).map((cat) => {
                 const lower = cat.name.toLowerCase();
                 const icon = CATEGORY_ICONS[lower] || <Cpu className="w-7 h-7 text-neutral-700" />;
                 return (
@@ -190,20 +194,8 @@ export const HomePage: React.FC = () => {
                   </motion.div>
                 );
               })
-            : DEFAULT_CATEGORIES.map((item, idx) => (
-                <motion.div key={idx} variants={staggerItemVariants}>
-                  <Link
-                    to={`/products?category=${item.slug}`}
-                    className="bg-[#F8F9FA] hover:bg-[#F0F2F5] transition-all duration-200 rounded-xl p-3.5 flex flex-col items-center justify-center group border border-transparent hover:border-neutral-200 hover:-translate-y-0.5 hover:shadow-xs text-center min-h-[105px] h-full"
-                  >
-                    <div className="h-12 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform duration-200 text-[#FF5C00]">
-                      {item.icon}
-                    </div>
-                    <span className="text-xs text-neutral-800 font-medium group-hover:text-[#FF5C00] line-clamp-1 transition-colors">
-                      {item.name}
-                    </span>
-                  </Link>
-                </motion.div>
+            : [...Array(8)].map((_, idx) => (
+                <ShimmerSkeleton key={idx} className="h-[105px] rounded-xl" />
               ))}
         </motion.div>
       </section>
@@ -237,12 +229,10 @@ export const HomePage: React.FC = () => {
                   className="bg-[#F8F9FA] hover:bg-[#F0F2F5] rounded-xl p-3 flex flex-col items-center text-center group cursor-pointer border border-transparent hover:border-neutral-200 hover:shadow-md transition-shadow select-none"
                 >
                   <div className="h-24 w-full flex items-center justify-center mb-2 overflow-hidden rounded-lg bg-white p-2">
-                    <img
-                      src={
-                        prod.images?.[0] ||
-                        'https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&w=300&q=80'
-                      }
+                    <ProductImage
+                      src={prod.images}
                       alt={prod.name}
+                      category={prod.category?.name}
                       className="max-h-20 max-w-full object-contain group-hover:scale-105 transition-transform duration-200 ease-out"
                     />
                   </div>
@@ -295,12 +285,10 @@ export const HomePage: React.FC = () => {
                   className="bg-[#F8F9FA] hover:bg-[#F0F2F5] rounded-xl p-3 flex flex-col items-center text-center group cursor-pointer border border-transparent hover:border-neutral-200 hover:shadow-md transition-shadow select-none"
                 >
                   <div className="h-24 w-full flex items-center justify-center mb-2 overflow-hidden rounded-lg bg-white p-2">
-                    <img
-                      src={
-                        prod.images?.[0] ||
-                        'https://images.unsplash.com/photo-1593642632823-8f785ba67e45?auto=format&fit=crop&w=300&q=80'
-                      }
+                    <ProductImage
+                      src={prod.images}
                       alt={prod.name}
+                      category={prod.category?.name}
                       className="max-h-20 max-w-full object-contain group-hover:scale-105 transition-transform duration-200 ease-out"
                     />
                   </div>

@@ -298,14 +298,11 @@ export const RootLayout: React.FC = () => {
                   </Link>
                 ))
               ) : (
-                <>
-                  <Link to="/products?category=laptop" className="hover:text-[#FF5C00] transition-colors whitespace-nowrap">Laptop</Link>
-                  <Link to="/products?category=phone" className="hover:text-[#FF5C00] transition-colors whitespace-nowrap">Điện thoại</Link>
-                  <Link to="/products?category=tablet" className="hover:text-[#FF5C00] transition-colors whitespace-nowrap">Máy tính bảng</Link>
-                  <Link to="/products?category=audio" className="hover:text-[#FF5C00] transition-colors whitespace-nowrap">Âm thanh</Link>
-                  <Link to="/products?category=wearable" className="hover:text-[#FF5C00] transition-colors whitespace-nowrap">Thiết bị đeo</Link>
-                  <Link to="/products?category=accessories" className="hover:text-[#FF5C00] transition-colors whitespace-nowrap">Phụ kiện</Link>
-                </>
+                <div className="flex items-center space-x-6">
+                  {['Điện thoại', 'Laptop', 'Linh kiện PC', 'Phụ kiện'].map((name, i) => (
+                    <span key={i} className="text-neutral-400 text-sm whitespace-nowrap">{name}</span>
+                  ))}
+                </div>
               )}
             </nav>
 

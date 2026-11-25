@@ -16,8 +16,8 @@ export interface User {
 }
 
 export interface AuthResponse {
-  ok: boolean;
-  token: string;
+  ok?: boolean;
+  token?: string;
   user: User;
   message?: string;
 }
@@ -36,8 +36,13 @@ export interface RegisterCustomerData {
   address?: string;
 }
 
-export interface RegisterSellerData extends RegisterCustomerData {
-  shopName: string;
-  shopPhone?: string;
-  shopAddress?: string;
+export interface RegisterSellerData {
+  fullName: string;
+  email: string;
+  phone: string;
+  password: string;
+  sellerType: 'owner' | 'staff';
+  shopName?: string;
+  shopDescription?: string;
+  shopId?: string;
 }

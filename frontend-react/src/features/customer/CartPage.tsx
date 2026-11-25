@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { listItemVariants } from '../../lib/motion';
 import { useCart } from '../../app/providers/CartProvider';
 import { useAuth } from '../../hooks/useAuth';
 import { EmptyState } from '../../components/common/EmptyState';
+import { normalizeCartItem, formatPriceVND } from '../../lib/cartUtils';
 import {
   Trash2,
   Minus,
@@ -22,7 +23,8 @@ export const CartPage: React.FC = () => {
   const [voucherDiscount, setVoucherDiscount] = useState(0);
   const [voucherMessage, setVoucherMessage] = useState<string | null>(null);
 
-  const items = cart?.items || [];
+  const rawItems = cart?.items || [];
+  const items = useMemo(() => rawItems.map(normalizeCartItem), [rawItems]);
 
   const handleApplyVoucher = (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,18 +43,15 @@ export const CartPage: React.FC = () => {
   };
 
   const calculateSubtotal = () => {
-    return items.reduce((sum, item) => {
-      const price = item.variant?.price || item.product?.minPrice || 0;
-      return sum + price * item.quantity;
-    }, 0);
+    return items.reduce((sum, item) => sum + item.lineTotal, 0);
   };
 
   const subtotal = calculateSubtotal();
-  const shippingFee = 0; // Free shipping
+  const shippingFee = 0; // Free shipping in cart view
   const total = Math.max(0, subtotal - voucherDiscount + shippingFee);
 
   const formatPrice = (val: number) => {
-    return val.toLocaleString('vi-VN') + ' ₫';
+    return formatPriceVND(val);
   };
 
   if (items.length === 0) {
@@ -105,12 +104,6 @@ export const CartPage: React.FC = () => {
           <div className="divide-y divide-neutral-100">
             <AnimatePresence initial={false}>
               {items.map((item) => {
-                const p = item.product || ({} as any);
-                const v = item.variant || ({} as any);
-                const price = v.price || p.minPrice || 0;
-                const lineTotal = price * item.quantity;
-                const img = p.images?.[0] || 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=300&q=80';
-
                 return (
                   <motion.div
                     key={item._id}
@@ -124,15 +117,15 @@ export const CartPage: React.FC = () => {
                   {/* Product Details & Image */}
                   <div className="col-span-6 flex items-center gap-4">
                     <div className="w-16 h-16 shrink-0 bg-neutral-50 border border-neutral-200 rounded-lg p-1 flex items-center justify-center overflow-hidden">
-                      <img src={img} alt={p.name || 'Sản phẩm'} className="max-w-full max-h-full object-contain" />
+                      <img src={item.image} alt={item.productName} className="max-w-full max-h-full object-contain" />
                     </div>
                     <div className="min-w-0 pr-2">
-                      <Link to={`/products/${p._id}`} className="text-xs sm:text-sm font-bold text-neutral-900 hover:text-[#FF5C00] transition line-clamp-2 leading-snug">
-                        {p.name || 'Sản phẩm TECHSTORE'}
+                      <Link to={`/products/${item.productId}`} className="text-xs sm:text-sm font-bold text-neutral-900 hover:text-[#FF5C00] transition line-clamp-2 leading-snug">
+                        {item.productName}
                       </Link>
-                      {v.name && (
+                      {item.variantName && (
                         <p className="text-[11px] text-neutral-500 mt-1 font-mono">
-                          Phân loại: {v.name}
+                          Phân loại: {item.variantName}
                         </p>
                       )}
                     </div>
@@ -140,14 +133,14 @@ export const CartPage: React.FC = () => {
 
                   {/* Unit Price */}
                   <div className="col-span-2 text-center text-xs font-semibold text-neutral-700 font-mono">
-                    {formatPrice(price)}
+                    {formatPrice(item.price)}
                   </div>
 
                   {/* Quantity Stepper */}
                   <div className="col-span-2 flex justify-center">
                     <div className="inline-flex items-center border border-neutral-300 rounded-md bg-white overflow-hidden shadow-xs">
                       <button
-                        onClick={() => updateQuantity(item._id!, item.quantity - 1)}
+                        onClick={() => updateQuantity(item._id, item.quantity - 1)}
                         className="w-7 h-7 flex items-center justify-center text-neutral-600 hover:bg-neutral-100 transition cursor-pointer"
                         title="Giảm số lượng"
                       >
@@ -157,7 +150,7 @@ export const CartPage: React.FC = () => {
                         {item.quantity}
                       </span>
                       <button
-                        onClick={() => updateQuantity(item._id!, item.quantity + 1)}
+                        onClick={() => updateQuantity(item._id, item.quantity + 1)}
                         className="w-7 h-7 flex items-center justify-center text-neutral-600 hover:bg-neutral-100 transition cursor-pointer"
                         title="Tăng số lượng"
                       >
@@ -169,12 +162,12 @@ export const CartPage: React.FC = () => {
                   {/* Line Total & Remove */}
                   <div className="col-span-2 flex items-center justify-end gap-3 text-right">
                     <span className="text-xs sm:text-sm font-bold text-[#FF5C00] font-mono">
-                      {formatPrice(lineTotal)}
+                      {formatPrice(item.lineTotal)}
                     </span>
                     <motion.button
                       whileHover={{ scale: 1.15 }}
                       whileTap={{ scale: 0.85 }}
-                      onClick={() => removeItem(item._id!)}
+                      onClick={() => removeItem(item._id)}
                       className="text-neutral-400 hover:text-red-500 transition p-1 cursor-pointer"
                       title="Xóa sản phẩm"
                     >

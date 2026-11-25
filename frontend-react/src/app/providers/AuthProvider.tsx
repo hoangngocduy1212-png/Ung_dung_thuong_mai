@@ -49,7 +49,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       const res = await authService.login(credentials, remember);
       setUser(res.user);
-      setToken(res.token);
+      setToken(res.token ?? null);
       return res.user;
     } finally {
       setIsLoading(false);

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../hooks/useAuth';
 import { customerService } from '../../services/customerService';
 import { Modal } from '../../components/common/Modal';
 import { Loading } from '../../components/common/Loading';
@@ -9,6 +10,11 @@ import {
   Store,
   Star,
   Truck,
+  CreditCard,
+  RotateCcw,
+  AlertTriangle,
+  CheckCircle2,
+  Headphones,
 } from 'lucide-react';
 
 const TABS: Array<{ id: string; label: string; status?: OrderStatus }> = [
@@ -21,6 +27,7 @@ const TABS: Array<{ id: string; label: string; status?: OrderStatus }> = [
 ];
 
 export const OrderHistoryPage: React.FC = () => {
+  const { user } = useAuth();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('all');
   const [orders, setOrders] = useState<Order[]>([]);
@@ -33,6 +40,24 @@ export const OrderHistoryPage: React.FC = () => {
   const [reviewContent, setReviewContent] = useState('');
   const [submittingReview, setSubmittingReview] = useState(false);
   const [reviewFeedback, setReviewFeedback] = useState<string | null>(null);
+
+  // After-sales Modal state (Đổi trả / Hoàn tiền / Hủy đơn)
+  const [afterSalesOrder, setAfterSalesOrder] = useState<Order | null>(null);
+  const [afterSalesType, setAfterSalesType] = useState<'huy_don' | 'hoan_tien' | 'doi_hang'>('doi_hang');
+  const [afterSalesReason, setAfterSalesReason] = useState('');
+  const [submittingAfterSales, setSubmittingAfterSales] = useState(false);
+  const [afterSalesError, setAfterSalesError] = useState<string | null>(null);
+  const [afterSalesSuccess, setAfterSalesSuccess] = useState<string | null>(null);
+
+  // Complaint Modal state (Khiếu nại CSKH)
+  const [complaintOrder, setComplaintOrder] = useState<Order | null>(null);
+  const [complaintName, setComplaintName] = useState('');
+  const [complaintPhone, setComplaintPhone] = useState('');
+  const [complaintEmail, setComplaintEmail] = useState('');
+  const [complaintReason, setComplaintReason] = useState('');
+  const [submittingComplaint, setSubmittingComplaint] = useState(false);
+  const [complaintError, setComplaintError] = useState<string | null>(null);
+  const [complaintSuccess, setComplaintSuccess] = useState<string | null>(null);
 
   const fetchOrders = useCallback(async () => {
     setLoading(true);
@@ -74,6 +99,17 @@ export const OrderHistoryPage: React.FC = () => {
     }
   };
 
+  const handlePayNow = async (groupCode: string) => {
+    try {
+      const res = await customerService.createVNPayUrl(groupCode);
+      if (res.paymentUrl) {
+        window.location.href = res.paymentUrl;
+      }
+    } catch (err: any) {
+      alert(err?.message || 'Không thể kết nối cổng thanh toán VNPay. Vui lòng thử lại sau.');
+    }
+  };
+
   const openReviewModal = (ord: Order, item: any) => {
     setReviewOrder(ord);
     setReviewProduct({ id: item.product || '', name: item.productName });
@@ -103,6 +139,79 @@ export const OrderHistoryPage: React.FC = () => {
       setReviewFeedback(err?.message || 'Không thể gửi đánh giá.');
     } finally {
       setSubmittingReview(false);
+    }
+  };
+
+  const openAfterSalesModal = (ord: Order, defaultType: 'huy_don' | 'hoan_tien' | 'doi_hang') => {
+    setAfterSalesOrder(ord);
+    setAfterSalesType(defaultType);
+    setAfterSalesReason('');
+    setAfterSalesError(null);
+    setAfterSalesSuccess(null);
+  };
+
+  const handleSubmitAfterSales = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!afterSalesOrder) return;
+    if (afterSalesReason.trim().length < 5) {
+      setAfterSalesError('Vui lòng mô tả lý do tối thiểu 5 ký tự.');
+      return;
+    }
+    setSubmittingAfterSales(true);
+    setAfterSalesError(null);
+    try {
+      await customerService.requestAfterSales(afterSalesOrder._id, {
+        type: afterSalesType,
+        reason: afterSalesReason.trim(),
+      });
+      setAfterSalesSuccess('Đã gửi yêu cầu sau bán hàng thành công! Gian hàng sẽ xử lý trong vòng 24h.');
+      await fetchOrders();
+      setTimeout(() => {
+        setAfterSalesOrder(null);
+      }, 2000);
+    } catch (err: any) {
+      setAfterSalesError(err?.message || 'Không thể gửi yêu cầu sau bán hàng.');
+    } finally {
+      setSubmittingAfterSales(false);
+    }
+  };
+
+  const openComplaintModal = (ord: Order) => {
+    setComplaintOrder(ord);
+    setComplaintName(user?.fullName || '');
+    setComplaintPhone(user?.phone || '');
+    setComplaintEmail(user?.email || '');
+    setComplaintReason('');
+    setComplaintError(null);
+    setComplaintSuccess(null);
+  };
+
+  const handleSubmitComplaint = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!complaintOrder) return;
+    if (complaintReason.trim().length < 10) {
+      setComplaintError('Vui lòng mô tả lý do khiếu nại tối thiểu 10 ký tự.');
+      return;
+    }
+    setSubmittingComplaint(true);
+    setComplaintError(null);
+    try {
+      const res = await customerService.createComplaint({
+        orderCode: complaintOrder.code,
+        contactName: complaintName.trim(),
+        contactPhone: complaintPhone.trim(),
+        contactEmail: complaintEmail.trim() || undefined,
+        reason: complaintReason.trim(),
+      });
+      setComplaintSuccess(`Đã tạo khiếu nại thành công! Mã tiếp nhận: ${res.code}. Nhân viên CSKH sẽ phản hồi sớm.`);
+      await fetchOrders();
+      setTimeout(() => {
+        setComplaintOrder(null);
+      }, 2500);
+    } catch (err: any) {
+      setComplaintError(err?.message || 'Không thể gửi khiếu nại.');
+    } finally {
+      setSubmittingComplaint(false);
     }
   };
 
@@ -232,6 +341,16 @@ export const OrderHistoryPage: React.FC = () => {
                   </div>
 
                   <div className="flex items-center gap-2 self-end sm:self-auto">
+                    {ord.payment?.method === 'online' && ord.payment?.status === 'unpaid' && ord.status === 'cho_xac_nhan' && (
+                      <button
+                        onClick={() => handlePayNow(ord.groupCode)}
+                        className="px-3.5 py-1.5 rounded-lg bg-[#FF5C00] hover:bg-[#E55200] text-white font-bold transition shadow-xs flex items-center gap-1.5 cursor-pointer active:scale-[0.98]"
+                      >
+                        <CreditCard className="w-3.5 h-3.5" />
+                        <span>Thanh toán VNPay</span>
+                      </button>
+                    )}
+
                     {ord.status === 'cho_xac_nhan' && (
                       <button
                         onClick={() => handleCancelOrder(ord._id)}
@@ -249,6 +368,34 @@ export const OrderHistoryPage: React.FC = () => {
                         Đã nhận hàng
                       </button>
                     )}
+
+                    {ord.status === 'da_xac_nhan' && (
+                      <button
+                        onClick={() => openAfterSalesModal(ord, 'huy_don')}
+                        className="px-3 py-1.5 rounded-lg border border-neutral-300 text-neutral-700 hover:bg-neutral-50 font-semibold transition cursor-pointer"
+                      >
+                        Yêu cầu hủy
+                      </button>
+                    )}
+
+                    {['da_giao', 'hoan_tat'].includes(ord.status) && (
+                      <button
+                        onClick={() => openAfterSalesModal(ord, 'doi_hang')}
+                        className="px-3 py-1.5 rounded-lg border border-neutral-300 text-neutral-700 hover:bg-neutral-50 font-semibold transition cursor-pointer flex items-center gap-1"
+                      >
+                        <RotateCcw className="w-3.5 h-3.5" />
+                        <span>Đổi / Trả hàng</span>
+                      </button>
+                    )}
+
+                    <button
+                      onClick={() => openComplaintModal(ord)}
+                      className="px-3 py-1.5 rounded-lg border border-neutral-200 text-neutral-600 hover:text-[#FF5C00] hover:border-[#FF5C00] font-medium transition cursor-pointer flex items-center gap-1"
+                      title="Gửi khiếu nại tới CSKH cho đơn hàng này"
+                    >
+                      <Headphones className="w-3.5 h-3.5" />
+                      <span>Khiếu nại</span>
+                    </button>
 
                     <Link
                       to={`/orders/${ord._id}/tracking`}
@@ -339,6 +486,194 @@ export const OrderHistoryPage: React.FC = () => {
                 className="px-5 py-2 bg-[#FF5C00] hover:bg-[#E55200] disabled:bg-neutral-300 text-white font-bold rounded-lg transition"
               >
                 {submittingReview ? 'Đang gửi...' : 'Gửi nhận xét'}
+              </button>
+            </div>
+          </form>
+        </Modal>
+      )}
+
+      {/* After-Sales Modal */}
+      {afterSalesOrder && (
+        <Modal
+          isOpen={true}
+          onClose={() => setAfterSalesOrder(null)}
+          title={`Yêu cầu sau bán hàng — Đơn ${afterSalesOrder.code}`}
+        >
+          <form onSubmit={handleSubmitAfterSales} className="space-y-4 text-xs">
+            {afterSalesError && (
+              <div className="p-3 bg-red-50 border border-red-200 text-red-700 rounded-lg flex items-center gap-2">
+                <AlertTriangle className="w-4 h-4 flex-shrink-0" />
+                <span>{afterSalesError}</span>
+              </div>
+            )}
+            {afterSalesSuccess && (
+              <div className="p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-lg flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 flex-shrink-0 text-emerald-600" />
+                <span>{afterSalesSuccess}</span>
+              </div>
+            )}
+
+            <div>
+              <label className="block font-semibold text-neutral-700 mb-1.5">
+                Loại yêu cầu sau bán hàng:
+              </label>
+              {afterSalesOrder.status === 'da_xac_nhan' ? (
+                <div className="p-3 bg-neutral-50 border border-neutral-200 rounded-lg text-neutral-800 font-medium">
+                  Yêu cầu hủy đơn hàng (Đơn đã xác nhận nhưng chưa giao)
+                </div>
+              ) : (
+                <div className="grid grid-cols-2 gap-3">
+                  <label className={`p-3 border rounded-xl flex items-center gap-2.5 cursor-pointer transition ${afterSalesType === 'doi_hang' ? 'border-[#FF5C00] bg-orange-50/40 text-neutral-900 font-bold' : 'border-neutral-200 text-neutral-700'}`}>
+                    <input
+                      type="radio"
+                      name="afterSalesType"
+                      value="doi_hang"
+                      checked={afterSalesType === 'doi_hang'}
+                      onChange={() => setAfterSalesType('doi_hang')}
+                      className="accent-[#FF5C00]"
+                    />
+                    <span>Yêu cầu đổi hàng</span>
+                  </label>
+                  <label className={`p-3 border rounded-xl flex items-center gap-2.5 cursor-pointer transition ${afterSalesType === 'hoan_tien' ? 'border-[#FF5C00] bg-orange-50/40 text-neutral-900 font-bold' : 'border-neutral-200 text-neutral-700'}`}>
+                    <input
+                      type="radio"
+                      name="afterSalesType"
+                      value="hoan_tien"
+                      checked={afterSalesType === 'hoan_tien'}
+                      onChange={() => setAfterSalesType('hoan_tien')}
+                      className="accent-[#FF5C00]"
+                    />
+                    <span>Trả hàng & Hoàn tiền</span>
+                  </label>
+                </div>
+              )}
+            </div>
+
+            <div>
+              <label className="block font-semibold text-neutral-700 mb-1">
+                Lý do chi tiết (tối thiểu 5 ký tự) <span className="text-red-500">*</span>
+              </label>
+              <textarea
+                rows={4}
+                required
+                value={afterSalesReason}
+                onChange={(e) => setAfterSalesReason(e.target.value)}
+                placeholder="Mô tả tình trạng hàng hóa, lỗi phát sinh hoặc lý do đổi trả..."
+                className="w-full px-3 py-2 border border-neutral-300 rounded-lg outline-none focus:ring-1 focus:ring-[#FF5C00] resize-none"
+              />
+            </div>
+
+            <div className="pt-3 flex justify-end gap-2 border-t border-neutral-100">
+              <button
+                type="button"
+                onClick={() => setAfterSalesOrder(null)}
+                className="px-4 py-2 border border-neutral-300 rounded-lg text-neutral-700 hover:bg-neutral-50 cursor-pointer"
+              >
+                Đóng
+              </button>
+              <button
+                type="submit"
+                disabled={submittingAfterSales}
+                className="px-5 py-2 bg-[#FF5C00] hover:bg-[#E55200] disabled:bg-neutral-300 text-white font-bold rounded-lg transition cursor-pointer"
+              >
+                {submittingAfterSales ? 'Đang gửi...' : 'Gửi yêu cầu'}
+              </button>
+            </div>
+          </form>
+        </Modal>
+      )}
+
+      {/* Complaint Modal */}
+      {complaintOrder && (
+        <Modal
+          isOpen={true}
+          onClose={() => setComplaintOrder(null)}
+          title={`Khiếu nại dịch vụ — Đơn ${complaintOrder.code}`}
+        >
+          <form onSubmit={handleSubmitComplaint} className="space-y-4 text-xs">
+            {complaintError && (
+              <div className="p-3 bg-red-50 border border-red-200 text-red-700 rounded-lg flex items-center gap-2">
+                <AlertTriangle className="w-4 h-4 flex-shrink-0" />
+                <span>{complaintError}</span>
+              </div>
+            )}
+            {complaintSuccess && (
+              <div className="p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-lg flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 flex-shrink-0 text-emerald-600" />
+                <span>{complaintSuccess}</span>
+              </div>
+            )}
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label className="block font-semibold text-neutral-700 mb-1">
+                  Người liên hệ <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={complaintName}
+                  onChange={(e) => setComplaintName(e.target.value)}
+                  className="w-full px-3 py-2 border border-neutral-300 rounded-lg outline-none focus:ring-1 focus:ring-[#FF5C00]"
+                  placeholder="Họ và tên"
+                />
+              </div>
+              <div>
+                <label className="block font-semibold text-neutral-700 mb-1">
+                  Số điện thoại <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="tel"
+                  required
+                  value={complaintPhone}
+                  onChange={(e) => setComplaintPhone(e.target.value)}
+                  className="w-full px-3 py-2 border border-neutral-300 rounded-lg outline-none focus:ring-1 focus:ring-[#FF5C00] font-mono"
+                  placeholder="Số điện thoại"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block font-semibold text-neutral-700 mb-1">
+                Email nhận phản hồi
+              </label>
+              <input
+                type="email"
+                value={complaintEmail}
+                onChange={(e) => setComplaintEmail(e.target.value)}
+                className="w-full px-3 py-2 border border-neutral-300 rounded-lg outline-none focus:ring-1 focus:ring-[#FF5C00]"
+                placeholder="email@example.com"
+              />
+            </div>
+
+            <div>
+              <label className="block font-semibold text-neutral-700 mb-1">
+                Lý do và nội dung khiếu nại (tối thiểu 10 ký tự) <span className="text-red-500">*</span>
+              </label>
+              <textarea
+                rows={4}
+                required
+                value={complaintReason}
+                onChange={(e) => setComplaintReason(e.target.value)}
+                placeholder="Mô tả cụ thể sự việc (giao thiếu hàng, hàng vỡ hỏng, thái độ phục vụ...)"
+                className="w-full px-3 py-2 border border-neutral-300 rounded-lg outline-none focus:ring-1 focus:ring-[#FF5C00] resize-none"
+              />
+            </div>
+
+            <div className="pt-3 flex justify-end gap-2 border-t border-neutral-100">
+              <button
+                type="button"
+                onClick={() => setComplaintOrder(null)}
+                className="px-4 py-2 border border-neutral-300 rounded-lg text-neutral-700 hover:bg-neutral-50 cursor-pointer"
+              >
+                Đóng
+              </button>
+              <button
+                type="submit"
+                disabled={submittingComplaint}
+                className="px-5 py-2 bg-[#FF5C00] hover:bg-[#E55200] disabled:bg-neutral-300 text-white font-bold rounded-lg transition cursor-pointer"
+              >
+                {submittingComplaint ? 'Đang gửi...' : 'Gửi khiếu nại'}
               </button>
             </div>
           </form>

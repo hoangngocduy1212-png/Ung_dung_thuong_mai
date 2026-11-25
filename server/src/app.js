@@ -10,12 +10,26 @@ import customerRoutes from './routes/customer.js';
 import sellerRoutes from './routes/seller.js';
 import staffRoutes from './routes/staff.js';
 import adminRoutes from './routes/admin.js';
+import paymentRoutes from './routes/payment.js';
 
 const app = express();
-// Cho phép giao diện tĩnh (Live Server) và CLIENT_ORIGIN (có thể nhiều giá trị, ngăn cách bằng dấu phẩy)
-const allowedOrigins = [...new Set([...config.clientOrigin.split(',').map((s) => s.trim()).filter(Boolean), 'http://127.0.0.1:5500', 'http://localhost:5500'])];
+// Cấu hình trust proxy an toàn cho Cloudflare Tunnel và reverse proxy nội bộ
+app.set('trust proxy', ['loopback', 'linklocal', 'uniquelocal']);
+// Cho phép các nguồn gốc local, CLIENT_ORIGIN và tất cả các domain Cloudflare Tunnel (*.trycloudflare.com)
+const configuredOrigins = config.clientOrigin.split(',').map((s) => s.trim()).filter(Boolean);
 app.use(cors({
-  origin: allowedOrigins,
+  origin: (origin, callback) => {
+    if (!origin) return callback(null, true);
+    if (
+      configuredOrigins.includes(origin) ||
+      origin.endsWith('.trycloudflare.com') ||
+      origin.startsWith('http://localhost') ||
+      origin.startsWith('http://127.0.0.1')
+    ) {
+      return callback(null, true);
+    }
+    return callback(null, false);
+  },
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
@@ -30,6 +44,7 @@ app.use('/api/customer', customerRoutes);
 app.use('/api/seller', sellerRoutes);
 app.use('/api/staff', staffRoutes); // nhân viên CSKH
 app.use('/api/admin', adminRoutes);
+app.use('/api/payment', paymentRoutes);
 // Chat (Socket.IO) sẽ bổ sung ở giai đoạn sau
 
 app.use(notFound);

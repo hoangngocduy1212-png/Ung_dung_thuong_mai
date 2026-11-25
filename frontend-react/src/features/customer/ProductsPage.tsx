@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { useSearchParams, useNavigate, Link } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { staggerContainerVariants, staggerItemVariants, ShimmerSkeleton, AddToCartFeedback } from '../../lib/motion';
@@ -6,6 +6,7 @@ import { catalogService } from '../../services/catalogService';
 import { useCart } from '../../app/providers/CartProvider';
 import { ErrorState } from '../../components/common/ErrorState';
 import { EmptyState } from '../../components/common/EmptyState';
+import { ProductImage } from '../../components/common/ProductImage';
 import type { Product, Category, Brand } from '../../types/catalog';
 import {
   Star,
@@ -40,13 +41,48 @@ export const ProductsPage: React.FC = () => {
 
   // Filters from URL
   const q = searchParams.get('q') || '';
-  const categoryId = searchParams.get('category') || '';
+  const rawCategory = searchParams.get('category') || '';
   const brandId = searchParams.get('brand') || '';
   const minPrice = searchParams.get('minPrice') || '';
   const maxPrice = searchParams.get('maxPrice') || '';
   const sort = searchParams.get('sort') || 'newest';
   const page = parseInt(searchParams.get('page') || '1', 10);
   const limit = 12;
+
+  // Ánh xạ slug hoặc tên danh mục sang ObjectId hợp lệ theo danh mục thực tế từ DB
+  const resolvedCategoryId = useMemo(() => {
+    if (!rawCategory) return '';
+    if (/^[a-f\d]{24}$/i.test(rawCategory)) return rawCategory;
+
+    const norm = (s: string) =>
+      (s || '')
+        .toLowerCase()
+        .replace(/đ/g, 'd')
+        .replace(/Đ/g, 'd')
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9]/g, '');
+
+    const target = norm(rawCategory);
+    const aliasMap: Record<string, string> = {
+      phone: 'dienthoai',
+      laptop: 'laptop',
+      tablet: 'maytinhbang',
+      audio: 'amthanh',
+      wearable: 'thietbideo',
+      accessories: 'phukien',
+      pc: 'linhkienpc',
+      desktop: 'maytinhban',
+    };
+    const mapped = aliasMap[target] || target;
+
+    const match = categories.find((c) => {
+      const n = norm(c.name);
+      return n === target || n === mapped || n.includes(target) || target.includes(n);
+    });
+
+    return match ? match._id : rawCategory;
+  }, [rawCategory, categories]);
 
   // Load Categories & Brands once
   useEffect(() => {
@@ -72,7 +108,7 @@ export const ProductsPage: React.FC = () => {
         sort,
       };
       if (q) params.q = q;
-      if (categoryId) params.category = categoryId;
+      if (resolvedCategoryId) params.category = resolvedCategoryId;
       if (brandId) params.brand = brandId;
       if (minPrice) params.minPrice = minPrice;
       if (maxPrice) params.maxPrice = maxPrice;
@@ -85,11 +121,50 @@ export const ProductsPage: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [q, categoryId, brandId, minPrice, maxPrice, sort, page]);
+  }, [q, resolvedCategoryId, brandId, minPrice, maxPrice, sort, page]);
 
   useEffect(() => {
-    fetchProducts();
-  }, [fetchProducts]);
+    let isCancelled = false;
+    setIsLoading(true);
+    setError(null);
+
+    const params: Record<string, string | number | undefined> = {
+      page,
+      limit,
+      sort,
+    };
+    if (q) params.q = q;
+    if (resolvedCategoryId) params.category = resolvedCategoryId;
+    if (brandId) params.brand = brandId;
+    if (minPrice) params.minPrice = minPrice;
+    if (maxPrice) params.maxPrice = maxPrice;
+
+    catalogService.getProducts(params)
+      .then((data) => {
+        if (!isCancelled) {
+          setProducts(data?.items || []);
+          setTotal(data?.total || 0);
+        }
+      })
+      .catch((err: any) => {
+        if (!isCancelled) {
+          setError(err?.message || 'Không thể tải danh sách sản phẩm từ máy chủ.');
+        }
+      })
+      .finally(() => {
+        if (!isCancelled) {
+          setIsLoading(false);
+        }
+      });
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [q, resolvedCategoryId, brandId, minPrice, maxPrice, sort, page]);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [page]);
 
   const updateParam = (key: string, val: string | undefined) => {
     const next = new URLSearchParams(searchParams);
@@ -98,7 +173,10 @@ export const ProductsPage: React.FC = () => {
     } else {
       next.set(key, val);
     }
-    next.set('page', '1'); // reset page on filter change
+    // Only reset page to 1 when changing filters or sorting, NOT when navigating pages
+    if (key !== 'page') {
+      next.set('page', '1');
+    }
     setSearchParams(next);
   };
 
@@ -143,7 +221,7 @@ export const ProductsPage: React.FC = () => {
   };
 
   const totalPages = Math.ceil(total / limit) || 1;
-  const currentCategory = categories.find((c) => c._id === categoryId);
+  const currentCategory = categories.find((c) => c._id === resolvedCategoryId);
 
   return (
     <div className="max-w-[1366px] mx-auto px-4 lg:px-6 py-4 pb-20">
@@ -186,7 +264,7 @@ export const ProductsPage: React.FC = () => {
               <Filter className="w-4 h-4 text-[#FF5C00]" />
               <span>Bộ lọc tìm kiếm</span>
             </div>
-            {(categoryId || brandId || minPrice || maxPrice || q) && (
+            {(rawCategory || brandId || minPrice || maxPrice || q) && (
               <button
                 onClick={handleClearAll}
                 className="text-xs text-[#FF5C00] hover:underline flex items-center gap-0.5"
@@ -206,7 +284,7 @@ export const ProductsPage: React.FC = () => {
               <button
                 onClick={() => updateParam('category', undefined)}
                 className={`w-full text-left px-2 py-1.5 rounded-lg transition-colors flex items-center justify-between ${
-                  !categoryId ? 'bg-neutral-100 font-bold text-[#FF5C00]' : 'text-neutral-700 hover:bg-neutral-50'
+                  !resolvedCategoryId ? 'bg-neutral-100 font-bold text-[#FF5C00]' : 'text-neutral-700 hover:bg-neutral-50'
                 }`}
               >
                 <span>Tất cả danh mục</span>
@@ -216,7 +294,7 @@ export const ProductsPage: React.FC = () => {
                   key={c._id}
                   onClick={() => updateParam('category', c._id)}
                   className={`w-full text-left px-2 py-1.5 rounded-lg transition-colors flex items-center justify-between ${
-                    categoryId === c._id
+                    resolvedCategoryId === c._id
                       ? 'bg-neutral-100 font-bold text-[#FF5C00]'
                       : 'text-neutral-700 hover:bg-neutral-50'
                   }`}
@@ -363,12 +441,10 @@ export const ProductsPage: React.FC = () => {
                     className="bg-white border border-neutral-200 rounded-xl p-3.5 flex flex-col justify-between hover:shadow-lg hover:border-neutral-300 transition-all duration-200 relative group cursor-pointer select-none"
                   >
                     <div className="w-full aspect-square flex items-center justify-center p-2 mb-3 bg-neutral-50 rounded-lg overflow-hidden">
-                      <img
-                        src={
-                          p.images?.[0] ||
-                          'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=400&q=80'
-                        }
+                      <ProductImage
+                        src={p.images}
                         alt={p.name}
+                        category={p.category?.name}
                         className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-200 ease-out"
                       />
                     </div>
