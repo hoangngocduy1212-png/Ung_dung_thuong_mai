@@ -52,6 +52,7 @@ export interface Order {
   items: OrderItem[];
   shippingAddress: OrderShippingAddress;
   note?: string;
+  shippingMethod?: 'standard' | 'express';
   subtotal: number;
   shippingFee: number;
   voucherCode?: string;
@@ -74,7 +75,42 @@ export interface CheckoutPayload {
   cartItemIds?: string[];
   addressId?: string;
   address?: OrderShippingAddress;
+  shippingMethod?: 'standard' | 'express';
   paymentMethod: 'cod' | 'online';
   note?: string;
   vouchers?: Record<string, string>; // shopId -> userVoucherId
+}
+
+export interface VNPayCreateUrlResult {
+  paymentUrl: string;
+  txnRef: string;
+  groupCode: string;
+  amount: number;
+  expiresAt: string;
+}
+
+export interface VNPayVerifyResult {
+  isValid: boolean;
+  status: 'pending' | 'processing' | 'success' | 'failed' | 'expired';
+  vnpayReportedSuccess?: boolean;
+  isOrderPaid?: boolean;
+  groupCode?: string;
+  txnRef?: string;
+  amount?: number;
+  currency?: string;
+  responseCode?: string;
+  transactionStatus?: string;
+  bankCode?: string;
+  bankTranNo?: string;
+  vnpTransactionNo?: string;
+  payDate?: string;
+  canRetry?: boolean;
+  message?: string;
+  orders?: {
+    _id: string;
+    code: string;
+    total: number;
+    paymentStatus: string;
+    status: string;
+  }[];
 }

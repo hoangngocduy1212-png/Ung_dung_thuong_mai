@@ -26,6 +26,7 @@ import { CheckoutPage } from '../../features/customer/CheckoutPage';
 import { OrderConfirmationPage } from '../../features/customer/OrderConfirmationPage';
 import { OrderTrackingPage } from '../../features/customer/OrderTrackingPage';
 import { PromotionsPage } from '../../features/customer/PromotionsPage';
+import { VNPayReturnPage } from '../../features/customer/VNPayReturnPage';
 
 // Customer Account Pages (Phase 5)
 import { AccountOverviewPage } from '../../features/customer/AccountOverviewPage';
@@ -84,6 +85,7 @@ export const AppRouter: React.FC = () => {
           <Route path="/promotions" element={<PromotionsPage />} />
           <Route path="/orders/confirmed" element={<OrderConfirmationPage />} />
           <Route path="/checkout/confirmation" element={<OrderConfirmationPage />} />
+          <Route path="/payment/vnpay/callback" element={<VNPayReturnPage />} />
           <Route path="/tracking" element={<OrderTrackingPage />} />
 
           {/* Checkout (Customer Protected) */}
@@ -157,6 +159,16 @@ export const AppRouter: React.FC = () => {
         {/* CSKH Portal (Protected) */}
         <Route
           path="/staff"
+          element={
+            <ProtectedRoute allowedRoles={['cskh']}>
+              <RootLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<CskhDashboard />} />
+        </Route>
+        <Route
+          path="/cskh"
           element={
             <ProtectedRoute allowedRoles={['cskh']}>
               <RootLayout />

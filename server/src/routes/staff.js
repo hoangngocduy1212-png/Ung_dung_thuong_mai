@@ -6,7 +6,7 @@ import { auth, requireRole } from '../middleware/auth.js';
 import User from '../models/User.js';
 import Order, { ORDER_STATUS } from '../models/Order.js';
 import { Product } from '../models/Product.js';
-import { Review, Complaint } from '../models/Support.js';
+import { Review, Complaint, AfterSales } from '../models/Support.js';
 import { recalcRatings } from '../services/ratingService.js';
 
 // Nhân viên CSKH
@@ -67,7 +67,23 @@ r.get('/orders', asyncHandler(async (req, res) => {
 r.get('/orders/:id', asyncHandler(async (req, res) => {
   const o = await Order.findById(req.params.id).populate('customer', 'fullName email phone').populate('shop', 'name').lean();
   if (!o) throw new AppError('Không tìm thấy đơn hàng', 404);
+  const [afterSales, complaints] = await Promise.all([
+    AfterSales.find({ order: o._id }).sort({ createdAt: -1 }).lean(),
+    Complaint.find({ order: o._id }).sort({ createdAt: -1 }).lean(),
+  ]);
+  o.afterSales = afterSales;
+  o.complaints = complaints;
   res.json(o);
+}));
+
+// ---- Tổng quan số liệu hàng đợi CSKH ----
+r.get('/summary', asyncHandler(async (req, res) => {
+  const [pool, mine, history] = await Promise.all([
+    Complaint.countDocuments({ status: 'moi' }),
+    Complaint.countDocuments({ assignedTo: req.user._id, status: { $in: ['dang_xu_ly', 'chuyen_admin'] } }),
+    Complaint.countDocuments({ assignedTo: req.user._id, status: 'da_xu_ly' }),
+  ]);
+  res.json({ pool, mine, history });
 }));
 
 // ---- Đơn khiếu nại ----

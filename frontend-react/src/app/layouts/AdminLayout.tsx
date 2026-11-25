@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink, Outlet, Link, useNavigate } from 'react-router-dom';
+import { PageTransition } from '../../lib/motion';
 import { useAuth } from '../providers/AuthProvider';
 
 const NAV_ITEMS = [
@@ -197,9 +198,11 @@ export const AdminLayout: React.FC = () => {
           </div>
         </header>
 
-        {/* Content Body */}
+        {/* Content Body with Page Transition */}
         <main className="flex-1 p-8">
-          <Outlet />
+          <PageTransition>
+            <Outlet />
+          </PageTransition>
         </main>
       </div>
     </div>

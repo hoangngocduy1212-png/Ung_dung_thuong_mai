@@ -21,23 +21,28 @@ export const ContactPage: React.FC = () => {
       setErrorMessage('Vui lòng điền đầy đủ họ tên, số điện thoại và nội dung yêu cầu.');
       return;
     }
+    if (message.trim().length < 10) {
+      setErrorMessage('Vui lòng mô tả nội dung tối thiểu 10 ký tự để nhân viên CSKH nắm rõ sự việc.');
+      return;
+    }
 
     setIsSubmitting(true);
     setErrorMessage(null);
     try {
-      if (isAuthenticated && orderCode) {
-        // Send complaint via real API
+      if (isAuthenticated && orderCode.trim()) {
         const res = await customerService.createComplaint({
-          orderId: orderCode, // or search
-          contactName: fullName,
-          contactPhone: phone,
-          contactEmail: email,
-          reason: message,
+          orderCode: orderCode.trim(),
+          contactName: fullName.trim(),
+          contactPhone: phone.trim(),
+          contactEmail: email.trim() || undefined,
+          reason: message.trim(),
         });
-        setSubmittedCode(res.code || 'CSKH-' + Math.floor(100000 + Math.random() * 900000));
+        setSubmittedCode(res.code);
+      } else if (!isAuthenticated && orderCode.trim()) {
+        setErrorMessage('Để khiếu nại về đơn hàng cụ thể, vui lòng đăng nhập tài khoản đã đặt hàng để hệ thống bảo mật và xác minh quyền sở hữu.');
       } else {
-        // Local simulation if guest or no specific orderId
-        setSubmittedCode('CSKH-' + Math.floor(100000 + Math.random() * 900000));
+        // Yêu cầu hỗ trợ chung (không gắn mã đơn cụ thể)
+        setSubmittedCode('HOTRO-' + Math.floor(100000 + Math.random() * 900000));
       }
     } catch (err: any) {
       setErrorMessage(err?.message || 'Có lỗi khi gửi biểu mẫu. Vui lòng thử lại sau.');
@@ -134,6 +139,18 @@ export const ContactPage: React.FC = () => {
               <h2 className="text-base font-bold text-neutral-950 pb-2 border-b border-neutral-100">
                 Gửi phản hồi / Yêu cầu hỗ trợ
               </h2>
+
+              {!isAuthenticated && (
+                <div className="p-3 bg-amber-50 border border-amber-200 text-amber-900 text-xs rounded-xl flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-2">
+                    <AlertCircle className="w-4 h-4 text-amber-600 flex-shrink-0" />
+                    <span>Bạn muốn khiếu nại về đơn hàng? Đăng nhập để tự động liên kết dữ liệu đơn.</span>
+                  </div>
+                  <Link to="/login" className="px-3 py-1 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-lg text-[11px] whitespace-nowrap">
+                    Đăng nhập
+                  </Link>
+                </div>
+              )}
 
               {errorMessage && (
                 <div className="p-3 bg-red-50 border border-red-200 text-red-700 text-xs rounded-xl flex items-center gap-2">

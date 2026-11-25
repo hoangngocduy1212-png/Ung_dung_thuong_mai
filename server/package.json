@@ -10,8 +10,11 @@
     "seed:demo": "node src/seed.js --demo",
     "test": "node test/smoke.js",
     "test:local": "node test/local.js",
+    "test:vnpay": "node test/vnpay_local_runner.js",
+    "test:auth": "node test/auth-multirole.js",
     "test:cskh": "node test/cskh.js",
     "test:cskh:extended": "node test/cskh-extended.js",
+    "test:cskh:cycle": "node test/cskh-full-cycle.js",
     "test:cskh:ui": "node test/cskh-ui.js",
     "preview:cskh": "node test/cskh-preview.js"
   },

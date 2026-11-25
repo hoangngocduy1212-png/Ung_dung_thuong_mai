@@ -1,4 +1,5 @@
 import React, { forwardRef, useId } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import { Check, Minus } from 'lucide-react';
 
 export interface CheckboxProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type'> {
@@ -41,7 +42,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
           />
           <label
             htmlFor={checkboxId}
-            className={`w-[18px] h-[18px] rounded-[4px] border transition-all duration-150 ease-[var(--ease-out)] flex items-center justify-center select-none ${
+            className={`w-[18px] h-[18px] rounded-[4px] border transition-all duration-150 ease-[var(--ease-out)] active:scale-90 flex items-center justify-center select-none ${
               disabled ? 'cursor-not-allowed' : 'cursor-pointer'
             } ${
               isDark
@@ -49,11 +50,31 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
                 : 'bg-white border-brand-border hover:border-neutral-400 peer-focus-visible:ring-2 peer-focus-visible:ring-brand-accent peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-white'
             } peer-checked:bg-brand-accent peer-checked:border-brand-accent peer-checked:text-white`}
           >
-            {indeterminate ? (
-              <Minus className="w-3.5 h-3.5 stroke-[3]" />
-            ) : checked ? (
-              <Check className="w-3.5 h-3.5 stroke-[3]" />
-            ) : null}
+            <AnimatePresence mode="wait">
+              {indeterminate ? (
+                <motion.span
+                  key="minus"
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0, opacity: 0 }}
+                  transition={{ duration: 0.12 }}
+                  className="flex items-center justify-center"
+                >
+                  <Minus className="w-3.5 h-3.5 stroke-[3]" />
+                </motion.span>
+              ) : checked ? (
+                <motion.span
+                  key="check"
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0, opacity: 0 }}
+                  transition={{ type: 'spring', stiffness: 500, damping: 25 }}
+                  className="flex items-center justify-center"
+                >
+                  <Check className="w-3.5 h-3.5 stroke-[3]" />
+                </motion.span>
+              ) : null}
+            </AnimatePresence>
           </label>
         </div>
 

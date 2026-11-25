@@ -64,10 +64,37 @@ export interface Complaint {
     content: string;
     at: string;
   }>;
+  orderDetail?: {
+    _id: string;
+    code: string;
+    total: number;
+    status: string;
+    items?: Array<{
+      productName?: string;
+      name?: string;
+      price: number;
+      quantity: number;
+      variantName?: string;
+    }>;
+    shop?: { _id: string; name: string };
+  };
   result?: string;
   escalateNote?: string;
   escalatedAt?: string;
   resolvedBy?: string;
   resolvedAt?: string;
+  createdAt: string;
+}
+
+export interface CustomerAfterSales {
+  _id: string;
+  order: string | { _id: string; code: string; total: number; status?: string };
+  customer: string;
+  shop: string | { _id: string; name: string };
+  type: 'huy_don' | 'hoan_tien' | 'doi_hang';
+  reason: string;
+  status: 'cho_xu_ly' | 'da_chap_nhan' | 'bi_tu_choi';
+  sellerNote?: string;
+  handledAt?: string;
   createdAt: string;
 }

@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { motion } from 'motion/react';
+import { staggerContainerVariants, staggerItemVariants, ShimmerSkeleton } from '../../lib/motion';
 import { catalogService } from '../../services/catalogService';
+import { ProductImage } from '../../components/common/ProductImage';
 import type { Category, Product, Brand } from '../../types/catalog';
 import {
   ArrowRight,
@@ -88,6 +91,9 @@ export const HomePage: React.FC = () => {
     return price.toLocaleString('vi-VN') + ' đ';
   };
 
+  const rootCategories = categories.filter((c) => !c.parent);
+  const displayCategories = rootCategories.length > 0 ? rootCategories : categories;
+
   return (
     <div className="max-w-[1320px] mx-auto px-4 lg:px-6 pt-4 pb-16 space-y-10">
       {/* 1. HERO SECTION BANNER */}
@@ -162,41 +168,36 @@ export const HomePage: React.FC = () => {
           </Link>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 gap-3">
+        <motion.div
+          variants={staggerContainerVariants}
+          initial="hidden"
+          animate="visible"
+          className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 gap-3"
+        >
           {categories.length > 0
-            ? categories.slice(0, 8).map((cat) => {
+            ? displayCategories.slice(0, 8).map((cat) => {
                 const lower = cat.name.toLowerCase();
                 const icon = CATEGORY_ICONS[lower] || <Cpu className="w-7 h-7 text-neutral-700" />;
                 return (
-                  <Link
-                    key={cat._id}
-                    to={`/products?category=${cat._id}`}
-                    className="bg-[#F8F9FA] hover:bg-[#F0F2F5] transition-all duration-200 rounded-xl p-3.5 flex flex-col items-center justify-center group border border-transparent hover:border-neutral-200 hover:-translate-y-0.5 text-center min-h-[105px]"
-                  >
-                    <div className="h-12 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform duration-200 text-[#FF5C00]">
-                      {icon}
-                    </div>
-                    <span className="text-xs text-neutral-800 font-medium group-hover:text-[#FF5C00] line-clamp-1">
-                      {cat.name}
-                    </span>
-                  </Link>
+                  <motion.div key={cat._id} variants={staggerItemVariants}>
+                    <Link
+                      to={`/products?category=${cat._id}`}
+                      className="bg-[#F8F9FA] hover:bg-[#F0F2F5] transition-all duration-200 rounded-xl p-3.5 flex flex-col items-center justify-center group border border-transparent hover:border-neutral-200 hover:-translate-y-0.5 hover:shadow-xs text-center min-h-[105px] h-full"
+                    >
+                      <div className="h-12 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform duration-200 text-[#FF5C00]">
+                        {icon}
+                      </div>
+                      <span className="text-xs text-neutral-800 font-medium group-hover:text-[#FF5C00] line-clamp-1 transition-colors">
+                        {cat.name}
+                      </span>
+                    </Link>
+                  </motion.div>
                 );
               })
-            : DEFAULT_CATEGORIES.map((item, idx) => (
-                <Link
-                  key={idx}
-                  to={`/products?category=${item.slug}`}
-                  className="bg-[#F8F9FA] hover:bg-[#F0F2F5] transition-all duration-200 rounded-xl p-3.5 flex flex-col items-center justify-center group border border-transparent hover:border-neutral-200 hover:-translate-y-0.5 text-center min-h-[105px]"
-                >
-                  <div className="h-12 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform duration-200 text-[#FF5C00]">
-                    {item.icon}
-                  </div>
-                  <span className="text-xs text-neutral-800 font-medium group-hover:text-[#FF5C00] line-clamp-1">
-                    {item.name}
-                  </span>
-                </Link>
+            : [...Array(8)].map((_, idx) => (
+                <ShimmerSkeleton key={idx} className="h-[105px] rounded-xl" />
               ))}
-        </div>
+        </motion.div>
       </section>
 
       {/* 3. DUAL PRODUCT COLUMNS: BESTSELLERS & NEW ARRIVALS */}
@@ -220,22 +221,22 @@ export const HomePage: React.FC = () => {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {bestsellers.length > 0 ? (
               bestsellers.map((prod) => (
-                <div
+                <motion.div
                   key={prod._id}
                   onClick={() => navigate(`/products/${prod._id}`)}
-                  className="bg-[#F8F9FA] hover:bg-[#F0F2F5] rounded-xl p-3 flex flex-col items-center text-center group cursor-pointer border border-transparent hover:border-neutral-200 transition-all hover:-translate-y-0.5"
+                  whileHover={{ y: -3, transition: { duration: 0.2, ease: [0.23, 1, 0.32, 1] } }}
+                  whileTap={{ scale: 0.98 }}
+                  className="bg-[#F8F9FA] hover:bg-[#F0F2F5] rounded-xl p-3 flex flex-col items-center text-center group cursor-pointer border border-transparent hover:border-neutral-200 hover:shadow-md transition-shadow select-none"
                 >
                   <div className="h-24 w-full flex items-center justify-center mb-2 overflow-hidden rounded-lg bg-white p-2">
-                    <img
-                      src={
-                        prod.images?.[0] ||
-                        'https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&w=300&q=80'
-                      }
+                    <ProductImage
+                      src={prod.images}
                       alt={prod.name}
-                      className="max-h-20 max-w-full object-contain group-hover:scale-105 transition-transform"
+                      category={prod.category?.name}
+                      className="max-h-20 max-w-full object-contain group-hover:scale-105 transition-transform duration-200 ease-out"
                     />
                   </div>
-                  <h3 className="text-[12px] font-medium text-neutral-900 line-clamp-2 mb-1 min-h-[32px] group-hover:text-[#FF5C00]">
+                  <h3 className="text-[12px] font-medium text-neutral-900 line-clamp-2 mb-1 min-h-[32px] group-hover:text-[#FF5C00] transition-colors">
                     {prod.name}
                   </h3>
                   <div className="flex items-center justify-center text-[#FF5C00] text-[10px] space-x-0.5 mb-1.5">
@@ -247,12 +248,12 @@ export const HomePage: React.FC = () => {
                   <p className="text-xs font-bold text-neutral-900 mt-auto font-mono">
                     {formatPrice(prod.minPrice)}
                   </p>
-                </div>
+                </motion.div>
               ))
             ) : (
-              <div className="col-span-4 py-8 text-center text-xs text-neutral-400">
-                Đang tải dữ liệu sản phẩm bán chạy...
-              </div>
+              [...Array(4)].map((_, i) => (
+                <ShimmerSkeleton key={i} className="h-48 rounded-xl" />
+              ))
             )}
           </div>
         </div>
@@ -276,22 +277,22 @@ export const HomePage: React.FC = () => {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {newArrivals.length > 0 ? (
               newArrivals.map((prod) => (
-                <div
+                <motion.div
                   key={prod._id}
                   onClick={() => navigate(`/products/${prod._id}`)}
-                  className="bg-[#F8F9FA] hover:bg-[#F0F2F5] rounded-xl p-3 flex flex-col items-center text-center group cursor-pointer border border-transparent hover:border-neutral-200 transition-all hover:-translate-y-0.5"
+                  whileHover={{ y: -3, transition: { duration: 0.2, ease: [0.23, 1, 0.32, 1] } }}
+                  whileTap={{ scale: 0.98 }}
+                  className="bg-[#F8F9FA] hover:bg-[#F0F2F5] rounded-xl p-3 flex flex-col items-center text-center group cursor-pointer border border-transparent hover:border-neutral-200 hover:shadow-md transition-shadow select-none"
                 >
                   <div className="h-24 w-full flex items-center justify-center mb-2 overflow-hidden rounded-lg bg-white p-2">
-                    <img
-                      src={
-                        prod.images?.[0] ||
-                        'https://images.unsplash.com/photo-1593642632823-8f785ba67e45?auto=format&fit=crop&w=300&q=80'
-                      }
+                    <ProductImage
+                      src={prod.images}
                       alt={prod.name}
-                      className="max-h-20 max-w-full object-contain group-hover:scale-105 transition-transform"
+                      category={prod.category?.name}
+                      className="max-h-20 max-w-full object-contain group-hover:scale-105 transition-transform duration-200 ease-out"
                     />
                   </div>
-                  <h3 className="text-[12px] font-medium text-neutral-900 line-clamp-2 mb-1 min-h-[32px] group-hover:text-[#FF5C00]">
+                  <h3 className="text-[12px] font-medium text-neutral-900 line-clamp-2 mb-1 min-h-[32px] group-hover:text-[#FF5C00] transition-colors">
                     {prod.name}
                   </h3>
                   <div className="flex items-center justify-center text-[#FF5C00] text-[10px] space-x-0.5 mb-1.5">
@@ -303,12 +304,12 @@ export const HomePage: React.FC = () => {
                   <p className="text-xs font-bold text-neutral-900 mt-auto font-mono">
                     {formatPrice(prod.minPrice)}
                   </p>
-                </div>
+                </motion.div>
               ))
             ) : (
-              <div className="col-span-4 py-8 text-center text-xs text-neutral-400">
-                Đang tải dữ liệu sản phẩm mới...
-              </div>
+              [...Array(4)].map((_, i) => (
+                <ShimmerSkeleton key={i} className="h-48 rounded-xl" />
+              ))
             )}
           </div>
         </div>

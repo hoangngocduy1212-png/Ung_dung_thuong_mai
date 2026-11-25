@@ -76,7 +76,8 @@ async function cartView(userId) {
       available, lineTotal: available ? v.price * i.quantity : 0,
     };
   });
-  return { items, total: items.reduce((s, i) => s + i.lineTotal, 0) };
+    const total = items.reduce((s, i) => s + i.lineTotal, 0);
+    return { items, total, totalAmount: total };
 }
 
 r.get('/cart', asyncHandler(async (req, res) => res.json(await cartView(req.user._id))));
@@ -180,6 +181,7 @@ r.post('/orders/checkout', asyncHandler(async (req, res) => {
     cartItemIds: z.array(z.string()).optional(),
     addressId: z.string().optional(),
     address: addressSchema.optional(),
+    shippingMethod: z.enum(['standard', 'express']).default('standard').optional(),
     paymentMethod: z.enum(['cod', 'online']),
     note: z.string().max(500).optional(),
     vouchers: z.record(zId, zId).optional(), // { shopId: userVoucherId }
@@ -299,20 +301,70 @@ r.post('/reviews', asyncHandler(async (req, res) => {
 // ======================= Khiếu nại (gửi theo dạng đơn tới CSKH) =======================
 r.post('/complaints', asyncHandler(async (req, res) => {
   const d = parse(z.object({
-    contactName: z.string().min(2), contactPhone: zPhone, contactEmail: z.string().email().optional(),
-    orderCode: z.string().min(5), reason: z.string().min(10, 'Vui lòng mô tả lý do tối thiểu 10 ký tự').max(2000),
-  }), req.body);
-  const o = await Order.findOne({ code: d.orderCode.trim().toUpperCase(), customer: req.user._id });
+    contactName: z.string().min(2),
+    contactPhone: zPhone,
+    contactEmail: z.string().email().optional(),
+    orderCode: z.string().min(3).optional(),
+    orderId: zId.optional(),
+    reason: z.string().min(10, 'Vui lòng mô tả lý do tối thiểu 10 ký tự').max(2000),
+  }).refine((data) => data.orderCode || data.orderId, 'Vui lòng cung cấp mã đơn hoặc ID đơn hàng'), req.body);
+
+  let o = null;
+  if (d.orderId) {
+    o = await Order.findOne({ _id: d.orderId, customer: req.user._id });
+  } else if (d.orderCode) {
+    o = await Order.findOne({ code: d.orderCode.trim().toUpperCase(), customer: req.user._id });
+  }
   if (!o) throw new AppError('Mã đơn hàng không tồn tại trong tài khoản của bạn', 404);
-  const c = await Complaint.create({ ...d, code: genCode('KN'), orderCode: o.code, order: o._id, customer: req.user._id });
+
+  // Chống gửi trùng khiếu nại đang mở cho cùng một đơn hàng
+  const existingOpen = await Complaint.exists({
+    order: o._id,
+    customer: req.user._id,
+    status: { $in: ['moi', 'dang_xu_ly', 'chuyen_admin'] }
+  });
+  if (existingOpen) throw new AppError('Đơn hàng này đang có khiếu nại đang chờ xử lý', 409);
+
+  const c = await Complaint.create({
+    contactName: d.contactName,
+    contactPhone: d.contactPhone,
+    contactEmail: d.contactEmail,
+    reason: d.reason,
+    code: genCode('KN'),
+    orderCode: o.code,
+    order: o._id,
+    customer: req.user._id,
+  });
   res.status(201).json(c);
 }));
 r.get('/complaints', asyncHandler(async (req, res) => {
   res.json(await Complaint.find({ customer: req.user._id }).sort({ createdAt: -1 }).lean());
 }));
 r.get('/complaints/:id', asyncHandler(async (req, res) => {
-  const c = await Complaint.findOne({ _id: req.params.id, customer: req.user._id }).populate('responses.by', 'fullName role').lean();
+  const c = await Complaint.findOne({ _id: req.params.id, customer: req.user._id })
+    .populate('responses.by', 'fullName role')
+    .populate({
+      path: 'order',
+      select: 'code total status items createdAt shop',
+      populate: { path: 'shop', select: 'name' }
+    })
+    .lean();
   if (!c) throw new AppError('Không tìm thấy đơn khiếu nại', 404);
+  res.json(c);
+}));
+r.post('/complaints/:id/messages', asyncHandler(async (req, res) => {
+  const { content } = parse(z.object({ content: z.string().trim().min(2).max(2000) }), req.body);
+  const c = await Complaint.findOne({ _id: req.params.id, customer: req.user._id });
+  if (!c) throw new AppError('Không tìm thấy đơn khiếu nại', 404);
+  if (c.status === 'da_xu_ly') throw new AppError('Khiếu nại này đã kết thúc xử lý, không thể gửi thêm tin nhắn', 400);
+
+  c.responses.push({
+    by: req.user._id,
+    role: 'customer',
+    content,
+    at: new Date(),
+  });
+  await c.save();
   res.json(c);
 }));
 

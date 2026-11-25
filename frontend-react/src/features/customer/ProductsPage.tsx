@@ -1,10 +1,12 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { useSearchParams, useNavigate, Link } from 'react-router-dom';
+import { motion } from 'motion/react';
+import { staggerContainerVariants, staggerItemVariants, ShimmerSkeleton, AddToCartFeedback } from '../../lib/motion';
 import { catalogService } from '../../services/catalogService';
 import { useCart } from '../../app/providers/CartProvider';
-import { Loading } from '../../components/common/Loading';
 import { ErrorState } from '../../components/common/ErrorState';
 import { EmptyState } from '../../components/common/EmptyState';
+import { ProductImage } from '../../components/common/ProductImage';
 import type { Product, Category, Brand } from '../../types/catalog';
 import {
   Star,
@@ -35,16 +37,52 @@ export const ProductsPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [addingId, setAddingId] = useState<string | null>(null);
+  const [showAddedFeedback, setShowAddedFeedback] = useState(false);
 
   // Filters from URL
   const q = searchParams.get('q') || '';
-  const categoryId = searchParams.get('category') || '';
+  const rawCategory = searchParams.get('category') || '';
   const brandId = searchParams.get('brand') || '';
   const minPrice = searchParams.get('minPrice') || '';
   const maxPrice = searchParams.get('maxPrice') || '';
   const sort = searchParams.get('sort') || 'newest';
   const page = parseInt(searchParams.get('page') || '1', 10);
   const limit = 12;
+
+  // Ánh xạ slug hoặc tên danh mục sang ObjectId hợp lệ theo danh mục thực tế từ DB
+  const resolvedCategoryId = useMemo(() => {
+    if (!rawCategory) return '';
+    if (/^[a-f\d]{24}$/i.test(rawCategory)) return rawCategory;
+
+    const norm = (s: string) =>
+      (s || '')
+        .toLowerCase()
+        .replace(/đ/g, 'd')
+        .replace(/Đ/g, 'd')
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9]/g, '');
+
+    const target = norm(rawCategory);
+    const aliasMap: Record<string, string> = {
+      phone: 'dienthoai',
+      laptop: 'laptop',
+      tablet: 'maytinhbang',
+      audio: 'amthanh',
+      wearable: 'thietbideo',
+      accessories: 'phukien',
+      pc: 'linhkienpc',
+      desktop: 'maytinhban',
+    };
+    const mapped = aliasMap[target] || target;
+
+    const match = categories.find((c) => {
+      const n = norm(c.name);
+      return n === target || n === mapped || n.includes(target) || target.includes(n);
+    });
+
+    return match ? match._id : rawCategory;
+  }, [rawCategory, categories]);
 
   // Load Categories & Brands once
   useEffect(() => {
@@ -70,7 +108,7 @@ export const ProductsPage: React.FC = () => {
         sort,
       };
       if (q) params.q = q;
-      if (categoryId) params.category = categoryId;
+      if (resolvedCategoryId) params.category = resolvedCategoryId;
       if (brandId) params.brand = brandId;
       if (minPrice) params.minPrice = minPrice;
       if (maxPrice) params.maxPrice = maxPrice;
@@ -83,11 +121,50 @@ export const ProductsPage: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [q, categoryId, brandId, minPrice, maxPrice, sort, page]);
+  }, [q, resolvedCategoryId, brandId, minPrice, maxPrice, sort, page]);
 
   useEffect(() => {
-    fetchProducts();
-  }, [fetchProducts]);
+    let isCancelled = false;
+    setIsLoading(true);
+    setError(null);
+
+    const params: Record<string, string | number | undefined> = {
+      page,
+      limit,
+      sort,
+    };
+    if (q) params.q = q;
+    if (resolvedCategoryId) params.category = resolvedCategoryId;
+    if (brandId) params.brand = brandId;
+    if (minPrice) params.minPrice = minPrice;
+    if (maxPrice) params.maxPrice = maxPrice;
+
+    catalogService.getProducts(params)
+      .then((data) => {
+        if (!isCancelled) {
+          setProducts(data?.items || []);
+          setTotal(data?.total || 0);
+        }
+      })
+      .catch((err: any) => {
+        if (!isCancelled) {
+          setError(err?.message || 'Không thể tải danh sách sản phẩm từ máy chủ.');
+        }
+      })
+      .finally(() => {
+        if (!isCancelled) {
+          setIsLoading(false);
+        }
+      });
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [q, resolvedCategoryId, brandId, minPrice, maxPrice, sort, page]);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [page]);
 
   const updateParam = (key: string, val: string | undefined) => {
     const next = new URLSearchParams(searchParams);
@@ -96,7 +173,10 @@ export const ProductsPage: React.FC = () => {
     } else {
       next.set(key, val);
     }
-    next.set('page', '1'); // reset page on filter change
+    // Only reset page to 1 when changing filters or sorting, NOT when navigating pages
+    if (key !== 'page') {
+      next.set('page', '1');
+    }
     setSearchParams(next);
   };
 
@@ -122,7 +202,11 @@ export const ProductsPage: React.FC = () => {
       const detail = await catalogService.getProductById(product._id);
       const firstVariant = detail.variants?.[0];
       if (firstVariant) {
-        await addToCart(product._id, firstVariant._id, 1);
+        const ok = await addToCart(product._id, firstVariant._id, 1);
+        if (ok) {
+          setShowAddedFeedback(true);
+          setTimeout(() => setShowAddedFeedback(false), 2200);
+        }
       }
     } catch {
       // Ignored
@@ -137,7 +221,7 @@ export const ProductsPage: React.FC = () => {
   };
 
   const totalPages = Math.ceil(total / limit) || 1;
-  const currentCategory = categories.find((c) => c._id === categoryId);
+  const currentCategory = categories.find((c) => c._id === resolvedCategoryId);
 
   return (
     <div className="max-w-[1366px] mx-auto px-4 lg:px-6 py-4 pb-20">
@@ -180,7 +264,7 @@ export const ProductsPage: React.FC = () => {
               <Filter className="w-4 h-4 text-[#FF5C00]" />
               <span>Bộ lọc tìm kiếm</span>
             </div>
-            {(categoryId || brandId || minPrice || maxPrice || q) && (
+            {(rawCategory || brandId || minPrice || maxPrice || q) && (
               <button
                 onClick={handleClearAll}
                 className="text-xs text-[#FF5C00] hover:underline flex items-center gap-0.5"
@@ -200,7 +284,7 @@ export const ProductsPage: React.FC = () => {
               <button
                 onClick={() => updateParam('category', undefined)}
                 className={`w-full text-left px-2 py-1.5 rounded-lg transition-colors flex items-center justify-between ${
-                  !categoryId ? 'bg-neutral-100 font-bold text-[#FF5C00]' : 'text-neutral-700 hover:bg-neutral-50'
+                  !resolvedCategoryId ? 'bg-neutral-100 font-bold text-[#FF5C00]' : 'text-neutral-700 hover:bg-neutral-50'
                 }`}
               >
                 <span>Tất cả danh mục</span>
@@ -210,7 +294,7 @@ export const ProductsPage: React.FC = () => {
                   key={c._id}
                   onClick={() => updateParam('category', c._id)}
                   className={`w-full text-left px-2 py-1.5 rounded-lg transition-colors flex items-center justify-between ${
-                    categoryId === c._id
+                    resolvedCategoryId === c._id
                       ? 'bg-neutral-100 font-bold text-[#FF5C00]'
                       : 'text-neutral-700 hover:bg-neutral-50'
                   }`}
@@ -323,8 +407,10 @@ export const ProductsPage: React.FC = () => {
 
           {/* Loading / Error / Empty / Grid States */}
           {isLoading ? (
-            <div className="py-20">
-              <Loading message="Đang tải danh sách thiết bị..." />
+            <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 py-2">
+              {[...Array(8)].map((_, i) => (
+                <ShimmerSkeleton key={i} className="h-72 rounded-xl" />
+              ))}
             </div>
           ) : error ? (
             <ErrorState message={error} onRetry={fetchProducts} />
@@ -337,22 +423,29 @@ export const ProductsPage: React.FC = () => {
             />
           ) : (
             <>
-              {/* Product Grid: 4 columns */}
-              <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4" data-purpose="product-grid">
+              {/* Product Grid: 4 columns with Staggered Motion */}
+              <motion.div
+                variants={staggerContainerVariants}
+                initial="hidden"
+                animate="visible"
+                className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4"
+                data-purpose="product-grid"
+              >
                 {products.map((p) => (
-                  <article
+                  <motion.article
                     key={p._id}
+                    variants={staggerItemVariants}
+                    whileHover={{ y: -3, transition: { duration: 0.2, ease: [0.23, 1, 0.32, 1] } }}
+                    whileTap={{ scale: 0.985 }}
                     onClick={() => navigate(`/products/${p._id}`)}
-                    className="bg-white border border-neutral-200 rounded-xl p-3.5 flex flex-col justify-between hover:shadow-lg hover:border-neutral-300 transition-all duration-200 relative group cursor-pointer"
+                    className="bg-white border border-neutral-200 rounded-xl p-3.5 flex flex-col justify-between hover:shadow-lg hover:border-neutral-300 transition-all duration-200 relative group cursor-pointer select-none"
                   >
                     <div className="w-full aspect-square flex items-center justify-center p-2 mb-3 bg-neutral-50 rounded-lg overflow-hidden">
-                      <img
-                        src={
-                          p.images?.[0] ||
-                          'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=400&q=80'
-                        }
+                      <ProductImage
+                        src={p.images}
                         alt={p.name}
-                        className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-200"
+                        category={p.category?.name}
+                        className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-200 ease-out"
                       />
                     </div>
 
@@ -384,14 +477,14 @@ export const ProductsPage: React.FC = () => {
                     <button
                       onClick={(e) => handleQuickAdd(e, p)}
                       disabled={addingId === p._id}
-                      className="mt-3 w-full py-1.5 px-3 rounded-lg bg-neutral-100 hover:bg-[#FF5C00] hover:text-white text-neutral-800 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                      className="mt-3 w-full py-1.5 px-3 rounded-lg bg-neutral-100 hover:bg-[#FF5C00] hover:text-white text-neutral-800 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors cursor-pointer active:scale-95"
                     >
                       <ShoppingCart className="w-3.5 h-3.5" />
                       <span>{addingId === p._id ? 'Đang thêm...' : 'Thêm vào giỏ'}</span>
                     </button>
-                  </article>
+                  </motion.article>
                 ))}
-              </div>
+              </motion.div>
 
               {/* Pagination Controls */}
               {totalPages > 1 && (
@@ -444,6 +537,9 @@ export const ProductsPage: React.FC = () => {
           )}
         </section>
       </div>
+
+      {/* Floating Add-to-cart confirmation toast */}
+      <AddToCartFeedback isVisible={showAddedFeedback} />
     </div>
   );
 };

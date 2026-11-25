@@ -8,7 +8,12 @@ import type {
   Complaint,
 } from '../types/customer';
 import type { Product, PlatformVoucher } from '../types/catalog';
-import type { Order, CheckoutPayload } from '../types/order';
+import type {
+  Order,
+  CheckoutPayload,
+  VNPayCreateUrlResult,
+  VNPayVerifyResult,
+} from '../types/order';
 
 export const customerService = {
   // Profile
@@ -58,6 +63,12 @@ export const customerService = {
     api.post<{ orders: Order[]; groupCode: string }>('/customer/orders/checkout', payload),
   payGroup: (groupCode: string) =>
     api.post<{ orders: Order[] }>(`/customer/orders/group/${groupCode}/pay`),
+  createVNPayUrl: (groupCode: string) =>
+    api.post<VNPayCreateUrlResult>('/payment/vnpay/create-url', { groupCode }),
+  verifyVNPayReturn: (params: Record<string, string>) =>
+    api.get<VNPayVerifyResult>('/payment/vnpay/verify-return', { params }),
+  checkVNPayExpiry: (groupCode: string) =>
+    api.post<{ status: string; message: string }>('/payment/vnpay/check-expiry', { groupCode }),
   getOrders: (params?: { status?: string; page?: number; limit?: number }) =>
     api.get<{ items: Order[]; total: number; page: number; limit: number }>(
       '/customer/orders',
@@ -79,12 +90,19 @@ export const customerService = {
 
   // Complaints
   createComplaint: (data: {
-    orderId: string;
+    orderId?: string;
+    orderCode?: string;
     contactName: string;
     contactPhone: string;
     contactEmail?: string;
     reason: string;
   }) => api.post<Complaint>('/customer/complaints', data),
   getComplaints: () =>
-    api.get<{ items: Complaint[]; total: number }>('/customer/complaints'),
+    api.get<Complaint[]>('/customer/complaints'),
+  getComplaintDetail: (id: string) =>
+    api.get<Complaint>(`/customer/complaints/${id}`),
+  sendComplaintMessage: (id: string, content: string) =>
+    api.post<Complaint>(`/customer/complaints/${id}/messages`, { content }),
+  getAfterSales: () =>
+    api.get<any[]>('/customer/after-sales'),
 };

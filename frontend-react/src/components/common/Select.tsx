@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect, useId, useCallback } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import { ChevronDown, Check } from 'lucide-react';
+import { dropdownVariants } from '../../lib/motion';
 
 export interface SelectOption {
   value: string;
@@ -228,40 +230,45 @@ export const Select: React.FC<SelectProps> = ({
       </button>
 
       {/* Dropdown Menu (Origin-aware from top) */}
-      {isOpen && (
-        <div
-          id={listboxId}
-          role="listbox"
-          aria-labelledby={label ? selectId : undefined}
-          tabIndex={-1}
-          style={{ transformOrigin: 'top center' }}
-          className={`absolute top-[calc(100%+4px)] left-0 w-full z-50 rounded-lg border p-1 max-h-60 overflow-y-auto ${themeStyles.dropdown}`}
-        >
-          {options.map((option, idx) => {
-            const isSelected = option.value === internalValue;
-            const isFocused = idx === focusedIndex;
-            const optId = `${selectId}-opt-${idx}`;
-            return (
-              <div
-                key={option.value}
-                id={optId}
-                role="option"
-                aria-selected={isSelected}
-                aria-disabled={option.disabled}
-                onClick={() => handleSelect(option.value)}
-                className={`px-3 py-2 text-sm rounded-md flex items-center justify-between cursor-pointer select-none transition-colors duration-100 ${
-                  option.disabled ? 'opacity-40 cursor-not-allowed' : themeStyles.item
-                } ${isSelected ? themeStyles.activeItem : ''} ${
-                  isFocused && !isSelected ? 'bg-brand-surface' : ''
-                }`}
-              >
-                <span className="truncate">{option.label}</span>
-                {isSelected && <Check className="w-4 h-4 text-brand-accent shrink-0" />}
-              </div>
-            );
-          })}
-        </div>
-      )}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            id={listboxId}
+            role="listbox"
+            aria-labelledby={label ? selectId : undefined}
+            tabIndex={-1}
+            variants={dropdownVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            className={`absolute top-[calc(100%+4px)] left-0 w-full z-50 rounded-lg border p-1 max-h-60 overflow-y-auto ${themeStyles.dropdown}`}
+          >
+            {options.map((option, idx) => {
+              const isSelected = option.value === internalValue;
+              const isFocused = idx === focusedIndex;
+              const optId = `${selectId}-opt-${idx}`;
+              return (
+                <div
+                  key={option.value}
+                  id={optId}
+                  role="option"
+                  aria-selected={isSelected}
+                  aria-disabled={option.disabled}
+                  onClick={() => handleSelect(option.value)}
+                  className={`px-3 py-2 text-sm rounded-md flex items-center justify-between cursor-pointer select-none transition-colors duration-100 ${
+                    option.disabled ? 'opacity-40 cursor-not-allowed' : themeStyles.item
+                  } ${isSelected ? themeStyles.activeItem : ''} ${
+                    isFocused && !isSelected ? 'bg-brand-surface' : ''
+                  }`}
+                >
+                  <span className="truncate">{option.label}</span>
+                  {isSelected && <Check className="w-4 h-4 text-brand-accent shrink-0" />}
+                </div>
+              );
+            })}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {error && <p className="text-xs text-brand-danger font-medium mt-0.5">{error}</p>}
       {!error && helperText && <p className="text-xs text-brand-muted mt-0.5">{helperText}</p>}

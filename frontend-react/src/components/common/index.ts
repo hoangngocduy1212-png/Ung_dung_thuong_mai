@@ -8,3 +8,4 @@ export * from './Modal';
 export * from './EmptyState';
 export * from './Loading';
 export * from './ErrorState';
+export * from './ProductImage';

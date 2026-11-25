@@ -102,8 +102,12 @@ export async function checkout(user, input) {
       usedVouchers.push(g.uv._id);
     }
     const groupCode = genCode('TT');
-    for (const g of groups.values()) {
-      const shippingFee = config.shippingFee;
+    const groupValues = Array.from(groups.values());
+    const isExpress = input.shippingMethod === 'express';
+    for (let idx = 0; idx < groupValues.length; idx++) {
+      const g = groupValues[idx];
+      const expressSurcharge = (isExpress && idx === 0) ? 30000 : 0;
+      const shippingFee = config.shippingFee + expressSurcharge;
       const order = await Order.create({
         code: genCode('DH'),
         groupCode,
@@ -119,6 +123,7 @@ export async function checkout(user, input) {
           quantity: l.quantity,
         })),
         shippingAddress: input.address,
+        shippingMethod: input.shippingMethod || 'standard',
         note: input.note,
         subtotal: g.subtotal,
         shippingFee,

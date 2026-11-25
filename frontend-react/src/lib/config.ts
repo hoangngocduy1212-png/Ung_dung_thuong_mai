@@ -19,6 +19,6 @@ export const ROLE_LABELS: Record<string, string> = {
 export const ROLE_HOME_PATHS: Record<string, string> = {
   customer: '/',
   seller: '/seller',
-  cskh: '/staff',
+  cskh: '/cskh',
   admin: '/admin',
 };

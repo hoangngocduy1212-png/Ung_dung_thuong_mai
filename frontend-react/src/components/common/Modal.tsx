@@ -43,6 +43,13 @@ export const Modal: React.FC<ModalProps> = ({
 
   const dialogRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLElement | null>(null);
+  const prevIsOpenRef = useRef(false);
+  const onCloseRef = useRef(onClose);
+
+  // Keep latest onClose without re-triggering effects
+  useEffect(() => {
+    onCloseRef.current = onClose;
+  });
 
   // Focus restoration & body scroll locking
   useEffect(() => {
@@ -71,28 +78,65 @@ export const Modal: React.FC<ModalProps> = ({
     }
   }, [isOpen]);
 
-  // Focus trap & Escape key listener
+  // Initial focus management - executes ONLY once when the modal transitions from closed to open
   useEffect(() => {
-    if (!isOpen) return;
+    if (isOpen && !prevIsOpenRef.current) {
+      prevIsOpenRef.current = true;
 
-    // Focus the modal or first focusable child
-    const focusTimer = setTimeout(() => {
-      if (dialogRef.current) {
-        const focusable = dialogRef.current.querySelectorAll<HTMLElement>(
-          'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      const focusTimer = setTimeout(() => {
+        if (!dialogRef.current) return;
+
+        // If focus is already inside the dialog (e.g., user clicked or native autofocus), do NOT steal it
+        if (dialogRef.current.contains(document.activeElement)) return;
+
+        // 1. Check for explicit autofocus attribute
+        const explicitAutoFocus = dialogRef.current.querySelector<HTMLElement>(
+          '[data-autofocus], [autofocus]'
         );
+        if (explicitAutoFocus) {
+          explicitAutoFocus.focus();
+          return;
+        }
+
+        // 2. Check for the first interactive form control in the body (inputs, textareas, selects)
+        const firstFormField = dialogRef.current.querySelector<HTMLElement>(
+          'input:not([type="hidden"]):not([disabled]):not([readonly]), textarea:not([disabled]):not([readonly]), select:not([disabled])'
+        );
+        if (firstFormField && firstFormField.offsetParent !== null) {
+          firstFormField.focus();
+          return;
+        }
+
+        // 3. Fallback to any visible focusable element (buttons, links, etc.)
+        const focusable = Array.from(
+          dialogRef.current.querySelectorAll<HTMLElement>(
+            'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+          )
+        ).filter((el) => el.offsetParent !== null);
+
         if (focusable.length > 0) {
           focusable[0].focus();
         } else {
           dialogRef.current.focus();
         }
-      }
-    }, 50);
+      }, 50);
+
+      return () => clearTimeout(focusTimer);
+    }
+
+    if (!isOpen) {
+      prevIsOpenRef.current = false;
+    }
+  }, [isOpen]);
+
+  // Focus trap & Escape key listener
+  useEffect(() => {
+    if (!isOpen) return;
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         e.preventDefault();
-        onClose();
+        onCloseRef.current();
         return;
       }
 
@@ -127,10 +171,9 @@ export const Modal: React.FC<ModalProps> = ({
 
     window.addEventListener('keydown', handleKeyDown);
     return () => {
-      clearTimeout(focusTimer);
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [isOpen, onClose]);
+  }, [isOpen]);
 
   const maxWidthStyles = {
     sm: 'max-w-sm',

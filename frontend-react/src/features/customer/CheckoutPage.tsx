@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
+import { motion, AnimatePresence } from 'motion/react';
 import { useCart } from '../../app/providers/CartProvider';
 import { useAuth } from '../../hooks/useAuth';
 import { customerService } from '../../services/customerService';
 import type { Address, UserVoucher } from '../../types/customer';
+import { normalizeCartItem, formatPriceVND } from '../../lib/cartUtils';
 import {
   User,
   Truck,
@@ -17,8 +19,13 @@ import {
 
 export const CheckoutPage: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { cart, refreshCart } = useCart();
   const { user, isAuthenticated } = useAuth();
+
+  const searchParams = useMemo(() => new URLSearchParams(location.search), [location.search]);
+  const isBuyNow = searchParams.get('buyNow') === '1';
+  const buyNowVariantId = searchParams.get('variantId');
 
   const [savedAddresses, setSavedAddresses] = useState<Address[]>([]);
   const [selectedAddressId, setSelectedAddressId] = useState<string>('');
@@ -63,28 +70,54 @@ export const CheckoutPage: React.FC = () => {
     }
   }, [isAuthenticated]);
 
-  const items = cart?.items || [];
+  const rawItems = cart?.items || [];
+  const allNormalizedItems = useMemo(() => rawItems.map(normalizeCartItem), [rawItems]);
+
+  // Isolate Buy Now item if requested and found in cart
+  const items = useMemo(() => {
+    if (isBuyNow && buyNowVariantId) {
+      const found = allNormalizedItems.filter((i) => i.variantId === buyNowVariantId);
+      if (found.length > 0) return found;
+    }
+    return allNormalizedItems;
+  }, [allNormalizedItems, isBuyNow, buyNowVariantId]);
 
   // Group items by shop for multi-vendor checkout
   const shopGroups = useMemo(() => {
     const map = new Map<string, { shopId: string; shopName: string; items: typeof items; subtotal: number }>();
     for (const it of items) {
-      const p = it.product || ({} as any);
-      const v = it.variant || ({} as any);
-      const price = v.price || p.minPrice || 0;
-      const shopId = p.shop?._id || (it as any).shop?._id || 'default_shop';
-      const shopName = p.shop?.name || (it as any).shop?.name || 'Cửa hàng TECHSTORE';
+      const shopId = it.shopId || 'default_shop';
+      const shopName = it.shopName || 'Cửa hàng TECHSTORE';
       if (!map.has(shopId)) {
         map.set(shopId, { shopId, shopName, items: [], subtotal: 0 });
       }
       const g = map.get(shopId)!;
       g.items.push(it);
-      g.subtotal += price * it.quantity;
+      g.subtotal += it.lineTotal;
     }
     return Array.from(map.values());
   }, [items]);
 
-  const subtotal = shopGroups.reduce((sum, g) => sum + g.subtotal, 0);
+  const subtotal = useMemo(() => shopGroups.reduce((sum, g) => sum + g.subtotal, 0), [shopGroups]);
+
+  // Auto-validate and deselect vouchers that become ineligible when subtotal changes
+  useEffect(() => {
+    setSelectedVouchers((prev) => {
+      let changed = false;
+      const next = { ...prev };
+      for (const g of shopGroups) {
+        const uvId = next[g.shopId];
+        if (uvId) {
+          const uv = availableVouchers.find((v) => v._id === uvId);
+          if (!uv || !uv.voucher || g.subtotal < (uv.voucher.minOrder || 0)) {
+            delete next[g.shopId];
+            changed = true;
+          }
+        }
+      }
+      return changed ? next : prev;
+    });
+  }, [shopGroups, availableVouchers]);
 
   // Calculate voucher discount based on selectedVouchers (fixed amount in VND)
   const voucherDiscount = useMemo(() => {
@@ -102,9 +135,12 @@ export const CheckoutPage: React.FC = () => {
     return disc;
   }, [shopGroups, selectedVouchers, availableVouchers]);
 
-  // Standard flat shipping fee 30,000 VND (aligned with backend config.shippingFee)
-  const shippingFee = items.length > 0 ? 30000 : 0;
-  const total = Math.max(0, subtotal - voucherDiscount + shippingFee);
+  // Standard flat shipping fee 30,000 VND per shop (matches backend config.shippingFee)
+  const standardShippingFee = shopGroups.length > 0 ? shopGroups.length * 30000 : 0;
+  // Express delivery surcharge 30,000 VND applied once per checkout group
+  const expressFee = shippingMethod === 'express' ? 30000 : 0;
+  const totalShippingFee = standardShippingFee + expressFee;
+  const total = Math.max(0, subtotal - voucherDiscount + totalShippingFee);
 
   const handleAddressSelect = (addrId: string) => {
     setSelectedAddressId(addrId);
@@ -146,6 +182,7 @@ export const CheckoutPage: React.FC = () => {
       }
 
       const payload = {
+        cartItemIds: isBuyNow && items.length > 0 ? items.map((i) => i._id) : undefined,
         addressId: selectedAddressId || undefined,
         address: {
           receiver,
@@ -155,6 +192,7 @@ export const CheckoutPage: React.FC = () => {
           district,
           province,
         },
+        shippingMethod,
         paymentMethod,
         note: note.trim() || undefined,
         vouchers: Object.keys(activeVouchers).length > 0 ? activeVouchers : undefined,
@@ -162,6 +200,24 @@ export const CheckoutPage: React.FC = () => {
 
       const result = await customerService.checkout(payload);
       await refreshCart();
+
+      if (paymentMethod === 'online') {
+        try {
+          const vnpRes = await customerService.createVNPayUrl(result.groupCode);
+          if (vnpRes.paymentUrl) {
+            window.location.href = vnpRes.paymentUrl;
+            return;
+          }
+        } catch (vnpErr: any) {
+          console.error('VNPay create url error:', vnpErr);
+          // Fallback to confirmed page with retry available
+          const firstOrder = result.orders?.[0];
+          navigate(
+            `/orders/confirmed?orderId=${firstOrder?._id || ''}&code=${firstOrder?.code || ''}&groupCode=${result.groupCode}&vnpError=true`
+          );
+          return;
+        }
+      }
 
       const firstOrder = result.orders?.[0];
       navigate(
@@ -175,7 +231,7 @@ export const CheckoutPage: React.FC = () => {
   };
 
   const formatPrice = (val: number) => {
-    return val.toLocaleString('vi-VN') + ' ₫';
+    return formatPriceVND(val);
   };
 
   return (
@@ -190,12 +246,20 @@ export const CheckoutPage: React.FC = () => {
         </p>
       </div>
 
-      {errorMessage && (
-        <div className="mb-6 p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs sm:text-sm flex items-center gap-2.5">
-          <AlertCircle className="w-5 h-5 flex-shrink-0" />
-          <span>{errorMessage}</span>
-        </div>
-      )}
+      <AnimatePresence>
+        {errorMessage && (
+          <motion.div
+            initial={{ opacity: 0, y: -8, height: 0 }}
+            animate={{ opacity: 1, y: 0, height: 'auto' }}
+            exit={{ opacity: 0, y: -8, height: 0 }}
+            transition={{ duration: 0.2 }}
+            className="mb-6 p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs sm:text-sm flex items-center gap-2.5 overflow-hidden"
+          >
+            <AlertCircle className="w-5 h-5 flex-shrink-0" />
+            <span>{errorMessage}</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Main Grid: Form Left (8 cols) & Summary Right (4 cols) */}
       <form onSubmit={handlePlaceOrder} className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
@@ -332,7 +396,7 @@ export const CheckoutPage: React.FC = () => {
                     type="radio"
                     name="shipping_method"
                     checked={shippingMethod === 'standard'}
-                    onChange={() => {}}
+                    onChange={() => setShippingMethod('standard')}
                     className="w-4 h-4 text-[#FF5C00] focus:ring-0"
                   />
                   <div>
@@ -340,7 +404,9 @@ export const CheckoutPage: React.FC = () => {
                     <div className="text-[11px] text-neutral-500 mt-0.5">Nhận hàng trong 1 - 3 ngày</div>
                   </div>
                 </div>
-                <span className="text-xs font-bold text-[#FF5C00] font-mono">Miễn phí</span>
+                <span className="text-xs font-bold text-neutral-900 font-mono">
+                  {items.length > 0 ? formatPrice(standardShippingFee) : '0 ₫'}
+                </span>
               </label>
 
               <label
@@ -356,15 +422,15 @@ export const CheckoutPage: React.FC = () => {
                     type="radio"
                     name="shipping_method"
                     checked={shippingMethod === 'express'}
-                    onChange={() => {}}
+                    onChange={() => setShippingMethod('express')}
                     className="w-4 h-4 text-[#FF5C00] focus:ring-0"
                   />
                   <div>
                     <div className="font-bold text-xs sm:text-sm text-neutral-900">Giao hàng hỏa tốc 2H</div>
-                    <div className="text-[11px] text-neutral-500 mt-0.5">Nhận hàng ngay trong ngày</div>
+                    <div className="text-[11px] text-neutral-500 mt-0.5">Nhận hàng ngay trong ngày (+30.000 ₫)</div>
                   </div>
                 </div>
-                <span className="text-xs font-bold text-neutral-700 font-mono">+30.000 ₫</span>
+                <span className="text-xs font-bold text-[#FF5C00] font-mono">+30.000 ₫</span>
               </label>
             </div>
           </section>
@@ -456,32 +522,36 @@ export const CheckoutPage: React.FC = () => {
               </Link>
             </div>
 
+            {isBuyNow && (
+              <div className="p-2.5 bg-orange-50 border border-orange-200 rounded-lg text-xs text-[#FF5C00] font-medium flex items-center justify-between">
+                <span>⚡ Chế độ Mua ngay ({items.length} sản phẩm)</span>
+                <Link to="/cart" className="underline text-[11px] text-neutral-600 hover:text-neutral-900">
+                  Xem giỏ hàng
+                </Link>
+              </div>
+            )}
+
             {/* Product items mini list */}
             <div className="divide-y divide-neutral-100 max-h-72 overflow-y-auto pr-1">
-              {items.map((it) => {
-                const p = it.product || ({} as any);
-                const v = it.variant || ({} as any);
-                const price = v.price || p.minPrice || 0;
-                return (
-                  <div key={it._id} className="py-3 flex gap-3 items-center text-xs">
-                    <div className="w-12 h-12 rounded border border-neutral-200 bg-neutral-50 p-1 flex items-center justify-center flex-shrink-0">
-                      <img
-                        src={p.images?.[0] || 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=200&q=80'}
-                        alt={p.name}
-                        className="max-h-full max-w-full object-contain"
-                      />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h4 className="font-semibold text-neutral-900 truncate">{p.name || 'Sản phẩm'}</h4>
-                      {v.name && <p className="text-[11px] text-neutral-500 font-mono">{v.name}</p>}
-                    </div>
-                    <div className="text-right flex-shrink-0 font-mono">
-                      <span className="font-bold text-neutral-900">{formatPrice(price)}</span>
-                      <span className="block text-[11px] text-neutral-400">x{it.quantity}</span>
-                    </div>
+              {items.map((it) => (
+                <div key={it._id} className="py-3 flex gap-3 items-center text-xs">
+                  <div className="w-12 h-12 rounded border border-neutral-200 bg-neutral-50 p-1 flex items-center justify-center flex-shrink-0">
+                    <img
+                      src={it.image}
+                      alt={it.productName}
+                      className="max-h-full max-w-full object-contain"
+                    />
                   </div>
-                );
-              })}
+                  <div className="flex-1 min-w-0">
+                    <h4 className="font-semibold text-neutral-900 truncate">{it.productName}</h4>
+                    {it.variantName && <p className="text-[11px] text-neutral-500 font-mono">{it.variantName}</p>}
+                  </div>
+                  <div className="text-right flex-shrink-0 font-mono">
+                    <span className="font-bold text-neutral-900">{formatPrice(it.price)}</span>
+                    <span className="block text-[11px] text-neutral-400">x{it.quantity}</span>
+                  </div>
+                </div>
+              ))}
             </div>
 
             {/* Voucher Selection Section */}
@@ -547,13 +617,19 @@ export const CheckoutPage: React.FC = () => {
             {/* Price Calculations */}
             <div className="border-t border-neutral-200 pt-3 space-y-2 text-xs">
               <div className="flex justify-between text-neutral-600">
-                <span>Tạm tính</span>
+                <span>Tạm tính ({items.reduce((acc, i) => acc + i.quantity, 0)} sản phẩm)</span>
                 <span className="font-semibold text-neutral-900 font-mono">{formatPrice(subtotal)}</span>
               </div>
               <div className="flex justify-between text-neutral-600">
-                <span>Phí giao hàng</span>
-                <span className="font-semibold text-neutral-900 font-mono">{formatPrice(shippingFee)}</span>
+                <span>Phí vận chuyển tiêu chuẩn{shopGroups.length > 1 ? ` (${shopGroups.length} gian hàng)` : ''}</span>
+                <span className="font-semibold text-neutral-900 font-mono">{formatPrice(standardShippingFee)}</span>
               </div>
+              {shippingMethod === 'express' && (
+                <div className="flex justify-between text-[#FF5C00]">
+                  <span>Phụ phí giao hàng hỏa tốc 2H</span>
+                  <span className="font-semibold font-mono">+{formatPrice(expressFee)}</span>
+                </div>
+              )}
               {voucherDiscount > 0 && (
                 <div className="flex justify-between text-red-600">
                   <span>Giảm giá Voucher</span>
@@ -574,14 +650,25 @@ export const CheckoutPage: React.FC = () => {
             </div>
 
             {/* Submit Button */}
-            <button
+            <motion.button
               type="submit"
               disabled={isSubmitting || items.length === 0}
-              className="w-full py-3.5 bg-[#FF5C00] hover:bg-[#E55200] active:scale-[0.99] disabled:bg-neutral-300 text-white font-bold rounded-xl transition duration-150 flex items-center justify-center gap-2 shadow-xs cursor-pointer text-sm"
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.985 }}
+              transition={{ duration: 0.15 }}
+              className="w-full py-3.5 bg-[#FF5C00] hover:bg-[#E55200] disabled:bg-neutral-300 text-white font-bold rounded-xl transition duration-150 flex items-center justify-center gap-2 shadow-xs cursor-pointer text-sm select-none"
             >
-              <span>{isSubmitting ? 'Đang tạo đơn hàng...' : 'Xác nhận đặt hàng'}</span>
+              <span>
+                {isSubmitting
+                  ? paymentMethod === 'online'
+                    ? 'Đang kết nối cổng VNPay Sandbox...'
+                    : 'Đang tạo đơn hàng...'
+                  : paymentMethod === 'online'
+                  ? 'Đặt hàng & Thanh toán VNPay'
+                  : 'Xác nhận đặt hàng (COD)'}
+              </span>
               <ArrowRight className="w-4 h-4" />
-            </button>
+            </motion.button>
           </div>
         </div>
       </form>

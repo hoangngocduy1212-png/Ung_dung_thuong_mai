@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
-import { Eye, EyeOff, AlertCircle, ShieldCheck, Mail, CheckCircle2 } from 'lucide-react';
+import { Eye, EyeOff, AlertCircle, ShieldCheck, Mail, CheckCircle2, UserPlus, ArrowRight, LogIn } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { authService } from '../../services/authService';
 import { ROLE_HOME_PATHS } from '../../lib/config';
@@ -329,36 +329,53 @@ export const LoginPage: React.FC = () => {
 
             {/* Submit Button */}
             <div className="pt-2">
-              <motion.button
+              <button
                 type="submit"
                 disabled={isLoading}
-                whileHover={{ scale: 1.005 }}
-                whileTap={{ scale: 0.985 }}
-                transition={{ duration: 0.15 }}
-                className="w-full py-3.5 px-6 rounded-lg bg-[#FF5C00] hover:bg-[#E05200] active:bg-[#CC4900] text-white font-bold text-sm tracking-wider uppercase transition-all duration-150 shadow-[0_4px_16px_rgba(255,92,0,0.35)] flex items-center justify-center cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed select-none"
+                className="monolith-primary-btn w-full py-3.5 px-6 text-sm tracking-wider uppercase select-none"
+                data-purpose="submit-login-button"
               >
                 {isLoading ? (
-                  <div className="flex items-center gap-2">
+                  <div className="relative z-10 flex items-center justify-center gap-2">
                     <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                     <span>Đang xác thực...</span>
                   </div>
                 ) : (
-                  <span>ĐĂNG NHẬP</span>
+                  <span className="relative z-10 flex items-center justify-center gap-2 font-bold tracking-wider">
+                    <LogIn className="w-4 h-4" />
+                    <span>ĐĂNG NHẬP</span>
+                  </span>
                 )}
-              </motion.button>
+              </button>
             </div>
           </form>
 
-          {/* Footer Link */}
-          <footer className="mt-8 text-center text-xs sm:text-sm text-zinc-400">
-            <p>
-              Chưa có tài khoản?{' '}
-              <Link
-                to="/register"
-                className="text-[#FF5C00] font-semibold hover:underline transition-colors ml-1"
-              >
-                Đăng ký ngay.
-              </Link>
+          {/* ================= SECONDARY CTA: REGISTER ================= */}
+          <footer className="mt-7 pt-1" data-purpose="register-cta-section">
+            {/* Technical Monolith Divider */}
+            <div className="relative mb-5 flex items-center justify-center">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-zinc-800/80" />
+              </div>
+              <div className="relative px-3.5 bg-[#111113] text-[10px] font-mono tracking-[0.22em] text-zinc-500 uppercase font-semibold select-none">
+                BẠN CHƯA CÓ TÀI KHOẢN?
+              </div>
+            </div>
+
+            {/* Specular Cyber Register Button */}
+            <Link
+              to="/register"
+              className="monolith-specular-btn group w-full py-3.5 px-6 flex items-center justify-center gap-2.5 text-xs sm:text-sm font-semibold tracking-wider uppercase select-none no-underline"
+              data-purpose="register-redirect-button"
+            >
+              <UserPlus className="w-4 h-4 text-zinc-400 group-hover:text-[#FF5C00] transition-colors duration-200 relative z-10" />
+              <span className="relative z-10 font-bold">ĐĂNG KÝ TÀI KHOẢN NGAY</span>
+              <ArrowRight className="w-4 h-4 text-zinc-400 group-hover:text-white group-hover:translate-x-1 transition-all duration-200 relative z-10" />
+            </Link>
+
+            {/* Membership Perk Subtext */}
+            <p className="mt-2.5 text-center text-[11px] font-mono text-zinc-500 tracking-wide select-none">
+              Nhận voucher <span className="text-[#FF5C00] font-semibold">50.000đ</span> &amp; ưu đãi thành viên mới
             </p>
           </footer>
 

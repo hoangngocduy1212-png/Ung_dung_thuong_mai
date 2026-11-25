@@ -19,4 +19,17 @@ export default {
   returnDays: 7, // số ngày được yêu cầu đổi trả/hoàn tiền kể từ lúc giao hàng
   autoCompleteDays: 3, // tự động "Hoàn tất" sau N ngày kể từ lúc "Đã giao" nếu khách không xác nhận
   pointUnit: 10000, // cứ mỗi 10.000đ (sau giảm giá, chưa tính ship) = 1 điểm
+
+  // ---- Cấu hình VNPay Sandbox ----
+  vnpay: {
+    tmnCode: process.env.VNPAY_TMN_CODE || '',
+    hashSecret: process.env.VNPAY_HASH_SECRET || '',
+    url: process.env.VNPAY_URL || 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html',
+    returnUrl: process.env.VNPAY_RETURN_URL || 'http://localhost:5173/payment/vnpay/callback',
+    ipnUrl: process.env.VNPAY_IPN_URL || 'http://localhost:5000/api/payment/vnpay/ipn',
+    version: process.env.VNPAY_VERSION || '2.1.0',
+    command: process.env.VNPAY_COMMAND || 'pay',
+    currency: process.env.VNPAY_CURRENCY || 'VND',
+    expiryMinutes: Number(process.env.VNPAY_EXPIRY_MINUTES) || 15,
+  },
 };
